@@ -1,0 +1,14 @@
+node_modules
+dist
+dist-ssr
+coverage
+*.local
+.DS_Store
+*.log
+.vite
+
+# Built preview launcher — regenerate with `bash scripts/build-app.sh`
+HRS.app/
+
+# NOTE: src/config/generated/** IS committed on purpose — it is codegen output
+# from config/standards/*.xlsx and lets the app build without re-running codegen.

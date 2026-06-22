@@ -1,0 +1,81 @@
+/** Display helpers + human labels for the UI. */
+
+import type { ComponentId } from '../engine/types';
+
+export const COMPONENT_LABELS: Record<ComponentId, string> = {
+  running: 'Running',
+  erg_engine: 'Erg Engine',
+  lower_strength: 'Lower Strength',
+  upper_strength: 'Upper Strength',
+  olympic: 'Olympic',
+  power: 'Power',
+  gymnastics: 'Gymnastics',
+  core_endurance: 'Core Endurance',
+  grip: 'Grip',
+  rucking: 'Rucking',
+  upper_endurance: 'Upper Endurance',
+  stability: 'Stability',
+  swimming: 'Swimming',
+};
+
+export const componentLabel = (c: ComponentId): string => COMPONENT_LABELS[c] ?? c;
+
+const BENCH_LABEL_OVERRIDES: Record<string, string> = {
+  run_1mi: '1-mile run', run_5k: '5k run', row_2k: '2k row', row_500m: '500m row',
+  hspu: 'HSPU', t2b: 'T2B', du_unbroken: 'Double-unders', max_mu: 'Muscle-ups',
+  strict_pullups: 'Strict Pull-ups', plank_hold: 'Plank', broad_jump: 'Broad Jump',
+  grip_deadhang: 'Dead Hang', ruck_time: 'Ruck',
+};
+
+/** A short display label for a benchmark (used for per-lift radar axes). */
+export function benchmarkLabel(b: { id: string; meta?: { notes?: string } }): string {
+  const note = b.meta?.notes;
+  if (note && note.length <= 24 && !/[.;,]/.test(note)) return note; // operator stores the real name here
+  if (BENCH_LABEL_OVERRIDES[b.id]) return BENCH_LABEL_OVERRIDES[b.id];
+  return b.id.replace(/_1rm$/, '').replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+export function formatPercent(p: number | null): string {
+  return p == null ? '—' : `${Math.round(p)}%`;
+}
+
+export function formatSeconds(totalSec: number): string {
+  const sign = totalSec < 0 ? '-' : '';
+  const s = Math.abs(totalSec);
+  const m = Math.floor(s / 60);
+  const rem = s - m * 60;
+  const remStr = Number.isInteger(rem) ? String(rem).padStart(2, '0') : rem.toFixed(1).padStart(4, '0');
+  return `${sign}${m}:${remStr}`;
+}
+
+/** Format a raw value in its native unit for display. */
+export function formatValue(value: number, unit: string): string {
+  if (unit.includes(':')) return formatSeconds(value);
+  if (unit === 'xBW') return `${value.toFixed(2)}×BW`;
+  if (unit === 'cm') return `${Math.round(value)} cm`;
+  if (unit === 'reps') return `${Math.round(value)} reps`;
+  if (unit === 'rounds') return `${value} rounds`;
+  return String(value);
+}
+
+/** Signed one-decimal number for the Capacity Index. */
+export function formatSigned(n: number | null): string {
+  if (n == null) return '—';
+  const v = Math.round(n * 10) / 10;
+  return `${v > 0 ? '+' : ''}${v.toFixed(1)}`;
+}
+
+/** Ordinal percentile, e.g. 73 -> "73rd". */
+export function formatPercentile(p: number | null): string {
+  if (p == null) return '—';
+  const r = Math.round(p);
+  const mod100 = r % 100;
+  const mod10 = r % 10;
+  let suffix = 'th';
+  if (mod100 < 11 || mod100 > 13) {
+    if (mod10 === 1) suffix = 'st';
+    else if (mod10 === 2) suffix = 'nd';
+    else if (mod10 === 3) suffix = 'rd';
+  }
+  return `${r}${suffix}`;
+}

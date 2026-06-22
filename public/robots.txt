@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://benchmark.takepointfitness.com/sitemap.xml
+Sitemap: https://operatorbenchmark.takepointfitness.com/sitemap.xml

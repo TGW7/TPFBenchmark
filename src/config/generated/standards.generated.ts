@@ -1,0 +1,869 @@
+// AUTO-GENERATED — DO NOT EDIT.
+// Source of truth: config/standards/TPF_HRS_Standards_v0_2026-06-21.xlsx
+// Regenerate with `npm run codegen`. Edit the Excel master, never this file.
+//
+// Empty threshold / weight / mix cells in the workbook are emitted as `null`
+// (TODO). The engine skips null benchmarks/components and re-normalises.
+
+import type {
+  ComponentId,
+  Normalization,
+  PathwayId,
+  Sex,
+  Source,
+  ThresholdSet,
+  WodId,
+} from '../../engine/types';
+
+export interface SourcingRow {
+  id: string;
+  component: ComponentId;
+  source: Source;
+  unit: string;
+  lowerIsBetter: boolean;
+  normalization: Normalization;
+  optional: boolean;
+  dataSource: string;
+  license: string;
+  commercialUse: string;
+  referencePopulation: string;
+  launchMethod: string;
+  notes: string;
+}
+
+export interface WodStandard {
+  unit: string;
+  lowerIsBetter: boolean;
+  thresholds: Record<Sex, ThresholdSet>;
+  load?: { movement: string; M: number | null; F: number | null };
+}
+
+/** Populated sourcing plan (drives benchmark ids, source, unit, direction). */
+export const BENCHMARK_SOURCING: SourcingRow[] = [
+  {
+    "id": "run_1mi",
+    "component": "running",
+    "source": "race_times",
+    "unit": "mm:ss",
+    "lowerIsBetter": true,
+    "normalization": "absolute",
+    "optional": false,
+    "dataSource": "WMA age-grade + open race data",
+    "license": "CC BY 4.0",
+    "commercialUse": "Yes (attribute WMA)",
+    "referencePopulation": "General / masters runners",
+    "launchMethod": "Licensed data + expert",
+    "notes": "Age/sex normalised via WMA factors"
+  },
+  {
+    "id": "run_5k",
+    "component": "running",
+    "source": "race_times",
+    "unit": "mm:ss",
+    "lowerIsBetter": true,
+    "normalization": "absolute",
+    "optional": false,
+    "dataSource": "WMA age-grade + open race distributions",
+    "license": "CC BY 4.0",
+    "commercialUse": "Yes (attribute WMA)",
+    "referencePopulation": "General runners",
+    "launchMethod": "Licensed data + expert",
+    "notes": "parkrun aggregate distributions a useful reference — confirm their data policy first"
+  },
+  {
+    "id": "row_2k",
+    "component": "erg_engine",
+    "source": "race_times",
+    "unit": "mm:ss.s",
+    "lowerIsBetter": true,
+    "normalization": "absolute",
+    "optional": false,
+    "dataSource": "Concept2 rankings (reference only)",
+    "license": "Proprietary",
+    "commercialUse": "License required",
+    "referencePopulation": "Concept2 loggers (enthusiast-biased)",
+    "launchMethod": "Own-data + expert",
+    "notes": "Do NOT ingest C2 data commercially without written consent; seed tiers via expert + own users"
+  },
+  {
+    "id": "row_500m",
+    "component": "erg_engine",
+    "source": "race_times",
+    "unit": "mm:ss.s",
+    "lowerIsBetter": true,
+    "normalization": "absolute",
+    "optional": false,
+    "dataSource": "Concept2 rankings (reference only)",
+    "license": "Proprietary",
+    "commercialUse": "License required",
+    "referencePopulation": "Concept2 loggers",
+    "launchMethod": "Own-data + expert",
+    "notes": "As row_2k — license or skip; seed expert"
+  },
+  {
+    "id": "back_squat_1rm",
+    "component": "lower_strength",
+    "source": "orm",
+    "unit": "xBW",
+    "lowerIsBetter": false,
+    "normalization": "bodyweight",
+    "optional": false,
+    "dataSource": "OpenPowerlifting",
+    "license": "CC0 / public domain",
+    "commercialUse": "Yes (no restriction)",
+    "referencePopulation": "Competitive lifters (strong-biased)",
+    "launchMethod": "Licensed data (adjust for general pop)",
+    "notes": "Squat contested in PL; rich by sex/BW/age"
+  },
+  {
+    "id": "deadlift_1rm",
+    "component": "lower_strength",
+    "source": "orm",
+    "unit": "xBW",
+    "lowerIsBetter": false,
+    "normalization": "bodyweight",
+    "optional": false,
+    "dataSource": "OpenPowerlifting",
+    "license": "CC0 / public domain",
+    "commercialUse": "Yes (no restriction)",
+    "referencePopulation": "Competitive lifters",
+    "launchMethod": "Licensed data (adjust)",
+    "notes": "Contested in PL"
+  },
+  {
+    "id": "bench_1rm",
+    "component": "upper_strength",
+    "source": "orm",
+    "unit": "xBW",
+    "lowerIsBetter": false,
+    "normalization": "bodyweight",
+    "optional": false,
+    "dataSource": "OpenPowerlifting",
+    "license": "CC0 / public domain",
+    "commercialUse": "Yes (no restriction)",
+    "referencePopulation": "Competitive lifters",
+    "launchMethod": "Licensed data (adjust)",
+    "notes": "Bench contested in PL"
+  },
+  {
+    "id": "strict_press_1rm",
+    "component": "upper_strength",
+    "source": "orm",
+    "unit": "xBW",
+    "lowerIsBetter": false,
+    "normalization": "bodyweight",
+    "optional": false,
+    "dataSource": "Expert-curated (not a contested lift)",
+    "license": "None",
+    "commercialUse": "Expert",
+    "referencePopulation": "Own users",
+    "launchMethod": "Expert-curated + own-data",
+    "notes": "Anchor ratio vs bench / bodyweight; refine from own data"
+  },
+  {
+    "id": "snatch_1rm",
+    "component": "olympic",
+    "source": "orm",
+    "unit": "xBW",
+    "lowerIsBetter": false,
+    "normalization": "bodyweight",
+    "optional": false,
+    "dataSource": "IWF comp data (elite) + coaching ratios",
+    "license": "Proprietary / unclear",
+    "commercialUse": "License required / expert",
+    "referencePopulation": "Elite weightlifters",
+    "launchMethod": "Expert-curated + own-data",
+    "notes": "Comp data elite-biased; anchor with coaching ratios"
+  },
+  {
+    "id": "clean_jerk_1rm",
+    "component": "olympic",
+    "source": "orm",
+    "unit": "xBW",
+    "lowerIsBetter": false,
+    "normalization": "bodyweight",
+    "optional": false,
+    "dataSource": "IWF comp data + coaching ratios",
+    "license": "Proprietary / unclear",
+    "commercialUse": "License required / expert",
+    "referencePopulation": "Elite weightlifters",
+    "launchMethod": "Expert-curated + own-data",
+    "notes": "As snatch"
+  },
+  {
+    "id": "power_clean_1rm",
+    "component": "power",
+    "source": "orm",
+    "unit": "xBW",
+    "lowerIsBetter": false,
+    "normalization": "bodyweight",
+    "optional": false,
+    "dataSource": "Expert-curated (not contested)",
+    "license": "None",
+    "commercialUse": "Expert",
+    "referencePopulation": "Own users",
+    "launchMethod": "Expert-curated + own-data",
+    "notes": "Ratio vs clean & jerk; refine from own data"
+  },
+  {
+    "id": "broad_jump",
+    "component": "power",
+    "source": "manual",
+    "unit": "cm",
+    "lowerIsBetter": false,
+    "normalization": "absolute",
+    "optional": false,
+    "dataSource": "Athletic / combine normative data + expert",
+    "license": "Mixed / public norms",
+    "commercialUse": "Check per source",
+    "referencePopulation": "Athletic test populations",
+    "launchMethod": "Published norms + own-data",
+    "notes": "Sex-split absolute distance"
+  },
+  {
+    "id": "strict_pullups",
+    "component": "gymnastics",
+    "source": "manual",
+    "unit": "reps",
+    "lowerIsBetter": false,
+    "normalization": "absolute",
+    "optional": false,
+    "dataSource": "Expert-curated (no public dataset)",
+    "license": "None",
+    "commercialUse": "Expert",
+    "referencePopulation": "Own users",
+    "launchMethod": "Expert-curated + own-data",
+    "notes": "Recalibrate from own data quickly"
+  },
+  {
+    "id": "hspu",
+    "component": "gymnastics",
+    "source": "manual",
+    "unit": "reps",
+    "lowerIsBetter": false,
+    "normalization": "absolute",
+    "optional": false,
+    "dataSource": "Expert-curated",
+    "license": "None",
+    "commercialUse": "Expert",
+    "referencePopulation": "Own users",
+    "launchMethod": "Expert-curated + own-data",
+    "notes": "Define Rx standard (kipping vs strict) explicitly"
+  },
+  {
+    "id": "t2b",
+    "component": "gymnastics",
+    "source": "manual",
+    "unit": "reps",
+    "lowerIsBetter": false,
+    "normalization": "absolute",
+    "optional": false,
+    "dataSource": "Expert-curated",
+    "license": "None",
+    "commercialUse": "Expert",
+    "referencePopulation": "Own users",
+    "launchMethod": "Expert-curated + own-data",
+    "notes": ""
+  },
+  {
+    "id": "du_unbroken",
+    "component": "gymnastics",
+    "source": "manual",
+    "unit": "reps",
+    "lowerIsBetter": false,
+    "normalization": "absolute",
+    "optional": false,
+    "dataSource": "Expert-curated",
+    "license": "None",
+    "commercialUse": "Expert",
+    "referencePopulation": "Own users",
+    "launchMethod": "Expert-curated + own-data",
+    "notes": "Unbroken double-unders"
+  },
+  {
+    "id": "max_mu",
+    "component": "gymnastics",
+    "source": "manual",
+    "unit": "reps",
+    "lowerIsBetter": false,
+    "normalization": "absolute",
+    "optional": false,
+    "dataSource": "Expert-curated",
+    "license": "None",
+    "commercialUse": "Expert",
+    "referencePopulation": "Own users",
+    "launchMethod": "Expert-curated + own-data",
+    "notes": "Bar or ring — specify"
+  },
+  {
+    "id": "plank_hold",
+    "component": "core_endurance",
+    "source": "manual",
+    "unit": "mm:ss",
+    "lowerIsBetter": false,
+    "normalization": "absolute",
+    "optional": false,
+    "dataSource": "Normative fitness data + expert",
+    "license": "Mixed",
+    "commercialUse": "Expert",
+    "referencePopulation": "Own users",
+    "launchMethod": "Expert-curated + own-data",
+    "notes": "Longer = better (higher_is_better)"
+  },
+  {
+    "id": "grip_deadhang",
+    "component": "grip",
+    "source": "manual",
+    "unit": "mm:ss",
+    "lowerIsBetter": false,
+    "normalization": "absolute",
+    "optional": true,
+    "dataSource": "Expert-curated",
+    "license": "None",
+    "commercialUse": "Expert",
+    "referencePopulation": "Own users",
+    "launchMethod": "Optional — off by default",
+    "notes": "Carry-over from ORS"
+  },
+  {
+    "id": "ruck_time",
+    "component": "rucking",
+    "source": "race_times",
+    "unit": "mm:ss",
+    "lowerIsBetter": true,
+    "normalization": "absolute",
+    "optional": true,
+    "dataSource": "Expert / military standards",
+    "license": "Mixed",
+    "commercialUse": "Expert",
+    "referencePopulation": "Own users",
+    "launchMethod": "Optional — off by default",
+    "notes": "Carry-over from ORS"
+  }
+];
+
+/** Per-benchmark tier thresholds by sex. Values are TODO (null) until populated. */
+export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
+  "run_1mi": {
+    "M": {
+      "pass": 540,
+      "good": 450,
+      "excellent": 390,
+      "elite": 330
+    },
+    "F": {
+      "pass": 600,
+      "good": 510,
+      "excellent": 432,
+      "elite": 372
+    }
+  },
+  "run_5k": {
+    "M": {
+      "pass": 1800,
+      "good": 1500,
+      "excellent": 1290,
+      "elite": 1110
+    },
+    "F": {
+      "pass": 2010,
+      "good": 1680,
+      "excellent": 1440,
+      "elite": 1230
+    }
+  },
+  "row_2k": {
+    "M": {
+      "pass": 480,
+      "good": 435,
+      "excellent": 405,
+      "elite": 375
+    },
+    "F": {
+      "pass": 540,
+      "good": 495,
+      "excellent": 462,
+      "elite": 420
+    }
+  },
+  "row_500m": {
+    "M": {
+      "pass": 110,
+      "good": 100,
+      "excellent": 93,
+      "elite": 85
+    },
+    "F": {
+      "pass": 125,
+      "good": 115,
+      "excellent": 107,
+      "elite": 98
+    }
+  },
+  "back_squat_1rm": {
+    "M": {
+      "pass": 1.25,
+      "good": 1.6,
+      "excellent": 2,
+      "elite": 2.5
+    },
+    "F": {
+      "pass": 1,
+      "good": 1.3,
+      "excellent": 1.6,
+      "elite": 2
+    }
+  },
+  "deadlift_1rm": {
+    "M": {
+      "pass": 1.5,
+      "good": 1.9,
+      "excellent": 2.3,
+      "elite": 2.8
+    },
+    "F": {
+      "pass": 1.2,
+      "good": 1.5,
+      "excellent": 1.9,
+      "elite": 2.4
+    }
+  },
+  "bench_1rm": {
+    "M": {
+      "pass": 1,
+      "good": 1.25,
+      "excellent": 1.6,
+      "elite": 2
+    },
+    "F": {
+      "pass": 0.6,
+      "good": 0.8,
+      "excellent": 1,
+      "elite": 1.3
+    }
+  },
+  "strict_press_1rm": {
+    "M": {
+      "pass": 0.6,
+      "good": 0.8,
+      "excellent": 1,
+      "elite": 1.25
+    },
+    "F": {
+      "pass": 0.4,
+      "good": 0.55,
+      "excellent": 0.7,
+      "elite": 0.9
+    }
+  },
+  "snatch_1rm": {
+    "M": {
+      "pass": 0.7,
+      "good": 0.95,
+      "excellent": 1.2,
+      "elite": 1.5
+    },
+    "F": {
+      "pass": 0.5,
+      "good": 0.65,
+      "excellent": 0.85,
+      "elite": 1.05
+    }
+  },
+  "clean_jerk_1rm": {
+    "M": {
+      "pass": 0.9,
+      "good": 1.2,
+      "excellent": 1.5,
+      "elite": 1.85
+    },
+    "F": {
+      "pass": 0.65,
+      "good": 0.85,
+      "excellent": 1.05,
+      "elite": 1.3
+    }
+  },
+  "power_clean_1rm": {
+    "M": {
+      "pass": 0.8,
+      "good": 1.05,
+      "excellent": 1.3,
+      "elite": 1.6
+    },
+    "F": {
+      "pass": 0.55,
+      "good": 0.75,
+      "excellent": 0.95,
+      "elite": 1.15
+    }
+  },
+  "broad_jump": {
+    "M": {
+      "pass": 200,
+      "good": 230,
+      "excellent": 260,
+      "elite": 300
+    },
+    "F": {
+      "pass": 160,
+      "good": 185,
+      "excellent": 210,
+      "elite": 245
+    }
+  },
+  "strict_pullups": {
+    "M": {
+      "pass": 5,
+      "good": 11,
+      "excellent": 18,
+      "elite": 28
+    },
+    "F": {
+      "pass": 1,
+      "good": 5,
+      "excellent": 10,
+      "elite": 18
+    }
+  },
+  "hspu": {
+    "M": {
+      "pass": 3,
+      "good": 8,
+      "excellent": 15,
+      "elite": 25
+    },
+    "F": {
+      "pass": 1,
+      "good": 4,
+      "excellent": 8,
+      "elite": 15
+    }
+  },
+  "t2b": {
+    "M": {
+      "pass": 8,
+      "good": 18,
+      "excellent": 30,
+      "elite": 50
+    },
+    "F": {
+      "pass": 5,
+      "good": 12,
+      "excellent": 22,
+      "elite": 40
+    }
+  },
+  "du_unbroken": {
+    "M": {
+      "pass": 20,
+      "good": 50,
+      "excellent": 100,
+      "elite": 200
+    },
+    "F": {
+      "pass": 15,
+      "good": 45,
+      "excellent": 90,
+      "elite": 180
+    }
+  },
+  "max_mu": {
+    "M": {
+      "pass": 1,
+      "good": 4,
+      "excellent": 9,
+      "elite": 18
+    },
+    "F": {
+      "pass": 1,
+      "good": 2,
+      "excellent": 5,
+      "elite": 11
+    }
+  },
+  "plank_hold": {
+    "M": {
+      "pass": 60,
+      "good": 120,
+      "excellent": 180,
+      "elite": 300
+    },
+    "F": {
+      "pass": 60,
+      "good": 120,
+      "excellent": 180,
+      "elite": 300
+    }
+  }
+};
+
+/** Pathway component weights. TODO (null) until populated; must each sum to 100. */
+export const PATHWAY_WEIGHTS: Partial<Record<PathwayId, Partial<Record<ComponentId, number | null>>>> = {
+  "gym_goer": {
+    "running": 10,
+    "erg_engine": 10,
+    "lower_strength": 20,
+    "upper_strength": 20,
+    "olympic": 5,
+    "power": 10,
+    "gymnastics": 15,
+    "core_endurance": 10
+  },
+  "hybrid_athlete": {
+    "running": 20,
+    "erg_engine": 15,
+    "lower_strength": 15,
+    "upper_strength": 15,
+    "olympic": 5,
+    "power": 10,
+    "gymnastics": 10,
+    "core_endurance": 10
+  },
+  "crossfit_generalist": {
+    "running": 12,
+    "erg_engine": 12,
+    "lower_strength": 14,
+    "upper_strength": 12,
+    "olympic": 16,
+    "power": 12,
+    "gymnastics": 16,
+    "core_endurance": 6
+  },
+  "hyrox": {
+    "running": 28,
+    "erg_engine": 24,
+    "lower_strength": 14,
+    "upper_strength": 8,
+    "olympic": 2,
+    "power": 6,
+    "gymnastics": 6,
+    "core_endurance": 12
+  },
+  "powerlifter": {
+    "running": 0,
+    "erg_engine": 0,
+    "lower_strength": 45,
+    "upper_strength": 35,
+    "olympic": 0,
+    "power": 10,
+    "gymnastics": 0,
+    "core_endurance": 10
+  },
+  "bodybuilder": {
+    "running": 0,
+    "erg_engine": 0,
+    "lower_strength": 35,
+    "upper_strength": 35,
+    "olympic": 0,
+    "power": 10,
+    "gymnastics": 10,
+    "core_endurance": 10
+  }
+};
+
+/** Benchmark-WOD tiers by sex. TODO (null) until populated. */
+export const WOD_STANDARDS: Record<WodId, WodStandard> = {
+  "fran": {
+    "unit": "mm:ss",
+    "lowerIsBetter": true,
+    "thresholds": {
+      "M": {
+        "pass": 360,
+        "good": 240,
+        "excellent": 180,
+        "elite": 120
+      },
+      "F": {
+        "pass": 420,
+        "good": 300,
+        "excellent": 240,
+        "elite": 165
+      }
+    },
+    "load": {
+      "movement": "Thruster",
+      "M": 43,
+      "F": 30
+    }
+  },
+  "grace": {
+    "unit": "mm:ss",
+    "lowerIsBetter": true,
+    "thresholds": {
+      "M": {
+        "pass": 300,
+        "good": 180,
+        "excellent": 120,
+        "elite": 90
+      },
+      "F": {
+        "pass": 360,
+        "good": 240,
+        "excellent": 165,
+        "elite": 120
+      }
+    },
+    "load": {
+      "movement": "Clean & jerk",
+      "M": 61,
+      "F": 43
+    }
+  },
+  "helen": {
+    "unit": "mm:ss",
+    "lowerIsBetter": true,
+    "thresholds": {
+      "M": {
+        "pass": 840,
+        "good": 660,
+        "excellent": 540,
+        "elite": 450
+      },
+      "F": {
+        "pass": 960,
+        "good": 780,
+        "excellent": 630,
+        "elite": 510
+      }
+    },
+    "load": {
+      "movement": "Kettlebell swing",
+      "M": 24,
+      "F": 16
+    }
+  },
+  "diane": {
+    "unit": "mm:ss",
+    "lowerIsBetter": true,
+    "thresholds": {
+      "M": {
+        "pass": 600,
+        "good": 360,
+        "excellent": 240,
+        "elite": 150
+      },
+      "F": {
+        "pass": 720,
+        "good": 480,
+        "excellent": 300,
+        "elite": 195
+      }
+    },
+    "load": {
+      "movement": "Deadlift",
+      "M": 102,
+      "F": 70
+    }
+  },
+  "cindy": {
+    "unit": "rounds",
+    "lowerIsBetter": false,
+    "thresholds": {
+      "M": {
+        "pass": 12,
+        "good": 18,
+        "excellent": 22,
+        "elite": 28
+      },
+      "F": {
+        "pass": 10,
+        "good": 16,
+        "excellent": 20,
+        "elite": 25
+      }
+    },
+    "load": {
+      "movement": "Bodyweight",
+      "M": null,
+      "F": null
+    }
+  },
+  "fight_gone_bad": {
+    "unit": "reps",
+    "lowerIsBetter": false,
+    "thresholds": {
+      "M": {
+        "pass": 250,
+        "good": 320,
+        "excellent": 360,
+        "elite": 420
+      },
+      "F": {
+        "pass": 200,
+        "good": 270,
+        "excellent": 310,
+        "elite": 370
+      }
+    },
+    "load": {
+      "movement": "Push press / SDHP / wall-ball",
+      "M": 34,
+      "F": 25
+    }
+  }
+};
+
+/** Capacity-Index quality-mix vectors. TODO (null) until populated; rows sum 1. */
+export const QUALITY_MIX: Record<WodId, Partial<Record<ComponentId, number | null>>> = {
+  "fran": {
+    "running": 0,
+    "erg_engine": 0,
+    "lower_strength": 0.1,
+    "upper_strength": 0.2,
+    "olympic": 0,
+    "power": 0.2,
+    "gymnastics": 0.35,
+    "core_endurance": 0.15
+  },
+  "grace": {
+    "running": 0,
+    "erg_engine": 0,
+    "lower_strength": 0,
+    "upper_strength": 0.15,
+    "olympic": 0.5,
+    "power": 0.25,
+    "gymnastics": 0,
+    "core_endurance": 0.1
+  },
+  "helen": {
+    "running": 0.35,
+    "erg_engine": 0,
+    "lower_strength": 0,
+    "upper_strength": 0,
+    "olympic": 0,
+    "power": 0.2,
+    "gymnastics": 0.25,
+    "core_endurance": 0.2
+  },
+  "diane": {
+    "running": 0,
+    "erg_engine": 0,
+    "lower_strength": 0.35,
+    "upper_strength": 0.35,
+    "olympic": 0,
+    "power": 0,
+    "gymnastics": 0.2,
+    "core_endurance": 0.1
+  },
+  "cindy": {
+    "running": 0,
+    "erg_engine": 0,
+    "lower_strength": 0.2,
+    "upper_strength": 0.25,
+    "olympic": 0,
+    "power": 0,
+    "gymnastics": 0.4,
+    "core_endurance": 0.15
+  },
+  "fight_gone_bad": {
+    "running": 0,
+    "erg_engine": 0.2,
+    "lower_strength": 0.15,
+    "upper_strength": 0.15,
+    "olympic": 0,
+    "power": 0.25,
+    "gymnastics": 0.15,
+    "core_endurance": 0.1
+  }
+};

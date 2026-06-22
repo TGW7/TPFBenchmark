@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#b2342a" />
+
+    <!-- Default (generic) SEO/social meta; main.tsx refines title + description
+         per brand at runtime. -->
+    <title>Take Point Fitness Benchmark — free strength &amp; fitness score</title>
+    <meta name="description" content="Free benchmark for lifters and hybrid athletes — score your lifts and times against your goal, see your percentile, and find your weak link. No sign-up." />
+    <link rel="canonical" href="https://benchmark.takepointfitness.com/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Take Point Fitness" />
+    <meta property="og:title" content="Know if your training is actually working" />
+    <meta property="og:description" content="Free benchmark — score your lifts and times against your goal, see your percentile, and find your weak link." />
+    <meta property="og:image" content="https://benchmark.takepointfitness.com/hero.jpg" />
+    <meta property="og:url" content="https://benchmark.takepointfitness.com/" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Know if your training is actually working" />
+    <meta name="twitter:description" content="Free benchmark — see where you rank and what to fix. No sign-up." />
+    <meta name="twitter:image" content="https://benchmark.takepointfitness.com/hero.jpg" />
+  </head>
+  <body>
+    <div id="root">
+      <!-- Crawler / no-JS fallback so the page isn't an empty shell. -->
+      <noscript>
+        <main style="max-width: 640px; margin: 48px auto; padding: 0 20px; font-family: system-ui, sans-serif;">
+          <h1>Know if your training is actually working.</h1>
+          <p>Take Point Fitness is a free benchmark for lifters and hybrid athletes.
+            Score your lifts and times against your goal (Gym-Goer, Powerlifter,
+            CrossFit, HYROX, or tactical operator standards), see your percentile
+            for your age and sex, and find the one weak link holding you back.</p>
+          <p>This tool needs JavaScript. Enable it, or visit
+            <a href="https://app.takepointfitness.com">app.takepointfitness.com</a>.</p>
+        </main>
+      </noscript>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
