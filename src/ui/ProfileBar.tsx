@@ -2,6 +2,7 @@
 
 import type { AthleteProfile, Sex } from '../engine/types';
 import { ageBand } from '../engine/percentile';
+import { type Units, weightUnit, toKg, fromKg } from '../lib/units';
 
 interface Props {
   profile: AthleteProfile;
@@ -9,10 +10,13 @@ interface Props {
   onLoadSample: () => void;
   onClear: () => void;
   hasData: boolean;
+  units: Units;
+  onUnitsChange: (u: Units) => void;
 }
 
-export function ProfileBar({ profile, onChange, onLoadSample, onClear, hasData }: Props) {
+export function ProfileBar({ profile, onChange, onLoadSample, onClear, hasData, units, onUnitsChange }: Props) {
   const band = ageBand(profile.ageYears);
+  const bwDisplay = Math.round(fromKg(profile.bodyweightKg, units));
   return (
     <div className="card" style={{ marginBottom: 16 }}>
       <div className="row" style={{ justifyContent: 'space-between' }}>
@@ -26,9 +30,9 @@ export function ProfileBar({ profile, onChange, onLoadSample, onClear, hasData }
             </select>
           </div>
           <div className="field">
-            <label htmlFor="bw">Bodyweight (kg)</label>
-            <input id="bw" inputMode="decimal" style={{ width: 90 }} value={profile.bodyweightKg}
-              onChange={(e) => onChange({ ...profile, bodyweightKg: Number(e.target.value) || 0 })} />
+            <label htmlFor="bw">Bodyweight ({weightUnit(units)})</label>
+            <input id="bw" inputMode="decimal" style={{ width: 90 }} value={bwDisplay || ''}
+              onChange={(e) => onChange({ ...profile, bodyweightKg: toKg(Number(e.target.value) || 0, units) })} />
           </div>
           <div className="field">
             <label htmlFor="age">Age</label>
@@ -38,6 +42,15 @@ export function ProfileBar({ profile, onChange, onLoadSample, onClear, hasData }
           {band && <span className="pill" style={{ alignSelf: 'flex-end', marginBottom: 6 }}>{profile.sex} · {band}</span>}
         </div>
         <div className="row" style={{ alignItems: 'flex-end' }}>
+          <div className="field">
+            <label>Units</label>
+            <div className="row" style={{ gap: 4 }}>
+              <button className={`btn ${units === 'metric' ? '' : 'ghost'}`} style={{ padding: '6px 12px' }}
+                onClick={() => onUnitsChange('metric')}>kg</button>
+              <button className={`btn ${units === 'imperial' ? '' : 'ghost'}`} style={{ padding: '6px 12px' }}
+                onClick={() => onUnitsChange('imperial')}>lb</button>
+            </div>
+          </div>
           <button className="btn ghost" onClick={onLoadSample}>Load sample</button>
           {hasData && <button className="btn ghost" onClick={onClear}>Clear all</button>}
         </div>

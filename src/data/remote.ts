@@ -124,3 +124,29 @@ export async function fetchPercentile(args: {
   });
   return error || data == null ? null : Number(data);
 }
+
+/** How many real athletes sit in a (brand, benchmark, sex, age-band) cell. */
+export async function fetchPoolCount(args: {
+  brand: Brand; benchmarkId: string; sex: string | null; ageBand: string | null;
+}): Promise<number | null> {
+  if (!supabase) return null;
+  const { data, error } = await supabase.rpc('benchmark_pool_count', {
+    p_brand: args.brand, p_benchmark_id: args.benchmarkId, p_sex: args.sex, p_age_band: args.ageBand,
+  });
+  return error || data == null ? null : Number(data);
+}
+
+/** Add an email to the list (list-building). Write-only; safe to call from anon. */
+export async function captureEmail(args: {
+  email: string; brand: Brand; source?: string; pathway?: string; userId?: string | null;
+}): Promise<boolean> {
+  if (!supabase) return false;
+  const { error } = await supabase.from('benchmark_emails').insert({
+    email: args.email.trim().toLowerCase(),
+    brand: args.brand,
+    source: args.source ?? 'updates',
+    pathway: args.pathway ?? null,
+    user_id: args.userId ?? null,
+  });
+  return !error;
+}

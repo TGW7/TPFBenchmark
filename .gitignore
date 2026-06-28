@@ -10,5 +10,8 @@ coverage
 # Built preview launcher — regenerate with `bash scripts/build-app.sh`
 HRS.app/
 
+# Recalibration output (regenerate with `npm run recalibrate`)
+recalibration-proposal.md
+
 # NOTE: src/config/generated/** IS committed on purpose — it is codegen output
 # from config/standards/*.xlsx and lets the app build without re-running codegen.

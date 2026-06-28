@@ -401,6 +401,7 @@ async function main() {
 
   await writeFile(GEN_TS, renderTs(data, sourceName), 'utf8');
   await writeFile(README, renderReadme(data, sourceName), 'utf8');
+  await writeFile(resolve(REPO, 'src/config/generated/lift.data.json'), JSON.stringify(data, null, 2), 'utf8');
 
   const filled = Object.values(standards).filter((s) =>
     [s.M, s.F].some((t) => t.pass != null),

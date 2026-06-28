@@ -18,6 +18,9 @@ export interface BuildPoolArgs {
   logs: AthleteLogs;
   signedIn: boolean;
   userId?: string | null;
+  /** Pathway + overall score → also pool a composite row for overall percentile. */
+  pathwayId?: string;
+  overall?: number | null;
 }
 
 export function buildPoolSubmissions(args: BuildPoolArgs): PoolRow[] {
@@ -48,6 +51,21 @@ export function buildPoolSubmissions(args: BuildPoolArgs): PoolRow[] {
         signedIn: args.signedIn,
         withinPlausibleRange: audit.level === 'ok',
       }),
+      user_id: args.userId ?? null,
+    });
+  }
+
+  // Composite "overall" row per pathway → powers the data-driven overall percentile.
+  if (args.pathwayId && args.overall != null) {
+    rows.push({
+      brand: args.brand,
+      benchmark_id: `overall:${args.pathwayId}`,
+      sex: args.profile.sex,
+      age_band: band,
+      bodyweight_kg: args.profile.bodyweightKg,
+      value: args.overall,
+      lower_is_better: false,
+      trust: trustScore({ signedIn: args.signedIn, withinPlausibleRange: true }),
       user_id: args.userId ?? null,
     });
   }

@@ -81,3 +81,20 @@ export function trustWeightedPercentile(
   if (total < minTrust) return null;
   return ((below + equal / 2) / total) * 100;
 }
+
+/**
+ * Weighted quantile: the value at which cumulative weight first reaches q·total.
+ * Used to recalibrate tier thresholds from the (trust-weighted) data pool.
+ */
+export function weightedQuantile(pairs: Array<[number, number]>, q: number): number | null {
+  const pts = pairs.filter(([, w]) => w > 0).sort((a, b) => a[0] - b[0]);
+  const total = pts.reduce((s, [, w]) => s + w, 0);
+  if (total <= 0) return null;
+  const target = Math.min(1, Math.max(0, q)) * total;
+  let cum = 0;
+  for (const [v, w] of pts) {
+    cum += w;
+    if (cum >= target) return v;
+  }
+  return pts[pts.length - 1][0];
+}

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import './theme.css';
 import {
+  ageBand,
   analyseWeaknesses,
   computeCapacityIndex,
   computeHRS,
@@ -22,7 +23,7 @@ import { brandMeta, detectBrand } from '../brand';
 import { LANDING_COPY } from '../content/landingCopy';
 import { useAuth } from '../auth/AuthContext';
 import { AuthPanel } from '../auth/AuthPanel';
-import { loadEntries, loadProfile, replaceEntries, saveProfile, submitToPool } from '../data/remote';
+import { fetchPercentile, fetchPoolCount, loadEntries, loadProfile, replaceEntries, saveProfile, submitToPool } from '../data/remote';
 import { buildPoolSubmissions } from '../data/pool';
 import { syncFromApp, syncToApp } from '../data/appSync';
 import { isSupabaseConfigured } from '../lib/supabase';
@@ -32,10 +33,14 @@ import { BenchmarkEntry } from './BenchmarkEntry';
 import { WodLog } from './WodLog';
 import { PathwayPicker } from './PathwayPicker';
 import { ProfileBar } from './ProfileBar';
+import { EmailCapture } from './EmailCapture';
 import { BrowseStandards } from './BrowseStandards';
 import { Landing } from './Landing';
 import { Footer } from './Footer';
 import { benchmarkLabel, componentLabel, formatPercentile } from './format';
+import { event } from '../lib/analytics';
+import { shareResult } from './shareImage';
+import { type Units, loadUnits, saveUnits } from '../lib/units';
 
 const BRAND = detectBrand();
 const META = brandMeta();
@@ -44,6 +49,7 @@ const CFG = brandConfig(BRAND);
 const SITE = BRAND === 'operator'
   ? 'https://operatorbenchmark.takepointfitness.com'
   : 'https://benchmark.takepointfitness.com';
+const APP_NAME = BRAND === 'operator' ? 'TPF Operator' : 'Take Point Fitness';
 
 const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
 
@@ -74,6 +80,8 @@ export function App() {
   const [saveMsg, setSaveMsg] = useState<string | null>(null);
   const [contribute, setContribute] = useState(true);
   const [shareMsg, setShareMsg] = useState<string | null>(null);
+  const [units, setUnitsState] = useState<Units>(loadUnits());
+  function setUnits(u: Units) { setUnitsState(u); saveUnits(u); event('units_changed', { units: u }); }
 
   useEffect(() => {
     if (!user) return;
@@ -103,8 +111,28 @@ export function App() {
     [logs.wod, result.components, profile],
   );
   const weakness = useMemo(() => analyseWeaknesses(result), [result]);
-  const percentile = estimatedPercentile(result.overall);
   const hasData = result.overall != null;
+
+  // Data-driven overall percentile from the pool; falls back to the tier estimate
+  // until a (sex, age-band) cell has enough trusted submissions.
+  const [poolPct, setPoolPct] = useState<number | null>(null);
+  const [poolN, setPoolN] = useState<number | null>(null);
+  useEffect(() => {
+    const overall = result.overall;
+    if (!isSupabaseConfigured || overall == null) { setPoolPct(null); setPoolN(null); return; }
+    let cancelled = false;
+    const t = setTimeout(() => {
+      const cell = {
+        brand: BRAND, benchmarkId: `overall:${pathwayId}`,
+        sex: profile.sex, ageBand: ageBand(profile.ageYears) ?? null,
+      };
+      fetchPercentile({ ...cell, value: overall, lowerIsBetter: false })
+        .then((p) => { if (!cancelled) setPoolPct(p); });
+      fetchPoolCount(cell).then((n) => { if (!cancelled) setPoolN(n); });
+    }, 400);
+    return () => { cancelled = true; clearTimeout(t); };
+  }, [pathwayId, profile.sex, profile.ageYears, result.overall]);
+  const percentile = poolPct ?? estimatedPercentile(result.overall);
 
   // Radar axes: per-lift for strength pathways, per-component otherwise.
   const radarAxes = useMemo<RadarAxis[]>(() => {
@@ -142,6 +170,24 @@ export function App() {
     );
   }
 
+  async function shareImg() {
+    if (result.overall == null) return;
+    event('result_shared', { brand: BRAND, pathway: pathwayId });
+    try {
+      const res = await shareResult(
+        {
+          brand: BRAND, shortName: META.shortName, scoreText: String(Math.round(result.overall)),
+          percentileText: formatPercentile(percentile), pathway: pathway.label,
+          weakest: weakness.limiters.map(componentLabel)[0] ?? '—', site: SITE.replace('https://', ''),
+        },
+        `My ${META.shortName} — ${Math.round(result.overall)} (${pathway.label}). Score yours free.`,
+      );
+      setShareMsg(res === 'shared' ? 'Shared!' : 'Image downloaded.');
+    } catch {
+      setShareMsg('Couldn’t make the image.');
+    }
+  }
+
   const addOrm = (e: OrmEntry) => setLogs((l) => ({ ...l, orm: [...l.orm, e] }));
   const addRaceTime = (e: RaceTimeEntry) => setLogs((l) => ({ ...l, raceTimes: [...l.raceTimes, e] }));
   const addManual = (e: ManualEntry) => setLogs((l) => ({ ...l, manual: [...l.manual, e] }));
@@ -155,7 +201,7 @@ export function App() {
     const sync = await syncToApp(user.id, logs);
     if (contribute) {
       await submitToPool(
-        buildPoolSubmissions({ brand: BRAND, benchmarks, profile, logs, signedIn: true, userId: user.id }),
+        buildPoolSubmissions({ brand: BRAND, benchmarks, profile, logs, signedIn: true, userId: user.id, pathwayId, overall: result.overall }),
       );
     }
     setSaveMsg(
@@ -202,6 +248,8 @@ export function App() {
           onLoadSample={loadSample}
           onClear={() => { setLogs(emptyLogs()); setSaveMsg(null); }}
           hasData={hasData}
+          units={units}
+          onUnitsChange={setUnits}
         />
 
         {user && (
@@ -220,7 +268,7 @@ export function App() {
 
         <div style={{ marginBottom: 16 }}>
           <div className="subtle" style={{ marginBottom: 6 }}>Score against:</div>
-          <PathwayPicker pathways={CFG.pathwayList} value={pathwayId} onChange={setPathwayId} />
+          <PathwayPicker pathways={CFG.pathwayList} value={pathwayId} onChange={(id) => { setPathwayId(id); event('pathway_selected', { pathway: id, brand: BRAND }); }} />
         </div>
 
         {!hasData && (
@@ -239,15 +287,31 @@ export function App() {
           weakness={weakness}
           pathwayLabel={pathway.label}
           percentile={percentile}
+          percentileLive={poolPct != null}
+          percentileN={poolPct != null ? poolN : null}
           showCapacity={showWods}
         />
 
         {hasData && (
           <div className="row" style={{ marginTop: 16, alignItems: 'center' }}>
-            <button className="btn ghost" onClick={copyResult}>Copy my result</button>
+            <button className="btn" onClick={shareImg}>Share my result</button>
+            <button className="btn ghost" onClick={copyResult}>Copy text</button>
             {shareMsg && <span className="subtle">{shareMsg}</span>}
           </div>
         )}
+
+        {hasData && weakness.limiters[0] && (
+          <div className="card" style={{ marginTop: 16, borderColor: 'var(--primary)' }}>
+            <p style={{ margin: 0 }}>
+              Your weak link is <strong>{componentLabel(weakness.limiters[0])}</strong>. The {APP_NAME} app
+              turns it into a training plan and tracks it over time.{' '}
+              <a className="btn" style={{ marginLeft: 6 }} href={META.appUrl}
+                onClick={() => event('get_app_click', { from: 'bridge', brand: BRAND })}>Get the app →</a>
+            </p>
+          </div>
+        )}
+
+        {hasData && <EmailCapture brand={BRAND} pathway={pathwayId} userId={user?.id ?? null} />}
 
         <div className="grid cols-2" style={{ marginTop: 16 }}>
           <div className="card">
@@ -263,6 +327,7 @@ export function App() {
               onLogOrm={addOrm}
               onLogRaceTime={addRaceTime}
               onLogManual={addManual}
+              units={units}
             />
             {showWods && <WodLog wods={CFG.wodList} sex={profile.sex} onLogWod={addWod} />}
           </div>

@@ -1,31 +1,4 @@
-// AUTO-GENERATED from config/standards/TPF_Operator_Standards.xlsx — do not edit.
-// Regenerate with `npm run codegen`. Operator model: per-unit benchmarks,
-// unisex (one threshold regardless of sex), absolute units.
-
-import type { ComponentId, ThresholdSet } from '../../engine/types';
-
-export interface OperatorBenchmark {
-  id: string;
-  name: string;
-  component: ComponentId;
-  source: 'orm' | 'race_times' | 'manual';
-  unit: string;
-  lowerIsBetter: boolean;
-  /** Unisex thresholds (same standard for M/F). */
-  thresholds: ThresholdSet;
-}
-
-export interface OperatorPathway {
-  id: string;
-  label: string;
-  region: 'US' | 'UK';
-  /** component → weight %; weightsInferred=true means an even split (no source row). */
-  weights: Partial<Record<ComponentId, number>>;
-  weightsInferred: boolean;
-  benchmarks: OperatorBenchmark[];
-}
-
-export const OPERATOR_PATHWAYS: OperatorPathway[] = [
+[
   {
     "id": "us_marine_corps_pft_cft",
     "label": "US Marine Corps (PFT/CFT)",
@@ -2739,4 +2712,4 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
       }
     ]
   }
-];
+]

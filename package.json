@@ -12,10 +12,12 @@
     "dev": "vite",
     "prebuild": "npm run codegen",
     "build": "tsc --noEmit && vite build",
+    "postbuild": "node scripts/build-seo.mjs",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "check:supabase": "node --env-file=.env.local scripts/check-supabase.mjs"
+    "check:supabase": "node --env-file=.env.local scripts/check-supabase.mjs",
+    "recalibrate": "node --env-file=.env.local scripts/recalibrate.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.0",

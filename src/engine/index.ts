@@ -56,4 +56,5 @@ export {
   quantile,
   winsorize,
   trustWeightedPercentile,
+  weightedQuantile,
 } from './stats';

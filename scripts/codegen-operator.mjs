@@ -138,5 +138,6 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = ${J(out)};
 
 const { writeFileSync } = await import('node:fs');
 writeFileSync(OUT, ts);
+writeFileSync(resolve(REPO, 'src/config/generated/operator.data.json'), JSON.stringify(out, null, 2));
 const benchCount = out.reduce((n, p) => n + p.benchmarks.length, 0);
 console.log(`[operator-codegen] ${out.length} pathways, ${benchCount} benchmark defs → ${OUT}`);

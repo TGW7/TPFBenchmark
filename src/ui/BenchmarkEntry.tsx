@@ -10,6 +10,7 @@ import type {
   OrmEntry,
   RaceTimeEntry,
 } from '../engine/types';
+import { type Units, weightUnit, toKg } from '../lib/units';
 
 interface Props {
   benchmarks: BenchmarkDef[];
@@ -17,6 +18,7 @@ interface Props {
   onLogOrm: (e: OrmEntry) => void;
   onLogRaceTime: (e: RaceTimeEntry) => void;
   onLogManual: (e: ManualEntry) => void;
+  units: Units;
 }
 
 function parseTimeInput(s: string): number | null {
@@ -31,7 +33,7 @@ function parseTimeInput(s: string): number | null {
   return parts.reduce((acc, n) => acc * 60 + n, 0);
 }
 
-export function BenchmarkEntry({ benchmarks, profile, onLogOrm, onLogRaceTime, onLogManual }: Props) {
+export function BenchmarkEntry({ benchmarks, profile, onLogOrm, onLogRaceTime, onLogManual, units }: Props) {
   const list = useMemo(() => benchmarks.filter((b) => !b.optional), [benchmarks]);
   const [id, setId] = useState(list[0]?.id ?? '');
   const [weight, setWeight] = useState('');
@@ -47,7 +49,7 @@ export function BenchmarkEntry({ benchmarks, profile, onLogOrm, onLogRaceTime, o
   function auditableValue(): number | null {
     if (!bench) return null;
     if (bench.source === 'orm') {
-      const w = Number(weight);
+      const w = toKg(Number(weight), units);
       const r = Number(reps);
       if (!Number.isFinite(w) || w <= 0 || !Number.isFinite(r) || r < 1) return null;
       return calc1RMVal(w, r);
@@ -75,7 +77,7 @@ export function BenchmarkEntry({ benchmarks, profile, onLogOrm, onLogRaceTime, o
     setFinding(audit.level === 'review' ? audit : null);
 
     if (bench.source === 'orm') {
-      onLogOrm({ benchmarkId: bench.id, weightKg: Number(weight), reps: Number(reps) });
+      onLogOrm({ benchmarkId: bench.id, weightKg: toKg(Number(weight), units), reps: Number(reps) });
       setWeight('');
     } else if (bench.source === 'race_times') {
       onLogRaceTime({ benchmarkId: bench.id, modality: bench.component, event: bench.id, timeSec: v });
@@ -104,7 +106,7 @@ export function BenchmarkEntry({ benchmarks, profile, onLogOrm, onLogRaceTime, o
         {bench.source === 'orm' && (
           <>
             <div className="field">
-              <label htmlFor="w">Weight (kg)</label>
+              <label htmlFor="w">Weight ({weightUnit(units)})</label>
               <input id="w" inputMode="decimal" value={weight} onChange={(e) => setWeight(e.target.value)} />
             </div>
             <div className="field">

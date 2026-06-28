@@ -6,6 +6,7 @@ import {
   quantile,
   robustBounds,
   trustWeightedPercentile,
+  weightedQuantile,
   winsorize,
 } from '../engine/stats';
 
@@ -52,5 +53,20 @@ describe('trustWeightedPercentile', () => {
     const s: Array<[number, number]> = [[10, 1], [20, 1], [30, 0.2]];
     // value 25, lower better: below = those slower (>25) = 30 (trust .2); equal 0; total 2.2
     expect(trustWeightedPercentile(25, s, true, 0)).toBeCloseTo((0.2 / 2.2) * 100);
+  });
+});
+
+describe('weightedQuantile (tier recalibration)', () => {
+  const equal = Array.from({ length: 100 }, (_, i) => [i + 1, 1] as [number, number]);
+  it('matches the unweighted quantile when weights are equal', () => {
+    expect(weightedQuantile(equal, 0.5)).toBe(50);
+    expect(weightedQuantile(equal, 0.85)).toBe(85);
+  });
+  it('shifts toward heavily-weighted values', () => {
+    expect(weightedQuantile([[100, 1], [200, 9]], 0.5)).toBe(200); // 90% of weight at 200
+  });
+  it('returns null for empty / zero-weight input', () => {
+    expect(weightedQuantile([], 0.5)).toBeNull();
+    expect(weightedQuantile([[5, 0]], 0.5)).toBeNull();
   });
 });

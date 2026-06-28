@@ -37,8 +37,9 @@ No sign-up. The public hook.
 - [x] Social cards (OG/Twitter, hero image), robots + sitemap + favicon, no-JS fallback
 - [x] Seed real standards into the Excel master (v1 beta) — Lift now scores on
       real tiers via codegen (`scripts/seed-standards.mjs`, `docs/STANDARDS.md`)
-- [ ] **Programmatic SEO pages** (real URLs per benchmark / pathway / unit —
-      needs client routing or SSG prerender) — biggest remaining growth lever
+- [x] **Programmatic SEO pages** — 42 static, crawlable pages (per lift benchmark,
+      pathway, and operator unit) + index pages + full sitemap, generated at build
+      (`scripts/build-seo.mjs`, postbuild). Tier tables + meta/OG/canonical + CTA.
 
 ## Phase 2 — Layer 2: accounts + sync (Supabase) 🟢 LIVE (keys in, migration run)
 
@@ -71,18 +72,25 @@ ORS matrix.
       benchmarks, unisex + absolute, components upper_endurance/stability/swimming,
       brand-aware radar + US/UK-grouped picker (`src/config/operator.ts`)
 - [x] Even-split weights auto-filled for the 5 police/SF units lacking source weights (flagged)
-- [ ] Review inferred tiers + real weights for the police/armed-response units
+- [x] Real expert weights for the 5 police/armed-response units (replaced even-split)
+- [x] SEAL swim corrected to 500 yd; olive accent + operator landing copy confirmed
+- [ ] Review the flagged `inferred` operator strength tiers (your PTI call)
 - [ ] Operator accent/theme + operator events (load carriage, work-capacity)
 
-## Phase 4 — Data flywheel 🟡 FOUNDATION BUILT
+## Phase 4 — Data flywheel 🟢 BUILT (lights up as data arrives)
 
-Turn user submissions into trustworthy percentiles.
+Turn user submissions into trustworthy, self-correcting percentiles.
 
-- [x] Robust outlier stats (median/MAD, winsorize) — `src/engine/stats.ts`, tested
+- [x] Robust outlier stats (median/MAD, winsorize, weightedQuantile) — `src/engine/stats.ts`, tested
 - [x] Trust-weighted percentile — SQL `benchmark_percentile()` + `stats.ts` mirror
-- [x] Contribute-to-pool flow (consent + `buildPoolSubmissions`, trust-weighted)
+- [x] Contribute-to-pool flow (consent + `buildPoolSubmissions`, incl. composite overall row)
+- [x] **Live data-driven overall percentile** in the dashboard (`fetchPercentile`),
+      falls back to the tier estimate until a (sex, age-band) cell has enough trusted data
+- [x] **Tier recalibration job** (`npm run recalibrate`) — proposes new pass/good/excellent/elite
+      from trust-weighted, winsorised pool quantiles → review diff (`recalibration-proposal.md`)
+- [ ] Per-benchmark live percentiles in the radar (currently overall only)
 - [ ] Verification flow for high-percentile claims (gate `needsVerification` exists; UI TODO)
-- [ ] "Based on N athletes" confidence surfacing; beta→own-population transition
+- [ ] Operator (per-unit, unisex) recalibration grouping; `--apply` write-back to the workbook
 
 ## Phase 5 — Ship 🟡 CONFIG READY
 
@@ -93,6 +101,26 @@ Turn user submissions into trustworthy percentiles.
 - [ ] Create the Vercel project + add both domains (the click)
 - [ ] Apply migrations + set Supabase env vars
 - [ ] `.co.uk` brand-protection redirect (if extended here)
+
+## Phase 6 — Funnel & virality 🟢 BUILT
+
+Turn the calculator into a growth loop: measure it, make it shareable, lower
+friction, build the list, and deepen the SEO surface.
+
+- [x] **Personalized app-bridge** — names your weakest link and routes into the app
+- [x] **Funnel analytics** (`src/lib/analytics.ts`) — privacy-friendly Vercel events:
+      pathway picked, units changed, result shared, get-app click, email captured
+- [x] **Shareable result card** (`src/ui/shareImage.ts`) — on-brand 1080² PNG via the
+      native share sheet (mobile) or download (desktop) — the word-of-mouth unit
+- [x] **Imperial / metric toggle** (`src/lib/units.ts`) — lb↔kg at the input edges
+      (bodyweight + lifts), persisted to localStorage; engine stays in kg
+- [x] **Email capture** (`src/ui/EmailCapture.tsx` + `benchmark_emails`) — honest
+      updates list, anon-write RLS, only shown when Supabase is configured
+- [x] **"vs N athletes"** beside the live percentile (`benchmark_pool_count()`
+      SECURITY DEFINER function)
+- [x] **Richer SEO pages** — FAQ + "how to improve" + FAQPage / BreadcrumbList
+      JSON-LD on every benchmark, pathway and unit page (`scripts/build-seo.mjs`)
+- [ ] Apply `supabase/migrations/0002_emails_and_pool_count.sql` to the project
 
 ---
 

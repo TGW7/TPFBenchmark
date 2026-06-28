@@ -51,6 +51,20 @@ const REGION = {
 // SWAT / Tactical Team (generic — but its strength feeds US SWAT below).
 const STRENGTH_PATTERN_SOURCE = { 'US SWAT': 'SWAT / Tactical Team' };
 
+// Benchmark label fixes (the PST swim is 500 yards, not metres).
+const BENCHMARK_RENAME = { '500 m swim': '500 yd swim' };
+
+// Expert component weights for the police / armed-response units (absent from
+// the source Weights sheet — otherwise codegen even-splits them). Each sums 100,
+// over only the components the unit actually tests.
+const POLICE_WEIGHTS = {
+  'US Police PFT': { running: 35, upper_endurance: 30, core_endurance: 20, power: 15 },
+  'US SWAT': { running: 20, upper_endurance: 20, lower_strength: 15, upper_strength: 10, power: 15, core_endurance: 10, grip: 10 },
+  'UK Police JRFT': { running: 50, upper_strength: 50 },
+  'UK ARU / SCO19': { running: 40, upper_endurance: 35, power: 25 },
+  'US Army Ranger RASP (Entry)': { rucking: 25, running: 20, upper_endurance: 25, core_endurance: 15, swimming: 15 },
+};
+
 const STRENGTH = [
   ['Back Squat', 'lower_strength', 'kg'],
   ['Hex-bar DL', 'lower_strength', 'kg'],
@@ -206,9 +220,10 @@ const out = [];
 const seen = new Set();
 for (let i = 1; i < stdRows.length; i++) {
   const r = stdRows[i];
-  const [pathway, component, benchmark, unit, direction, p, g, e, el] = r;
-  if (!pathway || !REGION[pathway] || STRENGTH_NAMES.has(benchmark)) continue; // strength handled separately
-  if (benchmark === 'Bench press (× bodyweight)') continue; // US SWAT: covered by the borrowed kg bench
+  const [pathway, component, benchmarkRaw, unit, direction, p, g, e, el] = r;
+  if (!pathway || !REGION[pathway] || STRENGTH_NAMES.has(benchmarkRaw)) continue; // strength handled separately
+  if (benchmarkRaw === 'Bench press (× bodyweight)') continue; // US SWAT: covered by the borrowed kg bench
+  const benchmark = BENCHMARK_RENAME[benchmarkRaw] ?? benchmarkRaw;
   const hib = !/lower/.test(String(direction));
   const raw = { pass: parseVal(p, unit, component), good: parseVal(g, unit, component), excellent: parseVal(e, unit, component), elite: parseVal(el, unit, component) };
   const { tiers, inferred } = fillTiers(raw, hib, unit);
@@ -256,6 +271,12 @@ for (const r of wtRows) {
   if (!REGION[r[0]]) continue;
   const vals = compCols.map((_, i) => r[i + 1] ?? 0);
   wtAoa.push([REGION[r[0]], r[0], ...vals, vals.reduce((a, b) => a + (Number(b) || 0), 0)]);
+}
+// police / armed-response units (not in the source Weights sheet)
+for (const [pathway, w] of Object.entries(POLICE_WEIGHTS)) {
+  if (!REGION[pathway]) continue;
+  const vals = compCols.map((c) => w[c] ?? 0);
+  wtAoa.push([REGION[pathway], pathway, ...vals, vals.reduce((a, b) => a + b, 0)]);
 }
 
 const readme = [

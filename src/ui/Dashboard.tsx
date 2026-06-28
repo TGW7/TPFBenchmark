@@ -11,6 +11,10 @@ interface DashboardProps {
   weakness: WeaknessReport;
   pathwayLabel: string;
   percentile: number | null;
+  /** true when the percentile is measured from the live data pool (vs estimated). */
+  percentileLive?: boolean;
+  /** Pool size behind a live percentile — shows "vs N athletes". */
+  percentileN?: number | null;
   /** Capacity Index is WOD-derived — hidden for pathways without WODs. */
   showCapacity?: boolean;
 }
@@ -22,7 +26,7 @@ function capacityVerdict(index: number | null): string {
   return 'Expresses raw fitness about as expected.';
 }
 
-export function Dashboard({ result, capacity, weakness, pathwayLabel, percentile, showCapacity = true }: DashboardProps) {
+export function Dashboard({ result, capacity, weakness, pathwayLabel, percentile, percentileLive = false, percentileN = null, showCapacity = true }: DashboardProps) {
   const coveragePct = Math.round(result.coverage * 100);
   const scoredWods = capacity.perWod.filter((w) => w.delta != null);
 
@@ -34,7 +38,11 @@ export function Dashboard({ result, capacity, weakness, pathwayLabel, percentile
         {percentile != null && (
           <p style={{ textAlign: 'center', margin: '6px 0 0' }}>
             ≈ <strong>{formatPercentile(percentile)}</strong> percentile{' '}
-            <span className="subtle">(estimated)</span>
+            <span className="subtle">
+              {percentileLive
+                ? (percentileN ? `(live — vs ${percentileN.toLocaleString()} athletes)` : '(live — vs real athletes)')
+                : '(estimated)'}
+            </span>
           </p>
         )}
       </div>
