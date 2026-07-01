@@ -29,7 +29,19 @@ const { error: rpcErr } = await supabase.rpc('benchmark_percentile', {
 if (rpcErr) { console.log(`  ✗ function benchmark_percentile: ${rpcErr.message}`); ok = false; }
 else console.log('  ✓ function benchmark_percentile');
 
+// 0002 — email capture + pool-size signal ("vs N athletes").
+{
+  const { error } = await supabase.from('benchmark_emails').select('*', { count: 'exact', head: true });
+  if (error) { console.log(`  ✗ table benchmark_emails: ${error.message}`); ok = false; }
+  else console.log('  ✓ table benchmark_emails');
+}
+const { error: pcErr } = await supabase.rpc('benchmark_pool_count', {
+  p_brand: 'lift', p_benchmark_id: 'check', p_sex: 'M', p_age_band: '30-39',
+});
+if (pcErr) { console.log(`  ✗ function benchmark_pool_count: ${pcErr.message}`); ok = false; }
+else console.log('  ✓ function benchmark_pool_count');
+
 console.log(ok
-  ? '\n✅ All good — accounts + the percentile pool are wired up.'
-  : '\n⚠️  Something is missing. If tables are absent, the migration (step 2) hasn’t run yet.');
+  ? '\n✅ All good — accounts, the percentile pool, email capture + "vs N" are wired up.'
+  : '\n⚠️  Something is missing. If tables/functions are absent, that migration hasn’t run yet.');
 process.exit(ok ? 0 : 1);
