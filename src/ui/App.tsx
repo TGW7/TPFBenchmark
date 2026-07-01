@@ -216,7 +216,7 @@ export function App() {
       <header className="topbar">
         <div>
           <div className="brandmark brandhead">
-            <img className="brandlogo" src="/favicon.svg" width="34" height="34" alt="" />
+            <img className="brandlogo" src="/tpf-mark.png" width="34" height="34" alt="" />
             <span>Take Point Fitness <span className="accent">·</span> {BRAND === 'operator' ? 'Operator' : 'Benchmark'}</span>
           </div>
           <div className="subtle">{META.shortName} — {META.tagline}</div>
@@ -283,6 +283,23 @@ export function App() {
           </div>
         )}
 
+        <div style={{ marginBottom: 8 }}>
+          <div className="subtle" style={{ marginBottom: 6 }}>3 · Enter your numbers:</div>
+          <BenchmarkEntry
+            benchmarks={benchmarks}
+            profile={profile}
+            onLogOrm={addOrm}
+            onLogRaceTime={addRaceTime}
+            onLogManual={addManual}
+            units={units}
+          />
+          {showWods && (
+            <div style={{ marginTop: 16 }}>
+              <WodLog wods={CFG.wodList} sex={profile.sex} onLogWod={addWod} />
+            </div>
+          )}
+        </div>
+
         <Dashboard
           result={result}
           capacity={capacity}
@@ -293,6 +310,13 @@ export function App() {
           percentileN={poolPct != null ? poolN : null}
           showCapacity={showWods}
         />
+
+        <div className="card" style={{ marginTop: 16 }}>
+          <h2>{pathway.radar === 'benchmarks' ? 'Per-lift radar' : 'Weakness radar'}</h2>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <WeaknessRadar axes={radarAxes} />
+          </div>
+        </div>
 
         {hasData && (
           <div className="row" style={{ marginTop: 16, alignItems: 'center' }}>
@@ -315,25 +339,6 @@ export function App() {
 
         {hasData && <EmailCapture brand={BRAND} pathway={pathwayId} userId={user?.id ?? null} />}
 
-        <div className="grid cols-2" style={{ marginTop: 16 }}>
-          <div className="card">
-            <h2>{pathway.radar === 'benchmarks' ? 'Per-lift radar' : 'Weakness radar'}</h2>
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <WeaknessRadar axes={radarAxes} />
-            </div>
-          </div>
-          <div style={{ display: 'grid', gap: 16, alignContent: 'start' }}>
-            <BenchmarkEntry
-              benchmarks={benchmarks}
-              profile={profile}
-              onLogOrm={addOrm}
-              onLogRaceTime={addRaceTime}
-              onLogManual={addManual}
-              units={units}
-            />
-            {showWods && <WodLog wods={CFG.wodList} sex={profile.sex} onLogWod={addWod} />}
-          </div>
-        </div>
       </section>
 
       {/* ── Standards, further down ── */}

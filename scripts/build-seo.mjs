@@ -73,7 +73,7 @@ function page({ brand, path, title, description, h1, lede, body, host, jsonLd = 
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}" />
 <link rel="canonical" href="${host}${path}" />
-<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" type="image/png" href="/tpf-mark.png" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <meta name="theme-color" content="${accent}" />
 <meta property="og:type" content="article" />
