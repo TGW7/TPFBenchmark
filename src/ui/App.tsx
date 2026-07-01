@@ -11,10 +11,8 @@ import {
 import type {
   AthleteLogs,
   AthleteProfile,
-  ManualEntry,
-  OrmEntry,
+  BenchmarkDef,
   PathwayId,
-  RaceTimeEntry,
   WodEntry,
 } from '../engine/types';
 import { emptyLogs } from '../data/stores';
@@ -29,7 +27,7 @@ import { syncFromApp, syncToApp } from '../data/appSync';
 import { isSupabaseConfigured } from '../lib/supabase';
 import { Dashboard } from './Dashboard';
 import { WeaknessRadar, type RadarAxis } from './WeaknessRadar';
-import { BenchmarkEntry } from './BenchmarkEntry';
+import { BenchmarkGrid } from './BenchmarkGrid';
 import { WodLog } from './WodLog';
 import { PathwayPicker } from './PathwayPicker';
 import { ProfileBar } from './ProfileBar';
@@ -80,8 +78,11 @@ export function App() {
   const [saveMsg, setSaveMsg] = useState<string | null>(null);
   const [contribute, setContribute] = useState(true);
   const [shareMsg, setShareMsg] = useState<string | null>(null);
+  // Bumps to re-seed the entry grid from logs (sample / clear / sign-in / unit switch).
+  const [formResetKey, setFormResetKey] = useState(0);
+  const bumpForm = () => setFormResetKey((k) => k + 1);
   const [units, setUnitsState] = useState<Units>(loadUnits());
-  function setUnits(u: Units) { setUnitsState(u); saveUnits(u); event('units_changed', { units: u }); }
+  function setUnits(u: Units) { setUnitsState(u); saveUnits(u); event('units_changed', { units: u }); bumpForm(); }
 
   useEffect(() => {
     if (!user) return;
@@ -95,7 +96,7 @@ export function App() {
       if (cancelled) return;
       if (p) { setProfile(p.profile); setPathwayId(p.pathway); }
       const merged = mergeLogs(appLogs, ours);
-      if (hasEntries(merged)) setLogs(merged);
+      if (hasEntries(merged)) { setLogs(merged); bumpForm(); }
     })();
     return () => { cancelled = true; };
   }, [user]);
@@ -155,7 +156,7 @@ export function App() {
     setTheme(next);
     document.documentElement.setAttribute('data-theme', next);
   }
-  function loadSample() { setLogs(CFG.sampleLogs); setProfile(CFG.sampleProfile); }
+  function loadSample() { setLogs(CFG.sampleLogs); setProfile(CFG.sampleProfile); bumpForm(); }
 
   function copyResult() {
     if (result.overall == null) return;
@@ -188,10 +189,27 @@ export function App() {
     }
   }
 
-  const addOrm = (e: OrmEntry) => setLogs((l) => ({ ...l, orm: [...l.orm, e] }));
-  const addRaceTime = (e: RaceTimeEntry) => setLogs((l) => ({ ...l, raceTimes: [...l.raceTimes, e] }));
-  const addManual = (e: ManualEntry) => setLogs((l) => ({ ...l, manual: [...l.manual, e] }));
   const addWod = (e: WodEntry) => setLogs((l) => ({ ...l, wod: [...l.wod, e] }));
+  const upsertOrm = (benchmarkId: string, weightKg: number | null, reps: number) =>
+    setLogs((l) => {
+      const orm = l.orm.filter((e) => e.benchmarkId !== benchmarkId);
+      if (weightKg != null && weightKg > 0) orm.push({ benchmarkId, weightKg, reps });
+      return { ...l, orm };
+    });
+  const upsertRaceTime = (bench: BenchmarkDef, timeSec: number | null) =>
+    setLogs((l) => {
+      const raceTimes = l.raceTimes.filter((e) => e.benchmarkId !== bench.id);
+      if (timeSec != null && timeSec > 0) {
+        raceTimes.push({ benchmarkId: bench.id, modality: bench.component, event: bench.id, timeSec });
+      }
+      return { ...l, raceTimes };
+    });
+  const upsertManual = (benchmarkId: string, value: number | null) =>
+    setLogs((l) => {
+      const manual = l.manual.filter((e) => e.benchmarkId !== benchmarkId);
+      if (value != null && Number.isFinite(value)) manual.push({ benchmarkId, value });
+      return { ...l, manual };
+    });
 
   async function save() {
     if (!user) return;
@@ -253,7 +271,7 @@ export function App() {
           profile={profile}
           onChange={setProfile}
           onLoadSample={loadSample}
-          onClear={() => { setLogs(emptyLogs()); setSaveMsg(null); }}
+          onClear={() => { setLogs(emptyLogs()); setSaveMsg(null); bumpForm(); }}
           hasData={hasData}
           units={units}
           onUnitsChange={setUnits}
@@ -285,13 +303,15 @@ export function App() {
 
         <div style={{ marginBottom: 8 }}>
           <div className="subtle" style={{ marginBottom: 6 }}>3 · Enter your numbers:</div>
-          <BenchmarkEntry
+          <BenchmarkGrid
             benchmarks={benchmarks}
             profile={profile}
-            onLogOrm={addOrm}
-            onLogRaceTime={addRaceTime}
-            onLogManual={addManual}
             units={units}
+            logs={logs}
+            resetKey={formResetKey}
+            onOrm={upsertOrm}
+            onRaceTime={upsertRaceTime}
+            onManual={upsertManual}
           />
           {showWods && (
             <div style={{ marginTop: 16 }}>
