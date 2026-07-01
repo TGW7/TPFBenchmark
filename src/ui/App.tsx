@@ -46,9 +46,7 @@ const COPY = LANDING_COPY[BRAND];
 const CFG = brandConfig(BRAND);
 const SITE = BRAND === 'operator'
   ? 'https://operatorbenchmark.takepointfitness.com'
-  : BRAND === 'hybrid'
-    ? 'https://hybridbenchmark.takepointfitness.com'
-    : 'https://benchmark.takepointfitness.com';
+  : 'https://benchmark.takepointfitness.com';
 const APP_NAME = BRAND === 'operator' ? 'TPF Operator' : BRAND === 'hybrid' ? 'TPF Hybrid' : 'Take Point Fitness';
 
 const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
