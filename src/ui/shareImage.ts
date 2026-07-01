@@ -18,7 +18,7 @@ export interface ShareData {
 }
 
 export function resultCardSVG(d: ShareData): string {
-  const accent = d.brand === 'operator' ? '#5c6e3a' : '#b2342a';
+  const accent = d.brand === 'operator' ? '#5c6e3a' : '#e31e24';
   const paper = '#f4f1e8';
   const ink = '#161616';
   const F = 'font-family="system-ui,-apple-system,Segoe UI,Roboto,sans-serif"';

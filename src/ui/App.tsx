@@ -215,10 +215,11 @@ export function App() {
     <div className="app">
       <header className="topbar">
         <div>
-          <div className="brandmark">
-            {META.shortName} <span className="accent">·</span> {META.fullName}
+          <div className="brandmark brandhead">
+            <img className="brandlogo" src="/favicon.svg" width="34" height="34" alt="" />
+            <span>Take Point Fitness <span className="accent">·</span> {BRAND === 'operator' ? 'Operator' : 'Benchmark'}</span>
           </div>
-          <div className="subtle">{META.tagline}</div>
+          <div className="subtle">{META.shortName} — {META.tagline}</div>
         </div>
         <div className="row" style={{ alignItems: 'center' }}>
           <a className="btn cta-primary" href={META.appUrl}>Get the app</a>
@@ -242,6 +243,12 @@ export function App() {
 
         <div className="banner">{CFG.synthetic ? '⚠️ ' : ''}{CFG.banner} Nothing is saved — entries clear when you leave{user ? ', unless you Save to your profile' : ''}.</div>
 
+        <div style={{ marginBottom: 16 }}>
+          <div className="subtle" style={{ marginBottom: 6 }}>1 · Score against:</div>
+          <PathwayPicker pathways={CFG.pathwayList} value={pathwayId} onChange={(id) => { setPathwayId(id); event('pathway_selected', { pathway: id, brand: BRAND }); }} />
+        </div>
+
+        <div className="subtle" style={{ marginBottom: 6 }}>2 · Your details:</div>
         <ProfileBar
           profile={profile}
           onChange={setProfile}
@@ -265,11 +272,6 @@ export function App() {
             Help improve the standards — add your anonymised numbers to the percentile pool.
           </label>
         )}
-
-        <div style={{ marginBottom: 16 }}>
-          <div className="subtle" style={{ marginBottom: 6 }}>Score against:</div>
-          <PathwayPicker pathways={CFG.pathwayList} value={pathwayId} onChange={(id) => { setPathwayId(id); event('pathway_selected', { pathway: id, brand: BRAND }); }} />
-        </div>
 
         {!hasData && (
           <div className="card" style={{ marginBottom: 16, textAlign: 'center' }}>

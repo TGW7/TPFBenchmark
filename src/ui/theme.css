@@ -1,7 +1,7 @@
 /* =========================================================================
    TPF design tokens — the ONLY place colour hex appears.
    Four-colour brand palette: off-white, black, OD-green, red.
-   HEX VALUES ARE PLACEHOLDERS — confirm against brand before launch.
+   Reds/black match the TPF app + logo (brand red = #e31e24). Operator adds olive.
    All component colours derive from these four tokens via color-mix().
    ========================================================================= */
 
@@ -10,7 +10,7 @@
   --tpf-offwhite: #f4f1e8;
   --tpf-black: #161616;
   --tpf-od-green: #5c6e3a; /* Operator / tactical only */
-  --tpf-red: #b2342a;
+  --tpf-red: #e31e24;
 
   /* Brand accent + canvas. DEFAULT = Lift: Black / Red / White (red primary).
      Operator overrides to the tactical olive palette. */
@@ -94,9 +94,19 @@ a {
 }
 
 .brandmark {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 800;
   letter-spacing: 0.02em;
+}
+.brandhead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.brandlogo {
+  display: block;
+  flex: 0 0 auto;
+  border-radius: 8px;
 }
 .brandmark .accent {
   color: var(--primary);

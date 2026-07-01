@@ -63,7 +63,7 @@ const slugify = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').repla
 
 // ---- HTML shell ------------------------------------------------------------
 function page({ brand, path, title, description, h1, lede, body, host, jsonLd = [] }) {
-  const accent = brand === 'operator' ? '#5c6e3a' : '#b2342a';
+  const accent = brand === 'operator' ? '#5c6e3a' : '#e31e24';
   const cta = brand === 'operator' ? 'Score your readiness free' : 'Score yourself free';
   return `<!doctype html>
 <html lang="en" data-theme="light" data-brand="${brand}">
