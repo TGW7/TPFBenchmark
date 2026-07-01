@@ -46,8 +46,10 @@ const COPY = LANDING_COPY[BRAND];
 const CFG = brandConfig(BRAND);
 const SITE = BRAND === 'operator'
   ? 'https://operatorbenchmark.takepointfitness.com'
-  : 'https://benchmark.takepointfitness.com';
-const APP_NAME = BRAND === 'operator' ? 'TPF Operator' : 'Take Point Fitness';
+  : BRAND === 'hybrid'
+    ? 'https://hybridbenchmark.takepointfitness.com'
+    : 'https://benchmark.takepointfitness.com';
+const APP_NAME = BRAND === 'operator' ? 'TPF Operator' : BRAND === 'hybrid' ? 'TPF Hybrid' : 'Take Point Fitness';
 
 const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
 
@@ -235,7 +237,7 @@ export function App() {
         <div>
           <div className="brandmark brandhead">
             <img className="brandlogo" src="/tpf-mark.png" width="34" height="34" alt="" />
-            <span>Take Point Fitness <span className="accent">·</span> {BRAND === 'operator' ? 'Operator' : 'Benchmark'}</span>
+            <span>Take Point Fitness <span className="accent">·</span> {BRAND === 'operator' ? 'Operator' : BRAND === 'hybrid' ? 'Hybrid' : 'Benchmark'}</span>
           </div>
           <div className="subtle">{META.shortName} — {META.tagline}</div>
         </div>

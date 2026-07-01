@@ -6,16 +6,18 @@
  * Operator pathways/standards/theme are Phase 3; this is the seam they slot into.
  */
 
-export type Brand = 'lift' | 'operator';
+export type Brand = 'lift' | 'operator' | 'hybrid';
 
 export function detectBrand(hostname?: string): Brand {
-  // Local preview override: ?brand=operator (only when no explicit hostname).
+  // Local preview override: ?brand=operator|hybrid|lift (only when no explicit hostname).
   if (hostname == null && typeof location !== 'undefined') {
     const q = new URLSearchParams(location.search).get('brand');
-    if (q === 'operator' || q === 'lift') return q;
+    if (q === 'operator' || q === 'lift' || q === 'hybrid') return q as Brand;
   }
   const host = hostname ?? (typeof location !== 'undefined' ? location.hostname : '');
-  return /operator/i.test(host) ? 'operator' : 'lift';
+  if (/operator/i.test(host)) return 'operator';
+  if (/hybrid/i.test(host))   return 'hybrid';
+  return 'lift';
 }
 
 export interface BrandMeta {
@@ -34,6 +36,13 @@ export const BRAND_META: Record<Brand, BrandMeta> = {
     fullName: 'Hybrid Readiness Score',
     tagline: 'Free benchmark calculator · pick a pathway, enter your numbers, see where you rank',
     appUrl: 'https://app.takepointfitness.com',
+  },
+  hybrid: {
+    brand: 'hybrid',
+    shortName: 'HRS',
+    fullName: 'Hybrid Readiness Score',
+    tagline: 'Free hybrid-athlete benchmark · score your strength and engine against hybrid athlete standards',
+    appUrl: 'https://hybridapp.takepointfitness.com',
   },
   operator: {
     brand: 'operator',

@@ -51,8 +51,36 @@ export interface BrandConfig {
 
 const LIFT_BANNER = 'v1 beta standards — expert-seeded, recalibrating as athletes log in.';
 const OPERATOR_BANNER = 'Operator standards (beta) — real US/UK unit benchmarks · unisex & absolute.';
+const HYBRID_BANNER = 'Hybrid athlete standards (beta) — balanced strength + engine benchmarks.';
+
+const HYBRID_PATHWAY_ORDER = [
+  'hybrid_athlete', 'crossfit_generalist', 'hyrox',
+  'gym_goer', 'powerlifter', 'bodybuilder',
+] as const;
 
 export function brandConfig(brand: Brand): BrandConfig {
+  if (brand === 'hybrid') {
+    const hybridPathwayList = HYBRID_PATHWAY_ORDER
+      .map(id => (HRS_PATHWAY_CONFIGS as Record<string, PathwayConfig>)[id])
+      .filter(Boolean);
+    return {
+      pathways: HRS_PATHWAY_CONFIGS,
+      pathwayList: hybridPathwayList,
+      components: [...CORE_COMPONENT_IDS],
+      benchmarksFor: (id) => {
+        const weights: Partial<Record<ComponentId, number | null>> =
+          (HRS_PATHWAY_CONFIGS as Record<string, PathwayConfig>)[id]?.weights ?? {};
+        return HRS_BENCHMARKS.filter((b) => (weights[b.component] ?? 0) > 0);
+      },
+      wods: HRS_WODS,
+      wodList: HRS_WOD_LIST,
+      sampleProfile: DEMO_PROFILE,
+      sampleLogs: DEMO_LOGS,
+      banner: HYBRID_BANNER,
+      synthetic: false,
+      unisex: false,
+    };
+  }
   if (brand === 'operator') {
     return {
       pathways: OPERATOR_PATHWAY_CONFIGS,

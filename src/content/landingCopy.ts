@@ -184,4 +184,72 @@ const OPERATOR: LandingCopy = {
   aspirationalIdentity: 'The operator who’s measurably ready — not hoping.',
 };
 
-export const LANDING_COPY: Record<Brand, LandingCopy> = { lift: LIFT, operator: OPERATOR };
+const HYBRID: LandingCopy = {
+  hero: {
+    eyebrow: 'Free hybrid-athlete benchmark · no sign-up',
+    headline: 'Know if your strength and engine are actually balanced.',
+    subhead:
+      'Score your lifts and run times against hybrid athlete standards, see where the imbalance is, and find the one weak link holding you back.',
+    primaryCta: 'Score yourself free',
+    secondaryCta: 'Get the app',
+    successScore: 84,
+    successPercentile: '84th',
+    successLabel: 'Balanced hybrid athlete',
+  },
+  stakes: {
+    heading: 'Strong in the gym. Slow on the road. Or the reverse.',
+    bullets: [
+      'You train both strength and conditioning — but one always lags behind.',
+      'Generic standards reward specialists, not athletes who do both.',
+      'No clear read on whether the balance is actually improving.',
+    ],
+  },
+  value: {
+    heading: 'One score. Both sides of fitness.',
+    items: [
+      { title: 'Know your hybrid score', body: 'Strength and engine combined into one honest number, weighted for the hybrid athlete.' },
+      { title: 'Find the imbalance', body: 'See whether your running or your lifting is holding you back — and by how much.' },
+      { title: 'Compare fairly', body: 'Your percentile for your sex against hybrid-specific standards — not a powerlifter chart.' },
+      { title: 'Pick your path', body: 'Hybrid Athlete, CrossFit, HYROX or your chosen goal — each scored on what counts for that standard.' },
+    ],
+  },
+  guide: {
+    empathy:
+      'We train the same way — and we know the frustration of improving one side and watching the other fall behind.',
+    authority: [
+      'Built by ex-British Army PTIs',
+      'Balanced strength + engine standards — not specialist charts',
+      'Free, no account needed, no tracking',
+    ],
+  },
+  plan: {
+    heading: 'Three steps to your hybrid score',
+    steps: [
+      { title: 'Pick your pathway', body: 'Choose the hybrid standard you train for.' },
+      { title: 'Enter lifts & times', body: 'A few numbers — no sign-up.' },
+      { title: 'See your score & weak side', body: 'Know where the imbalance is and what to fix first.' },
+    ],
+  },
+  explanatory:
+    'Take Point Fitness Hybrid turns your combined training into one honest read. Enter your squat, deadlift, bench, power clean and run and row times, choose the hybrid standard that matches your goal, and the calculator scores each against a clear pass / good / excellent / elite curve — adjusted for your bodyweight, sex and age. It weights strength and engine equally for the hybrid athlete, estimates your percentile, and surfaces the weak side that\'s costing you the most. It\'s free and needs no account. When you\'re ready to fix what it finds, the Take Point Fitness Hybrid app turns your weak side into a balanced plan.',
+  options: {
+    heading: 'Free to find out. Built to balance.',
+    free: { title: 'The benchmark', body: 'Your hybrid score, percentile and weak side — free, forever, no account.' },
+    app: {
+      title: 'The TPF Hybrid app',
+      body: 'Turn your weak side into a plan, log your training, and watch the balance improve. Your benchmark syncs straight in.',
+      cta: 'Get the app',
+    },
+  },
+  finalCta: {
+    heading: 'See where the imbalance really is.',
+    sub: 'Two minutes, no sign-up. Score yourself and find what\'s holding you back.',
+    primaryCta: 'Score yourself free',
+    secondaryCta: 'Get the app',
+  },
+  oneLiner:
+    'Most hybrid athletes train hard on both sides but never know which is actually holding them back. Take Point Fitness Hybrid scores your strength and engine together, so you can find the imbalance and fix it.',
+  aspirationalIdentity: 'The hybrid athlete who is genuinely strong and genuinely fast — not just one.',
+};
+
+export const LANDING_COPY: Record<Brand, LandingCopy> = { lift: LIFT, hybrid: HYBRID, operator: OPERATOR };

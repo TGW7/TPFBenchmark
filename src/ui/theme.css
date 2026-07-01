@@ -21,6 +21,9 @@
   --brand: var(--tpf-od-green);
   --canvas: var(--tpf-offwhite);
 }
+[data-brand='hybrid'] {
+  --brand: #3B7DD8;
+}
 
 /* ---- Light theme (default) ---- */
 :root,

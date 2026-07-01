@@ -8,7 +8,7 @@ const escapeXml = (s: string) =>
   String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 export interface ShareData {
-  brand: 'lift' | 'operator';
+  brand: 'lift' | 'operator' | 'hybrid';
   shortName: string;
   scoreText: string;
   percentileText: string;
@@ -18,7 +18,7 @@ export interface ShareData {
 }
 
 export function resultCardSVG(d: ShareData): string {
-  const accent = d.brand === 'operator' ? '#5c6e3a' : '#e31e24';
+  const accent = d.brand === 'operator' ? '#5c6e3a' : d.brand === 'hybrid' ? '#3B7DD8' : '#e31e24';
   const paper = '#f4f1e8';
   const ink = '#161616';
   const F = 'font-family="system-ui,-apple-system,Segoe UI,Roboto,sans-serif"';
