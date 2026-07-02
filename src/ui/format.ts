@@ -47,6 +47,15 @@ export function formatPercent(p: number | null): string {
   return p == null ? '—' : `${Math.round(p)}%`;
 }
 
+/** Traffic-light colour for a 0–100 score, banded on the pass/good/excellent tiers. */
+export function scoreColor(value: number | null): string {
+  if (value == null) return 'var(--fg-muted)';
+  if (value < 50) return '#d92626'; // below pass — red
+  if (value < 70) return '#de8a10'; // pass — amber
+  if (value < 85) return '#6ba32b'; // good — lime
+  return '#158a44'; // excellent / elite — green
+}
+
 export function formatSeconds(totalSec: number): string {
   const sign = totalSec < 0 ? '-' : '';
   const s = Math.abs(totalSec);

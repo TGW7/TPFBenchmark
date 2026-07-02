@@ -1,6 +1,6 @@
 /** Radial HRS gauge — pure SVG, themed with the four TPF tokens only. */
 
-import { formatPercent } from './format';
+import { formatPercent, scoreColor } from './format';
 
 interface GaugeProps {
   value: number | null;
@@ -19,7 +19,7 @@ export function Gauge({ value, max = 110, caption }: GaugeProps) {
 
   const fraction = value == null ? 0 : Math.max(0, Math.min(1, value / max));
   const dash = circumference * fraction;
-  const weak = value != null && value < 50;
+  const color = scoreColor(value);
 
   return (
     <div style={{ textAlign: 'center' }}>
@@ -32,7 +32,7 @@ export function Gauge({ value, max = 110, caption }: GaugeProps) {
             cy={cy}
             r={r}
             fill="none"
-            stroke={weak ? 'var(--alert)' : 'var(--primary)'}
+            stroke={color}
             strokeWidth={stroke}
             strokeLinecap="round"
             strokeDasharray={`${dash} ${circumference}`}
@@ -40,7 +40,7 @@ export function Gauge({ value, max = 110, caption }: GaugeProps) {
           />
         )}
         <text x={cx} y={cy - 2} textAnchor="middle" dominantBaseline="middle"
-          fontSize="2.4rem" fontWeight={800} fill="var(--fg)">
+          fontSize="2.4rem" fontWeight={800} fill={color}>
           {formatPercent(value)}
         </text>
         <text x={cx} y={cy + 26} textAnchor="middle" fontSize="0.7rem" fill="var(--fg-muted)"

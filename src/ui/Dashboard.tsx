@@ -52,7 +52,11 @@ export function Dashboard({ result, capacity, weakness, pathwayLabel, percentile
       {showCapacity && (
         <div className="card">
           <h2>Capacity Index</h2>
-          <div className={`bignum ${capacity.index != null && capacity.index < 0 ? 'alert' : 'good'}`}>
+          <p className="subtle" style={{ marginTop: 0, marginBottom: 8 }}>
+            How your workout (WOD) results compare with what your strength + engine numbers predict — a read on engine,
+            pacing and skill under fatigue. <strong>Positive</strong> = you punch above your raw numbers; <strong>negative</strong> = you under-express them.
+          </p>
+          <div className="bignum" style={{ color: capacity.index == null ? 'var(--fg-muted)' : capacity.index < 0 ? '#d92626' : '#158a44' }}>
             {formatSigned(capacity.index)}
           </div>
           <p className="subtle" style={{ marginTop: 6 }}>{capacityVerdict(capacity.index)}</p>
