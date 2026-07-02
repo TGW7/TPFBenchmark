@@ -4,7 +4,7 @@
  * Two ways to get a percentile:
  *   1. estimatedPercentile(score) — derive an ESTIMATE from the tier curve, using
  *      the standards methodology's anchoring (pass≈50th, good≈70th, excellent≈85th,
- *      elite≈top 1–2%). Works today with zero population data.
+ *      elite≈top 5%). Works today with zero population data.
  *   2. percentileRank(value, samples) — a TRUE percentile against a real sample
  *      distribution. This is the hook for the user-data pool (see audit.ts); it
  *      returns null until there are enough samples for the (sex, age-band) cell.
@@ -38,8 +38,9 @@ const KNOTS: ReadonlyArray<readonly [number, number]> = [
   [50, 50], // pass
   [70, 70], // good
   [85, 85], // excellent
-  [100, 98.5], // elite ≈ top 1–2%
-  [110, 99.9], // bonus ceiling
+  [95, 90], // excellent→elite midpoint
+  [100, 95], // elite ≈ top 5%
+  [110, 99], // bonus ceiling
 ];
 
 /** Estimate a population percentile (0–99.9) from an HRS score (0–110). */

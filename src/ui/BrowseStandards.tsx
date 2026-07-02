@@ -89,7 +89,7 @@ export function BrowseStandards({ benchmarks, wods, sex, unisex, onSexChange }: 
       <h3 style={{ marginTop: 20 }}>Benchmark workouts</h3>
       <Table rows={wodRows} />
       <p className="subtle" style={{ marginTop: 12 }}>
-        Thresholds shown are tiered at the 50th / 70th / 85th / top-1–2% levels.
+        Thresholds shown are tiered at the 50th / 70th / 85th / top 5% levels.
         Bodyweight lifts are ×bodyweight; enter your stats in the Calculator to see
         absolute targets and your percentile.
       </p>

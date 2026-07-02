@@ -250,7 +250,7 @@ for (const b of liftBench) {
   const dir = b.lowerIsBetter ? 'lower is faster' : b.normalization === 'bodyweight' ? 'as a multiple of bodyweight' : 'higher is better';
   const tips = tipsFor(b.id);
   const faqs = [
-    { q: `What is a good ${label}?`, a: `A "Good" ${label} sits around the 70th percentile of trained athletes — see the table above for the exact figure for your sex. "Excellent" is roughly the top 15%, and "Elite" is the top 1–2%.` },
+    { q: `What is a good ${label}?`, a: `A "Good" ${label} sits around the 70th percentile of trained athletes — see the table above for the exact figure for your sex. "Excellent" is roughly the top 15%, and "Elite" is the top 5%.` },
     { q: `How is the ${label} scored?`, a: `Your result is placed on a 0–100 curve anchored at the pass / good / excellent / elite tiers${b.normalization === 'bodyweight' ? ', measured as a multiple of bodyweight and adjusted for sex' : ', adjusted for sex'}. ${b.lowerIsBetter ? 'A faster time scores higher.' : 'A higher number scores higher.'}` },
     { q: `How can I improve my ${label}?`, a: tips.join(' ') },
   ];
@@ -261,7 +261,7 @@ for (const b of liftBench) {
     h1: `${label} Standards`,
     lede: `How does your ${label.toLowerCase()} stack up? These are the pass / good / excellent / elite tiers (${dir}), by sex.`,
     body: table(['Tier', 'Male', 'Female'], rows) +
-      `<p class="note">Tiers map to roughly the 50th / 70th / 85th / top-1–2% of trained athletes.</p>` +
+      `<p class="note">Tiers map to roughly the 50th / 70th / 85th / top 5% of trained athletes.</p>` +
       (inPathways.length ? `<p>Counts toward: ${inPathways.map(([l, s]) => `<a href="/pathways/${s}/">${esc(l)}</a>`).join(' · ')}</p>` : '') +
       `<h2>How to improve your ${esc(label)}</h2>` + bullets(tips) +
       faqHtml(faqs),

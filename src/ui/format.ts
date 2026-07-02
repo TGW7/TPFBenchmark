@@ -47,13 +47,24 @@ export function formatPercent(p: number | null): string {
   return p == null ? '—' : `${Math.round(p)}%`;
 }
 
-/** Traffic-light colour for a 0–100 score, banded on the pass/good/excellent tiers. */
+/** Traffic-light colour for a 0–100+ score, banded on the scoring tiers. */
 export function scoreColor(value: number | null): string {
   if (value == null) return 'var(--fg-muted)';
   if (value < 50) return '#d92626'; // below pass — red
   if (value < 70) return '#de8a10'; // pass — amber
   if (value < 85) return '#6ba32b'; // good — lime
-  return '#158a44'; // excellent / elite — green
+  if (value < 100) return '#158a44'; // excellent — green
+  return '#0d9488'; // elite (top ~5%) — teal
+}
+
+/** Named scoring tier for a 0–100+ score. Elite = meeting the elite standard (≈ top 5%). */
+export function scoreTier(value: number | null): string | null {
+  if (value == null) return null;
+  if (value < 50) return 'Below pass';
+  if (value < 70) return 'Pass';
+  if (value < 85) return 'Good';
+  if (value < 100) return 'Excellent';
+  return 'Elite';
 }
 
 export function formatSeconds(totalSec: number): string {

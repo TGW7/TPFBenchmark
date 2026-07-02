@@ -3,7 +3,7 @@
 import type { CapacityResult, HrsResult, WeaknessReport } from '../engine/types';
 import { wodPublicName } from '../config/wods';
 import { Gauge } from './Gauge';
-import { componentLabel, formatPercent, formatPercentile, formatSigned } from './format';
+import { componentLabel, formatPercent, formatPercentile, formatSigned, scoreColor, scoreTier } from './format';
 
 interface DashboardProps {
   result: HrsResult;
@@ -37,6 +37,17 @@ export function Dashboard({ result, capacity, weakness, pathwayLabel, percentile
       <div className="card">
         <h2>Overall · {pathwayLabel}</h2>
         <Gauge value={result.overall} caption={`${coveragePct}% of pathway tested`} />
+        {result.overall != null && (
+          <div style={{ textAlign: 'center', marginTop: 8 }}>
+            <span style={{
+              display: 'inline-block', padding: '3px 12px', borderRadius: 999,
+              fontWeight: 700, fontSize: '0.78rem', letterSpacing: '0.05em', textTransform: 'uppercase',
+              color: '#fff', background: scoreColor(result.overall),
+            }}>
+              {scoreTier(result.overall)}
+            </span>
+          </div>
+        )}
         {percentile != null && (
           <p style={{ textAlign: 'center', margin: '6px 0 0' }}>
             ≈ <strong>{formatPercentile(percentile)}</strong> percentile{' '}
