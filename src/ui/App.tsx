@@ -301,41 +301,45 @@ export function App() {
           </div>
         )}
 
-        <div style={{ marginBottom: 8 }}>
-          <div className="subtle" style={{ marginBottom: 6 }}>3 · Enter your numbers:</div>
-          <BenchmarkGrid
-            benchmarks={benchmarks}
-            profile={profile}
-            units={units}
-            logs={logs}
-            resetKey={formResetKey}
-            onOrm={upsertOrm}
-            onRaceTime={upsertRaceTime}
-            onManual={upsertManual}
-          />
-          {showWods && (
-            <div style={{ marginTop: 16 }}>
-              <WodLog wods={CFG.wodList} sex={profile.sex} onLogWod={addWod} />
-            </div>
-          )}
-        </div>
-
-        <Dashboard
-          result={result}
-          capacity={capacity}
-          weakness={weakness}
-          pathwayLabel={pathway.label}
-          percentile={percentile}
-          percentileLive={poolPct != null}
-          percentileN={poolPct != null ? poolN : null}
-          showCapacity={showWods}
-        />
-
-        <div className="card" style={{ marginTop: 16 }}>
-          <h2>{pathway.radar === 'benchmarks' ? 'Per-lift radar' : 'Weakness radar'}</h2>
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <WeaknessRadar axes={radarAxes} />
+        <div className="dash">
+          <div className="dash-main">
+            <div className="subtle" style={{ marginBottom: 6 }}>3 · Enter your numbers:</div>
+            <BenchmarkGrid
+              benchmarks={benchmarks}
+              profile={profile}
+              units={units}
+              logs={logs}
+              resetKey={formResetKey}
+              onOrm={upsertOrm}
+              onRaceTime={upsertRaceTime}
+              onManual={upsertManual}
+            />
+            {showWods && (
+              <div style={{ marginTop: 16 }}>
+                <WodLog wods={CFG.wodList} sex={profile.sex} onLogWod={addWod} />
+              </div>
+            )}
           </div>
+
+          <aside className="dash-side">
+            <Dashboard
+              result={result}
+              capacity={capacity}
+              weakness={weakness}
+              pathwayLabel={pathway.label}
+              percentile={percentile}
+              percentileLive={poolPct != null}
+              percentileN={poolPct != null ? poolN : null}
+              showCapacity={showWods}
+              stacked
+            />
+            <div className="card">
+              <h2>{pathway.radar === 'benchmarks' ? 'Per-lift radar' : 'Weakness radar'}</h2>
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <WeaknessRadar axes={radarAxes} />
+              </div>
+            </div>
+          </aside>
         </div>
 
         {hasData && (

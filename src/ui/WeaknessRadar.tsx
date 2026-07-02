@@ -34,6 +34,7 @@ export function WeaknessRadar({ axes, scale = 100 }: RadarProps) {
   }
 
   const size = 320;
+  const LABEL_PAD = 56; // horizontal room so long axis labels (e.g. "gymnastics") don't clip
   const cx = size / 2;
   const cy = size / 2;
   const radius = 104;
@@ -48,7 +49,7 @@ export function WeaknessRadar({ axes, scale = 100 }: RadarProps) {
   const dataPoly = dataPoints.map((p) => p.join(',')).join(' ');
 
   return (
-    <svg viewBox={`0 0 ${size} ${size}`} width="100%" style={{ maxWidth: size }} role="img" aria-label="Score radar">
+    <svg viewBox={`${-LABEL_PAD} 0 ${size + LABEL_PAD * 2} ${size}`} width="100%" style={{ maxWidth: size + LABEL_PAD }} role="img" aria-label="Score radar">
       {rings.map((lvl) => (
         <polygon key={lvl} points={ngon(radius * lvl)} fill="none" stroke="var(--line)" />
       ))}

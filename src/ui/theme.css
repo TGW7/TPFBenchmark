@@ -187,6 +187,28 @@ a {
   }
 }
 
+/* Dashboard: inputs panel beside a live results readout column. */
+.dash {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+  margin-top: 8px;
+}
+.dash-side {
+  display: grid;
+  gap: 16px;
+}
+.dash-side .card svg {
+  max-width: 100%;
+  height: auto;
+}
+@media (max-width: 900px) {
+  .dash {
+    grid-template-columns: 1fr;
+  }
+}
+
 .card {
   background: var(--surface);
   border: 1px solid var(--line);

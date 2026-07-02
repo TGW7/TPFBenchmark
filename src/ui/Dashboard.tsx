@@ -17,6 +17,8 @@ interface DashboardProps {
   percentileN?: number | null;
   /** Capacity Index is WOD-derived — hidden for pathways without WODs. */
   showCapacity?: boolean;
+  /** Stack the cards vertically (for the dashboard side column) instead of a row. */
+  stacked?: boolean;
 }
 
 function capacityVerdict(index: number | null): string {
@@ -26,12 +28,12 @@ function capacityVerdict(index: number | null): string {
   return 'Expresses raw fitness about as expected.';
 }
 
-export function Dashboard({ result, capacity, weakness, pathwayLabel, percentile, percentileLive = false, percentileN = null, showCapacity = true }: DashboardProps) {
+export function Dashboard({ result, capacity, weakness, pathwayLabel, percentile, percentileLive = false, percentileN = null, showCapacity = true, stacked = false }: DashboardProps) {
   const coveragePct = Math.round(result.coverage * 100);
   const scoredWods = capacity.perWod.filter((w) => w.delta != null);
 
   return (
-    <div className={`grid ${showCapacity ? 'cols-3' : 'cols-2'}`}>
+    <div className={stacked ? 'grid' : `grid ${showCapacity ? 'cols-3' : 'cols-2'}`}>
       <div className="card">
         <h2>Overall · {pathwayLabel}</h2>
         <Gauge value={result.overall} caption={`${coveragePct}% of pathway tested`} />
