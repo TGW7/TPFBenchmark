@@ -60,6 +60,7 @@
 
 body {
   margin: 0;
+  overflow-x: hidden;
   background: var(--bg);
   color: var(--fg);
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial,
@@ -86,29 +87,70 @@ a {
 }
 
 .topbar {
+  position: relative;
+  z-index: 0;
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
-  border-bottom: 2px solid var(--primary);
-  padding-bottom: 12px;
-  margin-bottom: 8px;
+  color: #fff;
+  padding: 16px 0 18px;
+  margin-bottom: 26px;
+}
+/* Full-bleed black band behind the header — the brand anchor. */
+.topbar::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  height: calc(100% + 24px);
+  background: #101010;
+  border-bottom: 4px solid var(--primary);
+}
+.topbar .subtle {
+  color: rgba(255, 255, 255, 0.72);
+}
+.topbar .btn.ghost {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+.topbar .btn.ghost:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+/* The auth dropdown is a light card — reset it out of the dark header context. */
+.topbar .card {
+  color: var(--fg);
+}
+.topbar .card .subtle {
+  color: var(--fg-muted);
+}
+.topbar .card .btn.ghost {
+  color: var(--fg);
+  border-color: var(--line);
+}
+.topbar .card .btn.ghost:hover {
+  background: transparent;
 }
 
 .brandmark {
-  font-size: 1.4rem;
+  font-size: 1.7rem;
   font-weight: 800;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
 }
 .brandhead {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 .brandlogo {
   display: block;
   flex: 0 0 auto;
+  width: 46px;
+  height: 46px;
 }
 .brandmark .accent {
   color: var(--primary);
@@ -148,8 +190,9 @@ a {
 .card {
   background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 18px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 10px 28px rgba(0, 0, 0, 0.06);
 }
 .card h2 {
   font-size: 1rem;
@@ -175,6 +218,21 @@ a {
 }
 .btn:hover {
   filter: brightness(1.05);
+}
+
+/* Pathway picker — bolder, tappable tabs with a lift on the active one. */
+[role='tablist'] .btn {
+  padding: 10px 18px;
+  font-weight: 600;
+  border-radius: 10px;
+}
+[role='tablist'] .btn:not(.ghost) {
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--primary) 40%, transparent);
+}
+[role='tablist'] .btn.ghost:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  filter: none;
 }
 
 .field {
@@ -342,10 +400,19 @@ a {
 }
 
 .display {
-  font-size: 2.6rem;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  margin: 0 0 14px;
+  font-size: 3.2rem;
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  margin: 0 0 16px;
+}
+.display::before {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--primary);
+  margin-bottom: 20px;
 }
 .lead {
   font-size: 1.12rem;
