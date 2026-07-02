@@ -32,15 +32,15 @@ export interface BrandMeta {
 export const BRAND_META: Record<Brand, BrandMeta> = {
   lift: {
     brand: 'lift',
-    shortName: 'HRS',
-    fullName: 'Hybrid Readiness Score',
+    shortName: 'HABS',
+    fullName: 'Hybrid Athlete Benchmark Score',
     tagline: 'Free benchmark calculator · pick a pathway, enter your numbers, see where you rank',
     appUrl: 'https://app.takepointfitness.com',
   },
   hybrid: {
     brand: 'hybrid',
-    shortName: 'HRS',
-    fullName: 'Hybrid Readiness Score',
+    shortName: 'HABS',
+    fullName: 'Hybrid Athlete Benchmark Score',
     tagline: 'Free hybrid-athlete benchmark · score your strength and engine against hybrid athlete standards',
     appUrl: 'https://hybridapp.takepointfitness.com',
   },

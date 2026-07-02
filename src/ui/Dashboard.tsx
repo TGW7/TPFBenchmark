@@ -19,6 +19,8 @@ interface DashboardProps {
   showCapacity?: boolean;
   /** Stack the cards vertically (for the dashboard side column) instead of a row. */
   stacked?: boolean;
+  /** Short score name for the gauge (brand-aware: HABS / ORS). */
+  scoreLabel?: string;
 }
 
 function capacityVerdict(index: number | null): string {
@@ -28,7 +30,7 @@ function capacityVerdict(index: number | null): string {
   return 'Expresses raw fitness about as expected.';
 }
 
-export function Dashboard({ result, capacity, weakness, pathwayLabel, percentile, percentileLive = false, percentileN = null, showCapacity = true, stacked = false }: DashboardProps) {
+export function Dashboard({ result, capacity, weakness, pathwayLabel, percentile, percentileLive = false, percentileN = null, showCapacity = true, stacked = false, scoreLabel = 'HABS' }: DashboardProps) {
   const coveragePct = Math.round(result.coverage * 100);
   const scoredWods = capacity.perWod.filter((w) => w.delta != null);
 
@@ -36,7 +38,7 @@ export function Dashboard({ result, capacity, weakness, pathwayLabel, percentile
     <div className={stacked ? 'grid' : `grid ${showCapacity ? 'cols-3' : 'cols-2'}`}>
       <div className="card">
         <h2>Overall · {pathwayLabel}</h2>
-        <Gauge value={result.overall} caption={`${coveragePct}% of pathway tested`} />
+        <Gauge value={result.overall} caption={`${coveragePct}% of pathway tested`} label={scoreLabel} />
         {result.overall != null && (
           <div style={{ textAlign: 'center', marginTop: 8 }}>
             <span style={{

@@ -7,9 +7,11 @@ interface GaugeProps {
   /** Curve caps at 110 (elite bonus); the gauge ring uses the same ceiling. */
   max?: number;
   caption?: string;
+  /** Short score name shown under the number (brand-aware: HABS / ORS). */
+  label?: string;
 }
 
-export function Gauge({ value, max = 110, caption }: GaugeProps) {
+export function Gauge({ value, max = 110, caption, label = 'HABS' }: GaugeProps) {
   const size = 200;
   const stroke = 18;
   const r = (size - stroke) / 2;
@@ -24,7 +26,7 @@ export function Gauge({ value, max = 110, caption }: GaugeProps) {
   return (
     <div style={{ textAlign: 'center' }}>
       <svg viewBox={`0 0 ${size} ${size}`} width={size} height={size} role="img"
-        aria-label={`Overall HRS ${formatPercent(value)}`}>
+        aria-label={`Overall ${label} ${formatPercent(value)}`}>
         <circle cx={cx} cy={cy} r={r} fill="none" stroke="var(--line)" strokeWidth={stroke} />
         {value != null && (
           <circle
@@ -45,7 +47,7 @@ export function Gauge({ value, max = 110, caption }: GaugeProps) {
         </text>
         <text x={cx} y={cy + 26} textAnchor="middle" fontSize="0.7rem" fill="var(--fg-muted)"
           letterSpacing="0.08em">
-          HRS
+          {label}
         </text>
       </svg>
       {caption && <div className="subtle">{caption}</div>}

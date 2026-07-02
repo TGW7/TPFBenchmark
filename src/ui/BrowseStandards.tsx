@@ -7,7 +7,7 @@
  */
 
 import type { BenchmarkDef, Sex, ThresholdSet, WodDef } from '../engine/types';
-import { wodPublicName } from '../config/wods';
+import { wodPublicName, wodPublicSpec } from '../config/wods';
 import { formatValue } from './format';
 
 interface Props {
@@ -68,9 +68,8 @@ export function BrowseStandards({ benchmarks, wods, sex, unisex, onSexChange }: 
     }));
   const wodRows = wods.map((w) => {
     const load = w.loads?.[0];
-    const sub = load
-      ? load[sex] != null ? `Rx ${load[sex]} kg · ${load.movement.toLowerCase()}` : load.movement
-      : undefined;
+    const rx = load && load[sex] != null ? ` · Rx ${load[sex]} kg` : '';
+    const sub = `${wodPublicSpec(w.id)}${rx}`;
     return { label: wodPublicName(w.id), sub, t: w.thresholds[sex], unit: w.unit };
   });
 

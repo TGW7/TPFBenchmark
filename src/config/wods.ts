@@ -53,3 +53,8 @@ export function wodPublicName(id: WodId): string {
   return WOD_PUBLIC_NAMES[id]?.name ?? id;
 }
 
+/** Factual, non-proprietary movement/rep description (what the workout actually is). */
+export function wodPublicSpec(id: WodId): string {
+  return WOD_PUBLIC_NAMES[id]?.spec ?? '';
+}
+

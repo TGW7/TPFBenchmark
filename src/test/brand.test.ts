@@ -12,7 +12,7 @@ describe('detectBrand', () => {
   });
   it('exposes brand metadata', () => {
     expect(brandMeta('operatorbenchmark.x').shortName).toBe('ORS');
-    expect(brandMeta('benchmark.x').shortName).toBe('HRS');
-    expect(BRAND_META.lift.fullName).toBe('Hybrid Readiness Score');
+    expect(brandMeta('benchmark.x').shortName).toBe('HABS');
+    expect(BRAND_META.lift.fullName).toBe('Hybrid Athlete Benchmark Score');
   });
 });

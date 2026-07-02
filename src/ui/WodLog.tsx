@@ -88,7 +88,7 @@ export function WodLog({ wods, sex, onLogWod }: Props) {
       )}
       <p className="subtle" style={{ marginTop: 8 }}>
         Rx = prescribed load (full curve) · scaled = lighter load (capped at good, 70%) ·
-        incomplete = scored on rep-equivalent. WODs are display-only (0% of core HRS in v1).
+        incomplete = scored on rep-equivalent. WODs are display-only (0% of the core score in v1).
       </p>
     </div>
   );

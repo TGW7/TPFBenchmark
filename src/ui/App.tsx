@@ -332,6 +332,7 @@ export function App() {
               percentileN={poolPct != null ? poolN : null}
               showCapacity={showWods}
               stacked
+              scoreLabel={META.shortName}
             />
             <div className="card">
               <h2>{pathway.radar === 'benchmarks' ? 'Per-lift radar' : 'Weakness radar'}</h2>
