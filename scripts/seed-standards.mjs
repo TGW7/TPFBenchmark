@@ -49,6 +49,7 @@ const STANDARDS = [
   ['row_2k', 'mm:ss.s', 1, [480, 435, 405, 375], [540, 495, 462, 420], 'Expert + own-data'],
   ['row_500m', 'mm:ss.s', 1, [110, 100, 93, 85], [125, 115, 107, 98], 'Expert + own-data'],
   ['back_squat_1rm', 'xBW', 0, [1.25, 1.6, 2.0, 2.5], [1.0, 1.3, 1.6, 2.0], 'OpenPowerlifting (adj.)'],
+  ['front_squat_1rm', 'xBW', 0, [1.05, 1.35, 1.65, 2.05], [0.8, 1.05, 1.3, 1.65], 'Coaching ratios (≈0.82× back squat)'],
   ['deadlift_1rm', 'xBW', 0, [1.5, 1.9, 2.3, 2.8], [1.2, 1.5, 1.9, 2.4], 'OpenPowerlifting (adj.)'],
   ['bench_1rm', 'xBW', 0, [1.0, 1.25, 1.6, 2.0], [0.6, 0.8, 1.0, 1.3], 'OpenPowerlifting (adj.)'],
   ['strict_press_1rm', 'xBW', 0, [0.6, 0.8, 1.0, 1.25], [0.4, 0.55, 0.7, 0.9], 'Expert-curated'],

@@ -21,7 +21,7 @@ export const COMPONENT_LABELS: Record<ComponentId, string> = {
 export const componentLabel = (c: ComponentId): string => COMPONENT_LABELS[c] ?? c;
 
 const BENCH_LABEL_OVERRIDES: Record<string, string> = {
-  back_squat_1rm: 'Back Squat', deadlift_1rm: 'Deadlift', bench_1rm: 'Bench Press',
+  back_squat_1rm: 'Back Squat', front_squat_1rm: 'Front Squat', deadlift_1rm: 'Deadlift', bench_1rm: 'Bench Press',
   strict_press_1rm: 'Strict Press', power_clean_1rm: 'Power Clean',
   snatch_1rm: 'Snatch', clean_jerk_1rm: 'Clean & Jerk',
   run_1mi: '1-mile run', run_5k: '5k run', row_2k: '2k row', row_500m: '500m row',

@@ -44,7 +44,7 @@ function fmt(unit, v) {
 }
 
 const BENCH = {
-  back_squat_1rm: ['Back Squat', 'back-squat'], deadlift_1rm: ['Deadlift', 'deadlift'],
+  back_squat_1rm: ['Back Squat', 'back-squat'], front_squat_1rm: ['Front Squat', 'front-squat'], deadlift_1rm: ['Deadlift', 'deadlift'],
   bench_1rm: ['Bench Press', 'bench-press'], strict_press_1rm: ['Overhead Press', 'overhead-press'],
   snatch_1rm: ['Snatch', 'snatch'], clean_jerk_1rm: ['Clean & Jerk', 'clean-and-jerk'],
   power_clean_1rm: ['Power Clean', 'power-clean'], broad_jump: ['Broad Jump', 'broad-jump'],
@@ -166,7 +166,7 @@ const bullets = (items) => `<ul>${items.map((t) => `<li>${esc(t)}</li>`).join(''
 // "How to improve" tips — keyed by training quality, not standards numbers, so
 // the no-hardcoded-numbers rule stays intact. Useful evergreen content for SEO.
 const TIP_CAT = {
-  back_squat_1rm: 'barbell', deadlift_1rm: 'barbell', bench_1rm: 'barbell', strict_press_1rm: 'barbell',
+  back_squat_1rm: 'barbell', front_squat_1rm: 'barbell', deadlift_1rm: 'barbell', bench_1rm: 'barbell', strict_press_1rm: 'barbell',
   snatch_1rm: 'oly', clean_jerk_1rm: 'oly', power_clean_1rm: 'oly',
   strict_pullups: 'pull', max_mu: 'pull', hspu: 'press_bw', t2b: 'core_bw', du_unbroken: 'skill',
   broad_jump: 'power', plank_hold: 'core',

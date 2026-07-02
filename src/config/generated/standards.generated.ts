@@ -116,6 +116,21 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "notes": "Squat contested in PL; rich by sex/BW/age"
   },
   {
+    "id": "front_squat_1rm",
+    "component": "lower_strength",
+    "source": "orm",
+    "unit": "xBW",
+    "lowerIsBetter": false,
+    "normalization": "bodyweight",
+    "optional": false,
+    "dataSource": "Coaching ratios",
+    "license": "n/a",
+    "commercialUse": "Yes",
+    "referencePopulation": "Trained adults",
+    "launchMethod": "Coach-curated (~0.82x back squat)",
+    "notes": "Front squat 1RM"
+  },
+  {
     "id": "deadlift_1rm",
     "component": "lower_strength",
     "source": "orm",
@@ -248,7 +263,7 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Expert",
     "referencePopulation": "Own users",
     "launchMethod": "Expert-curated + own-data",
-    "notes": "Define Rx standard (kipping vs strict) explicitly"
+    "notes": "Strict HSPU — head to floor, no kip, full lockout"
   },
   {
     "id": "t2b",
@@ -412,6 +427,20 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
       "good": 1.3,
       "excellent": 1.6,
       "elite": 2
+    }
+  },
+  "front_squat_1rm": {
+    "M": {
+      "pass": 1.05,
+      "good": 1.35,
+      "excellent": 1.65,
+      "elite": 2.05
+    },
+    "F": {
+      "pass": 0.8,
+      "good": 1.05,
+      "excellent": 1.3,
+      "elite": 1.65
     }
   },
   "deadlift_1rm": {
