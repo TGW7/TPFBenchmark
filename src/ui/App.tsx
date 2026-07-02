@@ -259,7 +259,7 @@ export function App() {
           <p className="lead">{COPY.hero.subhead}</p>
         </div>
 
-        <div className="banner">{CFG.synthetic ? '⚠️ ' : ''}{CFG.banner} Nothing is saved — entries clear when you leave{user ? ', unless you Save to your profile' : ''}.</div>
+        <div className="banner">{CFG.synthetic ? '⚠️ ' : ''}{CFG.banner} Nothing is saved — entries clear when you leave{user ? ', unless you Save to your profile' : ' (sign in to keep your scores)'}.</div>
 
         <div style={{ marginBottom: 16 }}>
           <div className="subtle" style={{ marginBottom: 6 }}>1 · Score against:</div>
@@ -348,6 +348,16 @@ export function App() {
             <button className="btn" onClick={shareImg}>Share my result</button>
             <button className="btn ghost" onClick={copyResult}>Copy text</button>
             {shareMsg && <span className="subtle">{shareMsg}</span>}
+          </div>
+        )}
+
+        {hasData && !user && isSupabaseConfigured && (
+          <div className="card" style={{ marginTop: 16 }}>
+            <p style={{ margin: 0 }}>
+              <strong>Keep this score.</strong> Sign in (top-right) to save your scores and profile — the same sign-up
+              gives you a <strong>free {APP_NAME} account</strong>. No card, no trial: just free access to the app your
+              benchmark syncs straight into.
+            </p>
           </div>
         )}
 

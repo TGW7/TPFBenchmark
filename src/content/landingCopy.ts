@@ -83,7 +83,7 @@ const LIFT: LandingCopy = {
     authority: [
       'Built by ex-British Army PTIs',
       'Transparent, percentile-based standards — no black box',
-      'Free, no account needed, no tracking',
+      'Free to use · private, no tracking',
     ],
   },
   plan: {
@@ -98,10 +98,10 @@ const LIFT: LandingCopy = {
     'Take Point Fitness turns your scattered numbers into one honest read. Enter your squat, deadlift, bench, runs, rows and benchmark workouts, choose the pathway that matches your goal, and the calculator scores each lift and time on a clear pass / good / excellent / elite curve — adjusted for your bodyweight, sex and age. It weights everything toward the goal you care about, estimates your percentile, and shows the weak link that’s costing you the most. It’s free and needs no account. When you’re ready to fix what it finds, the Take Point Fitness app turns your weak link into a plan and tracks the number as it climbs.',
   options: {
     heading: 'Free to find out. Built to improve.',
-    free: { title: 'The benchmark', body: 'Your score, percentile and weak link — across every pathway. Free, forever, no account.' },
+    free: { title: 'The benchmark', body: 'Your score, percentile and weak link — across every pathway. Free forever — sign in to save yours.' },
     app: {
       title: 'The Take Point Fitness app',
-      body: 'Turn your weak link into a plan, log your training, and watch your score climb. Your benchmark syncs straight in.',
+      body: 'Turn your weak link into a plan, log your training, and watch your score climb. Your benchmark syncs straight in — and the free version is genuinely free: no card, no trial.',
       cta: 'Get the app',
     },
   },
@@ -151,7 +151,7 @@ const OPERATOR: LandingCopy = {
     authority: [
       'Built by ex-British Army PTIs',
       'Standards modelled on tactical demands',
-      'Free, no account needed, no tracking',
+      'Free to use · private, no tracking',
     ],
   },
   plan: {
@@ -166,10 +166,10 @@ const OPERATOR: LandingCopy = {
     'Take Point Fitness Operator turns your fitness into one honest readiness read. Enter your lifts, carries, runs and work-capacity efforts, choose the standard that matches the job, and the calculator scores each against a clear pass / good / excellent / elite curve — adjusted for your bodyweight, sex and age. It weights everything toward the demands of the role, estimates your percentile, and shows the gap most likely to fail you first. It’s free and needs no account. When you’re ready to close it, the Take Point Fitness Operator app turns that gap into a plan and tracks your readiness over time.',
   options: {
     heading: 'Free to find out. Built to close the gap.',
-    free: { title: 'The benchmark', body: 'Your readiness score, percentile and biggest gap. Free, forever, no account.' },
+    free: { title: 'The benchmark', body: 'Your readiness score, percentile and biggest gap. Free forever — sign in to save yours.' },
     app: {
       title: 'The TPF Operator app',
-      body: 'Turn your gap into a plan, log your training, and track readiness over time. Your benchmark syncs straight in.',
+      body: 'Turn your gap into a plan, log your training, and track readiness over time. Your benchmark syncs straight in — and the free version is genuinely free: no card, no trial.',
       cta: 'Get the app',
     },
   },
@@ -219,7 +219,7 @@ const HYBRID: LandingCopy = {
     authority: [
       'Built by ex-British Army PTIs',
       'Balanced strength + engine standards — not specialist charts',
-      'Free, no account needed, no tracking',
+      'Free to use · private, no tracking',
     ],
   },
   plan: {
@@ -234,10 +234,10 @@ const HYBRID: LandingCopy = {
     'Take Point Fitness Hybrid turns your combined training into one honest read. Enter your squat, deadlift, bench, power clean and run and row times, choose the hybrid standard that matches your goal, and the calculator scores each against a clear pass / good / excellent / elite curve — adjusted for your bodyweight, sex and age. It weights strength and engine equally for the hybrid athlete, estimates your percentile, and surfaces the weak side that\'s costing you the most. It\'s free and needs no account. When you\'re ready to fix what it finds, the Take Point Fitness Hybrid app turns your weak side into a balanced plan.',
   options: {
     heading: 'Free to find out. Built to balance.',
-    free: { title: 'The benchmark', body: 'Your hybrid score, percentile and weak side — free, forever, no account.' },
+    free: { title: 'The benchmark', body: 'Your hybrid score, percentile and weak side — free forever; sign in to save yours.' },
     app: {
       title: 'The TPF Hybrid app',
-      body: 'Turn your weak side into a plan, log your training, and watch the balance improve. Your benchmark syncs straight in.',
+      body: 'Turn your weak side into a plan, log your training, and watch the balance improve. Your benchmark syncs straight in — and the free version is genuinely free: no card, no trial.',
       cta: 'Get the app',
     },
   },

@@ -44,12 +44,11 @@ export function AuthPanel() {
       </button>
       {open && (
         <div className="card" style={{ position: 'absolute', right: 0, top: 'calc(100% + 8px)', width: 280, zIndex: 10 }}>
-          {!configured && (
-            <p className="subtle" style={{ marginTop: 0 }}>
-              Accounts are coming soon. You’ll be able to save results, set targets
-              and sync with the Take Point Fitness app.
-            </p>
-          )}
+          <p className="subtle" style={{ marginTop: 0 }}>
+            {configured
+              ? 'Saves your scores & profile — and the same sign-up gives you a free Take Point Fitness account. No card, no trial: just free access to the app your benchmark syncs into.'
+              : 'Accounts are coming soon. You’ll be able to save results, set targets and sync with the Take Point Fitness app.'}
+          </p>
           <div className="row" style={{ marginBottom: 8 }}>
             <button className={`btn ${mode === 'in' ? '' : 'ghost'}`} onClick={() => setMode('in')}>Sign in</button>
             <button className={`btn ${mode === 'up' ? '' : 'ghost'}`} onClick={() => setMode('up')}>Create account</button>
