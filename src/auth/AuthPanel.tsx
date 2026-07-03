@@ -40,7 +40,7 @@ export function AuthPanel() {
   return (
     <div style={{ position: 'relative' }}>
       <button className="btn" onClick={() => setOpen((o) => !o)}>
-        {configured ? 'Sign in / up' : 'Save my results'}
+        {configured ? 'Save · free account' : 'Save my results'}
       </button>
       {open && (
         <div className="card" style={{ position: 'absolute', right: 0, top: 'calc(100% + 8px)', width: 280, zIndex: 10 }}>

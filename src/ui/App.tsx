@@ -238,6 +238,9 @@ export function App() {
             <span>Take Point Fitness <span className="accent">·</span> {BRAND === 'operator' ? 'Operator' : BRAND === 'hybrid' ? 'Hybrid' : 'Benchmark'}</span>
           </div>
           <div className="subtle">{META.shortName} — {META.tagline}</div>
+          <div className="subtle" style={{ marginTop: 3 }}>
+            Powered by the <span className="accent" style={{ fontWeight: 700 }}>Take Point Fitness App Suite</span>
+          </div>
         </div>
         <div className="row" style={{ alignItems: 'center' }}>
           <a className="btn cta-primary" href={META.appUrl}>Get the app</a>
@@ -257,6 +260,16 @@ export function App() {
         <div style={{ margin: '8px 0 18px' }}>
           <h1 className="display">{COPY.hero.headline}</h1>
           <p className="lead">{COPY.hero.subhead}</p>
+        </div>
+
+        <div className="card suite-callout" style={{ borderColor: 'var(--primary)', marginBottom: 16 }}>
+          <p style={{ margin: 0 }}>
+            <strong>Free tool. Free account. Free app.</strong> Scoring here needs no sign-up — and when you
+            sign up to save, that same account logs you into the <strong>{APP_NAME} app</strong>, which has a
+            <strong> genuinely free version</strong>. No subscription, no card, no trial. Your scores and profile sync straight across.{' '}
+            <a className="btn" style={{ marginLeft: 4 }} href={META.appUrl}
+              onClick={() => event('get_app_click', { from: 'suite_callout', brand: BRAND })}>See the free app →</a>
+          </p>
         </div>
 
         <div className="banner">{CFG.synthetic ? '⚠️ ' : ''}{CFG.banner} Nothing is saved — entries clear when you leave{user ? ', unless you Save to your profile' : ' (sign in to keep your scores)'}.</div>
