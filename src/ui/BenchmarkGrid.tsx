@@ -11,9 +11,9 @@
 
 import { useState } from 'react';
 import { auditEntry, calc1RMVal } from '../engine';
-import type { AthleteLogs, AthleteProfile, BenchmarkDef } from '../engine/types';
+import type { AthleteLogs, AthleteProfile, BenchmarkDef, ComponentId } from '../engine/types';
 import { type Units, weightUnit, toKg, fromKg } from '../lib/units';
-import { benchmarkLabel } from './format';
+import { benchmarkLabel, componentLabel } from './format';
 
 interface Props {
   benchmarks: BenchmarkDef[];
@@ -132,35 +132,57 @@ function BenchmarkRow({ bench, profile, units, initial, onOrm, onRaceTime, onMan
 
 export function BenchmarkGrid({ benchmarks, profile, units, logs, resetKey, onOrm, onRaceTime, onManual }: Props) {
   const list = benchmarks.filter((b) => !b.optional);
+
+  const hasEntry = (id: string) =>
+    logs.orm.some((e) => e.benchmarkId === id) ||
+    logs.raceTimes.some((e) => e.benchmarkId === id) ||
+    logs.manual.some((e) => e.benchmarkId === id);
+  const entered = list.filter((b) => hasEntry(b.id)).length;
+
+  // Group by component so the inputs chunk into labelled areas (Miller's Law /
+  // Law of Common Region) and mirror the radar + limiters — a consistent model.
+  const groups: { component: ComponentId; items: BenchmarkDef[] }[] = [];
+  for (const b of list) {
+    let g = groups.find((x) => x.component === b.component);
+    if (!g) { g = { component: b.component, items: [] }; groups.push(g); }
+    g.items.push(b);
+  }
+
+  const renderRow = (b: BenchmarkDef) => {
+    const orm = logs.orm.find((e) => e.benchmarkId === b.id);
+    const race = logs.raceTimes.find((e) => e.benchmarkId === b.id);
+    const man = logs.manual.find((e) => e.benchmarkId === b.id);
+    const initial = {
+      w: orm ? fmtWeight(orm.weightKg, units) : '',
+      r: orm ? String(orm.reps) : '1',
+      t: race ? fmtTime(race.timeSec) : '',
+      v: man ? String(man.value) : '',
+    };
+    return (
+      <BenchmarkRow
+        key={`${b.id}:${resetKey}`}
+        bench={b}
+        profile={profile}
+        units={units}
+        initial={initial}
+        onOrm={onOrm}
+        onRaceTime={onRaceTime}
+        onManual={onManual}
+      />
+    );
+  };
+
   return (
     <div className="card">
-      <div className="bench-grid">
-        {list.map((b) => {
-          const orm = logs.orm.find((e) => e.benchmarkId === b.id);
-          const race = logs.raceTimes.find((e) => e.benchmarkId === b.id);
-          const man = logs.manual.find((e) => e.benchmarkId === b.id);
-          const initial = {
-            w: orm ? fmtWeight(orm.weightKg, units) : '',
-            r: orm ? String(orm.reps) : '1',
-            t: race ? fmtTime(race.timeSec) : '',
-            v: man ? String(man.value) : '',
-          };
-          return (
-            <BenchmarkRow
-              key={`${b.id}:${resetKey}`}
-              bench={b}
-              profile={profile}
-              units={units}
-              initial={initial}
-              onOrm={onOrm}
-              onRaceTime={onRaceTime}
-              onManual={onManual}
-            />
-          );
-        })}
-      </div>
-      <p className="subtle" style={{ marginTop: 12, marginBottom: 0 }}>
-        Fill in what you know — leave the rest blank. Your score updates as you type.
+      {groups.map((g) => (
+        <div key={g.component} className="bench-group">
+          <div className="bench-group-label">{componentLabel(g.component)}</div>
+          <div className="bench-grid">{g.items.map(renderRow)}</div>
+        </div>
+      ))}
+      <p className="subtle" style={{ marginTop: 14, marginBottom: 0 }}>
+        <strong style={{ color: 'var(--fg)' }}>{entered} of {list.length} entered.</strong>{' '}
+        Fill in what you know — the more you add, the more complete your score. It updates as you type.
       </p>
     </div>
   );

@@ -39,7 +39,7 @@ export function AuthPanel() {
 
   return (
     <div style={{ position: 'relative' }}>
-      <button className="btn" onClick={() => setOpen((o) => !o)}>
+      <button className="btn ghost" onClick={() => setOpen((o) => !o)}>
         {configured ? 'Save · free account' : 'Save my results'}
       </button>
       {open && (

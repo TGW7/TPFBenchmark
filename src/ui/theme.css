@@ -283,6 +283,19 @@ a {
 }
 
 /* ---- all-at-once benchmark entry grid ---- */
+.bench-group + .bench-group {
+  margin-top: 18px;
+}
+.bench-group-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--primary);
+  margin-bottom: 4px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--line);
+}
 .bench-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;

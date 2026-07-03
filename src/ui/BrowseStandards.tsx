@@ -8,7 +8,7 @@
 
 import type { BenchmarkDef, Sex, ThresholdSet, WodDef } from '../engine/types';
 import { wodPublicName, wodPublicSpec } from '../config/wods';
-import { formatValue } from './format';
+import { formatValue, benchmarkLabel } from './format';
 
 interface Props {
   benchmarks: BenchmarkDef[];
@@ -61,7 +61,7 @@ export function BrowseStandards({ benchmarks, wods, sex, unisex, onSexChange }: 
   const liftRows = benchmarks
     .filter((b) => !b.optional)
     .map((b) => ({
-      label: b.id,
+      label: benchmarkLabel(b),
       sub: b.normalization === 'bodyweight' ? '×bodyweight' : undefined,
       t: b.thresholds[sex],
       unit: b.unit,
