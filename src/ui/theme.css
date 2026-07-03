@@ -88,52 +88,24 @@ a {
 
 .topbar {
   position: relative;
-  z-index: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
-  color: #fff;
-  padding: 16px 0 18px;
-  margin-bottom: 26px;
+  padding: 8px 0 16px;
+  margin-bottom: 22px;
 }
-/* Full-bleed black band behind the header — the brand anchor. */
-.topbar::before {
+/* Full-bleed red underline spanning the viewport — the brand anchor. */
+.topbar::after {
   content: '';
   position: absolute;
-  z-index: -1;
-  top: -24px;
+  bottom: 0;
   left: 50%;
   transform: translateX(-50%);
   width: 100vw;
-  height: calc(100% + 24px);
-  background: linear-gradient(115deg, #3a1013 0%, #1a0a0b 44%, #0b0b0b 100%);
-  border-bottom: 4px solid var(--primary);
-}
-.topbar .subtle {
-  color: rgba(255, 255, 255, 0.72);
-}
-.topbar .btn.ghost {
-  color: #fff;
-  border-color: rgba(255, 255, 255, 0.4);
-}
-.topbar .btn.ghost:hover {
-  background: rgba(255, 255, 255, 0.12);
-}
-/* The auth dropdown is a light card — reset it out of the dark header context. */
-.topbar .card {
-  color: var(--fg);
-}
-.topbar .card .subtle {
-  color: var(--fg-muted);
-}
-.topbar .card .btn.ghost {
-  color: var(--fg);
-  border-color: var(--line);
-}
-.topbar .card .btn.ghost:hover {
-  background: transparent;
+  height: 4px;
+  background: var(--primary);
 }
 
 .brandmark {
