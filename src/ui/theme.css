@@ -108,7 +108,7 @@ a {
   transform: translateX(-50%);
   width: 100vw;
   height: calc(100% + 24px);
-  background: #101010;
+  background: linear-gradient(115deg, #3a1013 0%, #1a0a0b 44%, #0b0b0b 100%);
   border-bottom: 4px solid var(--primary);
 }
 .topbar .subtle {
@@ -198,6 +198,9 @@ a {
 .dash-side {
   display: grid;
   gap: 16px;
+  position: sticky;
+  top: 16px;
+  align-self: start;
 }
 .dash-side .card svg {
   max-width: 100%;
@@ -206,6 +209,9 @@ a {
 @media (max-width: 900px) {
   .dash {
     grid-template-columns: 1fr;
+  }
+  .dash-side {
+    position: static;
   }
 }
 
@@ -304,6 +310,22 @@ a {
 @media (max-width: 640px) {
   .bench-grid {
     grid-template-columns: 1fr;
+  }
+  /* Fitts's Law: ≥44px touch targets on mobile. */
+  .bench-inputs input,
+  .field input,
+  .field select {
+    min-height: 44px;
+    font-size: 1rem;
+  }
+  .bench-inputs input {
+    width: 84px;
+  }
+  [role='tablist'] .btn {
+    padding: 12px 18px;
+  }
+  .btn {
+    padding: 11px 16px;
   }
 }
 .bench-cell {
