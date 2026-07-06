@@ -47,6 +47,7 @@ export const WOD_PUBLIC_NAMES: Record<WodId, WodPublicName> = {
   diane: { name: 'Deadlift & HSPU (21-15-9)', spec: '21-15-9 deadlifts & handstand push-ups, for time' },
   cindy: { name: '20-min Bodyweight AMRAP', spec: 'AMRAP 20: 5 pull-ups, 10 push-ups, 15 air squats' },
   fight_gone_bad: { name: 'Five Stations', spec: '3 rounds of 5 one-minute stations, max reps' },
+  hyrox_race: { name: 'HYROX Race (Open)', spec: '8 × 1km run + 8 stations — official race time, open singles' },
 };
 
 export function wodPublicName(id: WodId): string {

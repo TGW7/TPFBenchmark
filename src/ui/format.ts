@@ -70,10 +70,12 @@ export function scoreTier(value: number | null): string | null {
 export function formatSeconds(totalSec: number): string {
   const sign = totalSec < 0 ? '-' : '';
   const s = Math.abs(totalSec);
-  const m = Math.floor(s / 60);
-  const rem = s - m * 60;
-  const remStr = Number.isInteger(rem) ? String(rem).padStart(2, '0') : rem.toFixed(1).padStart(4, '0');
-  return `${sign}${m}:${remStr}`;
+  const h = Math.floor(s / 3600);
+  const rest = s - h * 3600;
+  const m = Math.floor(rest / 60);
+  const remSec = rest - m * 60;
+  const remStr = Number.isInteger(remSec) ? String(remSec).padStart(2, '0') : remSec.toFixed(1).padStart(4, '0');
+  return h > 0 ? `${sign}${h}:${String(m).padStart(2, '0')}:${remStr}` : `${sign}${m}:${remStr}`;
 }
 
 /** Format a raw value in its native unit for display. */

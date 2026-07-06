@@ -362,21 +362,21 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
   "run_1mi": {
     "M": {
       "pass": 540,
-      "good": 450,
+      "good": 435,
       "excellent": 390,
       "elite": 330
     },
     "F": {
       "pass": 600,
-      "good": 510,
+      "good": 495,
       "excellent": 432,
-      "elite": 372
+      "elite": 390
     }
   },
   "run_5k": {
     "M": {
       "pass": 1800,
-      "good": 1500,
+      "good": 1440,
       "excellent": 1290,
       "elite": 1110
     },
@@ -384,21 +384,21 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
       "pass": 2010,
       "good": 1680,
       "excellent": 1440,
-      "elite": 1230
+      "elite": 1290
     }
   },
   "row_2k": {
     "M": {
       "pass": 480,
-      "good": 435,
-      "excellent": 405,
-      "elite": 375
+      "good": 450,
+      "excellent": 420,
+      "elite": 400
     },
     "F": {
       "pass": 540,
-      "good": 495,
-      "excellent": 462,
-      "elite": 420
+      "good": 510,
+      "excellent": 480,
+      "elite": 460
     }
   },
   "row_500m": {
@@ -412,12 +412,12 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
       "pass": 125,
       "good": 115,
       "excellent": 107,
-      "elite": 98
+      "elite": 102
     }
   },
   "back_squat_1rm": {
     "M": {
-      "pass": 1.25,
+      "pass": 1.35,
       "good": 1.6,
       "excellent": 2,
       "elite": 2.5
@@ -431,7 +431,7 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
   },
   "front_squat_1rm": {
     "M": {
-      "pass": 1.05,
+      "pass": 1.1,
       "good": 1.35,
       "excellent": 1.65,
       "elite": 2.05
@@ -445,7 +445,7 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
   },
   "deadlift_1rm": {
     "M": {
-      "pass": 1.5,
+      "pass": 1.65,
       "good": 1.9,
       "excellent": 2.3,
       "elite": 2.8
@@ -473,7 +473,7 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
   },
   "strict_press_1rm": {
     "M": {
-      "pass": 0.6,
+      "pass": 0.65,
       "good": 0.8,
       "excellent": 1,
       "elite": 1.25
@@ -517,8 +517,8 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
     "M": {
       "pass": 0.8,
       "good": 1.05,
-      "excellent": 1.3,
-      "elite": 1.6
+      "excellent": 1.35,
+      "elite": 1.65
     },
     "F": {
       "pass": 0.55,
@@ -532,13 +532,13 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
       "pass": 200,
       "good": 230,
       "excellent": 260,
-      "elite": 300
+      "elite": 285
     },
     "F": {
       "pass": 160,
       "good": 185,
       "excellent": 210,
-      "elite": 245
+      "elite": 220
     }
   },
   "strict_pullups": {
@@ -546,7 +546,7 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
       "pass": 5,
       "good": 11,
       "excellent": 18,
-      "elite": 28
+      "elite": 25
     },
     "F": {
       "pass": 1,
@@ -574,13 +574,13 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
       "pass": 8,
       "good": 18,
       "excellent": 30,
-      "elite": 50
+      "elite": 45
     },
     "F": {
       "pass": 5,
       "good": 12,
       "excellent": 22,
-      "elite": 40
+      "elite": 35
     }
   },
   "du_unbroken": {
@@ -588,13 +588,13 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
       "pass": 20,
       "good": 50,
       "excellent": 100,
-      "elite": 200
+      "elite": 150
     },
     "F": {
       "pass": 15,
       "good": 45,
       "excellent": 90,
-      "elite": 180
+      "elite": 130
     }
   },
   "max_mu": {
@@ -602,25 +602,25 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
       "pass": 1,
       "good": 4,
       "excellent": 9,
-      "elite": 18
+      "elite": 14
     },
     "F": {
       "pass": 1,
       "good": 2,
       "excellent": 5,
-      "elite": 11
+      "elite": 8
     }
   },
   "plank_hold": {
     "M": {
-      "pass": 60,
-      "good": 120,
+      "pass": 90,
+      "good": 150,
       "excellent": 180,
       "elite": 300
     },
     "F": {
-      "pass": 60,
-      "good": 120,
+      "pass": 90,
+      "good": 150,
       "excellent": 180,
       "elite": 300
     }
@@ -660,14 +660,14 @@ export const PATHWAY_WEIGHTS: Partial<Record<PathwayId, Partial<Record<Component
     "core_endurance": 6
   },
   "hyrox": {
-    "running": 28,
-    "erg_engine": 24,
-    "lower_strength": 14,
+    "running": 33,
+    "erg_engine": 13,
+    "lower_strength": 16,
     "upper_strength": 8,
     "olympic": 2,
-    "power": 6,
+    "power": 7,
     "gymnastics": 6,
-    "core_endurance": 12
+    "core_endurance": 15
   },
   "powerlifter": {
     "running": 0,
@@ -700,14 +700,14 @@ export const WOD_STANDARDS: Record<WodId, WodStandard> = {
       "M": {
         "pass": 360,
         "good": 240,
-        "excellent": 180,
-        "elite": 120
+        "excellent": 210,
+        "elite": 165
       },
       "F": {
         "pass": 420,
         "good": 300,
-        "excellent": 240,
-        "elite": 165
+        "excellent": 270,
+        "elite": 210
       }
     },
     "load": {
@@ -722,15 +722,15 @@ export const WOD_STANDARDS: Record<WodId, WodStandard> = {
     "thresholds": {
       "M": {
         "pass": 300,
-        "good": 180,
-        "excellent": 120,
-        "elite": 90
+        "good": 225,
+        "excellent": 165,
+        "elite": 135
       },
       "F": {
         "pass": 360,
         "good": 240,
         "excellent": 165,
-        "elite": 120
+        "elite": 145
       }
     },
     "load": {
@@ -768,15 +768,15 @@ export const WOD_STANDARDS: Record<WodId, WodStandard> = {
     "thresholds": {
       "M": {
         "pass": 600,
-        "good": 360,
-        "excellent": 240,
-        "elite": 150
+        "good": 390,
+        "excellent": 285,
+        "elite": 210
       },
       "F": {
         "pass": 720,
         "good": 480,
-        "excellent": 300,
-        "elite": 195
+        "excellent": 360,
+        "elite": 255
       }
     },
     "load": {
@@ -793,13 +793,13 @@ export const WOD_STANDARDS: Record<WodId, WodStandard> = {
         "pass": 12,
         "good": 18,
         "excellent": 22,
-        "elite": 28
+        "elite": 25
       },
       "F": {
         "pass": 10,
         "good": 16,
         "excellent": 20,
-        "elite": 25
+        "elite": 22
       }
     },
     "load": {
@@ -829,6 +829,29 @@ export const WOD_STANDARDS: Record<WodId, WodStandard> = {
       "movement": "Push press / SDHP / wall-ball",
       "M": 34,
       "F": 25
+    }
+  },
+  "hyrox_race": {
+    "unit": "h:mm:ss",
+    "lowerIsBetter": true,
+    "thresholds": {
+      "M": {
+        "pass": 5700,
+        "good": 5160,
+        "excellent": 4620,
+        "elite": 4080
+      },
+      "F": {
+        "pass": 6600,
+        "good": 6000,
+        "excellent": 5340,
+        "elite": 4740
+      }
+    },
+    "load": {
+      "movement": "Full race (open, singles)",
+      "M": null,
+      "F": null
     }
   }
 };
@@ -894,5 +917,15 @@ export const QUALITY_MIX: Record<WodId, Partial<Record<ComponentId, number | nul
     "power": 0.25,
     "gymnastics": 0.15,
     "core_endurance": 0.1
+  },
+  "hyrox_race": {
+    "running": 0.5,
+    "erg_engine": 0.15,
+    "lower_strength": 0.1,
+    "upper_strength": 0,
+    "olympic": 0,
+    "power": 0.1,
+    "gymnastics": 0,
+    "core_endurance": 0.15
   }
 };

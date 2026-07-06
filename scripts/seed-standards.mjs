@@ -44,25 +44,25 @@ const fmt = (unit, v) => (typeof v === 'number' && unit.includes(':') ? clock(v)
 
 // --- Standards: [id, unit, lower_is_better, M[p,g,e,el], F[p,g,e,el], source] ---
 const STANDARDS = [
-  ['run_1mi', 'mm:ss', 1, [540, 450, 390, 330], [600, 510, 432, 372], 'WMA + open race'],
-  ['run_5k', 'mm:ss', 1, [1800, 1500, 1290, 1110], [2010, 1680, 1440, 1230], 'WMA + open race'],
-  ['row_2k', 'mm:ss.s', 1, [480, 435, 405, 375], [540, 495, 462, 420], 'Expert + own-data'],
-  ['row_500m', 'mm:ss.s', 1, [110, 100, 93, 85], [125, 115, 107, 98], 'Expert + own-data'],
-  ['back_squat_1rm', 'xBW', 0, [1.25, 1.6, 2.0, 2.5], [1.0, 1.3, 1.6, 2.0], 'OpenPowerlifting (adj.)'],
-  ['front_squat_1rm', 'xBW', 0, [1.05, 1.35, 1.65, 2.05], [0.8, 1.05, 1.3, 1.65], 'Coaching ratios (≈0.82× back squat)'],
-  ['deadlift_1rm', 'xBW', 0, [1.5, 1.9, 2.3, 2.8], [1.2, 1.5, 1.9, 2.4], 'OpenPowerlifting (adj.)'],
+  ['run_1mi', 'mm:ss', 1, [540, 435, 390, 330], [600, 495, 432, 390], 'WMA + open race'],
+  ['run_5k', 'mm:ss', 1, [1800, 1440, 1290, 1110], [2010, 1680, 1440, 1290], 'WMA + open race'],
+  ['row_2k', 'mm:ss.s', 1, [480, 450, 420, 400], [540, 510, 480, 460], 'Expert + own-data'],
+  ['row_500m', 'mm:ss.s', 1, [110, 100, 93, 85], [125, 115, 107, 102], 'Expert + own-data'],
+  ['back_squat_1rm', 'xBW', 0, [1.35, 1.6, 2.0, 2.5], [1.0, 1.3, 1.6, 2.0], 'OpenPowerlifting (adj.)'],
+  ['front_squat_1rm', 'xBW', 0, [1.1, 1.35, 1.65, 2.05], [0.8, 1.05, 1.3, 1.65], 'Coaching ratios (≈0.82× back squat)'],
+  ['deadlift_1rm', 'xBW', 0, [1.65, 1.9, 2.3, 2.8], [1.2, 1.5, 1.9, 2.4], 'OpenPowerlifting (adj.)'],
   ['bench_1rm', 'xBW', 0, [1.0, 1.25, 1.6, 2.0], [0.6, 0.8, 1.0, 1.3], 'OpenPowerlifting (adj.)'],
-  ['strict_press_1rm', 'xBW', 0, [0.6, 0.8, 1.0, 1.25], [0.4, 0.55, 0.7, 0.9], 'Expert-curated'],
+  ['strict_press_1rm', 'xBW', 0, [0.65, 0.8, 1.0, 1.25], [0.4, 0.55, 0.7, 0.9], 'Expert-curated'],
   ['snatch_1rm', 'xBW', 0, [0.7, 0.95, 1.2, 1.5], [0.5, 0.65, 0.85, 1.05], 'Expert + coaching ratios'],
   ['clean_jerk_1rm', 'xBW', 0, [0.9, 1.2, 1.5, 1.85], [0.65, 0.85, 1.05, 1.3], 'Expert + coaching ratios'],
-  ['power_clean_1rm', 'xBW', 0, [0.8, 1.05, 1.3, 1.6], [0.55, 0.75, 0.95, 1.15], 'Expert-curated'],
-  ['broad_jump', 'cm', 0, [200, 230, 260, 300], [160, 185, 210, 245], 'Combine norms + expert'],
-  ['strict_pullups', 'reps', 0, [5, 11, 18, 28], [1, 5, 10, 18], 'Expert-curated'],
+  ['power_clean_1rm', 'xBW', 0, [0.8, 1.05, 1.35, 1.65], [0.55, 0.75, 0.95, 1.15], 'Expert-curated'],
+  ['broad_jump', 'cm', 0, [200, 230, 260, 285], [160, 185, 210, 220], 'Combine norms + expert'],
+  ['strict_pullups', 'reps', 0, [5, 11, 18, 25], [1, 5, 10, 18], 'Expert-curated'],
   ['hspu', 'reps', 0, [3, 8, 15, 25], [1, 4, 8, 15], 'Expert-curated'],
-  ['t2b', 'reps', 0, [8, 18, 30, 50], [5, 12, 22, 40], 'Expert-curated'],
-  ['du_unbroken', 'reps', 0, [20, 50, 100, 200], [15, 45, 90, 180], 'Expert-curated'],
-  ['max_mu', 'reps', 0, [1, 4, 9, 18], [1, 2, 5, 11], 'Expert-curated'],
-  ['plank_hold', 'mm:ss', 0, [60, 120, 180, 300], [60, 120, 180, 300], 'Norms + expert'],
+  ['t2b', 'reps', 0, [8, 18, 30, 45], [5, 12, 22, 35], 'Expert-curated'],
+  ['du_unbroken', 'reps', 0, [20, 50, 100, 150], [15, 45, 90, 130], 'Expert-curated'],
+  ['max_mu', 'reps', 0, [1, 4, 9, 14], [1, 2, 5, 8], 'Expert-curated'],
+  ['plank_hold', 'mm:ss', 0, [90, 150, 180, 300], [90, 150, 180, 300], 'Norms + expert'],
 ];
 
 // --- Weights: each pathway column sums to 100 ---
@@ -70,7 +70,7 @@ const WEIGHTS = {
   gym_goer: { running: 10, erg_engine: 10, lower_strength: 20, upper_strength: 20, olympic: 5, power: 10, gymnastics: 15, core_endurance: 10 },
   hybrid_athlete: { running: 20, erg_engine: 15, lower_strength: 15, upper_strength: 15, olympic: 5, power: 10, gymnastics: 10, core_endurance: 10 },
   crossfit_generalist: { running: 12, erg_engine: 12, lower_strength: 14, upper_strength: 12, olympic: 16, power: 12, gymnastics: 16, core_endurance: 6 },
-  hyrox: { running: 28, erg_engine: 24, lower_strength: 14, upper_strength: 8, olympic: 2, power: 6, gymnastics: 6, core_endurance: 12 },
+  hyrox: { running: 33, erg_engine: 13, lower_strength: 16, upper_strength: 8, olympic: 2, power: 7, gymnastics: 6, core_endurance: 15 },
   // Strength pathways: NO cardio (running/erg = 0). Scored on lifts only.
   powerlifter: { running: 0, erg_engine: 0, lower_strength: 45, upper_strength: 35, olympic: 0, power: 10, gymnastics: 0, core_endurance: 10 },
   bodybuilder: { running: 0, erg_engine: 0, lower_strength: 35, upper_strength: 35, olympic: 0, power: 10, gymnastics: 10, core_endurance: 10 },
@@ -78,12 +78,13 @@ const WEIGHTS = {
 
 // --- WOD standards: tiers M/F + prescribed Rx load (kg) per sex ---
 const WODS = {
-  fran: { unit: 'mm:ss', lib: 1, M: [360, 240, 180, 120], F: [420, 300, 240, 165], move: 'Thruster', loadM: 43, loadF: 30 },
-  grace: { unit: 'mm:ss', lib: 1, M: [300, 180, 120, 90], F: [360, 240, 165, 120], move: 'Clean & jerk', loadM: 61, loadF: 43 },
+  fran: { unit: 'mm:ss', lib: 1, M: [360, 240, 210, 165], F: [420, 300, 270, 210], move: 'Thruster', loadM: 43, loadF: 30 },
+  grace: { unit: 'mm:ss', lib: 1, M: [300, 225, 165, 135], F: [360, 240, 165, 145], move: 'Clean & jerk', loadM: 61, loadF: 43 },
   helen: { unit: 'mm:ss', lib: 1, M: [840, 660, 540, 450], F: [960, 780, 630, 510], move: 'Kettlebell swing', loadM: 24, loadF: 16 },
-  diane: { unit: 'mm:ss', lib: 1, M: [600, 360, 240, 150], F: [720, 480, 300, 195], move: 'Deadlift', loadM: 102, loadF: 70 },
-  cindy: { unit: 'rounds', lib: 0, M: [12, 18, 22, 28], F: [10, 16, 20, 25], move: 'Bodyweight', loadM: null, loadF: null },
+  diane: { unit: 'mm:ss', lib: 1, M: [600, 390, 285, 210], F: [720, 480, 360, 255], move: 'Deadlift', loadM: 102, loadF: 70 },
+  cindy: { unit: 'rounds', lib: 0, M: [12, 18, 22, 25], F: [10, 16, 20, 22], move: 'Bodyweight', loadM: null, loadF: null },
   fight_gone_bad: { unit: 'reps', lib: 0, M: [250, 320, 360, 420], F: [200, 270, 310, 370], move: 'Push press / SDHP / wall-ball', loadM: 34, loadF: 25 },
+  hyrox_race: { unit: 'h:mm:ss', lib: 1, M: [5700, 5160, 4620, 4080], F: [6600, 6000, 5340, 4740], move: 'Full race (open, singles)', loadM: null, loadF: null },
 };
 
 // --- Quality-mix: component → fraction of the WOD's demand (rows sum 1) ---
@@ -94,6 +95,7 @@ const QMIX = {
   diane: { lower_strength: 0.35, upper_strength: 0.35, gymnastics: 0.2, core_endurance: 0.1 },
   cindy: { gymnastics: 0.4, upper_strength: 0.25, lower_strength: 0.2, core_endurance: 0.15 },
   fight_gone_bad: { power: 0.25, erg_engine: 0.2, gymnastics: 0.15, upper_strength: 0.15, lower_strength: 0.15, core_endurance: 0.1 },
+  hyrox_race: { running: 0.5, erg_engine: 0.15, lower_strength: 0.1, power: 0.1, core_endurance: 0.15 },
 };
 
 // --- build sheets -----------------------------------------------------------
