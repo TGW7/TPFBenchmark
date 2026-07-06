@@ -91,6 +91,14 @@ Turn user submissions into trustworthy, self-correcting percentiles.
 - [ ] Per-benchmark live percentiles in the radar (currently overall only)
 - [ ] Verification flow for high-percentile claims (gate `needsVerification` exists; UI TODO)
 - [ ] Operator (per-unit, unisex) recalibration grouping; `--apply` write-back to the workbook
+- [x] **Lift standards recalibrated to the July 2026 external audit** (see
+      `docs/STANDARDS-AUDIT-2026-07.md` + `docs/AUDIT-IMPLEMENTATION-HANDOFF.md`) —
+      corrected elite tiers that sat at top 0.5–2% instead of top 5%, male
+      barbell pass tiers that sat near Novice, the 2k-row ladder, and female
+      engine elites; added `hyrox_race` as a display-tier benchmark and
+      rebalanced the HYROX pathway weights toward running. This is the
+      pre-flywheel bridge — Operator/ORS standards are separate and still
+      awaiting PTI review.
 
 ## Phase 5 — Ship 🟡 CONFIG READY
 
