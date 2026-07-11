@@ -8,6 +8,7 @@
 
 export * from './types';
 export { ANCHORS, BONUS_CAP, asResolved, scoreToPercentage } from './tier-curve';
+export { HABS_MAX_LEVEL, HABS_LEVEL_STEP, habsLevelInfo, type HABSLevelInfo } from './levels';
 export {
   resolveThresholds,
   applyAgeGrade,

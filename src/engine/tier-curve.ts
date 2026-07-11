@@ -21,8 +21,10 @@ export const ANCHORS = {
   elite: 100,
 } as const;
 
-/** Beating elite earns a small linear bonus, capped here. */
-export const BONUS_CAP = 110;
+/** 2026-07-11 — unified HABS model (app Phase 107): elite = the hard
+ *  ceiling. Beating elite reads 100, same as hitting it exactly — no
+ *  bonus tier. Constant kept (=100) so consumers clamp consistently. */
+export const BONUS_CAP = 100;
 
 /**
  * Bonus slope: matching/just-beating elite earns ~0; beating elite by 100 %

@@ -25,10 +25,10 @@ describe('scoreToPercentage — higher is better', () => {
     expect(scoreToPercentage(halfway, HB, false)).toBeCloseTo(77.5);
   });
 
-  it('awards a small linear bonus above elite, capped at 110', () => {
-    expect(scoreToPercentage(300, HB, false)).toBeCloseTo(105); // +50% over elite -> +5
-    expect(scoreToPercentage(400, HB, false)).toBeCloseTo(BONUS_CAP); // +100% -> +10 (cap)
-    expect(scoreToPercentage(1e6, HB, false)).toBe(BONUS_CAP);
+  it('elite is the hard ceiling — beating it still reads 100 (unified HABS model)', () => {
+    expect(scoreToPercentage(300, HB, false)).toBe(100);
+    expect(scoreToPercentage(400, HB, false)).toBe(BONUS_CAP); // BONUS_CAP === 100
+    expect(scoreToPercentage(1e6, HB, false)).toBe(100);
   });
 });
 
@@ -40,8 +40,8 @@ describe('scoreToPercentage — lower is better (inverted)', () => {
     expect(scoreToPercentage(LB.elite, LB, true)).toBeCloseTo(ANCHORS.elite);
   });
 
-  it('faster than elite earns the capped bonus', () => {
-    expect(scoreToPercentage(200, LB, true)).toBeCloseTo(105); // half the elite time -> +5
+  it('faster than elite still reads the flat 100 ceiling', () => {
+    expect(scoreToPercentage(200, LB, true)).toBe(100);
     expect(scoreToPercentage(0, LB, true)).toBe(BONUS_CAP);
   });
 

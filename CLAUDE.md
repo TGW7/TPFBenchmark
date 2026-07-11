@@ -23,7 +23,8 @@ green against the mostly-empty master.
 ## Invariants (tests enforce)
 
 - Pathway weights sum to **100** once populated (`validatePathwayWeights`).
-- Tier curve anchors: `pass/good/excellent/elite = 50/70/85/100`, bonus cap 110,
+- Tier curve anchors: `pass/good/excellent/elite = 50/70/85/100`; elite is a
+  HARD ceiling (no bonus tier — unified with the app's Phase 107 HABS model);
   lower-is-better inverts.
 - **WODs and the Capacity Index are never folded into the core HRS** in v1
   (`WOD_CORE_WEIGHT = 0`).

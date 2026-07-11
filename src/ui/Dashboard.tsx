@@ -2,6 +2,7 @@
 
 import type { CapacityResult, HrsResult, WeaknessReport } from '../engine/types';
 import { wodPublicName } from '../config/wods';
+import { HABS_MAX_LEVEL, habsLevelInfo } from '../engine/levels';
 import { Gauge } from './Gauge';
 import { componentLabel, formatPercent, formatPercentile, formatSigned, scoreColor, scoreTier } from './format';
 
@@ -48,6 +49,20 @@ export function Dashboard({ result, capacity, weakness, pathwayLabel, percentile
             }}>
               {scoreTier(result.overall)}
             </span>
+            {/* 2026-07-11 — unified HABS 20-level ladder (same ladder as the
+                TPF app: one profile, one number, one level). */}
+            {(() => {
+              const lvl = habsLevelInfo(result.overall);
+              return (
+                <p style={{ margin: '6px 0 0' }}>
+                  <strong>{lvl.level > 0 ? `Level ${lvl.level}` : 'Unranked'}</strong>
+                  {lvl.level >= HABS_MAX_LEVEL && ' 🏆'}
+                  {lvl.nextThreshold != null && (
+                    <span className="subtle"> · {Math.ceil(lvl.toNext)} pts to Level {lvl.level + 1}</span>
+                  )}
+                </p>
+              );
+            })()}
           </div>
         )}
         {percentile != null && (

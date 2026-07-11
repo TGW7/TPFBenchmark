@@ -6,12 +6,12 @@ describe('estimatedPercentile', () => {
     expect(estimatedPercentile(50)).toBeCloseTo(50);
     expect(estimatedPercentile(70)).toBeCloseTo(70);
     expect(estimatedPercentile(85)).toBeCloseTo(85);
-    expect(estimatedPercentile(100)).toBeCloseTo(95); // elite ≈ top 5%
+    expect(estimatedPercentile(100)).toBeCloseTo(99); // elite = ceiling ≈ top 1%
   });
   it('interpolates and clamps', () => {
     expect(estimatedPercentile(60)).toBeCloseTo(60); // halfway pass->good
     expect(estimatedPercentile(0)).toBe(0);
-    expect(estimatedPercentile(110)).toBeCloseTo(99);
+    expect(estimatedPercentile(110)).toBeCloseTo(99); // clamped to the 100 ceiling
     expect(estimatedPercentile(null)).toBeNull();
   });
 });

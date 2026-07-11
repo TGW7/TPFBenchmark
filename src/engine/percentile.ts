@@ -39,14 +39,14 @@ const KNOTS: ReadonlyArray<readonly [number, number]> = [
   [70, 70], // good
   [85, 85], // excellent
   [95, 90], // excellent→elite midpoint
-  [100, 95], // elite ≈ top 5%
-  [110, 99], // bonus ceiling
+  [98, 95],
+  [100, 99], // elite = hard ceiling ≈ top 1% (unified HABS model)
 ];
 
-/** Estimate a population percentile (0–99.9) from an HRS score (0–110). */
+/** Estimate a population percentile (0–99.9) from a HABS score (0–100). */
 export function estimatedPercentile(score: number | null): number | null {
   if (score == null) return null;
-  const s = Math.max(0, Math.min(110, score));
+  const s = Math.max(0, Math.min(100, score));
   for (let i = 1; i < KNOTS.length; i++) {
     const [x0, y0] = KNOTS[i - 1];
     const [x1, y1] = KNOTS[i];

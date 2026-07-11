@@ -39,7 +39,7 @@ describe('operator config (real ORS)', () => {
       logs: OPERATOR_SAMPLE_LOGS,
     });
     expect(r.overall).toBeGreaterThan(55);
-    expect(r.overall).toBeLessThanOrEqual(110);
+    expect(r.overall).toBeLessThanOrEqual(100);
     expect(r.coverage).toBeGreaterThan(0.5);
   });
 });
