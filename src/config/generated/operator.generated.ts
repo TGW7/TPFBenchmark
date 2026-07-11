@@ -255,8 +255,8 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         }
       },
       {
-        "id": "8_km_ruck",
-        "name": "8 km ruck",
+        "id": "8_km_ruck_35_lb",
+        "name": "8 km ruck (35 lb)",
         "component": "rucking",
         "source": "race_times",
         "unit": "sec",
@@ -265,7 +265,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "pass": 5400,
           "good": 4900,
           "excellent": 4500,
-          "elite": 4100
+          "elite": 2700
         }
       },
       {
@@ -1051,8 +1051,8 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         }
       },
       {
-        "id": "8_km_ruck",
-        "name": "8 km ruck",
+        "id": "8_km_ruck_35_lb",
+        "name": "8 km ruck (35 lb)",
         "component": "rucking",
         "source": "race_times",
         "unit": "sec",
@@ -1061,7 +1061,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "pass": 5400,
           "good": 4500,
           "excellent": 3600,
-          "elite": 180000
+          "elite": 2700
         }
       },
       {
@@ -2703,10 +2703,10 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "unit": "sec",
         "lowerIsBetter": true,
         "thresholds": {
-          "pass": 2592000,
-          "good": 1555200,
-          "excellent": 518400,
-          "elite": 0
+          "pass": 30,
+          "good": 20,
+          "excellent": 12,
+          "elite": 8
         }
       },
       {

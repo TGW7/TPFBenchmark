@@ -19,7 +19,7 @@ interface DashboardProps {
   showCapacity?: boolean;
   /** Stack the cards vertically (for the dashboard side column) instead of a row. */
   stacked?: boolean;
-  /** Short score name for the gauge (brand-aware: HABS / ORS). */
+  /** Score label for the gauge (brand-aware: "HABS Score" / "ORS"). */
   scoreLabel?: string;
 }
 
@@ -30,7 +30,7 @@ function capacityVerdict(index: number | null): string {
   return 'Expresses raw fitness about as expected.';
 }
 
-export function Dashboard({ result, capacity, weakness, pathwayLabel, percentile, percentileLive = false, percentileN = null, showCapacity = true, stacked = false, scoreLabel = 'HABS' }: DashboardProps) {
+export function Dashboard({ result, capacity, weakness, pathwayLabel, percentile, percentileLive = false, percentileN = null, showCapacity = true, stacked = false, scoreLabel = 'HABS Score' }: DashboardProps) {
   const coveragePct = Math.round(result.coverage * 100);
   const scoredWods = capacity.perWod.filter((w) => w.delta != null);
 

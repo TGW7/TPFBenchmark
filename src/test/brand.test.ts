@@ -13,6 +13,13 @@ describe('detectBrand', () => {
   it('exposes brand metadata', () => {
     expect(brandMeta('operatorbenchmark.x').shortName).toBe('ORS');
     expect(brandMeta('benchmark.x').shortName).toBe('HABS');
-    expect(BRAND_META.lift.fullName).toBe('Hybrid Athlete Benchmark Score');
+    expect(BRAND_META.lift.fullName).toBe('Hybrid Athlete Benchmark Scoring');
+    expect(BRAND_META.hybrid.fullName).toBe('Hybrid Athlete Benchmark Scoring');
+  });
+  it('brand-aware score label avoids redundant "Score Score"', () => {
+    expect(BRAND_META.lift.scoreLabel).toBe('HABS Score');
+    expect(BRAND_META.hybrid.scoreLabel).toBe('HABS Score');
+    // ORS's fullName already ends in "...Score" — the label stays bare.
+    expect(BRAND_META.operator.scoreLabel).toBe('ORS');
   });
 });

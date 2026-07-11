@@ -162,7 +162,7 @@ export function App() {
     if (result.overall == null) return;
     const weak = weakness.limiters.map(componentLabel).join(', ') || '—';
     const text =
-      `My ${META.shortName} — ${pathway.label}: ${Math.round(result.overall)}/100 ` +
+      `My ${META.scoreLabel} — ${pathway.label}: ${Math.round(result.overall)}/100 ` +
       `(≈ ${formatPercentile(percentile)} percentile). Weakest: ${weak}. ` +
       `Score yours free → ${SITE}`;
     navigator.clipboard?.writeText(text).then(
@@ -177,11 +177,11 @@ export function App() {
     try {
       const res = await shareResult(
         {
-          brand: BRAND, shortName: META.shortName, scoreText: String(Math.round(result.overall)),
+          brand: BRAND, shortName: META.scoreLabel, scoreText: String(Math.round(result.overall)),
           percentileText: formatPercentile(percentile), pathway: pathway.label,
           weakest: weakness.limiters.map(componentLabel)[0] ?? '—', site: SITE.replace('https://', ''),
         },
-        `My ${META.shortName} — ${Math.round(result.overall)} (${pathway.label}). Score yours free.`,
+        `My ${META.scoreLabel} — ${Math.round(result.overall)} (${pathway.label}). Score yours free.`,
       );
       setShareMsg(res === 'shared' ? 'Shared!' : 'Image downloaded.');
     } catch {
@@ -237,7 +237,7 @@ export function App() {
             <img className="brandlogo" src="/tpf-mark.png" width="34" height="34" alt="" />
             <span>Take Point Fitness <span className="accent">·</span> {BRAND === 'operator' ? 'Operator' : BRAND === 'hybrid' ? 'Hybrid' : 'Benchmark'}</span>
           </div>
-          <div className="subtle">{META.shortName} — {META.tagline}</div>
+          <div className="subtle">{META.scoreLabel} — {META.tagline}</div>
           <div className="subtle" style={{ marginTop: 3 }}>
             Powered by the <span className="accent" style={{ fontWeight: 700 }}>Take Point Fitness App Suite</span>
           </div>
@@ -345,7 +345,7 @@ export function App() {
               percentileN={poolPct != null ? poolN : null}
               showCapacity={showWods}
               stacked
-              scoreLabel={META.shortName}
+              scoreLabel={META.scoreLabel}
             />
             <div className="card">
               <h2>{pathway.radar === 'benchmarks' ? 'Per-lift radar' : 'Weakness radar'}</h2>

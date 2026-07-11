@@ -7,11 +7,11 @@ interface GaugeProps {
   /** Curve caps at 110 (elite bonus); the gauge ring uses the same ceiling. */
   max?: number;
   caption?: string;
-  /** Short score name shown under the number (brand-aware: HABS / ORS). */
+  /** Score label shown under the number (brand-aware: "HABS Score" / "ORS"). */
   label?: string;
 }
 
-export function Gauge({ value, max = 110, caption, label = 'HABS' }: GaugeProps) {
+export function Gauge({ value, max = 110, caption, label = 'HABS Score' }: GaugeProps) {
   const size = 200;
   const stroke = 18;
   const r = (size - stroke) / 2;

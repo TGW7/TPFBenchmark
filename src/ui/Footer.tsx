@@ -19,7 +19,7 @@ export function Footer({ meta, onCalculator, onStandards }: Props) {
       <div className="row" style={{ justifyContent: 'space-between', alignItems: 'flex-start', gap: 24 }}>
         <div>
           <div className="brandmark" style={{ fontSize: '1.1rem' }}>
-            {meta.shortName} <span className="accent">·</span> Take Point Fitness
+            {meta.scoreLabel} <span className="accent">·</span> Take Point Fitness
           </div>
           <div className="subtle" style={{ maxWidth: 320 }}>{meta.tagline}</div>
         </div>

@@ -25,6 +25,13 @@ export interface BrandMeta {
   shortName: string;
   fullName: string;
   tagline: string;
+  /**
+   * The label for "the number you get" (e.g. under the gauge, in share text).
+   * Brand-aware so it doesn't read redundantly: HABS = "...Scoring" (the
+   * system), so what you get is a "HABS Score"; ORS's fullName already ends
+   * in "...Score", so the label is just "ORS".
+   */
+  scoreLabel: string;
   /** The paid app this site funnels into (the direct-CTA destination). */
   appUrl: string;
 }
@@ -33,15 +40,17 @@ export const BRAND_META: Record<Brand, BrandMeta> = {
   lift: {
     brand: 'lift',
     shortName: 'HABS',
-    fullName: 'Hybrid Athlete Benchmark Score',
+    fullName: 'Hybrid Athlete Benchmark Scoring',
     tagline: 'Free benchmark calculator · pick a pathway, enter your numbers, see where you rank',
+    scoreLabel: 'HABS Score',
     appUrl: 'https://app.takepointfitness.com',
   },
   hybrid: {
     brand: 'hybrid',
     shortName: 'HABS',
-    fullName: 'Hybrid Athlete Benchmark Score',
+    fullName: 'Hybrid Athlete Benchmark Scoring',
     tagline: 'Free hybrid-athlete benchmark · score your strength and engine against hybrid athlete standards',
+    scoreLabel: 'HABS Score',
     appUrl: 'https://hybridapp.takepointfitness.com',
   },
   operator: {
@@ -49,6 +58,7 @@ export const BRAND_META: Record<Brand, BrandMeta> = {
     shortName: 'ORS',
     fullName: 'Operational Readiness Score',
     tagline: 'Free tactical-fitness benchmark · score against operator standards',
+    scoreLabel: 'ORS',
     appUrl: 'https://operatorapp.takepointfitness.com',
   },
 };
