@@ -58,7 +58,8 @@ export type LiftPathwayId =
   | 'crossfit_generalist'
   | 'hyrox'
   | 'powerlifter'
-  | 'bodybuilder';
+  | 'bodybuilder'
+  | 'triathlete';
 
 /** Operator pathway ids are unit slugs codegen'd from the ORS workbook, so the
  *  general PathwayId is a string; lift still uses the typed LiftPathwayId. */

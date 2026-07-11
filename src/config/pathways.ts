@@ -16,6 +16,7 @@ const PATHWAY_LABELS: Record<LiftPathwayId, string> = {
   hyrox: 'HYROX',
   powerlifter: 'Powerlifter',
   bodybuilder: 'Bodybuilder',
+  triathlete: 'Triathlete',
 };
 
 /** Strength pathways show per-lift axes on the radar; others show components. */

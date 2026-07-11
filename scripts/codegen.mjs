@@ -44,7 +44,7 @@ const CORE_COMPONENTS = [
   'gymnastics',
   'core_endurance',
 ];
-const PATHWAYS = ['gym_goer', 'hybrid_athlete', 'crossfit_generalist', 'hyrox', 'powerlifter', 'bodybuilder'];
+const PATHWAYS = ['gym_goer', 'hybrid_athlete', 'crossfit_generalist', 'hyrox', 'powerlifter', 'bodybuilder', 'triathlete'];
 
 // ---- helpers ---------------------------------------------------------------
 

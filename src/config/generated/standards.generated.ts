@@ -688,6 +688,16 @@ export const PATHWAY_WEIGHTS: Partial<Record<PathwayId, Partial<Record<Component
     "power": 10,
     "gymnastics": 10,
     "core_endurance": 10
+  },
+  "triathlete": {
+    "running": 40,
+    "erg_engine": 25,
+    "lower_strength": 12,
+    "upper_strength": 5,
+    "olympic": 0,
+    "power": 5,
+    "gymnastics": 3,
+    "core_endurance": 10
   }
 };
 

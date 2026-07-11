@@ -7,7 +7,7 @@ import type { PathwayConfig } from '../engine/types';
 describe('pathway weight invariant', () => {
   it('defines the v1 lift pathways', () => {
     expect(PATHWAY_IDS).toEqual([
-      'gym_goer', 'hybrid_athlete', 'crossfit_generalist', 'hyrox', 'powerlifter', 'bodybuilder',
+      'gym_goer', 'hybrid_athlete', 'crossfit_generalist', 'hyrox', 'powerlifter', 'bodybuilder', 'triathlete',
     ]);
   });
 
