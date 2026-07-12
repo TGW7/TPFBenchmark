@@ -19,11 +19,14 @@ import type { AthleteLogs } from '../engine/types';
 /** benchmark id → the app's ORM lift name (exact title-case key in profiles.orm). */
 export const ORM_TO_APP: Record<string, string> = {
   back_squat_1rm: 'Back Squat',
+  front_squat_1rm: 'Front Squat',
   deadlift_1rm: 'Deadlift',
   bench_1rm: 'Bench Press',
   strict_press_1rm: 'Overhead Press',
   power_clean_1rm: 'Power Clean',
-  // snatch_1rm / clean_jerk_1rm have no app ORM lift → not synced.
+  // 2026-07-12 — the app has Olympic 1RM slots (Phase 68), so these sync now.
+  snatch_1rm: 'Snatch',
+  clean_jerk_1rm: 'Clean & Jerk',
 };
 
 /** benchmark id → the app's race modality + event key in profiles.race_times. */
