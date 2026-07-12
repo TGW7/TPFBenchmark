@@ -54,18 +54,20 @@ describe('absolute standards (2026-07-12 conversion)', () => {
 });
 
 describe('per-pathway overrides', () => {
-  it('powerlifter elite = drug-tested competitor calibration (M 240/165/275 S/B/D)', () => {
+  it('powerlifter elite = world-top-100 tested territory (M 340/240/380 S/B/D)', () => {
+    // Owner calibration 2026-07-12: IPF classic raw WRs 321-363 kg in the
+    // mid classes — elite means world-class, not top-percentile club lifter.
     const pl = PATHWAY_STANDARD_OVERRIDES.powerlifter!;
-    expect(pl.back_squat_1rm.M.elite).toBe(240);
-    expect(pl.bench_1rm.M.elite).toBe(165);
-    expect(pl.deadlift_1rm.M.elite).toBe(275);
-    expect(pl.back_squat_1rm.F.elite).toBe(145);
+    expect(pl.back_squat_1rm.M.elite).toBe(340);
+    expect(pl.bench_1rm.M.elite).toBe(240);
+    expect(pl.deadlift_1rm.M.elite).toBe(380);
+    expect(pl.back_squat_1rm.F.elite).toBe(210);
   });
 
   it('withPathwayStandards swaps overridden tiers and keeps the rest on base', () => {
     const defs = withPathwayStandards('powerlifter', HRS_BENCHMARKS);
     const squat = defs.find((b) => b.id === 'back_squat_1rm')!;
-    expect(squat.thresholds.M.elite).toBe(240);
+    expect(squat.thresholds.M.elite).toBe(340);
     // run_5k has no powerlifter override → base tiers.
     const run = defs.find((b) => b.id === 'run_5k')!;
     expect(run.thresholds).toEqual(byId('run_5k').thresholds);
@@ -97,9 +99,9 @@ describe('per-pathway overrides', () => {
       const cfg = brandConfig(brand);
       const squatFor = (p: string) =>
         cfg.benchmarksFor(p).find((b) => b.id === 'back_squat_1rm')!.thresholds.M.elite;
-      expect(squatFor('powerlifter')).toBe(240);
+      expect(squatFor('powerlifter')).toBe(340);
       expect(squatFor('hyrox')).toBe(170);
-      expect(squatFor('crossfit_generalist')).toBe(205); // 2025 Games-field floor
+      expect(squatFor('crossfit_generalist')).toBe(230); // world-top-100 territory
       expect(squatFor('hybrid_athlete')).toBe(190); // base, no override
     }
   });
