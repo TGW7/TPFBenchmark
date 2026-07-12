@@ -113,7 +113,7 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Yes (no restriction)",
     "referencePopulation": "Competitive lifters (strong-biased)",
     "launchMethod": "Licensed data (adjust for general pop)",
-    "notes": "Squat contested in PL; rich by sex/BW/age | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+    "notes": "Squat contested in PL; rich by sex/BW/age | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
   },
   {
     "id": "front_squat_1rm",
@@ -128,7 +128,7 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Yes",
     "referencePopulation": "Trained adults",
     "launchMethod": "Coach-curated (~0.82x back squat)",
-    "notes": "Front squat 1RM | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+    "notes": "Front squat 1RM | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
   },
   {
     "id": "deadlift_1rm",
@@ -143,7 +143,7 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Yes (no restriction)",
     "referencePopulation": "Competitive lifters",
     "launchMethod": "Licensed data (adjust)",
-    "notes": "Contested in PL | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+    "notes": "Contested in PL | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
   },
   {
     "id": "bench_1rm",
@@ -158,7 +158,7 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Yes (no restriction)",
     "referencePopulation": "Competitive lifters",
     "launchMethod": "Licensed data (adjust)",
-    "notes": "Bench contested in PL | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+    "notes": "Bench contested in PL | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
   },
   {
     "id": "strict_press_1rm",
@@ -173,7 +173,7 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Expert",
     "referencePopulation": "Own users",
     "launchMethod": "Expert-curated + own-data",
-    "notes": "Anchor ratio vs bench / bodyweight; refine from own data | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+    "notes": "Anchor ratio vs bench / bodyweight; refine from own data | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
   },
   {
     "id": "snatch_1rm",
@@ -188,7 +188,7 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "License required / expert",
     "referencePopulation": "Elite weightlifters",
     "launchMethod": "Expert-curated + own-data",
-    "notes": "Comp data elite-biased; anchor with coaching ratios | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+    "notes": "Comp data elite-biased; anchor with coaching ratios | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
   },
   {
     "id": "clean_jerk_1rm",
@@ -203,7 +203,7 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "License required / expert",
     "referencePopulation": "Elite weightlifters",
     "launchMethod": "Expert-curated + own-data",
-    "notes": "As snatch | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+    "notes": "As snatch | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
   },
   {
     "id": "power_clean_1rm",
@@ -218,7 +218,7 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Expert",
     "referencePopulation": "Own users",
     "launchMethod": "Expert-curated + own-data",
-    "notes": "Ratio vs clean & jerk; refine from own data | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+    "notes": "Ratio vs clean & jerk; refine from own data | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
   },
   {
     "id": "broad_jump",
@@ -361,8 +361,8 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
 export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
   "run_1mi": {
     "M": {
-      "pass": 495,
-      "novice": 460,
+      "pass": 545,
+      "novice": 485,
       "good": 420,
       "excellent": 345,
       "intermediate": 370,
@@ -370,8 +370,8 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
       "elite": 300
     },
     "F": {
-      "pass": 565,
-      "novice": 530,
+      "pass": 620,
+      "novice": 555,
       "good": 490,
       "excellent": 410,
       "intermediate": 435,
@@ -381,8 +381,8 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
   },
   "run_5k": {
     "M": {
-      "pass": 1640,
-      "novice": 1530,
+      "pass": 1805,
+      "novice": 1605,
       "good": 1420,
       "excellent": 1185,
       "intermediate": 1265,
@@ -390,8 +390,8 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
       "elite": 1050
     },
     "F": {
-      "pass": 1890,
-      "novice": 1765,
+      "pass": 2080,
+      "novice": 1855,
       "good": 1640,
       "excellent": 1380,
       "intermediate": 1465,
@@ -401,8 +401,8 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
   },
   "row_2k": {
     "M": {
-      "pass": 505,
-      "novice": 480,
+      "pass": 555,
+      "novice": 505,
       "good": 460,
       "excellent": 410,
       "intermediate": 425,
@@ -410,8 +410,8 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
       "elite": 390
     },
     "F": {
-      "pass": 580,
-      "novice": 550,
+      "pass": 640,
+      "novice": 580,
       "good": 525,
       "excellent": 465,
       "intermediate": 485,
@@ -441,8 +441,8 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
   },
   "back_squat_1rm": {
     "M": {
-      "pass": 90,
-      "novice": 105,
+      "pass": 80,
+      "novice": 100,
       "good": 120,
       "excellent": 155,
       "intermediate": 145,
@@ -450,8 +450,8 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
       "elite": 190
     },
     "F": {
-      "pass": 55,
-      "novice": 65,
+      "pass": 50,
+      "novice": 60,
       "good": 75,
       "excellent": 97,
       "intermediate": 90,
@@ -461,8 +461,8 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
   },
   "front_squat_1rm": {
     "M": {
-      "pass": 75,
-      "novice": 90,
+      "pass": 70,
+      "novice": 85,
       "good": 100,
       "excellent": 127,
       "intermediate": 120,
@@ -470,7 +470,7 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
       "elite": 155
     },
     "F": {
-      "pass": 45,
+      "pass": 40,
       "novice": 50,
       "good": 60,
       "excellent": 80,
@@ -481,8 +481,8 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
   },
   "deadlift_1rm": {
     "M": {
-      "pass": 105,
-      "novice": 120,
+      "pass": 95,
+      "novice": 115,
       "good": 140,
       "excellent": 180,
       "intermediate": 165,
@@ -490,8 +490,8 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
       "elite": 225
     },
     "F": {
-      "pass": 70,
-      "novice": 80,
+      "pass": 65,
+      "novice": 75,
       "good": 90,
       "excellent": 118,
       "intermediate": 110,
@@ -501,8 +501,8 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
   },
   "bench_1rm": {
     "M": {
-      "pass": 75,
-      "novice": 90,
+      "pass": 70,
+      "novice": 85,
       "good": 100,
       "excellent": 130,
       "intermediate": 120,
@@ -510,7 +510,7 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
       "elite": 160
     },
     "F": {
-      "pass": 45,
+      "pass": 40,
       "novice": 50,
       "good": 55,
       "excellent": 73,
@@ -521,7 +521,7 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
   },
   "strict_press_1rm": {
     "M": {
-      "pass": 45,
+      "pass": 40,
       "novice": 50,
       "good": 60,
       "excellent": 77,
@@ -530,7 +530,7 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
       "elite": 95
     },
     "F": {
-      "pass": 25,
+      "pass": 20,
       "novice": 30,
       "good": 35,
       "excellent": 45,
@@ -541,8 +541,8 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
   },
   "snatch_1rm": {
     "M": {
-      "pass": 45,
-      "novice": 55,
+      "pass": 40,
+      "novice": 50,
       "good": 65,
       "excellent": 81,
       "intermediate": 75,
@@ -550,7 +550,7 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
       "elite": 100
     },
     "F": {
-      "pass": 30,
+      "pass": 25,
       "novice": 35,
       "good": 40,
       "excellent": 50,
@@ -561,8 +561,8 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
   },
   "clean_jerk_1rm": {
     "M": {
-      "pass": 60,
-      "novice": 70,
+      "pass": 55,
+      "novice": 65,
       "good": 80,
       "excellent": 105,
       "intermediate": 95,
@@ -570,7 +570,7 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
       "elite": 130
     },
     "F": {
-      "pass": 40,
+      "pass": 35,
       "novice": 45,
       "good": 50,
       "excellent": 66,
@@ -581,8 +581,8 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
   },
   "power_clean_1rm": {
     "M": {
-      "pass": 55,
-      "novice": 65,
+      "pass": 50,
+      "novice": 60,
       "good": 75,
       "excellent": 97,
       "intermediate": 90,
@@ -590,7 +590,7 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
       "elite": 120
     },
     "F": {
-      "pass": 35,
+      "pass": 30,
       "novice": 40,
       "good": 50,
       "excellent": 63,
@@ -748,8 +748,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
   "gym_goer": {
     "back_squat_1rm": {
       "M": {
-        "pass": 100,
-        "novice": 120,
+        "pass": 90,
+        "novice": 115,
         "good": 135,
         "excellent": 175,
         "intermediate": 160,
@@ -757,8 +757,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 215
       },
       "F": {
-        "pass": 50,
-        "novice": 60,
+        "pass": 45,
+        "novice": 55,
         "good": 70,
         "excellent": 102,
         "intermediate": 90,
@@ -768,8 +768,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "front_squat_1rm": {
       "M": {
-        "pass": 80,
-        "novice": 90,
+        "pass": 70,
+        "novice": 85,
         "good": 105,
         "excellent": 139,
         "intermediate": 130,
@@ -777,7 +777,7 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 170
       },
       "F": {
-        "pass": 45,
+        "pass": 40,
         "novice": 50,
         "good": 60,
         "excellent": 82,
@@ -788,8 +788,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "deadlift_1rm": {
       "M": {
-        "pass": 120,
-        "novice": 135,
+        "pass": 110,
+        "novice": 130,
         "good": 150,
         "excellent": 200,
         "intermediate": 185,
@@ -797,8 +797,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 245
       },
       "F": {
-        "pass": 60,
-        "novice": 70,
+        "pass": 55,
+        "novice": 65,
         "good": 85,
         "excellent": 118,
         "intermediate": 105,
@@ -808,8 +808,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "bench_1rm": {
       "M": {
-        "pass": 75,
-        "novice": 90,
+        "pass": 70,
+        "novice": 85,
         "good": 100,
         "excellent": 135,
         "intermediate": 125,
@@ -817,7 +817,7 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 165
       },
       "F": {
-        "pass": 30,
+        "pass": 25,
         "novice": 40,
         "good": 50,
         "excellent": 72,
@@ -828,8 +828,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "strict_press_1rm": {
       "M": {
-        "pass": 50,
-        "novice": 60,
+        "pass": 45,
+        "novice": 55,
         "good": 65,
         "excellent": 88,
         "intermediate": 80,
@@ -848,8 +848,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "snatch_1rm": {
       "M": {
-        "pass": 55,
-        "novice": 65,
+        "pass": 50,
+        "novice": 60,
         "good": 75,
         "excellent": 105,
         "intermediate": 95,
@@ -857,7 +857,7 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 133
       },
       "F": {
-        "pass": 30,
+        "pass": 25,
         "novice": 35,
         "good": 40,
         "excellent": 58,
@@ -868,8 +868,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "clean_jerk_1rm": {
       "M": {
-        "pass": 65,
-        "novice": 80,
+        "pass": 60,
+        "novice": 75,
         "good": 90,
         "excellent": 126,
         "intermediate": 115,
@@ -877,7 +877,7 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 158
       },
       "F": {
-        "pass": 40,
+        "pass": 35,
         "novice": 45,
         "good": 50,
         "excellent": 72,
@@ -888,8 +888,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "power_clean_1rm": {
       "M": {
-        "pass": 70,
-        "novice": 80,
+        "pass": 65,
+        "novice": 75,
         "good": 90,
         "excellent": 122,
         "intermediate": 110,
@@ -897,7 +897,7 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 150
       },
       "F": {
-        "pass": 40,
+        "pass": 35,
         "novice": 45,
         "good": 50,
         "excellent": 70,
@@ -908,8 +908,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "run_1mi": {
       "M": {
-        "pass": 540,
-        "novice": 495,
+        "pass": 595,
+        "novice": 520,
         "good": 450,
         "excellent": 390,
         "intermediate": 410,
@@ -917,8 +917,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 345
       },
       "F": {
-        "pass": 630,
-        "novice": 580,
+        "pass": 695,
+        "novice": 610,
         "good": 525,
         "excellent": 460,
         "intermediate": 480,
@@ -928,8 +928,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "run_5k": {
       "M": {
-        "pass": 1800,
-        "novice": 1650,
+        "pass": 1980,
+        "novice": 1730,
         "good": 1500,
         "excellent": 1290,
         "intermediate": 1360,
@@ -937,8 +937,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 1140
       },
       "F": {
-        "pass": 2040,
-        "novice": 1890,
+        "pass": 2245,
+        "novice": 1985,
         "good": 1740,
         "excellent": 1500,
         "intermediate": 1580,
@@ -948,8 +948,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "row_2k": {
       "M": {
-        "pass": 500,
-        "novice": 480,
+        "pass": 550,
+        "novice": 505,
         "good": 460,
         "excellent": 425,
         "intermediate": 435,
@@ -957,8 +957,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 405
       },
       "F": {
-        "pass": 570,
-        "novice": 550,
+        "pass": 625,
+        "novice": 580,
         "good": 525,
         "excellent": 485,
         "intermediate": 500,
@@ -970,8 +970,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
   "crossfit_generalist": {
     "back_squat_1rm": {
       "M": {
-        "pass": 95,
-        "novice": 115,
+        "pass": 85,
+        "novice": 110,
         "good": 135,
         "excellent": 175,
         "intermediate": 160,
@@ -979,8 +979,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 210
       },
       "F": {
-        "pass": 65,
-        "novice": 80,
+        "pass": 60,
+        "novice": 75,
         "good": 90,
         "excellent": 120,
         "intermediate": 110,
@@ -990,8 +990,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "front_squat_1rm": {
       "M": {
-        "pass": 80,
-        "novice": 100,
+        "pass": 70,
+        "novice": 95,
         "good": 115,
         "excellent": 148,
         "intermediate": 135,
@@ -999,8 +999,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 180
       },
       "F": {
-        "pass": 55,
-        "novice": 65,
+        "pass": 50,
+        "novice": 60,
         "good": 75,
         "excellent": 103,
         "intermediate": 95,
@@ -1010,8 +1010,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "deadlift_1rm": {
       "M": {
-        "pass": 100,
-        "novice": 120,
+        "pass": 90,
+        "novice": 115,
         "good": 140,
         "excellent": 175,
         "intermediate": 160,
@@ -1019,8 +1019,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 210
       },
       "F": {
-        "pass": 70,
-        "novice": 80,
+        "pass": 65,
+        "novice": 75,
         "good": 93,
         "excellent": 120,
         "intermediate": 110,
@@ -1030,8 +1030,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "bench_1rm": {
       "M": {
-        "pass": 75,
-        "novice": 90,
+        "pass": 70,
+        "novice": 85,
         "good": 100,
         "excellent": 122,
         "intermediate": 115,
@@ -1039,7 +1039,7 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 140
       },
       "F": {
-        "pass": 40,
+        "pass": 35,
         "novice": 45,
         "good": 50,
         "excellent": 72,
@@ -1050,8 +1050,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "snatch_1rm": {
       "M": {
-        "pass": 50,
-        "novice": 60,
+        "pass": 45,
+        "novice": 55,
         "good": 70,
         "excellent": 100,
         "intermediate": 90,
@@ -1059,7 +1059,7 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 125
       },
       "F": {
-        "pass": 35,
+        "pass": 30,
         "novice": 40,
         "good": 45,
         "excellent": 69,
@@ -1070,8 +1070,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "clean_jerk_1rm": {
       "M": {
-        "pass": 65,
-        "novice": 80,
+        "pass": 60,
+        "novice": 75,
         "good": 90,
         "excellent": 126,
         "intermediate": 115,
@@ -1079,7 +1079,7 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 155
       },
       "F": {
-        "pass": 45,
+        "pass": 40,
         "novice": 50,
         "good": 60,
         "excellent": 87,
@@ -1090,8 +1090,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "power_clean_1rm": {
       "M": {
-        "pass": 60,
-        "novice": 70,
+        "pass": 55,
+        "novice": 65,
         "good": 80,
         "excellent": 110,
         "intermediate": 100,
@@ -1099,7 +1099,7 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 135
       },
       "F": {
-        "pass": 40,
+        "pass": 35,
         "novice": 45,
         "good": 50,
         "excellent": 75,
@@ -1110,8 +1110,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "run_1mi": {
       "M": {
-        "pass": 495,
-        "novice": 460,
+        "pass": 545,
+        "novice": 485,
         "good": 420,
         "excellent": 360,
         "intermediate": 380,
@@ -1119,8 +1119,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 320
       },
       "F": {
-        "pass": 570,
-        "novice": 520,
+        "pass": 625,
+        "novice": 545,
         "good": 475,
         "excellent": 415,
         "intermediate": 435,
@@ -1130,8 +1130,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "run_5k": {
       "M": {
-        "pass": 1620,
-        "novice": 1515,
+        "pass": 1780,
+        "novice": 1590,
         "good": 1410,
         "excellent": 1230,
         "intermediate": 1290,
@@ -1139,8 +1139,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 1110
       },
       "F": {
-        "pass": 1830,
-        "novice": 1710,
+        "pass": 2015,
+        "novice": 1795,
         "good": 1590,
         "excellent": 1400,
         "intermediate": 1465,
@@ -1150,8 +1150,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "row_2k": {
       "M": {
-        "pass": 470,
-        "novice": 450,
+        "pass": 515,
+        "novice": 470,
         "good": 430,
         "excellent": 400,
         "intermediate": 410,
@@ -1159,8 +1159,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 380
       },
       "F": {
-        "pass": 540,
-        "novice": 520,
+        "pass": 595,
+        "novice": 545,
         "good": 495,
         "excellent": 465,
         "intermediate": 475,
@@ -1172,8 +1172,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
   "hyrox": {
     "back_squat_1rm": {
       "M": {
-        "pass": 80,
-        "novice": 90,
+        "pass": 70,
+        "novice": 85,
         "good": 105,
         "excellent": 140,
         "intermediate": 130,
@@ -1181,8 +1181,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 170
       },
       "F": {
-        "pass": 50,
-        "novice": 60,
+        "pass": 45,
+        "novice": 55,
         "good": 70,
         "excellent": 90,
         "intermediate": 85,
@@ -1192,8 +1192,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "front_squat_1rm": {
       "M": {
-        "pass": 65,
-        "novice": 80,
+        "pass": 60,
+        "novice": 75,
         "good": 90,
         "excellent": 115,
         "intermediate": 105,
@@ -1201,7 +1201,7 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 140
       },
       "F": {
-        "pass": 45,
+        "pass": 40,
         "novice": 50,
         "good": 55,
         "excellent": 74,
@@ -1212,8 +1212,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "deadlift_1rm": {
       "M": {
-        "pass": 100,
-        "novice": 120,
+        "pass": 90,
+        "novice": 115,
         "good": 135,
         "excellent": 172,
         "intermediate": 160,
@@ -1221,8 +1221,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 210
       },
       "F": {
-        "pass": 65,
-        "novice": 75,
+        "pass": 60,
+        "novice": 70,
         "good": 85,
         "excellent": 115,
         "intermediate": 105,
@@ -1232,8 +1232,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "bench_1rm": {
       "M": {
-        "pass": 60,
-        "novice": 70,
+        "pass": 55,
+        "novice": 65,
         "good": 80,
         "excellent": 102,
         "intermediate": 95,
@@ -1241,7 +1241,7 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 125
       },
       "F": {
-        "pass": 35,
+        "pass": 30,
         "novice": 40,
         "good": 50,
         "excellent": 62,
@@ -1252,7 +1252,7 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "strict_press_1rm": {
       "M": {
-        "pass": 40,
+        "pass": 35,
         "novice": 45,
         "good": 50,
         "excellent": 66,
@@ -1261,8 +1261,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 80
       },
       "F": {
-        "pass": 25,
-        "novice": 30,
+        "pass": 20,
+        "novice": 25,
         "good": 30,
         "excellent": 43,
         "intermediate": 40,
@@ -1272,8 +1272,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "power_clean_1rm": {
       "M": {
-        "pass": 50,
-        "novice": 60,
+        "pass": 45,
+        "novice": 55,
         "good": 65,
         "excellent": 86,
         "intermediate": 80,
@@ -1281,7 +1281,7 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 105
       },
       "F": {
-        "pass": 35,
+        "pass": 30,
         "novice": 40,
         "good": 45,
         "excellent": 59,
@@ -1294,8 +1294,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
   "triathlete": {
     "back_squat_1rm": {
       "M": {
-        "pass": 70,
-        "novice": 80,
+        "pass": 65,
+        "novice": 75,
         "good": 90,
         "excellent": 118,
         "intermediate": 110,
@@ -1303,8 +1303,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 145
       },
       "F": {
-        "pass": 50,
-        "novice": 60,
+        "pass": 45,
+        "novice": 55,
         "good": 70,
         "excellent": 91,
         "intermediate": 85,
@@ -1314,8 +1314,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "front_squat_1rm": {
       "M": {
-        "pass": 55,
-        "novice": 65,
+        "pass": 50,
+        "novice": 60,
         "good": 75,
         "excellent": 97,
         "intermediate": 90,
@@ -1323,7 +1323,7 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 119
       },
       "F": {
-        "pass": 45,
+        "pass": 40,
         "novice": 50,
         "good": 55,
         "excellent": 74,
@@ -1334,8 +1334,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "deadlift_1rm": {
       "M": {
-        "pass": 85,
-        "novice": 100,
+        "pass": 75,
+        "novice": 95,
         "good": 110,
         "excellent": 146,
         "intermediate": 135,
@@ -1343,8 +1343,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 180
       },
       "F": {
-        "pass": 65,
-        "novice": 75,
+        "pass": 60,
+        "novice": 70,
         "good": 85,
         "excellent": 111,
         "intermediate": 100,
@@ -1354,8 +1354,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "bench_1rm": {
       "M": {
-        "pass": 50,
-        "novice": 60,
+        "pass": 45,
+        "novice": 55,
         "good": 65,
         "excellent": 85,
         "intermediate": 80,
@@ -1363,7 +1363,7 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 105
       },
       "F": {
-        "pass": 30,
+        "pass": 25,
         "novice": 40,
         "good": 45,
         "excellent": 57,
@@ -1374,7 +1374,7 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "strict_press_1rm": {
       "M": {
-        "pass": 35,
+        "pass": 30,
         "novice": 40,
         "good": 45,
         "excellent": 57,
@@ -1383,8 +1383,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 70
       },
       "F": {
-        "pass": 25,
-        "novice": 30,
+        "pass": 20,
+        "novice": 25,
         "good": 30,
         "excellent": 39,
         "intermediate": 35,
@@ -1394,7 +1394,7 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "power_clean_1rm": {
       "M": {
-        "pass": 45,
+        "pass": 40,
         "novice": 50,
         "good": 55,
         "excellent": 73,
@@ -1403,7 +1403,7 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 90
       },
       "F": {
-        "pass": 30,
+        "pass": 25,
         "novice": 35,
         "good": 40,
         "excellent": 55,
@@ -1414,8 +1414,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "row_2k": {
       "M": {
-        "pass": 470,
-        "novice": 450,
+        "pass": 515,
+        "novice": 470,
         "good": 430,
         "excellent": 400,
         "intermediate": 410,
@@ -1423,8 +1423,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 380
       },
       "F": {
-        "pass": 540,
-        "novice": 515,
+        "pass": 595,
+        "novice": 540,
         "good": 490,
         "excellent": 455,
         "intermediate": 465,
@@ -1434,8 +1434,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "run_1mi": {
       "M": {
-        "pass": 450,
-        "novice": 420,
+        "pass": 495,
+        "novice": 440,
         "good": 385,
         "excellent": 330,
         "intermediate": 350,
@@ -1443,8 +1443,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 280
       },
       "F": {
-        "pass": 520,
-        "novice": 485,
+        "pass": 570,
+        "novice": 510,
         "good": 450,
         "excellent": 385,
         "intermediate": 405,
@@ -1454,8 +1454,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "run_5k": {
       "M": {
-        "pass": 1500,
-        "novice": 1380,
+        "pass": 1650,
+        "novice": 1450,
         "good": 1260,
         "excellent": 1100,
         "intermediate": 1155,
@@ -1463,8 +1463,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 980
       },
       "F": {
-        "pass": 1740,
-        "novice": 1605,
+        "pass": 1915,
+        "novice": 1685,
         "good": 1470,
         "excellent": 1290,
         "intermediate": 1350,
@@ -1476,8 +1476,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
   "powerlifter": {
     "back_squat_1rm": {
       "M": {
-        "pass": 155,
-        "novice": 185,
+        "pass": 140,
+        "novice": 175,
         "good": 215,
         "excellent": 280,
         "intermediate": 260,
@@ -1485,8 +1485,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 340
       },
       "F": {
-        "pass": 100,
-        "novice": 120,
+        "pass": 90,
+        "novice": 115,
         "good": 135,
         "excellent": 172,
         "intermediate": 160,
@@ -1496,8 +1496,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "front_squat_1rm": {
       "M": {
-        "pass": 130,
-        "novice": 150,
+        "pass": 115,
+        "novice": 140,
         "good": 175,
         "excellent": 230,
         "intermediate": 210,
@@ -1505,8 +1505,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 280
       },
       "F": {
-        "pass": 80,
-        "novice": 95,
+        "pass": 70,
+        "novice": 90,
         "good": 110,
         "excellent": 141,
         "intermediate": 130,
@@ -1516,8 +1516,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "deadlift_1rm": {
       "M": {
-        "pass": 175,
-        "novice": 210,
+        "pass": 160,
+        "novice": 200,
         "good": 240,
         "excellent": 310,
         "intermediate": 285,
@@ -1525,8 +1525,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 380
       },
       "F": {
-        "pass": 115,
-        "novice": 135,
+        "pass": 105,
+        "novice": 130,
         "good": 155,
         "excellent": 205,
         "intermediate": 190,
@@ -1536,8 +1536,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "bench_1rm": {
       "M": {
-        "pass": 115,
-        "novice": 130,
+        "pass": 105,
+        "novice": 125,
         "good": 150,
         "excellent": 198,
         "intermediate": 180,
@@ -1545,8 +1545,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 240
       },
       "F": {
-        "pass": 65,
-        "novice": 75,
+        "pass": 60,
+        "novice": 70,
         "good": 85,
         "excellent": 110,
         "intermediate": 100,
@@ -1556,8 +1556,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "strict_press_1rm": {
       "M": {
-        "pass": 60,
-        "novice": 70,
+        "pass": 55,
+        "novice": 65,
         "good": 85,
         "excellent": 110,
         "intermediate": 100,
@@ -1565,7 +1565,7 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 135
       },
       "F": {
-        "pass": 35,
+        "pass": 30,
         "novice": 40,
         "good": 50,
         "excellent": 62,
@@ -1578,8 +1578,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
   "bodybuilder": {
     "back_squat_1rm": {
       "M": {
-        "pass": 100,
-        "novice": 120,
+        "pass": 90,
+        "novice": 115,
         "good": 135,
         "excellent": 172,
         "intermediate": 160,
@@ -1587,8 +1587,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 210
       },
       "F": {
-        "pass": 60,
-        "novice": 70,
+        "pass": 55,
+        "novice": 65,
         "good": 85,
         "excellent": 107,
         "intermediate": 100,
@@ -1598,8 +1598,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "front_squat_1rm": {
       "M": {
-        "pass": 80,
-        "novice": 95,
+        "pass": 70,
+        "novice": 90,
         "good": 110,
         "excellent": 141,
         "intermediate": 130,
@@ -1607,8 +1607,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 172
       },
       "F": {
-        "pass": 50,
-        "novice": 60,
+        "pass": 45,
+        "novice": 55,
         "good": 65,
         "excellent": 88,
         "intermediate": 80,
@@ -1618,8 +1618,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "deadlift_1rm": {
       "M": {
-        "pass": 110,
-        "novice": 125,
+        "pass": 100,
+        "novice": 120,
         "good": 140,
         "excellent": 190,
         "intermediate": 175,
@@ -1627,8 +1627,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 230
       },
       "F": {
-        "pass": 70,
-        "novice": 80,
+        "pass": 65,
+        "novice": 75,
         "good": 95,
         "excellent": 123,
         "intermediate": 115,
@@ -1638,8 +1638,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "bench_1rm": {
       "M": {
-        "pass": 76,
-        "novice": 90,
+        "pass": 70,
+        "novice": 85,
         "good": 102,
         "excellent": 132,
         "intermediate": 120,
@@ -1647,7 +1647,7 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 160
       },
       "F": {
-        "pass": 40,
+        "pass": 35,
         "novice": 45,
         "good": 53,
         "excellent": 69,
@@ -1658,8 +1658,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "strict_press_1rm": {
       "M": {
-        "pass": 48,
-        "novice": 55,
+        "pass": 45,
+        "novice": 50,
         "good": 64,
         "excellent": 83,
         "intermediate": 75,
@@ -1667,7 +1667,7 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 100
       },
       "F": {
-        "pass": 29,
+        "pass": 25,
         "novice": 35,
         "good": 38,
         "excellent": 50,

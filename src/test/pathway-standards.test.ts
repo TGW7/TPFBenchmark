@@ -37,14 +37,14 @@ describe('absolute standards (2026-07-12 conversion)', () => {
     // Tuple order: pass, novice, good, intermediate, advanced, elite
     // (excellent omitted — vestigial once novice/intermediate/advanced exist).
     const shared: Record<string, { M: number[]; F: number[] }> = {
-      back_squat_1rm:   { M: [90, 105, 120, 145, 165, 190],   F: [55, 65, 75, 90, 105, 120] },
-      deadlift_1rm:     { M: [105, 120, 140, 165, 195, 225],  F: [70, 80, 90, 110, 125, 145] },
-      bench_1rm:        { M: [75, 90, 100, 120, 140, 160],    F: [45, 50, 55, 65, 80, 90] },
-      strict_press_1rm: { M: [45, 50, 60, 70, 85, 95],        F: [25, 30, 35, 40, 50, 55] },
-      power_clean_1rm:  { M: [55, 65, 75, 90, 105, 120],      F: [35, 40, 50, 60, 70, 78] },
-      run_1mi:          { M: [495, 460, 420, 370, 330, 300],  F: [565, 530, 490, 435, 395, 360] },
-      run_5k:           { M: [1640, 1530, 1420, 1265, 1140, 1050], F: [1890, 1765, 1640, 1465, 1335, 1245] },
-      row_2k:           { M: [505, 480, 460, 425, 405, 390],  F: [580, 550, 525, 485, 455, 435] },
+      back_squat_1rm:   { M: [80, 100, 120, 145, 165, 190],   F: [50, 60, 75, 90, 105, 120] },
+      deadlift_1rm:     { M: [95, 115, 140, 165, 195, 225],   F: [65, 75, 90, 110, 125, 145] },
+      bench_1rm:        { M: [70, 85, 100, 120, 140, 160],    F: [40, 50, 55, 65, 80, 90] },
+      strict_press_1rm: { M: [40, 50, 60, 70, 85, 95],        F: [20, 30, 35, 40, 50, 55] },
+      power_clean_1rm:  { M: [50, 60, 75, 90, 105, 120],      F: [30, 40, 50, 60, 70, 78] },
+      run_1mi:          { M: [545, 485, 420, 370, 330, 300],  F: [620, 555, 490, 435, 395, 360] },
+      run_5k:           { M: [1805, 1605, 1420, 1265, 1140, 1050], F: [2080, 1855, 1640, 1465, 1335, 1245] },
+      row_2k:           { M: [555, 505, 460, 425, 405, 390],  F: [640, 580, 525, 485, 455, 435] },
     };
     for (const [id, tiers] of Object.entries(shared)) {
       for (const sex of ['M', 'F'] as const) {
@@ -98,7 +98,12 @@ describe('per-pathway overrides', () => {
     expect(withPathwayStandards('nope', HRS_BENCHMARKS)).toEqual(HRS_BENCHMARKS);
   });
 
-  it('every override tier set is complete and correctly ordered', () => {
+  it('every override tier set is complete and strictly ordered (six-tier when novice is present)', () => {
+    // Strict pairwise comparisons, not a sort-equality check — a sort
+    // leaves exact TIES in place (stable sort), so it can't catch two
+    // adjacent tiers landing on the same number after rounding. That gap
+    // let a real bug ship: hyrox/triathlete F strict_press novice landed
+    // on 30, tying `good`=30, undetected until a round-9 diagnostic caught it.
     for (const [pathway, overrides] of Object.entries(PATHWAY_STANDARD_OVERRIDES)) {
       for (const [id, bySex] of Object.entries(overrides!)) {
         const def = byId(id);
@@ -106,12 +111,17 @@ describe('per-pathway overrides', () => {
         for (const sex of ['M', 'F'] as const) {
           const t = bySex[sex];
           if (t.pass == null) continue; // sex not overridden → base
-          const tiers = [t.pass, t.good, t.excellent, t.elite];
+          const tiers = t.novice != null
+            ? [t.pass, t.novice, t.good, t.intermediate, t.advanced, t.elite]
+            : [t.pass, t.good, t.excellent, t.elite];
           expect(tiers.every((v) => v != null), `${pathway}/${id}/${sex} incomplete`).toBe(true);
-          const sorted = def.lowerIsBetter
-            ? [...tiers].sort((a, b) => b! - a!)
-            : [...tiers].sort((a, b) => a! - b!);
-          expect(tiers, `${pathway}/${id}/${sex} tier order`).toEqual(sorted);
+          for (let i = 0; i < tiers.length - 1; i++) {
+            if (def.lowerIsBetter) {
+              expect(tiers[i]!, `${pathway}/${id}/${sex} tier order @${i}`).toBeGreaterThan(tiers[i + 1]!);
+            } else {
+              expect(tiers[i]!, `${pathway}/${id}/${sex} tier order @${i}`).toBeLessThan(tiers[i + 1]!);
+            }
+          }
         }
       }
     }
