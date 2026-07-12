@@ -32,7 +32,7 @@ describe('absolute standards (2026-07-12 conversion)', () => {
     expect(STANDARDS_THRESHOLDS.run_5k.M.elite).toBe(1050); // 17:30
   });
 
-  it('matches the tpf-app base tables on every shared benchmark (6-tier)', () => {
+  it('matches the tpf-app base table on every shared benchmark (6-tier)', () => {
     // hybrid_readiness.ts STANDARDS_MALE/FEMALE — update BOTH in one pass.
     // Tuple order: pass, novice, good, intermediate, advanced, elite
     // (excellent omitted — vestigial once novice/intermediate/advanced exist).
@@ -53,6 +53,109 @@ describe('absolute standards (2026-07-12 conversion)', () => {
           [t.pass, t.novice, t.good, t.intermediate, t.advanced, t.elite],
           `${id}/${sex}`,
         ).toEqual(tiers[sex]);
+      }
+    }
+  });
+
+  it('matches the tpf-app pathway overrides on every shared benchmark, all 7 pathways (2026-07-13)', () => {
+    // The test above only ever covered the BASE table — pathway overrides
+    // (gym_goer/crossfit/hyrox/triathlete/powerlifter/bodybuilder's own
+    // lift and run/row numbers) had NO cross-repo check at all, and drifted
+    // apart silently over several earlier rounds: 78 mismatched values were
+    // found across gym_goer/crossfit_generalist/triathlete's run/row tiers
+    // plus a handful of 1-5 kg lift rounding differences, none caught until
+    // an explicit owner request to verify sync. Fixed by taking the app's
+    // habs_pathway_standards.ts as canonical and updating the benchmark
+    // workbook to match exactly — this test pins that down so it can't
+    // silently drift again. Powerlifter/hyrox/hybrid_athlete had already
+    // been exact-verified by other tests in this file; included here too
+    // for one single source of truth.
+    const shared: Record<string, Record<string, { M: number[]; F: number[] }>> = {
+      hybrid_athlete: {
+        back_squat_1rm: { M: [80, 100, 120, 145, 165, 190], F: [50, 60, 75, 90, 105, 120] },
+        deadlift_1rm: { M: [95, 115, 140, 165, 195, 225], F: [65, 75, 90, 110, 125, 145] },
+        bench_1rm: { M: [70, 85, 100, 120, 140, 160], F: [40, 50, 55, 65, 80, 90] },
+        strict_press_1rm: { M: [40, 50, 60, 70, 85, 95], F: [20, 30, 35, 40, 50, 55] },
+        power_clean_1rm: { M: [50, 60, 75, 90, 105, 120], F: [30, 40, 50, 60, 70, 78] },
+        run_1mi: { M: [545, 455, 390, 370, 330, 300], F: [620, 520, 455, 435, 395, 360] },
+        run_5k: { M: [1805, 1500, 1320, 1170, 1140, 1050], F: [2080, 1735, 1525, 1355, 1335, 1245] },
+        row_2k: { M: [555, 505, 460, 425, 405, 390], F: [640, 580, 525, 485, 455, 435] },
+      },
+      gym_goer: {
+        back_squat_1rm: { M: [80, 100, 120, 145, 165, 190], F: [50, 60, 75, 90, 105, 120] },
+        deadlift_1rm: { M: [95, 115, 140, 165, 195, 225], F: [65, 75, 90, 110, 125, 145] },
+        bench_1rm: { M: [70, 85, 100, 120, 140, 160], F: [40, 50, 55, 65, 80, 90] },
+        strict_press_1rm: { M: [40, 50, 60, 70, 85, 95], F: [20, 30, 35, 40, 50, 55] },
+        power_clean_1rm: { M: [50, 60, 75, 90, 105, 120], F: [30, 40, 50, 60, 70, 78] },
+        run_1mi: { M: [620, 545, 470, 415, 375, 345], F: [725, 635, 550, 490, 445, 410] },
+        run_5k: { M: [2080, 1815, 1575, 1385, 1240, 1140], F: [2355, 2080, 1825, 1610, 1450, 1350] },
+        row_2k: { M: [580, 530, 485, 445, 420, 405], F: [660, 605, 550, 505, 475, 460] },
+      },
+      crossfit_generalist: {
+        back_squat_1rm: { M: [85, 110, 135, 160, 185, 210], F: [60, 75, 90, 110, 130, 150] },
+        deadlift_1rm: { M: [90, 115, 140, 165, 185, 210], F: [65, 75, 95, 110, 130, 150] },
+        bench_1rm: { M: [70, 85, 100, 115, 130, 140], F: [35, 45, 50, 65, 80, 90] },
+        strict_press_1rm: { M: [40, 50, 60, 70, 85, 95], F: [20, 30, 35, 40, 50, 55] },
+        power_clean_1rm: { M: [55, 65, 80, 100, 120, 135], F: [35, 45, 50, 65, 80, 95] },
+        run_1mi: { M: [570, 505, 440, 385, 345, 330], F: [660, 580, 500, 445, 405, 380] },
+        run_5k: { M: [1870, 1670, 1480, 1315, 1190, 1110], F: [2110, 1885, 1670, 1490, 1365, 1290] },
+        row_2k: { M: [545, 495, 450, 415, 395, 380], F: [620, 565, 520, 485, 455, 440] },
+      },
+      hyrox: {
+        back_squat_1rm: { M: [70, 85, 105, 130, 150, 170], F: [45, 55, 70, 85, 95, 110] },
+        deadlift_1rm: { M: [90, 115, 135, 160, 185, 210], F: [60, 70, 85, 105, 125, 140] },
+        bench_1rm: { M: [55, 65, 80, 95, 110, 125], F: [30, 40, 50, 60, 65, 75] },
+        strict_press_1rm: { M: [35, 45, 50, 60, 70, 80], F: [20, 25, 30, 40, 45, 52] },
+        power_clean_1rm: { M: [45, 55, 65, 80, 90, 105], F: [30, 40, 45, 55, 65, 72] },
+        // no run/row override — inherits base
+        run_1mi: { M: [545, 455, 390, 370, 330, 300], F: [620, 520, 455, 435, 395, 360] },
+        run_5k: { M: [1805, 1500, 1320, 1170, 1140, 1050], F: [2080, 1735, 1525, 1355, 1335, 1245] },
+        row_2k: { M: [555, 505, 460, 425, 405, 390], F: [640, 580, 525, 485, 455, 435] },
+      },
+      triathlete: {
+        back_squat_1rm: { M: [65, 75, 90, 110, 125, 145], F: [45, 55, 70, 85, 95, 110] },
+        deadlift_1rm: { M: [75, 95, 110, 135, 155, 180], F: [60, 70, 85, 100, 120, 135] },
+        bench_1rm: { M: [45, 55, 65, 80, 90, 105], F: [25, 40, 45, 55, 60, 70] },
+        strict_press_1rm: { M: [30, 40, 45, 55, 60, 70], F: [20, 25, 30, 35, 40, 48] },
+        power_clean_1rm: { M: [40, 50, 55, 65, 80, 90], F: [25, 35, 40, 50, 60, 66] },
+        run_1mi: { M: [515, 460, 405, 355, 315, 280], F: [600, 535, 470, 415, 365, 330] },
+        run_5k: { M: [1735, 1520, 1325, 1175, 1060, 980], F: [2010, 1770, 1545, 1375, 1245, 1160] },
+        row_2k: { M: [545, 495, 450, 415, 395, 380], F: [620, 565, 515, 475, 445, 425] },
+      },
+      powerlifter: {
+        back_squat_1rm: { M: [105, 140, 180, 225, 280, 340], F: [70, 90, 115, 145, 175, 210] },
+        deadlift_1rm: { M: [125, 155, 195, 240, 300, 380], F: [80, 100, 125, 155, 195, 250] },
+        bench_1rm: { M: [85, 105, 130, 160, 195, 240], F: [50, 60, 75, 90, 110, 135] },
+        strict_press_1rm: { M: [55, 65, 80, 95, 110, 135], F: [35, 40, 45, 55, 65, 75] },
+        power_clean_1rm: { M: [50, 60, 75, 90, 105, 120], F: [30, 40, 50, 60, 70, 78] },
+        // no run/row override — inherits base
+        run_1mi: { M: [545, 455, 390, 370, 330, 300], F: [620, 520, 455, 435, 395, 360] },
+        run_5k: { M: [1805, 1500, 1320, 1170, 1140, 1050], F: [2080, 1735, 1525, 1355, 1335, 1245] },
+        row_2k: { M: [555, 505, 460, 425, 405, 390], F: [640, 580, 525, 485, 455, 435] },
+      },
+      bodybuilder: {
+        back_squat_1rm: { M: [80, 100, 135, 160, 185, 210], F: [50, 60, 85, 100, 115, 130] },
+        deadlift_1rm: { M: [95, 115, 140, 175, 205, 230], F: [65, 75, 95, 115, 130, 150] },
+        bench_1rm: { M: [70, 85, 100, 120, 140, 160], F: [40, 50, 55, 65, 75, 85] },
+        strict_press_1rm: { M: [40, 50, 65, 75, 90, 100], F: [20, 30, 40, 45, 55, 62] },
+        power_clean_1rm: { M: [50, 60, 75, 90, 105, 120], F: [30, 40, 50, 60, 70, 78] },
+        // no run/row override — inherits base
+        run_1mi: { M: [545, 455, 390, 370, 330, 300], F: [620, 520, 455, 435, 395, 360] },
+        run_5k: { M: [1805, 1500, 1320, 1170, 1140, 1050], F: [2080, 1735, 1525, 1355, 1335, 1245] },
+        row_2k: { M: [555, 505, 460, 425, 405, 390], F: [640, 580, 525, 485, 455, 435] },
+      },
+    };
+    for (const [pathway, byBenchmark] of Object.entries(shared)) {
+      const overrides = pathway === 'hybrid_athlete' ? null : PATHWAY_STANDARD_OVERRIDES[pathway as keyof typeof PATHWAY_STANDARD_OVERRIDES];
+      for (const [id, tiers] of Object.entries(byBenchmark)) {
+        const t = (overrides?.[id] ?? STANDARDS_THRESHOLDS[id]) as typeof STANDARDS_THRESHOLDS[string];
+        for (const sex of ['M', 'F'] as const) {
+          const s = t[sex];
+          expect(
+            [s.pass, s.novice, s.good, s.intermediate, s.advanced, s.elite],
+            `${pathway}/${id}/${sex}`,
+          ).toEqual(tiers[sex]);
+        }
       }
     }
   });

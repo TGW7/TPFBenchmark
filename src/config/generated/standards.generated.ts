@@ -113,7 +113,7 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Yes (no restriction)",
     "referencePopulation": "Competitive lifters (strong-biased)",
     "launchMethod": "Licensed data (adjust for general pop)",
-    "notes": "Squat contested in PL; rich by sex/BW/age | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+    "notes": "Squat contested in PL; rich by sex/BW/age | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
   },
   {
     "id": "front_squat_1rm",
@@ -128,7 +128,7 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Yes",
     "referencePopulation": "Trained adults",
     "launchMethod": "Coach-curated (~0.82x back squat)",
-    "notes": "Front squat 1RM | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+    "notes": "Front squat 1RM | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
   },
   {
     "id": "deadlift_1rm",
@@ -143,7 +143,7 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Yes (no restriction)",
     "referencePopulation": "Competitive lifters",
     "launchMethod": "Licensed data (adjust)",
-    "notes": "Contested in PL | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+    "notes": "Contested in PL | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
   },
   {
     "id": "bench_1rm",
@@ -158,7 +158,7 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Yes (no restriction)",
     "referencePopulation": "Competitive lifters",
     "launchMethod": "Licensed data (adjust)",
-    "notes": "Bench contested in PL | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+    "notes": "Bench contested in PL | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
   },
   {
     "id": "strict_press_1rm",
@@ -173,7 +173,7 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Expert",
     "referencePopulation": "Own users",
     "launchMethod": "Expert-curated + own-data",
-    "notes": "Anchor ratio vs bench / bodyweight; refine from own data | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+    "notes": "Anchor ratio vs bench / bodyweight; refine from own data | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
   },
   {
     "id": "snatch_1rm",
@@ -188,7 +188,7 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "License required / expert",
     "referencePopulation": "Elite weightlifters",
     "launchMethod": "Expert-curated + own-data",
-    "notes": "Comp data elite-biased; anchor with coaching ratios | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+    "notes": "Comp data elite-biased; anchor with coaching ratios | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
   },
   {
     "id": "clean_jerk_1rm",
@@ -203,7 +203,7 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "License required / expert",
     "referencePopulation": "Elite weightlifters",
     "launchMethod": "Expert-curated + own-data",
-    "notes": "As snatch | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+    "notes": "As snatch | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
   },
   {
     "id": "power_clean_1rm",
@@ -218,7 +218,7 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Expert",
     "referencePopulation": "Own users",
     "launchMethod": "Expert-curated + own-data",
-    "notes": "Ratio vs clean & jerk; refine from own data | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+    "notes": "Ratio vs clean & jerk; refine from own data | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
   },
   {
     "id": "broad_jump",
@@ -748,60 +748,60 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
   "gym_goer": {
     "run_1mi": {
       "M": {
-        "pass": 595,
-        "novice": 520,
-        "good": 450,
+        "pass": 620,
+        "novice": 545,
+        "good": 470,
         "excellent": 390,
-        "intermediate": 410,
+        "intermediate": 415,
         "advanced": 375,
         "elite": 345
       },
       "F": {
-        "pass": 695,
-        "novice": 610,
-        "good": 525,
+        "pass": 725,
+        "novice": 635,
+        "good": 550,
         "excellent": 460,
-        "intermediate": 480,
+        "intermediate": 490,
         "advanced": 445,
         "elite": 410
       }
     },
     "run_5k": {
       "M": {
-        "pass": 1980,
-        "novice": 1730,
-        "good": 1500,
+        "pass": 2080,
+        "novice": 1815,
+        "good": 1575,
         "excellent": 1290,
-        "intermediate": 1360,
+        "intermediate": 1385,
         "advanced": 1240,
         "elite": 1140
       },
       "F": {
-        "pass": 2245,
-        "novice": 1985,
-        "good": 1740,
+        "pass": 2355,
+        "novice": 2080,
+        "good": 1825,
         "excellent": 1500,
-        "intermediate": 1580,
+        "intermediate": 1610,
         "advanced": 1450,
         "elite": 1350
       }
     },
     "row_2k": {
       "M": {
-        "pass": 550,
-        "novice": 505,
-        "good": 460,
+        "pass": 580,
+        "novice": 530,
+        "good": 485,
         "excellent": 425,
-        "intermediate": 435,
+        "intermediate": 445,
         "advanced": 420,
         "elite": 405
       },
       "F": {
-        "pass": 625,
-        "novice": 580,
-        "good": 525,
+        "pass": 660,
+        "novice": 605,
+        "good": 550,
         "excellent": 485,
-        "intermediate": 500,
+        "intermediate": 505,
         "advanced": 475,
         "elite": 460
       }
@@ -854,14 +854,14 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "novice": 115,
         "good": 140,
         "excellent": 175,
-        "intermediate": 160,
+        "intermediate": 165,
         "advanced": 185,
         "elite": 210
       },
       "F": {
         "pass": 65,
         "novice": 75,
-        "good": 93,
+        "good": 95,
         "excellent": 120,
         "intermediate": 110,
         "advanced": 130,
@@ -950,60 +950,60 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "run_1mi": {
       "M": {
-        "pass": 545,
-        "novice": 485,
-        "good": 420,
+        "pass": 570,
+        "novice": 505,
+        "good": 440,
         "excellent": 360,
-        "intermediate": 380,
+        "intermediate": 385,
         "advanced": 345,
         "elite": 330
       },
       "F": {
-        "pass": 625,
-        "novice": 545,
-        "good": 475,
+        "pass": 660,
+        "novice": 580,
+        "good": 500,
         "excellent": 415,
-        "intermediate": 435,
+        "intermediate": 445,
         "advanced": 405,
         "elite": 380
       }
     },
     "run_5k": {
       "M": {
-        "pass": 1780,
-        "novice": 1590,
-        "good": 1410,
+        "pass": 1870,
+        "novice": 1670,
+        "good": 1480,
         "excellent": 1230,
-        "intermediate": 1290,
+        "intermediate": 1315,
         "advanced": 1190,
         "elite": 1110
       },
       "F": {
-        "pass": 2015,
-        "novice": 1795,
-        "good": 1590,
+        "pass": 2110,
+        "novice": 1885,
+        "good": 1670,
         "excellent": 1400,
-        "intermediate": 1465,
+        "intermediate": 1490,
         "advanced": 1365,
         "elite": 1290
       }
     },
     "row_2k": {
       "M": {
-        "pass": 515,
-        "novice": 470,
-        "good": 430,
+        "pass": 545,
+        "novice": 495,
+        "good": 450,
         "excellent": 400,
-        "intermediate": 410,
+        "intermediate": 415,
         "advanced": 395,
         "elite": 380
       },
       "F": {
-        "pass": 595,
-        "novice": 545,
-        "good": 495,
+        "pass": 620,
+        "novice": 565,
+        "good": 520,
         "excellent": 465,
-        "intermediate": 475,
+        "intermediate": 485,
         "advanced": 455,
         "elite": 440
       }
@@ -1254,60 +1254,60 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
     },
     "row_2k": {
       "M": {
-        "pass": 515,
-        "novice": 470,
-        "good": 430,
+        "pass": 545,
+        "novice": 495,
+        "good": 450,
         "excellent": 400,
-        "intermediate": 410,
+        "intermediate": 415,
         "advanced": 395,
         "elite": 380
       },
       "F": {
-        "pass": 595,
-        "novice": 540,
-        "good": 490,
+        "pass": 620,
+        "novice": 565,
+        "good": 515,
         "excellent": 455,
-        "intermediate": 465,
+        "intermediate": 475,
         "advanced": 445,
         "elite": 425
       }
     },
     "run_1mi": {
       "M": {
-        "pass": 495,
-        "novice": 440,
-        "good": 385,
+        "pass": 515,
+        "novice": 460,
+        "good": 405,
         "excellent": 330,
-        "intermediate": 350,
+        "intermediate": 355,
         "advanced": 315,
         "elite": 280
       },
       "F": {
-        "pass": 570,
-        "novice": 510,
-        "good": 450,
+        "pass": 600,
+        "novice": 535,
+        "good": 470,
         "excellent": 385,
-        "intermediate": 405,
+        "intermediate": 415,
         "advanced": 365,
         "elite": 330
       }
     },
     "run_5k": {
       "M": {
-        "pass": 1650,
-        "novice": 1450,
-        "good": 1260,
+        "pass": 1735,
+        "novice": 1520,
+        "good": 1325,
         "excellent": 1100,
-        "intermediate": 1155,
+        "intermediate": 1175,
         "advanced": 1060,
         "elite": 980
       },
       "F": {
-        "pass": 1915,
-        "novice": 1685,
-        "good": 1470,
+        "pass": 2010,
+        "novice": 1770,
+        "good": 1545,
         "excellent": 1290,
-        "intermediate": 1350,
+        "intermediate": 1375,
         "advanced": 1245,
         "elite": 1160
       }
@@ -1480,7 +1480,7 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
       "M": {
         "pass": 70,
         "novice": 85,
-        "good": 102,
+        "good": 100,
         "excellent": 132,
         "intermediate": 120,
         "advanced": 140,
@@ -1489,7 +1489,7 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
       "F": {
         "pass": 40,
         "novice": 50,
-        "good": 53,
+        "good": 55,
         "excellent": 69,
         "intermediate": 65,
         "advanced": 75,
@@ -1500,7 +1500,7 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
       "M": {
         "pass": 40,
         "novice": 50,
-        "good": 64,
+        "good": 65,
         "excellent": 83,
         "intermediate": 75,
         "advanced": 90,
@@ -1509,7 +1509,7 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
       "F": {
         "pass": 20,
         "novice": 30,
-        "good": 38,
+        "good": 40,
         "excellent": 50,
         "intermediate": 45,
         "advanced": 55,
