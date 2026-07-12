@@ -98,7 +98,8 @@ describe('per-pathway overrides', () => {
       const squatFor = (p: string) =>
         cfg.benchmarksFor(p).find((b) => b.id === 'back_squat_1rm')!.thresholds.M.elite;
       expect(squatFor('powerlifter')).toBe(240);
-      expect(squatFor('hyrox')).toBe(140);
+      expect(squatFor('hyrox')).toBe(170);
+      expect(squatFor('crossfit_generalist')).toBe(205); // 2025 Games-field floor
       expect(squatFor('hybrid_athlete')).toBe(190); // base, no override
     }
   });
