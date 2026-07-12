@@ -37,7 +37,7 @@ describe('absolute standards (2026-07-12 conversion)', () => {
     const shared: Record<string, { M: number[]; F: number[] }> = {
       back_squat_1rm:   { M: [95, 125, 155, 190],  F: [60, 78, 97, 120] },
       deadlift_1rm:     { M: [110, 145, 180, 225], F: [72, 95, 118, 145] },
-      bench_1rm:        { M: [70, 90, 115, 140],   F: [40, 52, 65, 80] },
+      bench_1rm:        { M: [80, 105, 130, 160],  F: [45, 59, 73, 90] },
       strict_press_1rm: { M: [45, 62, 77, 95],     F: [28, 36, 45, 55] },
       power_clean_1rm:  { M: [60, 78, 97, 120],    F: [38, 51, 63, 78] },
       run_1mi:          { M: [470, 400, 345, 300], F: [540, 465, 410, 360] },

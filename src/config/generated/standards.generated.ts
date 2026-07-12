@@ -113,7 +113,7 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Yes (no restriction)",
     "referencePopulation": "Competitive lifters (strong-biased)",
     "launchMethod": "Licensed data (adjust for general pop)",
-    "notes": "Squat contested in PL; rich by sex/BW/age | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+    "notes": "Squat contested in PL; rich by sex/BW/age | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
   },
   {
     "id": "front_squat_1rm",
@@ -128,7 +128,7 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Yes",
     "referencePopulation": "Trained adults",
     "launchMethod": "Coach-curated (~0.82x back squat)",
-    "notes": "Front squat 1RM | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+    "notes": "Front squat 1RM | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
   },
   {
     "id": "deadlift_1rm",
@@ -143,7 +143,7 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Yes (no restriction)",
     "referencePopulation": "Competitive lifters",
     "launchMethod": "Licensed data (adjust)",
-    "notes": "Contested in PL | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+    "notes": "Contested in PL | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
   },
   {
     "id": "bench_1rm",
@@ -158,7 +158,7 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Yes (no restriction)",
     "referencePopulation": "Competitive lifters",
     "launchMethod": "Licensed data (adjust)",
-    "notes": "Bench contested in PL | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+    "notes": "Bench contested in PL | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
   },
   {
     "id": "strict_press_1rm",
@@ -173,7 +173,7 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Expert",
     "referencePopulation": "Own users",
     "launchMethod": "Expert-curated + own-data",
-    "notes": "Anchor ratio vs bench / bodyweight; refine from own data | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+    "notes": "Anchor ratio vs bench / bodyweight; refine from own data | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
   },
   {
     "id": "snatch_1rm",
@@ -188,7 +188,7 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "License required / expert",
     "referencePopulation": "Elite weightlifters",
     "launchMethod": "Expert-curated + own-data",
-    "notes": "Comp data elite-biased; anchor with coaching ratios | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+    "notes": "Comp data elite-biased; anchor with coaching ratios | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
   },
   {
     "id": "clean_jerk_1rm",
@@ -203,7 +203,7 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "License required / expert",
     "referencePopulation": "Elite weightlifters",
     "launchMethod": "Expert-curated + own-data",
-    "notes": "As snatch | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+    "notes": "As snatch | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
   },
   {
     "id": "power_clean_1rm",
@@ -218,7 +218,7 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Expert",
     "referencePopulation": "Own users",
     "launchMethod": "Expert-curated + own-data",
-    "notes": "Ratio vs clean & jerk; refine from own data | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+    "notes": "Ratio vs clean & jerk; refine from own data | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
   },
   {
     "id": "broad_jump",
@@ -459,16 +459,16 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
   },
   "bench_1rm": {
     "M": {
-      "pass": 70,
-      "good": 90,
-      "excellent": 115,
-      "elite": 140
+      "pass": 80,
+      "good": 105,
+      "excellent": 130,
+      "elite": 160
     },
     "F": {
-      "pass": 40,
-      "good": 52,
-      "excellent": 65,
-      "elite": 80
+      "pass": 45,
+      "good": 59,
+      "excellent": 73,
+      "elite": 90
     }
   },
   "strict_press_1rm": {
