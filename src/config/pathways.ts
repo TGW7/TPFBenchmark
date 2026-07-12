@@ -10,7 +10,7 @@ import type { LiftPathwayId, PathwayConfig } from '../engine/types';
 import { PATHWAY_WEIGHTS } from './generated/standards.generated';
 
 const PATHWAY_LABELS: Record<LiftPathwayId, string> = {
-  gym_goer: 'Gym-Goer',
+  gym_goer: 'General',
   hybrid_athlete: 'Hybrid Athlete',
   crossfit_generalist: 'CrossFit Generalist',
   hyrox: 'HYROX',

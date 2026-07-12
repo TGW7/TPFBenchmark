@@ -80,7 +80,7 @@ export const DEMO_WOD_LIST: WodDef[] = Object.values(DEMO_WODS);
 export const DEMO_PATHWAYS: Record<string, PathwayConfig> = {
   gym_goer: {
     id: 'gym_goer',
-    label: 'Gym-Goer',
+    label: 'General',
     weights: {
       running: 10, erg_engine: 10, lower_strength: 20, upper_strength: 20,
       olympic: 5, power: 10, gymnastics: 15, core_endurance: 10,

@@ -101,7 +101,7 @@ describe('per-pathway overrides', () => {
         cfg.benchmarksFor(p).find((b) => b.id === 'back_squat_1rm')!.thresholds.M.elite;
       expect(squatFor('powerlifter')).toBe(340);
       expect(squatFor('hyrox')).toBe(170);
-      expect(squatFor('crossfit_generalist')).toBe(230); // world-top-100 territory
+      expect(squatFor('crossfit_generalist')).toBe(210); // owner-pegged (participation skew)
       expect(squatFor('hybrid_athlete')).toBe(190); // base, no override
     }
   });

@@ -74,7 +74,7 @@ const LIFT: LandingCopy = {
       { title: 'Know your number', body: 'One clear score for your whole profile, weighted to the goal you actually train for.' },
       { title: 'Find your weak link', body: 'See the single area that will raise your score the most — so you train what matters.' },
       { title: 'Compare fairly', body: 'Your percentile for your sex and age — not a one-size chart built for someone else.' },
-      { title: 'Pick your path', body: 'Gym-Goer, Powerlifter, CrossFit or HYROX — each scored on what counts for that goal.' },
+      { title: 'Pick your path', body: 'General, Powerlifter, CrossFit or HYROX — each scored on what counts for that goal.' },
     ],
   },
   guide: {
