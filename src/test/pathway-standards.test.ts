@@ -35,11 +35,11 @@ describe('absolute standards (2026-07-12 conversion)', () => {
   it('matches the tpf-app base tables on every shared benchmark', () => {
     // hybrid_readiness.ts STANDARDS_MALE/FEMALE — update BOTH in one pass.
     const shared: Record<string, { M: number[]; F: number[] }> = {
-      back_squat_1rm:   { M: [90, 119, 155, 190],  F: [57, 74, 97, 120] },
-      deadlift_1rm:     { M: [105, 138, 180, 225], F: [68, 90, 118, 145] },
-      bench_1rm:        { M: [76, 100, 130, 160],  F: [43, 56, 73, 90] },
-      strict_press_1rm: { M: [43, 59, 77, 95],     F: [27, 34, 45, 55] },
-      power_clean_1rm:  { M: [57, 74, 97, 120],    F: [36, 48, 63, 78] },
+      back_squat_1rm:   { M: [90, 120, 155, 190],  F: [55, 75, 97, 120] },
+      deadlift_1rm:     { M: [105, 140, 180, 225], F: [70, 90, 118, 145] },
+      bench_1rm:        { M: [75, 100, 130, 160],  F: [45, 55, 73, 90] },
+      strict_press_1rm: { M: [45, 60, 77, 95],     F: [25, 35, 45, 55] },
+      power_clean_1rm:  { M: [55, 75, 97, 120],    F: [35, 50, 63, 78] },
       run_1mi:          { M: [495, 420, 345, 300], F: [565, 490, 410, 360] },
       run_5k:           { M: [1640, 1420, 1185, 1050], F: [1890, 1640, 1380, 1245] },
       row_2k:           { M: [505, 460, 410, 390], F: [580, 525, 465, 435] },
@@ -62,6 +62,9 @@ describe('per-pathway overrides', () => {
     expect(pl.bench_1rm.M.elite).toBe(240);
     expect(pl.deadlift_1rm.M.elite).toBe(380);
     expect(pl.back_squat_1rm.F.elite).toBe(210);
+    // Round 6 (owner): every pass/good is a multiple of 5.
+    expect(pl.back_squat_1rm.M.pass! % 5).toBe(0);
+    expect(pl.back_squat_1rm.M.good! % 5).toBe(0);
   });
 
   it('withPathwayStandards swaps overridden tiers and keeps the rest on base', () => {
