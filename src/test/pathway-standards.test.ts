@@ -35,14 +35,14 @@ describe('absolute standards (2026-07-12 conversion)', () => {
   it('matches the tpf-app base tables on every shared benchmark', () => {
     // hybrid_readiness.ts STANDARDS_MALE/FEMALE — update BOTH in one pass.
     const shared: Record<string, { M: number[]; F: number[] }> = {
-      back_squat_1rm:   { M: [95, 125, 155, 190],  F: [60, 78, 97, 120] },
-      deadlift_1rm:     { M: [110, 145, 180, 225], F: [72, 95, 118, 145] },
-      bench_1rm:        { M: [80, 105, 130, 160],  F: [45, 59, 73, 90] },
-      strict_press_1rm: { M: [45, 62, 77, 95],     F: [28, 36, 45, 55] },
-      power_clean_1rm:  { M: [60, 78, 97, 120],    F: [38, 51, 63, 78] },
-      run_1mi:          { M: [470, 400, 345, 300], F: [540, 465, 410, 360] },
-      run_5k:           { M: [1560, 1350, 1185, 1050], F: [1800, 1560, 1380, 1245] },
-      row_2k:           { M: [480, 440, 410, 390], F: [550, 500, 465, 435] },
+      back_squat_1rm:   { M: [90, 119, 155, 190],  F: [57, 74, 97, 120] },
+      deadlift_1rm:     { M: [105, 138, 180, 225], F: [68, 90, 118, 145] },
+      bench_1rm:        { M: [76, 100, 130, 160],  F: [43, 56, 73, 90] },
+      strict_press_1rm: { M: [43, 59, 77, 95],     F: [27, 34, 45, 55] },
+      power_clean_1rm:  { M: [57, 74, 97, 120],    F: [36, 48, 63, 78] },
+      run_1mi:          { M: [495, 420, 345, 300], F: [565, 490, 410, 360] },
+      run_5k:           { M: [1640, 1420, 1185, 1050], F: [1890, 1640, 1380, 1245] },
+      row_2k:           { M: [505, 460, 410, 390], F: [580, 525, 465, 435] },
     };
     for (const [id, tiers] of Object.entries(shared)) {
       for (const sex of ['M', 'F'] as const) {
