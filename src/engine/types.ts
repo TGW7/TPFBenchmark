@@ -69,22 +69,45 @@ export type BenchmarkId = string;
 export type WodId = string;
 
 /**
- * Four tier thresholds anchored at 50 / 70 / 85 / 100 %.
+ * Tier thresholds anchored at 50 / 70 / 85 / 100 % (four-tier, legacy) or
+ * 50 / 60 / 70 / 80 / 90 / 100 % (six-tier, once `novice` is populated).
  * `null` = not yet populated in the Excel master (TODO). The engine skips any
  * benchmark whose resolved thresholds are incomplete.
+ *
+ * 2026-07-13 (round 8) — six tiers, not four: Beginner(pass) / Novice /
+ * Experienced(good) / Intermediate / Advanced / Elite (owner — supersedes
+ * an earlier five-tier attempt). `novice`/`intermediate`/`advanced` are
+ * OPTIONAL/nullable rather than required: operator/WOD standards haven't
+ * been given these values, so they keep scoring on the original four-tier
+ * curve untouched (`excellent` stays required and is still USED there);
+ * only benchmarks with a real `novice` number get the six-tier curve, where
+ * `excellent` becomes vestigial (populated for type-completeness, ignored
+ * by scoring). See tier-curve.ts for the dual-mode logic this enables.
  */
 export interface ThresholdSet {
   pass: number | null;
+  /** Optional: absent (undefined) on any threshold set that predates this
+   *  tier (e.g. generated operator/WOD data) — NOT the same as explicit
+   *  `null`, but treated identically by the engine (`novice != null`). */
+  novice?: number | null;
   good: number | null;
   excellent: number | null;
+  intermediate?: number | null;
+  advanced?: number | null;
   elite: number | null;
 }
 
-/** A fully-resolved threshold set — all four anchors known (post-resolution). */
+/** A fully-resolved threshold set — the four REQUIRED legacy anchors known
+ *  (post-resolution). The three new tiers stay optional/nullable even
+ *  here: `novice`'s presence is the signal for which scoring curve
+ *  (four-tier vs six-tier) applies. */
 export interface ResolvedThresholds {
   pass: number;
+  novice?: number | null;
   good: number;
   excellent: number;
+  intermediate?: number | null;
+  advanced?: number | null;
   elite: number;
 }
 

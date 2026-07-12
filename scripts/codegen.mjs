@@ -101,8 +101,16 @@ function normaliseComponent(component) {
   return { component: stripped, optional: /optional/i.test(component) };
 }
 
-const thresholdSet = (pass, good, excellent, elite) => ({ pass, good, excellent, elite });
-const NULL_TS = thresholdSet(null, null, null, null);
+// 2026-07-13 (round 8) — six tiers, not four: Beginner(pass) / Novice /
+// Experienced(good) / Intermediate / Advanced / Elite (owner). `excellent`
+// stays for legacy/backward-compat (still USED on the four-tier path,
+// vestigial on the six-tier path). Optional: a row without "novice (60%)"
+// / "intermediate (80%)" / "advanced (90%)" column values yields nulls,
+// which the engine treats as legacy four-tier data (tier-curve.ts DUAL
+// MODE) — so existing WOD/operator rows keep scoring exactly as before.
+const thresholdSet = (pass, novice, good, excellent, intermediate, advanced, elite) =>
+  ({ pass, novice, good, excellent, intermediate, advanced, elite });
+const NULL_TS = thresholdSet(null, null, null, null, null, null, null);
 
 // ---- parsers ---------------------------------------------------------------
 
@@ -160,10 +168,14 @@ function parseStandards(wb) {
     sex: findCol(head, (s) => s === 'sex'),
     unit: findCol(head, (s) => s === 'unit'),
     pass: findCol(head, (s) => s.startsWith('pass')),
+    novice: findCol(head, (s) => s.startsWith('novice')),
     good: findCol(head, (s) => s.startsWith('good')),
     excellent: findCol(head, (s) => s.startsWith('excellent')),
+    intermediate: findCol(head, (s) => s.startsWith('intermediate')),
+    advanced: findCol(head, (s) => s.startsWith('advanced')),
     elite: findCol(head, (s) => s.startsWith('elite')),
   };
+  const opt = (col, unit, r) => (col >= 0 ? parseThreshold(cell(r, col), unit) : null);
   const byId = {};
   for (let i = h + 1; i < rows.length; i++) {
     const r = rows[i] || [];
@@ -174,8 +186,11 @@ function parseStandards(wb) {
     byId[id] = byId[id] || { M: NULL_TS, F: NULL_TS };
     byId[id][sex] = thresholdSet(
       parseThreshold(cell(r, C.pass), unit),
+      opt(C.novice, unit, r),
       parseThreshold(cell(r, C.good), unit),
       parseThreshold(cell(r, C.excellent), unit),
+      opt(C.intermediate, unit, r),
+      opt(C.advanced, unit, r),
       parseThreshold(cell(r, C.elite), unit),
     );
   }
@@ -200,10 +215,14 @@ function parsePathwayStandards(wb) {
     sex: findCol(head, (s) => s === 'sex'),
     unit: findCol(head, (s) => s === 'unit'),
     pass: findCol(head, (s) => s.startsWith('pass')),
+    novice: findCol(head, (s) => s.startsWith('novice')),
     good: findCol(head, (s) => s.startsWith('good')),
     excellent: findCol(head, (s) => s.startsWith('excellent')),
+    intermediate: findCol(head, (s) => s.startsWith('intermediate')),
+    advanced: findCol(head, (s) => s.startsWith('advanced')),
     elite: findCol(head, (s) => s.startsWith('elite')),
   };
+  const opt = (col, unit, r) => (col >= 0 ? parseThreshold(cell(r, col), unit) : null);
   const byPathway = {};
   for (let i = h + 1; i < rows.length; i++) {
     const r = rows[i] || [];
@@ -220,8 +239,11 @@ function parsePathwayStandards(wb) {
     byPathway[pathway][id] = byPathway[pathway][id] || { M: NULL_TS, F: NULL_TS };
     byPathway[pathway][id][sex] = thresholdSet(
       parseThreshold(cell(r, C.pass), unit),
+      opt(C.novice, unit, r),
       parseThreshold(cell(r, C.good), unit),
       parseThreshold(cell(r, C.excellent), unit),
+      opt(C.intermediate, unit, r),
+      opt(C.advanced, unit, r),
       parseThreshold(cell(r, C.elite), unit),
     );
   }
@@ -281,10 +303,14 @@ function parseWodStandards(wb) {
       thresholds: { M: NULL_TS, F: NULL_TS },
       load: { movement: '', M: null, F: null },
     };
+    // WODs stay four-tier — no "solid" column on this sheet.
     byId[id].thresholds[sex] = thresholdSet(
       parseThreshold(cell(r, C.pass), unit),
+      null,
       parseThreshold(cell(r, C.good), unit),
       parseThreshold(cell(r, C.excellent), unit),
+      null,
+      null,
       parseThreshold(cell(r, C.elite), unit),
     );
     const move = str(cell(r, C.move));

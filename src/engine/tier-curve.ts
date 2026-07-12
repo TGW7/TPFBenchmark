@@ -9,15 +9,37 @@
  *
  * These curve constants are ENGINE LOGIC, not standards. No real benchmark
  * numbers appear here; thresholds are supplied by the caller.
+ *
+ * 2026-07-13 (round 8) — DUAL MODE: six tiers, not four — Beginner(pass) /
+ * Novice / Experienced(good) / Intermediate / Advanced / Elite (owner: the
+ * old jumps between named tiers felt too big). Benchmarks with a populated
+ * `novice` (hybrid/lift pathways) score on the six-tier curve, anchored at
+ * 50/60/70/80/90/100 — `excellent` becomes VESTIGIAL there (kept only so
+ * the type stays fully-resolved; scoring ignores it). Benchmarks that have
+ * never been given a `novice` value (operator/WOD standards — untouched by
+ * this change) keep scoring on the ORIGINAL four-tier curve using
+ * `excellent` exactly as before. `ANCHORS` stays exported exactly as-is
+ * since wod.ts depends on its exact values for an unrelated WOD-scaling
+ * convention.
  */
 
 import type { ResolvedThresholds, ThresholdSet } from './types';
 
-/** Anchor percentages for the four tiers. */
+/** Anchor percentages for the four LEGACY tiers (operator/WOD path). */
 export const ANCHORS = {
   pass: 50,
   good: 70,
   excellent: 85,
+  elite: 100,
+} as const;
+
+/** Anchor percentages for the six tiers, once `novice` is populated. */
+const ANCHORS6 = {
+  pass: 50,
+  novice: 60,
+  good: 70,
+  intermediate: 80,
+  advanced: 90,
   elite: 100,
 } as const;
 
@@ -67,14 +89,19 @@ export function asResolved(t: ThresholdSet): ResolvedThresholds | null {
   if (t.pass == null || t.good == null || t.excellent == null || t.elite == null) {
     return null;
   }
-  return { pass: t.pass, good: t.good, excellent: t.excellent, elite: t.elite };
+  return {
+    pass: t.pass, novice: t.novice, good: t.good, excellent: t.excellent,
+    intermediate: t.intermediate, advanced: t.advanced, elite: t.elite,
+  };
 }
 
 /**
- * Map a raw value to a 0–110 % readiness score against four tier thresholds.
+ * Map a raw value to a 0–110 % readiness score against the resolved tier
+ * thresholds. Six-tier when `t.novice` is populated, legacy four-tier
+ * otherwise (see file header — DUAL MODE).
  *
  * @param raw            athlete's raw value, in the same unit as the thresholds
- * @param t              resolved pass/good/excellent/elite thresholds
+ * @param t              resolved thresholds (novice/intermediate/advanced optional)
  * @param lowerIsBetter  true for time-based benchmarks (faster = higher %)
  */
 export function scoreToPercentage(
@@ -98,27 +125,49 @@ function bonusAboveElite(overshootFraction: number): number {
 }
 
 function scoreHigherIsBetter(raw: number, t: ResolvedThresholds): number {
-  const { pass, good, excellent, elite } = t;
+  const { pass, novice, good, intermediate, advanced, elite } = t;
   if (raw >= elite) {
     return ANCHORS.elite + bonusAboveElite((raw - elite) / elite);
   }
-  if (raw >= excellent) return lerp(raw, excellent, elite, ANCHORS.excellent, ANCHORS.elite);
-  if (raw >= good) return lerp(raw, good, excellent, ANCHORS.good, ANCHORS.excellent);
-  if (raw >= pass) return lerp(raw, pass, good, ANCHORS.pass, ANCHORS.good);
+  if (novice != null && intermediate != null && advanced != null) {
+    // Six-tier curve — `excellent` is not referenced here (vestigial).
+    if (raw >= advanced)     return lerp(raw, advanced, elite, ANCHORS6.advanced, ANCHORS6.elite);
+    if (raw >= intermediate) return lerp(raw, intermediate, advanced, ANCHORS6.intermediate, ANCHORS6.advanced);
+    if (raw >= good)         return lerp(raw, good, intermediate, ANCHORS6.good, ANCHORS6.intermediate);
+    if (raw >= novice)       return lerp(raw, novice, good, ANCHORS6.novice, ANCHORS6.good);
+    if (raw >= pass)         return lerp(raw, pass, novice, ANCHORS6.pass, ANCHORS6.novice);
+  } else {
+    // Legacy four-tier curve (operator/WOD — untouched).
+    const excellent = t.excellent;
+    if (raw >= excellent) return lerp(raw, excellent, elite, ANCHORS.excellent, ANCHORS.elite);
+    if (raw >= good)       return lerp(raw, good, excellent, ANCHORS.good, ANCHORS.excellent);
+    if (raw >= pass)       return lerp(raw, pass, good, ANCHORS.pass, ANCHORS.good);
+  }
   // Below pass: linear from 0 % at raw = 0 to 50 % at pass.
   if (raw <= 0) return 0;
   return (raw / pass) * ANCHORS.pass;
 }
 
 function scoreLowerIsBetter(raw: number, t: ResolvedThresholds): number {
-  const { pass, good, excellent, elite } = t;
-  // For lower-is-better, smaller is better: elite < excellent < good < pass.
+  const { pass, novice, good, intermediate, advanced, elite } = t;
+  // For lower-is-better, smaller is better: elite < ... < good < pass.
   if (raw <= elite) {
     return ANCHORS.elite + bonusAboveElite((elite - raw) / elite);
   }
-  if (raw <= excellent) return lerp(raw, elite, excellent, ANCHORS.elite, ANCHORS.excellent);
-  if (raw <= good) return lerp(raw, excellent, good, ANCHORS.excellent, ANCHORS.good);
-  if (raw <= pass) return lerp(raw, good, pass, ANCHORS.good, ANCHORS.pass);
+  if (novice != null && intermediate != null && advanced != null) {
+    // Six-tier curve — `excellent` is not referenced here (vestigial).
+    if (raw <= advanced)     return lerp(raw, elite, advanced, ANCHORS6.elite, ANCHORS6.advanced);
+    if (raw <= intermediate) return lerp(raw, advanced, intermediate, ANCHORS6.advanced, ANCHORS6.intermediate);
+    if (raw <= good)         return lerp(raw, intermediate, good, ANCHORS6.intermediate, ANCHORS6.good);
+    if (raw <= novice)       return lerp(raw, good, novice, ANCHORS6.good, ANCHORS6.novice);
+    if (raw <= pass)         return lerp(raw, novice, pass, ANCHORS6.novice, ANCHORS6.pass);
+  } else {
+    // Legacy four-tier curve (operator/WOD — untouched).
+    const excellent = t.excellent;
+    if (raw <= excellent) return lerp(raw, elite, excellent, ANCHORS.elite, ANCHORS.excellent);
+    if (raw <= good)       return lerp(raw, excellent, good, ANCHORS.excellent, ANCHORS.good);
+    if (raw <= pass)       return lerp(raw, good, pass, ANCHORS.good, ANCHORS.pass);
+  }
   // Slower than pass: linear from 50 % at pass down to 0 % at LOWER_FLOOR_MULTIPLE × pass.
   const floor = pass * LOWER_FLOOR_MULTIPLE;
   if (raw >= floor) return 0;

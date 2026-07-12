@@ -73,7 +73,7 @@
       "commercialUse": "Yes (no restriction)",
       "referencePopulation": "Competitive lifters (strong-biased)",
       "launchMethod": "Licensed data (adjust for general pop)",
-      "notes": "Squat contested in PL; rich by sex/BW/age | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+      "notes": "Squat contested in PL; rich by sex/BW/age | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
     },
     {
       "id": "front_squat_1rm",
@@ -88,7 +88,7 @@
       "commercialUse": "Yes",
       "referencePopulation": "Trained adults",
       "launchMethod": "Coach-curated (~0.82x back squat)",
-      "notes": "Front squat 1RM | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+      "notes": "Front squat 1RM | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
     },
     {
       "id": "deadlift_1rm",
@@ -103,7 +103,7 @@
       "commercialUse": "Yes (no restriction)",
       "referencePopulation": "Competitive lifters",
       "launchMethod": "Licensed data (adjust)",
-      "notes": "Contested in PL | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+      "notes": "Contested in PL | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
     },
     {
       "id": "bench_1rm",
@@ -118,7 +118,7 @@
       "commercialUse": "Yes (no restriction)",
       "referencePopulation": "Competitive lifters",
       "launchMethod": "Licensed data (adjust)",
-      "notes": "Bench contested in PL | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+      "notes": "Bench contested in PL | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
     },
     {
       "id": "strict_press_1rm",
@@ -133,7 +133,7 @@
       "commercialUse": "Expert",
       "referencePopulation": "Own users",
       "launchMethod": "Expert-curated + own-data",
-      "notes": "Anchor ratio vs bench / bodyweight; refine from own data | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+      "notes": "Anchor ratio vs bench / bodyweight; refine from own data | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
     },
     {
       "id": "snatch_1rm",
@@ -148,7 +148,7 @@
       "commercialUse": "License required / expert",
       "referencePopulation": "Elite weightlifters",
       "launchMethod": "Expert-curated + own-data",
-      "notes": "Comp data elite-biased; anchor with coaching ratios | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+      "notes": "Comp data elite-biased; anchor with coaching ratios | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
     },
     {
       "id": "clean_jerk_1rm",
@@ -163,7 +163,7 @@
       "commercialUse": "License required / expert",
       "referencePopulation": "Elite weightlifters",
       "launchMethod": "Expert-curated + own-data",
-      "notes": "As snatch | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+      "notes": "As snatch | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
     },
     {
       "id": "power_clean_1rm",
@@ -178,7 +178,7 @@
       "commercialUse": "Expert",
       "referencePopulation": "Own users",
       "launchMethod": "Expert-curated + own-data",
-      "notes": "Ratio vs clean & jerk; refine from own data | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+      "notes": "Ratio vs clean & jerk; refine from own data | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
     },
     {
       "id": "broad_jump",
@@ -320,266 +320,380 @@
     "run_1mi": {
       "M": {
         "pass": 495,
+        "novice": 460,
         "good": 420,
         "excellent": 345,
+        "intermediate": 370,
+        "advanced": 330,
         "elite": 300
       },
       "F": {
         "pass": 565,
+        "novice": 530,
         "good": 490,
         "excellent": 410,
+        "intermediate": 435,
+        "advanced": 395,
         "elite": 360
       }
     },
     "run_5k": {
       "M": {
         "pass": 1640,
+        "novice": 1530,
         "good": 1420,
         "excellent": 1185,
+        "intermediate": 1265,
+        "advanced": 1140,
         "elite": 1050
       },
       "F": {
         "pass": 1890,
+        "novice": 1765,
         "good": 1640,
         "excellent": 1380,
+        "intermediate": 1465,
+        "advanced": 1335,
         "elite": 1245
       }
     },
     "row_2k": {
       "M": {
         "pass": 505,
+        "novice": 480,
         "good": 460,
         "excellent": 410,
+        "intermediate": 425,
+        "advanced": 405,
         "elite": 390
       },
       "F": {
         "pass": 580,
+        "novice": 550,
         "good": 525,
         "excellent": 465,
+        "intermediate": 485,
+        "advanced": 455,
         "elite": 435
       }
     },
     "row_500m": {
       "M": {
         "pass": 110,
+        "novice": null,
         "good": 100,
         "excellent": 93,
+        "intermediate": null,
+        "advanced": null,
         "elite": 85
       },
       "F": {
         "pass": 125,
+        "novice": null,
         "good": 115,
         "excellent": 107,
+        "intermediate": null,
+        "advanced": null,
         "elite": 102
       }
     },
     "back_squat_1rm": {
       "M": {
         "pass": 90,
+        "novice": 105,
         "good": 120,
         "excellent": 155,
+        "intermediate": 145,
+        "advanced": 165,
         "elite": 190
       },
       "F": {
         "pass": 55,
+        "novice": 65,
         "good": 75,
         "excellent": 97,
+        "intermediate": 90,
+        "advanced": 105,
         "elite": 120
       }
     },
     "front_squat_1rm": {
       "M": {
         "pass": 75,
+        "novice": 90,
         "good": 100,
         "excellent": 127,
+        "intermediate": 120,
+        "advanced": 135,
         "elite": 155
       },
       "F": {
         "pass": 45,
+        "novice": 50,
         "good": 60,
         "excellent": 80,
+        "intermediate": 75,
+        "advanced": 85,
         "elite": 98
       }
     },
     "deadlift_1rm": {
       "M": {
         "pass": 105,
+        "novice": 120,
         "good": 140,
         "excellent": 180,
+        "intermediate": 165,
+        "advanced": 195,
         "elite": 225
       },
       "F": {
         "pass": 70,
+        "novice": 80,
         "good": 90,
         "excellent": 118,
+        "intermediate": 110,
+        "advanced": 125,
         "elite": 145
       }
     },
     "bench_1rm": {
       "M": {
         "pass": 75,
+        "novice": 90,
         "good": 100,
         "excellent": 130,
+        "intermediate": 120,
+        "advanced": 140,
         "elite": 160
       },
       "F": {
         "pass": 45,
+        "novice": 50,
         "good": 55,
         "excellent": 73,
+        "intermediate": 65,
+        "advanced": 80,
         "elite": 90
       }
     },
     "strict_press_1rm": {
       "M": {
         "pass": 45,
+        "novice": 50,
         "good": 60,
         "excellent": 77,
+        "intermediate": 70,
+        "advanced": 85,
         "elite": 95
       },
       "F": {
         "pass": 25,
+        "novice": 30,
         "good": 35,
         "excellent": 45,
+        "intermediate": 40,
+        "advanced": 50,
         "elite": 55
       }
     },
     "snatch_1rm": {
       "M": {
         "pass": 45,
+        "novice": 55,
         "good": 65,
         "excellent": 81,
+        "intermediate": 75,
+        "advanced": 85,
         "elite": 100
       },
       "F": {
         "pass": 30,
+        "novice": 35,
         "good": 40,
         "excellent": 50,
+        "intermediate": 45,
+        "advanced": 55,
         "elite": 62
       }
     },
     "clean_jerk_1rm": {
       "M": {
         "pass": 60,
+        "novice": 70,
         "good": 80,
         "excellent": 105,
+        "intermediate": 95,
+        "advanced": 115,
         "elite": 130
       },
       "F": {
         "pass": 40,
+        "novice": 45,
         "good": 50,
         "excellent": 66,
+        "intermediate": 60,
+        "advanced": 70,
         "elite": 82
       }
     },
     "power_clean_1rm": {
       "M": {
         "pass": 55,
+        "novice": 65,
         "good": 75,
         "excellent": 97,
+        "intermediate": 90,
+        "advanced": 105,
         "elite": 120
       },
       "F": {
         "pass": 35,
+        "novice": 40,
         "good": 50,
         "excellent": 63,
+        "intermediate": 60,
+        "advanced": 70,
         "elite": 78
       }
     },
     "broad_jump": {
       "M": {
         "pass": 200,
+        "novice": null,
         "good": 230,
         "excellent": 260,
+        "intermediate": null,
+        "advanced": null,
         "elite": 285
       },
       "F": {
         "pass": 160,
+        "novice": null,
         "good": 185,
         "excellent": 210,
+        "intermediate": null,
+        "advanced": null,
         "elite": 220
       }
     },
     "strict_pullups": {
       "M": {
         "pass": 5,
+        "novice": null,
         "good": 11,
         "excellent": 18,
+        "intermediate": null,
+        "advanced": null,
         "elite": 25
       },
       "F": {
         "pass": 1,
+        "novice": null,
         "good": 5,
         "excellent": 10,
+        "intermediate": null,
+        "advanced": null,
         "elite": 18
       }
     },
     "hspu": {
       "M": {
         "pass": 3,
+        "novice": null,
         "good": 8,
         "excellent": 15,
+        "intermediate": null,
+        "advanced": null,
         "elite": 25
       },
       "F": {
         "pass": 1,
+        "novice": null,
         "good": 4,
         "excellent": 8,
+        "intermediate": null,
+        "advanced": null,
         "elite": 15
       }
     },
     "t2b": {
       "M": {
         "pass": 8,
+        "novice": null,
         "good": 18,
         "excellent": 30,
+        "intermediate": null,
+        "advanced": null,
         "elite": 45
       },
       "F": {
         "pass": 5,
+        "novice": null,
         "good": 12,
         "excellent": 22,
+        "intermediate": null,
+        "advanced": null,
         "elite": 35
       }
     },
     "du_unbroken": {
       "M": {
         "pass": 20,
+        "novice": null,
         "good": 50,
         "excellent": 100,
+        "intermediate": null,
+        "advanced": null,
         "elite": 150
       },
       "F": {
         "pass": 15,
+        "novice": null,
         "good": 45,
         "excellent": 90,
+        "intermediate": null,
+        "advanced": null,
         "elite": 130
       }
     },
     "max_mu": {
       "M": {
         "pass": 1,
+        "novice": null,
         "good": 4,
         "excellent": 9,
+        "intermediate": null,
+        "advanced": null,
         "elite": 14
       },
       "F": {
         "pass": 1,
+        "novice": null,
         "good": 2,
         "excellent": 5,
+        "intermediate": null,
+        "advanced": null,
         "elite": 8
       }
     },
     "plank_hold": {
       "M": {
         "pass": 90,
+        "novice": null,
         "good": 150,
         "excellent": 180,
+        "intermediate": null,
+        "advanced": null,
         "elite": 300
       },
       "F": {
         "pass": 90,
+        "novice": null,
         "good": 150,
         "excellent": 180,
+        "intermediate": null,
+        "advanced": null,
         "elite": 300
       }
     }
@@ -589,154 +703,220 @@
       "back_squat_1rm": {
         "M": {
           "pass": 100,
+          "novice": 120,
           "good": 135,
           "excellent": 175,
+          "intermediate": 160,
+          "advanced": 190,
           "elite": 215
         },
         "F": {
           "pass": 50,
+          "novice": 60,
           "good": 70,
           "excellent": 102,
+          "intermediate": 90,
+          "advanced": 110,
           "elite": 133
         }
       },
       "front_squat_1rm": {
         "M": {
           "pass": 80,
+          "novice": 90,
           "good": 105,
           "excellent": 139,
+          "intermediate": 130,
+          "advanced": 150,
           "elite": 170
         },
         "F": {
           "pass": 45,
+          "novice": 50,
           "good": 60,
           "excellent": 82,
+          "intermediate": 75,
+          "advanced": 90,
           "elite": 103
         }
       },
       "deadlift_1rm": {
         "M": {
           "pass": 120,
+          "novice": 135,
           "good": 150,
           "excellent": 200,
+          "intermediate": 185,
+          "advanced": 215,
           "elite": 245
         },
         "F": {
           "pass": 60,
+          "novice": 70,
           "good": 85,
           "excellent": 118,
+          "intermediate": 105,
+          "advanced": 130,
           "elite": 152
         }
       },
       "bench_1rm": {
         "M": {
           "pass": 75,
+          "novice": 90,
           "good": 100,
           "excellent": 135,
+          "intermediate": 125,
+          "advanced": 145,
           "elite": 165
         },
         "F": {
           "pass": 30,
+          "novice": 40,
           "good": 50,
           "excellent": 72,
+          "intermediate": 65,
+          "advanced": 80,
           "elite": 96
         }
       },
       "strict_press_1rm": {
         "M": {
           "pass": 50,
+          "novice": 60,
           "good": 65,
           "excellent": 88,
+          "intermediate": 80,
+          "advanced": 95,
           "elite": 110
         },
         "F": {
           "pass": 20,
+          "novice": 25,
           "good": 30,
           "excellent": 48,
+          "intermediate": 40,
+          "advanced": 55,
           "elite": 63
         }
       },
       "snatch_1rm": {
         "M": {
           "pass": 55,
+          "novice": 65,
           "good": 75,
           "excellent": 105,
+          "intermediate": 95,
+          "advanced": 115,
           "elite": 133
         },
         "F": {
           "pass": 30,
+          "novice": 35,
           "good": 40,
           "excellent": 58,
+          "intermediate": 50,
+          "advanced": 65,
           "elite": 74
         }
       },
       "clean_jerk_1rm": {
         "M": {
           "pass": 65,
+          "novice": 80,
           "good": 90,
           "excellent": 126,
+          "intermediate": 115,
+          "advanced": 135,
           "elite": 158
         },
         "F": {
           "pass": 40,
+          "novice": 45,
           "good": 50,
           "excellent": 72,
+          "intermediate": 65,
+          "advanced": 80,
           "elite": 90
         }
       },
       "power_clean_1rm": {
         "M": {
           "pass": 70,
+          "novice": 80,
           "good": 90,
           "excellent": 122,
+          "intermediate": 110,
+          "advanced": 130,
           "elite": 150
         },
         "F": {
           "pass": 40,
+          "novice": 45,
           "good": 50,
           "excellent": 70,
+          "intermediate": 65,
+          "advanced": 75,
           "elite": 88
         }
       },
       "run_1mi": {
         "M": {
-          "pass": 565,
-          "good": 470,
+          "pass": 540,
+          "novice": 495,
+          "good": 450,
           "excellent": 390,
+          "intermediate": 410,
+          "advanced": 375,
           "elite": 345
         },
         "F": {
-          "pass": 660,
-          "good": 550,
+          "pass": 630,
+          "novice": 580,
+          "good": 525,
           "excellent": 460,
+          "intermediate": 480,
+          "advanced": 445,
           "elite": 410
         }
       },
       "run_5k": {
         "M": {
-          "pass": 1890,
-          "good": 1575,
+          "pass": 1800,
+          "novice": 1650,
+          "good": 1500,
           "excellent": 1290,
+          "intermediate": 1360,
+          "advanced": 1240,
           "elite": 1140
         },
         "F": {
-          "pass": 2140,
-          "good": 1825,
+          "pass": 2040,
+          "novice": 1890,
+          "good": 1740,
           "excellent": 1500,
+          "intermediate": 1580,
+          "advanced": 1450,
           "elite": 1350
         }
       },
       "row_2k": {
         "M": {
-          "pass": 525,
-          "good": 485,
+          "pass": 500,
+          "novice": 480,
+          "good": 460,
           "excellent": 425,
+          "intermediate": 435,
+          "advanced": 420,
           "elite": 405
         },
         "F": {
-          "pass": 600,
-          "good": 550,
+          "pass": 570,
+          "novice": 550,
+          "good": 525,
           "excellent": 485,
+          "intermediate": 500,
+          "advanced": 475,
           "elite": 460
         }
       }
@@ -745,140 +925,200 @@
       "back_squat_1rm": {
         "M": {
           "pass": 95,
+          "novice": 115,
           "good": 135,
           "excellent": 175,
+          "intermediate": 160,
+          "advanced": 185,
           "elite": 210
         },
         "F": {
           "pass": 65,
+          "novice": 80,
           "good": 90,
           "excellent": 120,
+          "intermediate": 110,
+          "advanced": 130,
           "elite": 150
         }
       },
       "front_squat_1rm": {
         "M": {
           "pass": 80,
+          "novice": 100,
           "good": 115,
           "excellent": 148,
+          "intermediate": 135,
+          "advanced": 160,
           "elite": 180
         },
         "F": {
           "pass": 55,
+          "novice": 65,
           "good": 75,
           "excellent": 103,
+          "intermediate": 95,
+          "advanced": 110,
           "elite": 128
         }
       },
       "deadlift_1rm": {
         "M": {
           "pass": 100,
+          "novice": 120,
           "good": 140,
           "excellent": 175,
+          "intermediate": 160,
+          "advanced": 185,
           "elite": 210
         },
         "F": {
           "pass": 70,
-          "good": 95,
+          "novice": 80,
+          "good": 93,
           "excellent": 120,
+          "intermediate": 110,
+          "advanced": 130,
           "elite": 150
         }
       },
       "bench_1rm": {
         "M": {
           "pass": 75,
+          "novice": 90,
           "good": 100,
           "excellent": 122,
+          "intermediate": 115,
+          "advanced": 130,
           "elite": 140
         },
         "F": {
           "pass": 40,
+          "novice": 45,
           "good": 50,
           "excellent": 72,
+          "intermediate": 65,
+          "advanced": 80,
           "elite": 90
         }
       },
       "snatch_1rm": {
         "M": {
           "pass": 50,
+          "novice": 60,
           "good": 70,
           "excellent": 100,
+          "intermediate": 90,
+          "advanced": 110,
           "elite": 125
         },
         "F": {
           "pass": 35,
+          "novice": 40,
           "good": 45,
           "excellent": 69,
+          "intermediate": 60,
+          "advanced": 75,
           "elite": 90
         }
       },
       "clean_jerk_1rm": {
         "M": {
           "pass": 65,
+          "novice": 80,
           "good": 90,
           "excellent": 126,
+          "intermediate": 115,
+          "advanced": 135,
           "elite": 155
         },
         "F": {
           "pass": 45,
+          "novice": 50,
           "good": 60,
           "excellent": 87,
+          "intermediate": 80,
+          "advanced": 95,
           "elite": 110
         }
       },
       "power_clean_1rm": {
         "M": {
           "pass": 60,
+          "novice": 70,
           "good": 80,
           "excellent": 110,
+          "intermediate": 100,
+          "advanced": 120,
           "elite": 135
         },
         "F": {
           "pass": 40,
+          "novice": 45,
           "good": 50,
           "excellent": 75,
+          "intermediate": 65,
+          "advanced": 80,
           "elite": 95
         }
       },
       "run_1mi": {
         "M": {
-          "pass": 520,
-          "good": 440,
+          "pass": 495,
+          "novice": 460,
+          "good": 420,
           "excellent": 360,
+          "intermediate": 380,
+          "advanced": 345,
           "elite": 320
         },
         "F": {
-          "pass": 600,
-          "good": 500,
+          "pass": 570,
+          "novice": 520,
+          "good": 475,
           "excellent": 415,
+          "intermediate": 435,
+          "advanced": 405,
           "elite": 380
         }
       },
       "run_5k": {
         "M": {
-          "pass": 1700,
-          "good": 1480,
+          "pass": 1620,
+          "novice": 1515,
+          "good": 1410,
           "excellent": 1230,
+          "intermediate": 1290,
+          "advanced": 1190,
           "elite": 1110
         },
         "F": {
-          "pass": 1920,
-          "good": 1670,
+          "pass": 1830,
+          "novice": 1710,
+          "good": 1590,
           "excellent": 1400,
+          "intermediate": 1465,
+          "advanced": 1365,
           "elite": 1290
         }
       },
       "row_2k": {
         "M": {
-          "pass": 495,
-          "good": 450,
+          "pass": 470,
+          "novice": 450,
+          "good": 430,
           "excellent": 400,
+          "intermediate": 410,
+          "advanced": 395,
           "elite": 380
         },
         "F": {
-          "pass": 565,
-          "good": 520,
+          "pass": 540,
+          "novice": 520,
+          "good": 495,
           "excellent": 465,
+          "intermediate": 475,
+          "advanced": 455,
           "elite": 440
         }
       }
@@ -887,84 +1127,120 @@
       "back_squat_1rm": {
         "M": {
           "pass": 80,
+          "novice": 90,
           "good": 105,
           "excellent": 140,
+          "intermediate": 130,
+          "advanced": 150,
           "elite": 170
         },
         "F": {
           "pass": 50,
+          "novice": 60,
           "good": 70,
           "excellent": 90,
+          "intermediate": 85,
+          "advanced": 95,
           "elite": 110
         }
       },
       "front_squat_1rm": {
         "M": {
           "pass": 65,
+          "novice": 80,
           "good": 90,
           "excellent": 115,
+          "intermediate": 105,
+          "advanced": 125,
           "elite": 140
         },
         "F": {
           "pass": 45,
+          "novice": 50,
           "good": 55,
           "excellent": 74,
+          "intermediate": 70,
+          "advanced": 80,
           "elite": 90
         }
       },
       "deadlift_1rm": {
         "M": {
           "pass": 100,
+          "novice": 120,
           "good": 135,
           "excellent": 172,
+          "intermediate": 160,
+          "advanced": 185,
           "elite": 210
         },
         "F": {
           "pass": 65,
+          "novice": 75,
           "good": 85,
           "excellent": 115,
+          "intermediate": 105,
+          "advanced": 125,
           "elite": 140
         }
       },
       "bench_1rm": {
         "M": {
           "pass": 60,
+          "novice": 70,
           "good": 80,
           "excellent": 102,
+          "intermediate": 95,
+          "advanced": 110,
           "elite": 125
         },
         "F": {
           "pass": 35,
+          "novice": 40,
           "good": 50,
           "excellent": 62,
+          "intermediate": 60,
+          "advanced": 65,
           "elite": 75
         }
       },
       "strict_press_1rm": {
         "M": {
           "pass": 40,
+          "novice": 45,
           "good": 50,
           "excellent": 66,
+          "intermediate": 60,
+          "advanced": 70,
           "elite": 80
         },
         "F": {
           "pass": 25,
+          "novice": 30,
           "good": 30,
           "excellent": 43,
+          "intermediate": 40,
+          "advanced": 45,
           "elite": 52
         }
       },
       "power_clean_1rm": {
         "M": {
           "pass": 50,
+          "novice": 60,
           "good": 65,
           "excellent": 86,
+          "intermediate": 80,
+          "advanced": 90,
           "elite": 105
         },
         "F": {
           "pass": 35,
+          "novice": 40,
           "good": 45,
           "excellent": 59,
+          "intermediate": 55,
+          "advanced": 65,
           "elite": 72
         }
       }
@@ -973,126 +1249,180 @@
       "back_squat_1rm": {
         "M": {
           "pass": 70,
+          "novice": 80,
           "good": 90,
           "excellent": 118,
+          "intermediate": 110,
+          "advanced": 125,
           "elite": 145
         },
         "F": {
           "pass": 50,
+          "novice": 60,
           "good": 70,
           "excellent": 91,
+          "intermediate": 85,
+          "advanced": 95,
           "elite": 110
         }
       },
       "front_squat_1rm": {
         "M": {
           "pass": 55,
+          "novice": 65,
           "good": 75,
           "excellent": 97,
+          "intermediate": 90,
+          "advanced": 105,
           "elite": 119
         },
         "F": {
           "pass": 45,
+          "novice": 50,
           "good": 55,
           "excellent": 74,
+          "intermediate": 70,
+          "advanced": 80,
           "elite": 90
         }
       },
       "deadlift_1rm": {
         "M": {
           "pass": 85,
+          "novice": 100,
           "good": 110,
           "excellent": 146,
+          "intermediate": 135,
+          "advanced": 155,
           "elite": 180
         },
         "F": {
           "pass": 65,
+          "novice": 75,
           "good": 85,
           "excellent": 111,
+          "intermediate": 100,
+          "advanced": 120,
           "elite": 135
         }
       },
       "bench_1rm": {
         "M": {
           "pass": 50,
+          "novice": 60,
           "good": 65,
           "excellent": 85,
+          "intermediate": 80,
+          "advanced": 90,
           "elite": 105
         },
         "F": {
           "pass": 30,
+          "novice": 40,
           "good": 45,
           "excellent": 57,
+          "intermediate": 55,
+          "advanced": 60,
           "elite": 70
         }
       },
       "strict_press_1rm": {
         "M": {
           "pass": 35,
+          "novice": 40,
           "good": 45,
           "excellent": 57,
+          "intermediate": 55,
+          "advanced": 60,
           "elite": 70
         },
         "F": {
           "pass": 25,
+          "novice": 30,
           "good": 30,
           "excellent": 39,
+          "intermediate": 35,
+          "advanced": 40,
           "elite": 48
         }
       },
       "power_clean_1rm": {
         "M": {
           "pass": 45,
+          "novice": 50,
           "good": 55,
           "excellent": 73,
+          "intermediate": 65,
+          "advanced": 80,
           "elite": 90
         },
         "F": {
           "pass": 30,
+          "novice": 35,
           "good": 40,
           "excellent": 55,
+          "intermediate": 50,
+          "advanced": 60,
           "elite": 66
         }
       },
       "row_2k": {
         "M": {
-          "pass": 495,
-          "good": 450,
+          "pass": 470,
+          "novice": 450,
+          "good": 430,
           "excellent": 400,
+          "intermediate": 410,
+          "advanced": 395,
           "elite": 380
         },
         "F": {
-          "pass": 565,
-          "good": 515,
+          "pass": 540,
+          "novice": 515,
+          "good": 490,
           "excellent": 455,
+          "intermediate": 465,
+          "advanced": 445,
           "elite": 425
         }
       },
       "run_1mi": {
         "M": {
-          "pass": 470,
-          "good": 405,
+          "pass": 450,
+          "novice": 420,
+          "good": 385,
           "excellent": 330,
+          "intermediate": 350,
+          "advanced": 315,
           "elite": 280
         },
         "F": {
-          "pass": 545,
-          "good": 470,
+          "pass": 520,
+          "novice": 485,
+          "good": 450,
           "excellent": 385,
+          "intermediate": 405,
+          "advanced": 365,
           "elite": 330
         }
       },
       "run_5k": {
         "M": {
-          "pass": 1575,
-          "good": 1325,
+          "pass": 1500,
+          "novice": 1380,
+          "good": 1260,
           "excellent": 1100,
+          "intermediate": 1155,
+          "advanced": 1060,
           "elite": 980
         },
         "F": {
-          "pass": 1825,
-          "good": 1545,
+          "pass": 1740,
+          "novice": 1605,
+          "good": 1470,
           "excellent": 1290,
+          "intermediate": 1350,
+          "advanced": 1245,
           "elite": 1160
         }
       }
@@ -1101,70 +1431,100 @@
       "back_squat_1rm": {
         "M": {
           "pass": 155,
+          "novice": 185,
           "good": 215,
           "excellent": 280,
+          "intermediate": 260,
+          "advanced": 300,
           "elite": 340
         },
         "F": {
           "pass": 100,
+          "novice": 120,
           "good": 135,
           "excellent": 172,
+          "intermediate": 160,
+          "advanced": 185,
           "elite": 210
         }
       },
       "front_squat_1rm": {
         "M": {
           "pass": 130,
+          "novice": 150,
           "good": 175,
           "excellent": 230,
+          "intermediate": 210,
+          "advanced": 245,
           "elite": 280
         },
         "F": {
           "pass": 80,
+          "novice": 95,
           "good": 110,
           "excellent": 141,
+          "intermediate": 130,
+          "advanced": 150,
           "elite": 172
         }
       },
       "deadlift_1rm": {
         "M": {
           "pass": 175,
+          "novice": 210,
           "good": 240,
           "excellent": 310,
+          "intermediate": 285,
+          "advanced": 335,
           "elite": 380
         },
         "F": {
           "pass": 115,
+          "novice": 135,
           "good": 155,
           "excellent": 205,
+          "intermediate": 190,
+          "advanced": 220,
           "elite": 250
         }
       },
       "bench_1rm": {
         "M": {
           "pass": 115,
+          "novice": 130,
           "good": 150,
           "excellent": 198,
+          "intermediate": 180,
+          "advanced": 210,
           "elite": 240
         },
         "F": {
           "pass": 65,
+          "novice": 75,
           "good": 85,
           "excellent": 110,
+          "intermediate": 100,
+          "advanced": 120,
           "elite": 135
         }
       },
       "strict_press_1rm": {
         "M": {
           "pass": 60,
+          "novice": 70,
           "good": 85,
           "excellent": 110,
+          "intermediate": 100,
+          "advanced": 120,
           "elite": 135
         },
         "F": {
           "pass": 35,
+          "novice": 40,
           "good": 50,
           "excellent": 62,
+          "intermediate": 60,
+          "advanced": 65,
           "elite": 75
         }
       }
@@ -1173,70 +1533,100 @@
       "back_squat_1rm": {
         "M": {
           "pass": 100,
+          "novice": 120,
           "good": 135,
           "excellent": 172,
+          "intermediate": 160,
+          "advanced": 185,
           "elite": 210
         },
         "F": {
           "pass": 60,
+          "novice": 70,
           "good": 85,
           "excellent": 107,
+          "intermediate": 100,
+          "advanced": 115,
           "elite": 130
         }
       },
       "front_squat_1rm": {
         "M": {
           "pass": 80,
+          "novice": 95,
           "good": 110,
           "excellent": 141,
+          "intermediate": 130,
+          "advanced": 150,
           "elite": 172
         },
         "F": {
           "pass": 50,
+          "novice": 60,
           "good": 65,
           "excellent": 88,
+          "intermediate": 80,
+          "advanced": 95,
           "elite": 107
         }
       },
       "deadlift_1rm": {
         "M": {
           "pass": 110,
+          "novice": 125,
           "good": 140,
           "excellent": 190,
+          "intermediate": 175,
+          "advanced": 205,
           "elite": 230
         },
         "F": {
           "pass": 70,
+          "novice": 80,
           "good": 95,
           "excellent": 123,
+          "intermediate": 115,
+          "advanced": 130,
           "elite": 150
         }
       },
       "bench_1rm": {
         "M": {
           "pass": 76,
+          "novice": 90,
           "good": 102,
           "excellent": 132,
+          "intermediate": 120,
+          "advanced": 140,
           "elite": 160
         },
         "F": {
           "pass": 40,
+          "novice": 45,
           "good": 53,
           "excellent": 69,
+          "intermediate": 65,
+          "advanced": 75,
           "elite": 85
         }
       },
       "strict_press_1rm": {
         "M": {
           "pass": 48,
+          "novice": 55,
           "good": 64,
           "excellent": 83,
+          "intermediate": 75,
+          "advanced": 90,
           "elite": 100
         },
         "F": {
           "pass": 29,
+          "novice": 35,
           "good": 38,
           "excellent": 50,
+          "intermediate": 45,
+          "advanced": 55,
           "elite": 62
         }
       }
@@ -1321,14 +1711,20 @@
       "thresholds": {
         "M": {
           "pass": 360,
+          "novice": null,
           "good": 240,
           "excellent": 210,
+          "intermediate": null,
+          "advanced": null,
           "elite": 165
         },
         "F": {
           "pass": 420,
+          "novice": null,
           "good": 300,
           "excellent": 270,
+          "intermediate": null,
+          "advanced": null,
           "elite": 210
         }
       },
@@ -1344,14 +1740,20 @@
       "thresholds": {
         "M": {
           "pass": 300,
+          "novice": null,
           "good": 225,
           "excellent": 165,
+          "intermediate": null,
+          "advanced": null,
           "elite": 135
         },
         "F": {
           "pass": 360,
+          "novice": null,
           "good": 240,
           "excellent": 165,
+          "intermediate": null,
+          "advanced": null,
           "elite": 145
         }
       },
@@ -1367,14 +1769,20 @@
       "thresholds": {
         "M": {
           "pass": 840,
+          "novice": null,
           "good": 660,
           "excellent": 540,
+          "intermediate": null,
+          "advanced": null,
           "elite": 450
         },
         "F": {
           "pass": 960,
+          "novice": null,
           "good": 780,
           "excellent": 630,
+          "intermediate": null,
+          "advanced": null,
           "elite": 510
         }
       },
@@ -1390,14 +1798,20 @@
       "thresholds": {
         "M": {
           "pass": 600,
+          "novice": null,
           "good": 390,
           "excellent": 285,
+          "intermediate": null,
+          "advanced": null,
           "elite": 210
         },
         "F": {
           "pass": 720,
+          "novice": null,
           "good": 480,
           "excellent": 360,
+          "intermediate": null,
+          "advanced": null,
           "elite": 255
         }
       },
@@ -1413,14 +1827,20 @@
       "thresholds": {
         "M": {
           "pass": 12,
+          "novice": null,
           "good": 18,
           "excellent": 22,
+          "intermediate": null,
+          "advanced": null,
           "elite": 25
         },
         "F": {
           "pass": 10,
+          "novice": null,
           "good": 16,
           "excellent": 20,
+          "intermediate": null,
+          "advanced": null,
           "elite": 22
         }
       },
@@ -1436,14 +1856,20 @@
       "thresholds": {
         "M": {
           "pass": 250,
+          "novice": null,
           "good": 320,
           "excellent": 360,
+          "intermediate": null,
+          "advanced": null,
           "elite": 420
         },
         "F": {
           "pass": 200,
+          "novice": null,
           "good": 270,
           "excellent": 310,
+          "intermediate": null,
+          "advanced": null,
           "elite": 370
         }
       },
@@ -1459,14 +1885,20 @@
       "thresholds": {
         "M": {
           "pass": 5700,
+          "novice": null,
           "good": 5160,
           "excellent": 4620,
+          "intermediate": null,
+          "advanced": null,
           "elite": 4080
         },
         "F": {
           "pass": 6600,
+          "novice": null,
           "good": 6000,
           "excellent": 5340,
+          "intermediate": null,
+          "advanced": null,
           "elite": 4740
         }
       },

@@ -1,9 +1,15 @@
 /**
  * Browse Standards — Strength-Level-style reference tables. No input needed:
- * pick a sex and read the pass/good/excellent/elite thresholds per benchmark.
+ * pick a sex and read the tier thresholds per benchmark.
  *
  * Uses whatever standards are loaded (synthetic demo today; real Excel later).
  * Benchmarks/WODs with null tiers render "—".
+ *
+ * 2026-07-13 (round 8) — six tiers, not four: every row shows all seven raw
+ * fields (Pass/Novice/Good/Excellent/Intermediate/Advanced/Elite). Lift/hybrid
+ * benchmarks populate all seven; legacy operator/WOD-style benchmarks (no
+ * `novice`) only populate Pass/Good/Excellent/Elite and render "—" for the
+ * rest — same dual-mode split as the scoring engine (see tier-curve.ts).
  */
 
 import type { BenchmarkDef, Sex, ThresholdSet, WodDef } from '../engine/types';
@@ -30,7 +36,7 @@ function Table({ rows }: { rows: Array<{ label: string; sub?: string; t: Thresho
       <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.9rem' }}>
         <thead>
           <tr>
-            {['Benchmark', 'Pass', 'Good', 'Excellent', 'Elite'].map((h, i) => (
+            {['Benchmark', 'Pass', 'Novice', 'Good', 'Excellent', 'Intermediate', 'Advanced', 'Elite'].map((h, i) => (
               <th key={h} style={{ textAlign: i === 0 ? 'left' : 'right', padding: '6px 8px', borderBottom: '2px solid var(--primary)', color: 'var(--fg-muted)', fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                 {h}
               </th>
@@ -44,7 +50,7 @@ function Table({ rows }: { rows: Array<{ label: string; sub?: string; t: Thresho
                 {r.label}
                 {r.sub && <div className="subtle" style={{ fontSize: '0.72rem' }}>{r.sub}</div>}
               </td>
-              {(['pass', 'good', 'excellent', 'elite'] as const).map((k) => (
+              {(['pass', 'novice', 'good', 'excellent', 'intermediate', 'advanced', 'elite'] as const).map((k) => (
                 <td key={k} style={{ padding: '7px 8px', textAlign: 'right', borderBottom: '1px solid var(--line)', fontVariantNumeric: 'tabular-nums' }}>
                   {cell(r.t, k, r.unit)}
                 </td>
@@ -89,10 +95,12 @@ export function BrowseStandards({ benchmarks, wods, sex, unisex, onSexChange }: 
       <Table rows={wodRows} />
       <p className="subtle" style={{ marginTop: 12 }}>
         Thresholds shown are the selected pathway&apos;s tiers at the
-        50 / 70 / 85 / 100 anchor levels. All values are absolute — kg for
-        lifts, times for runs and the erg (fixed-load sports don&apos;t scale
-        with bodyweight, so the standards don&apos;t either). Enter your stats
-        in the Calculator to see your scores and percentile.
+        50 / 60 / 70 / 80 / 90 / 100 anchor levels (Excellent is a legacy
+        85% checkpoint, kept for reference — WOD-style benchmarks without a
+        Novice value still score against it). All values are absolute — kg
+        for lifts, times for runs and the erg (fixed-load sports don&apos;t
+        scale with bodyweight, so the standards don&apos;t either). Enter
+        your stats in the Calculator to see your scores and percentile.
       </p>
     </div>
   );

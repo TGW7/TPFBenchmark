@@ -47,23 +47,38 @@ export function formatPercent(p: number | null): string {
   return p == null ? '—' : `${Math.round(p)}%`;
 }
 
-/** Traffic-light colour for a 0–100+ score, banded on the scoring tiers. */
+/**
+ * Traffic-light colour for a 0–100+ score, banded on the scoring tiers.
+ *
+ * 2026-07-13 (round 8) — six bands, not four (owner: the old jumps between
+ * named tiers felt too big; supersedes an earlier five-band attempt):
+ * Beginner 50 / Novice 60 / Experienced 70 / Intermediate 80 / Advanced 90 /
+ * Elite 100 — same naming as the app's `TIER_LABEL`. Benchmarks still on the
+ * legacy four-tier curve (no `novice` value — operator/WOD) score cleanly
+ * into one of these bands too, just landing on whichever side of
+ * 60/70/80/90 their continuous score happens to fall — the bands are a
+ * display convenience, not tied to which curve produced the number.
+ */
 export function scoreColor(value: number | null): string {
   if (value == null) return 'var(--fg-muted)';
-  if (value < 50) return '#d92626'; // below pass — red
-  if (value < 70) return '#de8a10'; // pass — amber
-  if (value < 85) return '#6ba32b'; // good — lime
-  if (value < 100) return '#158a44'; // excellent — green
+  if (value < 50) return '#d92626'; // below beginner — red
+  if (value < 60) return '#de6a10'; // beginner — orange
+  if (value < 70) return '#d9a017'; // novice — amber
+  if (value < 80) return '#a8a02a'; // experienced — olive
+  if (value < 90) return '#6ba32b'; // intermediate — lime
+  if (value < 100) return '#158a44'; // advanced — green
   return '#0d9488'; // elite (top ~5%) — teal
 }
 
 /** Named scoring tier for a 0–100+ score. Elite = meeting the elite standard (≈ top 5%). */
 export function scoreTier(value: number | null): string | null {
   if (value == null) return null;
-  if (value < 50) return 'Below pass';
-  if (value < 70) return 'Pass';
-  if (value < 85) return 'Good';
-  if (value < 100) return 'Excellent';
+  if (value < 50) return 'Below Beginner';
+  if (value < 60) return 'Beginner';
+  if (value < 70) return 'Novice';
+  if (value < 80) return 'Experienced';
+  if (value < 90) return 'Intermediate';
+  if (value < 100) return 'Advanced';
   return 'Elite';
 }
 

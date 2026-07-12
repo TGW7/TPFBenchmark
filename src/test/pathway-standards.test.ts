@@ -32,22 +32,42 @@ describe('absolute standards (2026-07-12 conversion)', () => {
     expect(STANDARDS_THRESHOLDS.run_5k.M.elite).toBe(1050); // 17:30
   });
 
-  it('matches the tpf-app base tables on every shared benchmark', () => {
+  it('matches the tpf-app base tables on every shared benchmark (6-tier)', () => {
     // hybrid_readiness.ts STANDARDS_MALE/FEMALE — update BOTH in one pass.
+    // Tuple order: pass, novice, good, intermediate, advanced, elite
+    // (excellent omitted — vestigial once novice/intermediate/advanced exist).
     const shared: Record<string, { M: number[]; F: number[] }> = {
-      back_squat_1rm:   { M: [90, 120, 155, 190],  F: [55, 75, 97, 120] },
-      deadlift_1rm:     { M: [105, 140, 180, 225], F: [70, 90, 118, 145] },
-      bench_1rm:        { M: [75, 100, 130, 160],  F: [45, 55, 73, 90] },
-      strict_press_1rm: { M: [45, 60, 77, 95],     F: [25, 35, 45, 55] },
-      power_clean_1rm:  { M: [55, 75, 97, 120],    F: [35, 50, 63, 78] },
-      run_1mi:          { M: [495, 420, 345, 300], F: [565, 490, 410, 360] },
-      run_5k:           { M: [1640, 1420, 1185, 1050], F: [1890, 1640, 1380, 1245] },
-      row_2k:           { M: [505, 460, 410, 390], F: [580, 525, 465, 435] },
+      back_squat_1rm:   { M: [90, 105, 120, 145, 165, 190],   F: [55, 65, 75, 90, 105, 120] },
+      deadlift_1rm:     { M: [105, 120, 140, 165, 195, 225],  F: [70, 80, 90, 110, 125, 145] },
+      bench_1rm:        { M: [75, 90, 100, 120, 140, 160],    F: [45, 50, 55, 65, 80, 90] },
+      strict_press_1rm: { M: [45, 50, 60, 70, 85, 95],        F: [25, 30, 35, 40, 50, 55] },
+      power_clean_1rm:  { M: [55, 65, 75, 90, 105, 120],      F: [35, 40, 50, 60, 70, 78] },
+      run_1mi:          { M: [495, 460, 420, 370, 330, 300],  F: [565, 530, 490, 435, 395, 360] },
+      run_5k:           { M: [1640, 1530, 1420, 1265, 1140, 1050], F: [1890, 1765, 1640, 1465, 1335, 1245] },
+      row_2k:           { M: [505, 480, 460, 425, 405, 390],  F: [580, 550, 525, 485, 455, 435] },
     };
     for (const [id, tiers] of Object.entries(shared)) {
       for (const sex of ['M', 'F'] as const) {
         const t = STANDARDS_THRESHOLDS[id][sex];
-        expect([t.pass, t.good, t.excellent, t.elite], `${id}/${sex}`).toEqual(tiers[sex]);
+        expect(
+          [t.pass, t.novice, t.good, t.intermediate, t.advanced, t.elite],
+          `${id}/${sex}`,
+        ).toEqual(tiers[sex]);
+      }
+    }
+  });
+
+  it('every populated benchmark carries novice/intermediate/advanced tiers (six levels, not four)', () => {
+    for (const s of BENCHMARK_SOURCING) {
+      if (s.id.includes('front_squat') || s.id.includes('snatch') || s.id.includes('clean_jerk')
+        || ['back_squat_1rm', 'deadlift_1rm', 'bench_1rm', 'strict_press_1rm', 'power_clean_1rm', 'run_1mi', 'run_5k', 'row_2k'].includes(s.id)) {
+        const t = STANDARDS_THRESHOLDS[s.id];
+        expect(t.M.novice, `${s.id}/M novice`).not.toBeNull();
+        expect(t.M.intermediate, `${s.id}/M intermediate`).not.toBeNull();
+        expect(t.M.advanced, `${s.id}/M advanced`).not.toBeNull();
+        expect(t.F.novice, `${s.id}/F novice`).not.toBeNull();
+        expect(t.F.intermediate, `${s.id}/F intermediate`).not.toBeNull();
+        expect(t.F.advanced, `${s.id}/F advanced`).not.toBeNull();
       }
     }
   });
