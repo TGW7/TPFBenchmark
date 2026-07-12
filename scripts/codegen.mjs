@@ -43,6 +43,11 @@ const CORE_COMPONENTS = [
   'power',
   'gymnastics',
   'core_endurance',
+  // 2026-07-13 — triathlete discipline components (swim 25 / bike 25 /
+  // run 25 / strength 25, owner spec). Zero-weighted on every other
+  // lift/hybrid pathway.
+  'swimming',
+  'cycling',
 ];
 const PATHWAYS = ['gym_goer', 'hybrid_athlete', 'crossfit_generalist', 'hyrox', 'powerlifter', 'bodybuilder', 'triathlete'];
 

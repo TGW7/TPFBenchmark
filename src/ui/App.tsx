@@ -142,7 +142,17 @@ export function App() {
       for (const c of result.components) for (const b of c.benchmarks) scoreById.set(b.benchmarkId, b.percent);
       return benchmarks.map((b) => ({ label: benchmarkLabel(b), percent: scoreById.get(b.id) ?? null }));
     }
-    return CFG.components.map((c) => ({
+    // 2026-07-13 — pathway-aware axes: only components this pathway
+    // actually weights (result.components is exactly that set), in the
+    // brand's canonical order, with any extras (the triathlete's
+    // swimming/cycling, which aren't in the 8-component core list)
+    // appended. The old CFG.components.map(...) showed dead axes for
+    // unweighted components (e.g. a permanently-null Olympic axis on
+    // the triathlete radar) and would have hidden swim/bike entirely.
+    const weighted = new Set(result.components.map((c) => c.component));
+    const ordered = CFG.components.filter((c) => weighted.has(c));
+    const extras = result.components.map((c) => c.component).filter((c) => !CFG.components.includes(c));
+    return [...ordered, ...extras].map((c) => ({
       label: componentLabel(c),
       percent: result.components.find((x) => x.component === c)?.percent ?? null,
     }));

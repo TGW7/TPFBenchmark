@@ -27,7 +27,12 @@ export type OptionalComponentId = 'grip' | 'rucking';
 /** Operator-only components (from the ORS model). */
 export type OperatorComponentId = 'upper_endurance' | 'stability' | 'swimming';
 
-export type ComponentId = CoreComponentId | OptionalComponentId | OperatorComponentId;
+/** 2026-07-13 — triathlete pathway discipline components (owner: swim 25 /
+ *  bike 25 / run 25 / strength 25). `swimming` already existed above for
+ *  the operator pathways and is reused; cycling is new here. */
+export type EnduranceComponentId = 'cycling';
+
+export type ComponentId = CoreComponentId | OptionalComponentId | OperatorComponentId | EnduranceComponentId;
 
 export const CORE_COMPONENT_IDS: readonly CoreComponentId[] = [
   'running',

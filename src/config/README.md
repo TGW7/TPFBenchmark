@@ -22,7 +22,7 @@ workbook location with the `HRS_STANDARDS_XLSX` env var.
 
 | Export | From sheet | State |
 |--------|-----------|-------|
-| `BENCHMARK_SOURCING` (21) | Benchmarks_Sourcing | populated |
+| `BENCHMARK_SOURCING` (25) | Benchmarks_Sourcing | populated |
 | `STANDARDS_THRESHOLDS` | Standards | thresholds TODO (null) |
 | `PATHWAY_STANDARD_OVERRIDES` | Standards_Pathway | per-pathway tier overrides |
 | `PATHWAY_WEIGHTS` | Weights | weights TODO (null), each col → 100 |

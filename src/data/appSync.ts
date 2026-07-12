@@ -35,6 +35,12 @@ export const RACE_TO_APP: Record<string, { modality: string; event: string }> = 
   run_5k: { modality: 'run', event: '5k' },
   row_2k: { modality: 'row', event: '2k' },
   row_500m: { modality: 'row', event: '500m' },
+  // 2026-07-13 — triathlete swim/bike benchmarks (event keys match the
+  // app's MODALITY_EVENTS in multimodal_race_times_storage).
+  swim_400m: { modality: 'swim', event: '400m' },
+  swim_1500m: { modality: 'swim', event: '1500m' },
+  bike_20k: { modality: 'bike', event: '20k' },
+  bike_40k: { modality: 'bike', event: '40k' },
   // ruck_time omitted — the app's ruck events are distance-specific (TODO map).
 };
 

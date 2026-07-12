@@ -16,6 +16,7 @@ export const COMPONENT_LABELS: Record<ComponentId, string> = {
   upper_endurance: 'Upper Endurance',
   stability: 'Stability',
   swimming: 'Swimming',
+  cycling: 'Cycling',
 };
 
 export const componentLabel = (c: ComponentId): string => COMPONENT_LABELS[c] ?? c;
@@ -25,6 +26,7 @@ const BENCH_LABEL_OVERRIDES: Record<string, string> = {
   strict_press_1rm: 'Strict Press', power_clean_1rm: 'Power Clean',
   snatch_1rm: 'Snatch', clean_jerk_1rm: 'Clean & Jerk',
   run_1mi: '1-mile run', run_5k: '5k run', row_2k: '2k row', row_500m: '500m row',
+  swim_400m: '400m swim', swim_1500m: '1500m swim', bike_20k: '20km bike TT', bike_40k: '40km bike TT',
   hspu: 'HSPU', t2b: 'T2B', du_unbroken: 'Double-unders', max_mu: 'Muscle-ups',
   strict_pullups: 'Strict Pull-ups', plank_hold: 'Plank', broad_jump: 'Broad Jump',
   grip_deadhang: 'Dead Hang', ruck_time: 'Ruck',

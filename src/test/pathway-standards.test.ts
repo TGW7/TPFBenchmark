@@ -45,6 +45,13 @@ describe('absolute standards (2026-07-12 conversion)', () => {
       run_1mi:          { M: [545, 455, 390, 370, 330, 300],  F: [620, 520, 455, 435, 395, 360] },
       run_5k:           { M: [1805, 1500, 1320, 1170, 1140, 1050], F: [2080, 1735, 1525, 1355, 1335, 1245] },
       row_2k:           { M: [555, 505, 460, 425, 405, 390],  F: [640, 580, 525, 485, 455, 435] },
+      // 2026-07-13 (round 13) — triathlete swim/bike benchmarks. Base rows
+      // ARE the triathlete calibration (only that pathway weights them);
+      // app source: hybrid_readiness.ts SWIM_400/BIKE_20K + riegelStd.
+      swim_400m:        { M: [560, 480, 410, 360, 320, 285],  F: [620, 530, 455, 400, 355, 315] },
+      swim_1500m:       { M: [2270, 1950, 1660, 1460, 1300, 1160], F: [2520, 2150, 1850, 1620, 1440, 1280] },
+      bike_20k:         { M: [2700, 2400, 2160, 1950, 1770, 1620], F: [3000, 2670, 2400, 2160, 1965, 1800] },
+      bike_40k:         { M: [5590, 4970, 4470, 4040, 3660, 3350], F: [6210, 5530, 4970, 4470, 4070, 3730] },
     };
     for (const [id, tiers] of Object.entries(shared)) {
       for (const sex of ['M', 'F'] as const) {
@@ -120,7 +127,9 @@ describe('absolute standards (2026-07-12 conversion)', () => {
         power_clean_1rm: { M: [40, 50, 55, 65, 80, 90], F: [25, 35, 40, 50, 60, 66] },
         run_1mi: { M: [515, 460, 405, 355, 315, 280], F: [600, 535, 470, 415, 365, 330] },
         run_5k: { M: [1735, 1520, 1325, 1175, 1060, 980], F: [2010, 1770, 1545, 1375, 1245, 1160] },
-        row_2k: { M: [545, 495, 450, 415, 395, 380], F: [620, 565, 515, 475, 445, 425] },
+        // round 13 — row_2k override removed (erg weight 0 for the
+        // triathlete: it can never be scored) → falls back to base.
+        row_2k: { M: [555, 505, 460, 425, 405, 390], F: [640, 580, 525, 485, 455, 435] },
       },
       powerlifter: {
         back_squat_1rm: { M: [105, 140, 180, 225, 280, 340], F: [70, 90, 115, 145, 175, 210] },
@@ -244,5 +253,23 @@ describe('per-pathway overrides', () => {
 
   it('hybrid brand pathway list includes the triathlete (2026-07-12 fix)', () => {
     expect(brandConfig('hybrid').pathwayList.map((p) => p.id)).toContain('triathlete');
+  });
+
+  it('2026-07-13: triathlete scores swim/bike benchmarks and drops the erg', () => {
+    // Owner spec: run 25 / swim 25 / bike 25 / lower 10 / upper 10 / power 5.
+    const cfg = brandConfig('hybrid');
+    const ids = cfg.benchmarksFor('triathlete').map((b) => b.id);
+    expect(ids).toContain('swim_400m');
+    expect(ids).toContain('swim_1500m');
+    expect(ids).toContain('bike_20k');
+    expect(ids).toContain('bike_40k');
+    expect(ids).not.toContain('row_2k');   // erg_engine weight 0
+    expect(ids).not.toContain('snatch_1rm'); // olympic weight 0
+    // No other lift/hybrid pathway scores swim/bike.
+    for (const p of ['hybrid_athlete', 'gym_goer', 'crossfit_generalist', 'hyrox', 'powerlifter', 'bodybuilder']) {
+      const other = cfg.benchmarksFor(p).map((b) => b.id);
+      expect(other, p).not.toContain('swim_400m');
+      expect(other, p).not.toContain('bike_20k');
+    }
   });
 });
