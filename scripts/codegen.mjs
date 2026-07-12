@@ -182,6 +182,52 @@ function parseStandards(wb) {
   return byId;
 }
 
+/**
+ * 2026-07-12 — per-PATHWAY tier overrides (Standards_Pathway sheet).
+ * Rows: benchmark_id | pathway | sex | unit | pass..elite | source_ref | notes.
+ * A row overrides the base Standards tier set for that benchmark+sex under
+ * that pathway only; benchmarks/sexes without a row keep the base tiers.
+ * Sheet absent → empty object (backward compatible).
+ */
+function parsePathwayStandards(wb) {
+  const rows = sheetRows(wb, 'Standards_Pathway');
+  const h = findHeaderRow(rows, 'benchmark_id');
+  if (h < 0) return {};
+  const head = rows[h];
+  const C = {
+    id: findCol(head, (s) => s === 'benchmark_id'),
+    pathway: findCol(head, (s) => s === 'pathway'),
+    sex: findCol(head, (s) => s === 'sex'),
+    unit: findCol(head, (s) => s === 'unit'),
+    pass: findCol(head, (s) => s.startsWith('pass')),
+    good: findCol(head, (s) => s.startsWith('good')),
+    excellent: findCol(head, (s) => s.startsWith('excellent')),
+    elite: findCol(head, (s) => s.startsWith('elite')),
+  };
+  const byPathway = {};
+  for (let i = h + 1; i < rows.length; i++) {
+    const r = rows[i] || [];
+    const id = str(cell(r, C.id));
+    const pathway = str(cell(r, C.pathway));
+    const sex = str(cell(r, C.sex)).toUpperCase();
+    if (!id || (sex !== 'M' && sex !== 'F')) continue;
+    if (!PATHWAYS.includes(pathway)) {
+      if (pathway) console.warn(`[codegen] Standards_Pathway: unknown pathway "${pathway}" (row ${i + 1}) — skipped`);
+      continue;
+    }
+    const unit = str(cell(r, C.unit));
+    byPathway[pathway] = byPathway[pathway] || {};
+    byPathway[pathway][id] = byPathway[pathway][id] || { M: NULL_TS, F: NULL_TS };
+    byPathway[pathway][id][sex] = thresholdSet(
+      parseThreshold(cell(r, C.pass), unit),
+      parseThreshold(cell(r, C.good), unit),
+      parseThreshold(cell(r, C.excellent), unit),
+      parseThreshold(cell(r, C.elite), unit),
+    );
+  }
+  return byPathway;
+}
+
 function parseWeights(wb) {
   const rows = sheetRows(wb, 'Weights');
   const h = findHeaderRow(rows, 'component');
@@ -325,6 +371,11 @@ export const BENCHMARK_SOURCING: SourcingRow[] = ${J(data.sourcing)};
 /** Per-benchmark tier thresholds by sex. Values are TODO (null) until populated. */
 export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = ${J(data.standards)};
 
+/** Per-PATHWAY tier overrides (Standards_Pathway sheet). A populated
+ *  benchmark+sex entry replaces the base tiers under that pathway; anything
+ *  absent falls back to STANDARDS_THRESHOLDS. */
+export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string, Record<Sex, ThresholdSet>>>> = ${J(data.pathwayStandards)};
+
 /** Pathway component weights. TODO (null) until populated; must each sum to 100. */
 export const PATHWAY_WEIGHTS: Partial<Record<PathwayId, Partial<Record<ComponentId, number | null>>>> = ${J(data.weights)};
 
@@ -365,6 +416,7 @@ workbook location with the \`HRS_STANDARDS_XLSX\` env var.
 |--------|-----------|-------|
 | \`BENCHMARK_SOURCING\` (${benchCount}) | Benchmarks_Sourcing | populated |
 | \`STANDARDS_THRESHOLDS\` | Standards | thresholds TODO (null) |
+| \`PATHWAY_STANDARD_OVERRIDES\` | Standards_Pathway | per-pathway tier overrides |
 | \`PATHWAY_WEIGHTS\` | Weights | weights TODO (null), each col → 100 |
 | \`WOD_STANDARDS\` (${wodCount}) | WOD_Standards | thresholds TODO (null) |
 | \`QUALITY_MIX\` | Quality_Mix | vectors TODO (null), rows → 1 |
@@ -393,11 +445,12 @@ async function main() {
 
   const sourcing = parseSourcing(wb);
   const standards = parseStandards(wb);
+  const pathwayStandards = parsePathwayStandards(wb);
   const weights = parseWeights(wb);
   const wodStandards = parseWodStandards(wb);
   const qualityMix = parseQualityMix(wb, Object.keys(wodStandards));
 
-  const data = { sourcing, standards, weights, wodStandards, qualityMix };
+  const data = { sourcing, standards, pathwayStandards, weights, wodStandards, qualityMix };
 
   await writeFile(GEN_TS, renderTs(data, sourceName), 'utf8');
   await writeFile(README, renderReadme(data, sourceName), 'utf8');

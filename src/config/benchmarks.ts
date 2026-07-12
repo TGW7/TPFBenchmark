@@ -9,6 +9,7 @@
 import type { BenchmarkDef, Sex, ThresholdSet } from '../engine/types';
 import {
   BENCHMARK_SOURCING,
+  PATHWAY_STANDARD_OVERRIDES,
   STANDARDS_THRESHOLDS,
 } from './generated/standards.generated';
 
@@ -48,3 +49,21 @@ export const HRS_BENCHMARKS_BY_ID: Record<string, BenchmarkDef> = Object.fromEnt
 
 /** Core (always-on) benchmarks — excludes the optional grip / rucking carry-overs. */
 export const CORE_BENCHMARKS: BenchmarkDef[] = HRS_BENCHMARKS.filter((b) => !b.optional);
+
+/**
+ * 2026-07-12 — per-pathway standards. Where the Standards_Pathway sheet
+ * carries a populated tier set for (pathway, benchmark, sex), it replaces
+ * the base tiers; everything else keeps the shared Standards values. Sex
+ * granularity matters: an override with only an M row leaves F on base.
+ */
+export function withPathwayStandards(pathwayId: string, defs: BenchmarkDef[]): BenchmarkDef[] {
+  const overrides = (PATHWAY_STANDARD_OVERRIDES as Record<string, Record<string, Record<Sex, ThresholdSet>> | undefined>)[pathwayId];
+  if (!overrides) return defs;
+  return defs.map((b) => {
+    const ov = overrides[b.id];
+    if (!ov) return b;
+    const pick = (sex: Sex): ThresholdSet =>
+      ov[sex] && ov[sex].pass != null ? ov[sex] : b.thresholds[sex];
+    return { ...b, thresholds: { M: pick('M'), F: pick('F') } };
+  });
+}

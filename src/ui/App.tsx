@@ -22,7 +22,7 @@ import { LANDING_COPY } from '../content/landingCopy';
 import { useAuth } from '../auth/AuthContext';
 import { AuthPanel } from '../auth/AuthPanel';
 import { fetchPercentile, fetchPoolCount, loadEntries, loadProfile, replaceEntries, saveProfile, submitToPool } from '../data/remote';
-import { buildPoolSubmissions } from '../data/pool';
+import { buildPoolSubmissions, overallPoolKey } from '../data/pool';
 import { syncFromApp, syncToApp } from '../data/appSync';
 import { isSupabaseConfigured } from '../lib/supabase';
 import { Dashboard } from './Dashboard';
@@ -124,7 +124,7 @@ export function App() {
     let cancelled = false;
     const t = setTimeout(() => {
       const cell = {
-        brand: BRAND, benchmarkId: `overall:${pathwayId}`,
+        brand: BRAND, benchmarkId: overallPoolKey(pathwayId),
         sex: profile.sex, ageBand: ageBand(profile.ageYears) ?? null,
       };
       fetchPercentile({ ...cell, value: overall, lowerIsBetter: false })

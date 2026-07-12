@@ -64,7 +64,7 @@ const LIFT: LandingCopy = {
     heading: 'Training hard and still guessing?',
     bullets: [
       'You’re plateauing — with no idea which lift or engine is holding you back.',
-      'Generic “standards” online don’t fit your goal or your bodyweight.',
+      'Generic “standards” online don’t fit your goal or your sport.',
       'Months of effort, and no clear read on whether any of it is paying off.',
     ],
   },
@@ -95,7 +95,7 @@ const LIFT: LandingCopy = {
     ],
   },
   explanatory:
-    'Take Point Fitness turns your scattered numbers into one honest read. Enter your squat, deadlift, bench, runs, rows and benchmark workouts, choose the pathway that matches your goal, and the calculator scores each lift and time on a clear pass / good / excellent / elite curve — adjusted for your bodyweight, sex and age. It weights everything toward the goal you care about, estimates your percentile, and shows the weak link that’s costing you the most. It’s free and needs no account. When you’re ready to fix what it finds, the Take Point Fitness app turns your weak link into a plan and tracks the number as it climbs. Scores compress at the top — 85+ is elite territory, because it means being near the top in every area at once, not just one.',
+    'Take Point Fitness turns your scattered numbers into one honest read. Enter your squat, deadlift, bench, runs, rows and benchmark workouts, choose the pathway that matches your goal, and the calculator scores each lift and time on a clear pass / good / excellent / elite curve — scored on absolute standards for your sex, tiered by pathway. It weights everything toward the goal you care about, estimates your percentile, and shows the weak link that’s costing you the most. It’s free and needs no account. When you’re ready to fix what it finds, the Take Point Fitness app turns your weak link into a plan and tracks the number as it climbs. Scores compress at the top — 85+ is elite territory, because it means being near the top in every area at once, not just one.',
   options: {
     heading: 'Free to find out. Built to improve.',
     free: { title: 'The benchmark', body: 'Your score, percentile and weak link — across every pathway. Free forever — sign in to save yours.' },
@@ -163,7 +163,7 @@ const OPERATOR: LandingCopy = {
     ],
   },
   explanatory:
-    'Take Point Fitness Operator turns your fitness into one honest readiness read. Enter your lifts, carries, runs and work-capacity efforts, choose the standard that matches the job, and the calculator scores each against a clear pass / good / excellent / elite curve — adjusted for your bodyweight, sex and age. It weights everything toward the demands of the role, estimates your percentile, and shows the gap most likely to fail you first. It’s free and needs no account. When you’re ready to close it, the Take Point Fitness Operator app turns that gap into a plan and tracks your readiness over time. Scores compress at the top — 85+ is elite territory, because it means being near the top in every area at once, not just one.',
+    'Take Point Fitness Operator turns your fitness into one honest readiness read. Enter your lifts, carries, runs and work-capacity efforts, choose the standard that matches the job, and the calculator scores each against a clear pass / good / excellent / elite curve — scored on absolute standards for your sex, tiered by pathway. It weights everything toward the demands of the role, estimates your percentile, and shows the gap most likely to fail you first. It’s free and needs no account. When you’re ready to close it, the Take Point Fitness Operator app turns that gap into a plan and tracks your readiness over time. Scores compress at the top — 85+ is elite territory, because it means being near the top in every area at once, not just one.',
   options: {
     heading: 'Free to find out. Built to close the gap.',
     free: { title: 'The benchmark', body: 'Your readiness score, percentile and biggest gap. Free forever — sign in to save yours.' },
@@ -231,7 +231,7 @@ const HYBRID: LandingCopy = {
     ],
   },
   explanatory:
-    'Take Point Fitness Hybrid turns your combined training into one honest read. Enter your squat, deadlift, bench, power clean and run and row times, choose the hybrid standard that matches your goal, and the calculator scores each against a clear pass / good / excellent / elite curve — adjusted for your bodyweight, sex and age. It weights strength and engine equally for the hybrid athlete, estimates your percentile, and surfaces the weak side that\'s costing you the most. It\'s free and needs no account. When you\'re ready to fix what it finds, the Take Point Fitness Hybrid app turns your weak side into a balanced plan. Scores compress at the top — 85+ is elite territory, because it means being near the top in every area at once, not just one.',
+    'Take Point Fitness Hybrid turns your combined training into one honest read. Enter your squat, deadlift, bench, power clean and run and row times, choose the hybrid standard that matches your goal, and the calculator scores each against a clear pass / good / excellent / elite curve — scored on absolute standards for your sex, tiered by pathway. It weights strength and engine equally for the hybrid athlete, estimates your percentile, and surfaces the weak side that\'s costing you the most. It\'s free and needs no account. When you\'re ready to fix what it finds, the Take Point Fitness Hybrid app turns your weak side into a balanced plan. Scores compress at the top — 85+ is elite territory, because it means being near the top in every area at once, not just one.',
   options: {
     heading: 'Free to find out. Built to balance.',
     free: { title: 'The benchmark', body: 'Your hybrid score, percentile and weak side — free forever; sign in to save yours.' },

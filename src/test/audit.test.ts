@@ -19,17 +19,18 @@ function def(id: string, normalization: Normalization, unit: string): BenchmarkD
   };
 }
 
-const squat = def('back_squat_1rm', 'bodyweight', 'xBW');
+// 2026-07-12 — lifts are stored ABSOLUTE (kg) now; bounds are kg too.
+const squat = def('back_squat_1rm', 'absolute', 'kg');
 const pullups = def('strict_pullups', 'absolute', 'reps');
 const run5k = def('run_5k', 'absolute', 'mm:ss');
 
 describe('auditEntry — sanity bounds', () => {
-  it('accepts plausible bodyweight lifts (×BW)', () => {
-    expect(auditEntry(squat, 150, PROFILE).level).toBe('ok'); // 1.88×BW
+  it('accepts plausible lifts (absolute kg)', () => {
+    expect(auditEntry(squat, 150, PROFILE).level).toBe('ok'); // 150 kg
   });
   it('rejects impossible lifts and flags implausible ones', () => {
-    expect(auditEntry(squat, 400, PROFILE).level).toBe('reject'); // 5.0×BW
-    expect(auditEntry(squat, 300, PROFILE).level).toBe('review'); // 3.75×BW > soft 3.5
+    expect(auditEntry(squat, 510, PROFILE).level).toBe('reject'); // past the all-time raw record
+    expect(auditEntry(squat, 340, PROFILE).level).toBe('review'); // 340 kg > soft 320
     expect(auditEntry(squat, -10, PROFILE).level).toBe('reject');
   });
   it('handles absolute rep benchmarks', () => {
@@ -52,9 +53,9 @@ describe('auditBodyweight', () => {
   });
 });
 
-describe('auditConsistency — cross-benchmark ratios', () => {
+describe('auditConsistency — cross-benchmark ratios (unit-agnostic, kg here)', () => {
   it('flags bench above squat', () => {
-    const f = auditConsistency({ bench_1rm: 1.6, back_squat_1rm: 1.5 }, {});
+    const f = auditConsistency({ bench_1rm: 130, back_squat_1rm: 120 }, {});
     expect(f.some((x) => x.benchmarkId === 'bench_1rm')).toBe(true);
   });
   it('flags a mile slower than 5k pace', () => {
@@ -64,7 +65,7 @@ describe('auditConsistency — cross-benchmark ratios', () => {
   });
   it('passes a consistent athlete with no findings', () => {
     const f = auditConsistency(
-      { bench_1rm: 1.3, back_squat_1rm: 1.8, clean_jerk_1rm: 1.4, snatch_1rm: 1.1, power_clean_1rm: 1.2 },
+      { bench_1rm: 104, back_squat_1rm: 144, clean_jerk_1rm: 112, snatch_1rm: 88, power_clean_1rm: 96 },
       { run_1mi: 330, run_5k: 1140 }, // 5:30 mile, ~6:07/mi 5k -> consistent
     );
     expect(f.length).toBe(0);

@@ -104,121 +104,121 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "id": "back_squat_1rm",
     "component": "lower_strength",
     "source": "orm",
-    "unit": "xBW",
+    "unit": "kg",
     "lowerIsBetter": false,
-    "normalization": "bodyweight",
+    "normalization": "absolute",
     "optional": false,
-    "dataSource": "OpenPowerlifting",
+    "dataSource": "StrengthLevel + Kilgore 2023 + IPF/USAPL (reference); expert-curated absolute tiers",
     "license": "CC0 / public domain",
     "commercialUse": "Yes (no restriction)",
     "referencePopulation": "Competitive lifters (strong-biased)",
     "launchMethod": "Licensed data (adjust for general pop)",
-    "notes": "Squat contested in PL; rich by sex/BW/age"
+    "notes": "Squat contested in PL; rich by sex/BW/age | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
   },
   {
     "id": "front_squat_1rm",
     "component": "lower_strength",
     "source": "orm",
-    "unit": "xBW",
+    "unit": "kg",
     "lowerIsBetter": false,
-    "normalization": "bodyweight",
+    "normalization": "absolute",
     "optional": false,
-    "dataSource": "Coaching ratios",
+    "dataSource": "StrengthLevel + Kilgore 2023 + IPF/USAPL (reference); expert-curated absolute tiers",
     "license": "n/a",
     "commercialUse": "Yes",
     "referencePopulation": "Trained adults",
     "launchMethod": "Coach-curated (~0.82x back squat)",
-    "notes": "Front squat 1RM"
+    "notes": "Front squat 1RM | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
   },
   {
     "id": "deadlift_1rm",
     "component": "lower_strength",
     "source": "orm",
-    "unit": "xBW",
+    "unit": "kg",
     "lowerIsBetter": false,
-    "normalization": "bodyweight",
+    "normalization": "absolute",
     "optional": false,
-    "dataSource": "OpenPowerlifting",
+    "dataSource": "StrengthLevel + Kilgore 2023 + IPF/USAPL (reference); expert-curated absolute tiers",
     "license": "CC0 / public domain",
     "commercialUse": "Yes (no restriction)",
     "referencePopulation": "Competitive lifters",
     "launchMethod": "Licensed data (adjust)",
-    "notes": "Contested in PL"
+    "notes": "Contested in PL | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
   },
   {
     "id": "bench_1rm",
     "component": "upper_strength",
     "source": "orm",
-    "unit": "xBW",
+    "unit": "kg",
     "lowerIsBetter": false,
-    "normalization": "bodyweight",
+    "normalization": "absolute",
     "optional": false,
-    "dataSource": "OpenPowerlifting",
+    "dataSource": "StrengthLevel + Kilgore 2023 + IPF/USAPL (reference); expert-curated absolute tiers",
     "license": "CC0 / public domain",
     "commercialUse": "Yes (no restriction)",
     "referencePopulation": "Competitive lifters",
     "launchMethod": "Licensed data (adjust)",
-    "notes": "Bench contested in PL"
+    "notes": "Bench contested in PL | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
   },
   {
     "id": "strict_press_1rm",
     "component": "upper_strength",
     "source": "orm",
-    "unit": "xBW",
+    "unit": "kg",
     "lowerIsBetter": false,
-    "normalization": "bodyweight",
+    "normalization": "absolute",
     "optional": false,
-    "dataSource": "Expert-curated (not a contested lift)",
+    "dataSource": "StrengthLevel + Kilgore 2023 + IPF/USAPL (reference); expert-curated absolute tiers",
     "license": "None",
     "commercialUse": "Expert",
     "referencePopulation": "Own users",
     "launchMethod": "Expert-curated + own-data",
-    "notes": "Anchor ratio vs bench / bodyweight; refine from own data"
+    "notes": "Anchor ratio vs bench / bodyweight; refine from own data | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
   },
   {
     "id": "snatch_1rm",
     "component": "olympic",
     "source": "orm",
-    "unit": "xBW",
+    "unit": "kg",
     "lowerIsBetter": false,
-    "normalization": "bodyweight",
+    "normalization": "absolute",
     "optional": false,
-    "dataSource": "IWF comp data (elite) + coaching ratios",
+    "dataSource": "StrengthLevel + Kilgore 2023 + IPF/USAPL (reference); expert-curated absolute tiers",
     "license": "Proprietary / unclear",
     "commercialUse": "License required / expert",
     "referencePopulation": "Elite weightlifters",
     "launchMethod": "Expert-curated + own-data",
-    "notes": "Comp data elite-biased; anchor with coaching ratios"
+    "notes": "Comp data elite-biased; anchor with coaching ratios | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
   },
   {
     "id": "clean_jerk_1rm",
     "component": "olympic",
     "source": "orm",
-    "unit": "xBW",
+    "unit": "kg",
     "lowerIsBetter": false,
-    "normalization": "bodyweight",
+    "normalization": "absolute",
     "optional": false,
-    "dataSource": "IWF comp data + coaching ratios",
+    "dataSource": "StrengthLevel + Kilgore 2023 + IPF/USAPL (reference); expert-curated absolute tiers",
     "license": "Proprietary / unclear",
     "commercialUse": "License required / expert",
     "referencePopulation": "Elite weightlifters",
     "launchMethod": "Expert-curated + own-data",
-    "notes": "As snatch"
+    "notes": "As snatch | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
   },
   {
     "id": "power_clean_1rm",
     "component": "power",
     "source": "orm",
-    "unit": "xBW",
+    "unit": "kg",
     "lowerIsBetter": false,
-    "normalization": "bodyweight",
+    "normalization": "absolute",
     "optional": false,
-    "dataSource": "Expert-curated (not contested)",
+    "dataSource": "StrengthLevel + Kilgore 2023 + IPF/USAPL (reference); expert-curated absolute tiers",
     "license": "None",
     "commercialUse": "Expert",
     "referencePopulation": "Own users",
     "launchMethod": "Expert-curated + own-data",
-    "notes": "Ratio vs clean & jerk; refine from own data"
+    "notes": "Ratio vs clean & jerk; refine from own data | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
   },
   {
     "id": "broad_jump",
@@ -361,44 +361,44 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
 export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
   "run_1mi": {
     "M": {
-      "pass": 540,
-      "good": 435,
-      "excellent": 390,
-      "elite": 330
+      "pass": 470,
+      "good": 400,
+      "excellent": 345,
+      "elite": 300
     },
     "F": {
-      "pass": 600,
-      "good": 495,
-      "excellent": 432,
-      "elite": 390
+      "pass": 540,
+      "good": 465,
+      "excellent": 410,
+      "elite": 360
     }
   },
   "run_5k": {
     "M": {
-      "pass": 1800,
-      "good": 1440,
-      "excellent": 1290,
-      "elite": 1110
+      "pass": 1560,
+      "good": 1350,
+      "excellent": 1185,
+      "elite": 1050
     },
     "F": {
-      "pass": 2010,
-      "good": 1680,
-      "excellent": 1440,
-      "elite": 1290
+      "pass": 1800,
+      "good": 1560,
+      "excellent": 1380,
+      "elite": 1245
     }
   },
   "row_2k": {
     "M": {
       "pass": 480,
-      "good": 450,
-      "excellent": 420,
-      "elite": 400
+      "good": 440,
+      "excellent": 410,
+      "elite": 390
     },
     "F": {
-      "pass": 540,
-      "good": 510,
-      "excellent": 480,
-      "elite": 460
+      "pass": 550,
+      "good": 500,
+      "excellent": 465,
+      "elite": 435
     }
   },
   "row_500m": {
@@ -417,114 +417,114 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
   },
   "back_squat_1rm": {
     "M": {
-      "pass": 1.35,
-      "good": 1.6,
-      "excellent": 2,
-      "elite": 2.5
+      "pass": 95,
+      "good": 125,
+      "excellent": 155,
+      "elite": 190
     },
     "F": {
-      "pass": 1,
-      "good": 1.3,
-      "excellent": 1.6,
-      "elite": 2
+      "pass": 60,
+      "good": 78,
+      "excellent": 97,
+      "elite": 120
     }
   },
   "front_squat_1rm": {
     "M": {
-      "pass": 1.1,
-      "good": 1.35,
-      "excellent": 1.65,
-      "elite": 2.05
+      "pass": 78,
+      "good": 102,
+      "excellent": 127,
+      "elite": 155
     },
     "F": {
-      "pass": 0.8,
-      "good": 1.05,
-      "excellent": 1.3,
-      "elite": 1.65
+      "pass": 50,
+      "good": 64,
+      "excellent": 80,
+      "elite": 98
     }
   },
   "deadlift_1rm": {
     "M": {
-      "pass": 1.65,
-      "good": 1.9,
-      "excellent": 2.3,
-      "elite": 2.8
+      "pass": 110,
+      "good": 145,
+      "excellent": 180,
+      "elite": 225
     },
     "F": {
-      "pass": 1.2,
-      "good": 1.5,
-      "excellent": 1.9,
-      "elite": 2.4
+      "pass": 72,
+      "good": 95,
+      "excellent": 118,
+      "elite": 145
     }
   },
   "bench_1rm": {
     "M": {
-      "pass": 1,
-      "good": 1.25,
-      "excellent": 1.6,
-      "elite": 2
+      "pass": 70,
+      "good": 90,
+      "excellent": 115,
+      "elite": 140
     },
     "F": {
-      "pass": 0.6,
-      "good": 0.8,
-      "excellent": 1,
-      "elite": 1.3
+      "pass": 40,
+      "good": 52,
+      "excellent": 65,
+      "elite": 80
     }
   },
   "strict_press_1rm": {
     "M": {
-      "pass": 0.65,
-      "good": 0.8,
-      "excellent": 1,
-      "elite": 1.25
+      "pass": 45,
+      "good": 62,
+      "excellent": 77,
+      "elite": 95
     },
     "F": {
-      "pass": 0.4,
-      "good": 0.55,
-      "excellent": 0.7,
-      "elite": 0.9
+      "pass": 28,
+      "good": 36,
+      "excellent": 45,
+      "elite": 55
     }
   },
   "snatch_1rm": {
     "M": {
-      "pass": 0.7,
-      "good": 0.95,
-      "excellent": 1.2,
-      "elite": 1.5
+      "pass": 49,
+      "good": 66,
+      "excellent": 81,
+      "elite": 100
     },
     "F": {
-      "pass": 0.5,
-      "good": 0.65,
-      "excellent": 0.85,
-      "elite": 1.05
+      "pass": 30,
+      "good": 41,
+      "excellent": 50,
+      "elite": 62
     }
   },
   "clean_jerk_1rm": {
     "M": {
-      "pass": 0.9,
-      "good": 1.2,
-      "excellent": 1.5,
-      "elite": 1.85
+      "pass": 64,
+      "good": 85,
+      "excellent": 105,
+      "elite": 130
     },
     "F": {
-      "pass": 0.65,
-      "good": 0.85,
-      "excellent": 1.05,
-      "elite": 1.3
+      "pass": 40,
+      "good": 54,
+      "excellent": 66,
+      "elite": 82
     }
   },
   "power_clean_1rm": {
     "M": {
-      "pass": 0.8,
-      "good": 1.05,
-      "excellent": 1.35,
-      "elite": 1.65
+      "pass": 60,
+      "good": 78,
+      "excellent": 97,
+      "elite": 120
     },
     "F": {
-      "pass": 0.55,
-      "good": 0.75,
-      "excellent": 0.95,
-      "elite": 1.15
+      "pass": 38,
+      "good": 51,
+      "excellent": 63,
+      "elite": 78
     }
   },
   "broad_jump": {
@@ -623,6 +623,640 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
       "good": 150,
       "excellent": 180,
       "elite": 300
+    }
+  }
+};
+
+/** Per-PATHWAY tier overrides (Standards_Pathway sheet). A populated
+ *  benchmark+sex entry replaces the base tiers under that pathway; anything
+ *  absent falls back to STANDARDS_THRESHOLDS. */
+export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string, Record<Sex, ThresholdSet>>>> = {
+  "gym_goer": {
+    "back_squat_1rm": {
+      "M": {
+        "pass": 105,
+        "good": 140,
+        "excellent": 175,
+        "elite": 215
+      },
+      "F": {
+        "pass": 50,
+        "good": 74,
+        "excellent": 102,
+        "elite": 133
+      }
+    },
+    "front_squat_1rm": {
+      "M": {
+        "pass": 84,
+        "good": 110,
+        "excellent": 139,
+        "elite": 170
+      },
+      "F": {
+        "pass": 45,
+        "good": 62,
+        "excellent": 82,
+        "elite": 103
+      }
+    },
+    "deadlift_1rm": {
+      "M": {
+        "pass": 125,
+        "good": 160,
+        "excellent": 200,
+        "elite": 245
+      },
+      "F": {
+        "pass": 61,
+        "good": 87,
+        "excellent": 118,
+        "elite": 152
+      }
+    },
+    "bench_1rm": {
+      "M": {
+        "pass": 80,
+        "good": 105,
+        "excellent": 135,
+        "elite": 165
+      },
+      "F": {
+        "pass": 32,
+        "good": 50,
+        "excellent": 72,
+        "elite": 96
+      }
+    },
+    "strict_press_1rm": {
+      "M": {
+        "pass": 50,
+        "good": 68,
+        "excellent": 88,
+        "elite": 110
+      },
+      "F": {
+        "pass": 22,
+        "good": 34,
+        "excellent": 48,
+        "elite": 63
+      }
+    },
+    "snatch_1rm": {
+      "M": {
+        "pass": 57,
+        "good": 79,
+        "excellent": 105,
+        "elite": 133
+      },
+      "F": {
+        "pass": 31,
+        "good": 43,
+        "excellent": 58,
+        "elite": 74
+      }
+    },
+    "clean_jerk_1rm": {
+      "M": {
+        "pass": 71,
+        "good": 97,
+        "excellent": 126,
+        "elite": 158
+      },
+      "F": {
+        "pass": 40,
+        "good": 55,
+        "excellent": 72,
+        "elite": 90
+      }
+    },
+    "power_clean_1rm": {
+      "M": {
+        "pass": 73,
+        "good": 95,
+        "excellent": 122,
+        "elite": 150
+      },
+      "F": {
+        "pass": 40,
+        "good": 54,
+        "excellent": 70,
+        "elite": 88
+      }
+    },
+    "run_1mi": {
+      "M": {
+        "pass": 540,
+        "good": 450,
+        "excellent": 390,
+        "elite": 345
+      },
+      "F": {
+        "pass": 630,
+        "good": 525,
+        "excellent": 460,
+        "elite": 410
+      }
+    },
+    "run_5k": {
+      "M": {
+        "pass": 1800,
+        "good": 1500,
+        "excellent": 1290,
+        "elite": 1140
+      },
+      "F": {
+        "pass": 2040,
+        "good": 1740,
+        "excellent": 1500,
+        "elite": 1350
+      }
+    },
+    "row_2k": {
+      "M": {
+        "pass": 500,
+        "good": 460,
+        "excellent": 425,
+        "elite": 405
+      },
+      "F": {
+        "pass": 570,
+        "good": 525,
+        "excellent": 485,
+        "elite": 460
+      }
+    }
+  },
+  "crossfit_generalist": {
+    "back_squat_1rm": {
+      "M": {
+        "pass": 100,
+        "good": 140,
+        "excellent": 165,
+        "elite": 185
+      },
+      "F": {
+        "pass": 68,
+        "good": 92,
+        "excellent": 112,
+        "elite": 130
+      }
+    },
+    "front_squat_1rm": {
+      "M": {
+        "pass": 82,
+        "good": 115,
+        "excellent": 135,
+        "elite": 152
+      },
+      "F": {
+        "pass": 56,
+        "good": 75,
+        "excellent": 92,
+        "elite": 107
+      }
+    },
+    "deadlift_1rm": {
+      "M": {
+        "pass": 125,
+        "good": 170,
+        "excellent": 200,
+        "elite": 225
+      },
+      "F": {
+        "pass": 82,
+        "good": 114,
+        "excellent": 137,
+        "elite": 160
+      }
+    },
+    "bench_1rm": {
+      "M": {
+        "pass": 78,
+        "good": 105,
+        "excellent": 123,
+        "elite": 140
+      },
+      "F": {
+        "pass": 40,
+        "good": 54,
+        "excellent": 70,
+        "elite": 85
+      }
+    },
+    "snatch_1rm": {
+      "M": {
+        "pass": 55,
+        "good": 74,
+        "excellent": 95,
+        "elite": 115
+      },
+      "F": {
+        "pass": 35,
+        "good": 48,
+        "excellent": 62,
+        "elite": 75
+      }
+    },
+    "clean_jerk_1rm": {
+      "M": {
+        "pass": 70,
+        "good": 96,
+        "excellent": 120,
+        "elite": 145
+      },
+      "F": {
+        "pass": 46,
+        "good": 63,
+        "excellent": 79,
+        "elite": 95
+      }
+    },
+    "power_clean_1rm": {
+      "M": {
+        "pass": 62,
+        "good": 85,
+        "excellent": 108,
+        "elite": 130
+      },
+      "F": {
+        "pass": 40,
+        "good": 55,
+        "excellent": 70,
+        "elite": 85
+      }
+    },
+    "run_1mi": {
+      "M": {
+        "pass": 495,
+        "good": 420,
+        "excellent": 360,
+        "elite": 320
+      },
+      "F": {
+        "pass": 570,
+        "good": 475,
+        "excellent": 415,
+        "elite": 380
+      }
+    },
+    "run_5k": {
+      "M": {
+        "pass": 1620,
+        "good": 1410,
+        "excellent": 1230,
+        "elite": 1110
+      },
+      "F": {
+        "pass": 1830,
+        "good": 1590,
+        "excellent": 1400,
+        "elite": 1290
+      }
+    },
+    "row_2k": {
+      "M": {
+        "pass": 470,
+        "good": 430,
+        "excellent": 400,
+        "elite": 380
+      },
+      "F": {
+        "pass": 540,
+        "good": 495,
+        "excellent": 465,
+        "elite": 440
+      }
+    }
+  },
+  "hyrox": {
+    "back_squat_1rm": {
+      "M": {
+        "pass": 70,
+        "good": 92,
+        "excellent": 115,
+        "elite": 140
+      },
+      "F": {
+        "pass": 47,
+        "good": 62,
+        "excellent": 78,
+        "elite": 95
+      }
+    },
+    "front_squat_1rm": {
+      "M": {
+        "pass": 57,
+        "good": 75,
+        "excellent": 94,
+        "elite": 115
+      },
+      "F": {
+        "pass": 39,
+        "good": 51,
+        "excellent": 64,
+        "elite": 78
+      }
+    },
+    "deadlift_1rm": {
+      "M": {
+        "pass": 85,
+        "good": 115,
+        "excellent": 143,
+        "elite": 175
+      },
+      "F": {
+        "pass": 60,
+        "good": 80,
+        "excellent": 100,
+        "elite": 122
+      }
+    },
+    "bench_1rm": {
+      "M": {
+        "pass": 55,
+        "good": 72,
+        "excellent": 90,
+        "elite": 110
+      },
+      "F": {
+        "pass": 32,
+        "good": 43,
+        "excellent": 53,
+        "elite": 65
+      }
+    },
+    "strict_press_1rm": {
+      "M": {
+        "pass": 37,
+        "good": 49,
+        "excellent": 61,
+        "elite": 75
+      },
+      "F": {
+        "pass": 24,
+        "good": 31,
+        "excellent": 39,
+        "elite": 48
+      }
+    },
+    "power_clean_1rm": {
+      "M": {
+        "pass": 47,
+        "good": 62,
+        "excellent": 78,
+        "elite": 95
+      },
+      "F": {
+        "pass": 30,
+        "good": 39,
+        "excellent": 49,
+        "elite": 60
+      }
+    }
+  },
+  "triathlete": {
+    "back_squat_1rm": {
+      "M": {
+        "pass": 72,
+        "good": 95,
+        "excellent": 118,
+        "elite": 145
+      },
+      "F": {
+        "pass": 45,
+        "good": 59,
+        "excellent": 73,
+        "elite": 90
+      }
+    },
+    "front_squat_1rm": {
+      "M": {
+        "pass": 59,
+        "good": 78,
+        "excellent": 97,
+        "elite": 119
+      },
+      "F": {
+        "pass": 37,
+        "good": 48,
+        "excellent": 60,
+        "elite": 74
+      }
+    },
+    "deadlift_1rm": {
+      "M": {
+        "pass": 90,
+        "good": 118,
+        "excellent": 146,
+        "elite": 180
+      },
+      "F": {
+        "pass": 55,
+        "good": 73,
+        "excellent": 91,
+        "elite": 112
+      }
+    },
+    "bench_1rm": {
+      "M": {
+        "pass": 52,
+        "good": 69,
+        "excellent": 85,
+        "elite": 105
+      },
+      "F": {
+        "pass": 29,
+        "good": 38,
+        "excellent": 47,
+        "elite": 58
+      }
+    },
+    "strict_press_1rm": {
+      "M": {
+        "pass": 35,
+        "good": 46,
+        "excellent": 57,
+        "elite": 70
+      },
+      "F": {
+        "pass": 20,
+        "good": 26,
+        "excellent": 32,
+        "elite": 40
+      }
+    },
+    "power_clean_1rm": {
+      "M": {
+        "pass": 45,
+        "good": 59,
+        "excellent": 73,
+        "elite": 90
+      },
+      "F": {
+        "pass": 27,
+        "good": 36,
+        "excellent": 45,
+        "elite": 55
+      }
+    },
+    "row_2k": {
+      "M": {
+        "pass": 470,
+        "good": 430,
+        "excellent": 400,
+        "elite": 380
+      },
+      "F": {
+        "pass": 540,
+        "good": 490,
+        "excellent": 455,
+        "elite": 425
+      }
+    }
+  },
+  "powerlifter": {
+    "back_squat_1rm": {
+      "M": {
+        "pass": 120,
+        "good": 160,
+        "excellent": 200,
+        "elite": 240
+      },
+      "F": {
+        "pass": 73,
+        "good": 97,
+        "excellent": 120,
+        "elite": 145
+      }
+    },
+    "front_squat_1rm": {
+      "M": {
+        "pass": 98,
+        "good": 130,
+        "excellent": 164,
+        "elite": 197
+      },
+      "F": {
+        "pass": 60,
+        "good": 80,
+        "excellent": 98,
+        "elite": 119
+      }
+    },
+    "deadlift_1rm": {
+      "M": {
+        "pass": 135,
+        "good": 180,
+        "excellent": 230,
+        "elite": 275
+      },
+      "F": {
+        "pass": 85,
+        "good": 115,
+        "excellent": 142,
+        "elite": 172
+      }
+    },
+    "bench_1rm": {
+      "M": {
+        "pass": 82,
+        "good": 110,
+        "excellent": 138,
+        "elite": 165
+      },
+      "F": {
+        "pass": 44,
+        "good": 59,
+        "excellent": 73,
+        "elite": 88
+      }
+    },
+    "strict_press_1rm": {
+      "M": {
+        "pass": 55,
+        "good": 73,
+        "excellent": 91,
+        "elite": 110
+      },
+      "F": {
+        "pass": 32,
+        "good": 42,
+        "excellent": 52,
+        "elite": 63
+      }
+    }
+  },
+  "bodybuilder": {
+    "back_squat_1rm": {
+      "M": {
+        "pass": 105,
+        "good": 140,
+        "excellent": 172,
+        "elite": 210
+      },
+      "F": {
+        "pass": 65,
+        "good": 87,
+        "excellent": 107,
+        "elite": 130
+      }
+    },
+    "front_squat_1rm": {
+      "M": {
+        "pass": 86,
+        "good": 115,
+        "excellent": 141,
+        "elite": 172
+      },
+      "F": {
+        "pass": 53,
+        "good": 71,
+        "excellent": 88,
+        "elite": 107
+      }
+    },
+    "deadlift_1rm": {
+      "M": {
+        "pass": 115,
+        "good": 150,
+        "excellent": 190,
+        "elite": 230
+      },
+      "F": {
+        "pass": 75,
+        "good": 100,
+        "excellent": 123,
+        "elite": 150
+      }
+    },
+    "bench_1rm": {
+      "M": {
+        "pass": 80,
+        "good": 107,
+        "excellent": 132,
+        "elite": 160
+      },
+      "F": {
+        "pass": 42,
+        "good": 56,
+        "excellent": 69,
+        "elite": 85
+      }
+    },
+    "strict_press_1rm": {
+      "M": {
+        "pass": 50,
+        "good": 67,
+        "excellent": 83,
+        "elite": 100
+      },
+      "F": {
+        "pass": 30,
+        "good": 40,
+        "excellent": 50,
+        "elite": 62
+      }
     }
   }
 };

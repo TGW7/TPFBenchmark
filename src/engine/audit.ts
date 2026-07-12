@@ -36,14 +36,16 @@ interface Bounds {
 
 /** Impossible-outside (reject) / implausible-outside (review) guardrails. */
 export const SANITY_BOUNDS: Record<string, Bounds> = {
-  // ×bodyweight lifts
-  back_squat_1rm: { hardMin: 0.2, hardMax: 4.5, softMax: 3.5 },
-  deadlift_1rm: { hardMin: 0.2, hardMax: 5.0, softMax: 4.0 },
-  bench_1rm: { hardMin: 0.1, hardMax: 3.0, softMax: 2.3 },
-  strict_press_1rm: { hardMin: 0.1, hardMax: 2.0, softMax: 1.3 },
-  snatch_1rm: { hardMin: 0.1, hardMax: 2.5, softMax: 1.8 },
-  clean_jerk_1rm: { hardMin: 0.1, hardMax: 3.0, softMax: 2.2 },
-  power_clean_1rm: { hardMin: 0.1, hardMax: 2.5, softMax: 1.8 },
+  // Lifts — ABSOLUTE kg (2026-07-12: standards converted from ×BW to
+  // absolute; hard maxes sit just past all-time raw records).
+  back_squat_1rm: { hardMin: 20, hardMax: 500, softMax: 320 },
+  front_squat_1rm: { hardMin: 15, hardMax: 420, softMax: 280 },
+  deadlift_1rm: { hardMin: 20, hardMax: 505, softMax: 360 },
+  bench_1rm: { hardMin: 15, hardMax: 355, softMax: 230 },
+  strict_press_1rm: { hardMin: 10, hardMax: 230, softMax: 140 },
+  snatch_1rm: { hardMin: 10, hardMax: 230, softMax: 170 },
+  clean_jerk_1rm: { hardMin: 10, hardMax: 275, softMax: 200 },
+  power_clean_1rm: { hardMin: 10, hardMax: 250, softMax: 180 },
   // times (seconds)
   run_1mi: { hardMin: 220, hardMax: 1200, softMin: 240 },
   run_5k: { hardMin: 740, hardMax: 3600, softMin: 780 },

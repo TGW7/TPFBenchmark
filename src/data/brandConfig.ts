@@ -18,7 +18,7 @@ import type {
 } from '../engine/types';
 import { CORE_COMPONENT_IDS } from '../engine/types';
 import type { Brand } from '../brand';
-import { HRS_BENCHMARKS } from '../config/benchmarks';
+import { HRS_BENCHMARKS, withPathwayStandards } from '../config/benchmarks';
 import { HRS_PATHWAY_CONFIGS, HRS_PATHWAY_LIST } from '../config/pathways';
 import { HRS_WODS, HRS_WOD_LIST } from '../config/wods';
 import {
@@ -54,9 +54,20 @@ const OPERATOR_BANNER = 'Operator standards (beta) — real US/UK unit benchmark
 const HYBRID_BANNER = 'Hybrid athlete standards (beta) — balanced strength + engine benchmarks.';
 
 const HYBRID_PATHWAY_ORDER = [
-  'hybrid_athlete', 'crossfit_generalist', 'hyrox',
+  'hybrid_athlete', 'crossfit_generalist', 'hyrox', 'triathlete',
   'gym_goer', 'powerlifter', 'bodybuilder',
 ] as const;
+
+/** Benchmarks a lift/hybrid pathway scores: only components it weights,
+ *  with any per-pathway standards overrides applied (2026-07-12). */
+function hrsBenchmarksFor(id: string): BenchmarkDef[] {
+  const weights: Partial<Record<ComponentId, number | null>> =
+    (HRS_PATHWAY_CONFIGS as Record<string, PathwayConfig>)[id]?.weights ?? {};
+  return withPathwayStandards(
+    id,
+    HRS_BENCHMARKS.filter((b) => (weights[b.component] ?? 0) > 0),
+  );
+}
 
 export function brandConfig(brand: Brand): BrandConfig {
   if (brand === 'hybrid') {
@@ -67,11 +78,7 @@ export function brandConfig(brand: Brand): BrandConfig {
       pathways: HRS_PATHWAY_CONFIGS,
       pathwayList: hybridPathwayList,
       components: [...CORE_COMPONENT_IDS],
-      benchmarksFor: (id) => {
-        const weights: Partial<Record<ComponentId, number | null>> =
-          (HRS_PATHWAY_CONFIGS as Record<string, PathwayConfig>)[id]?.weights ?? {};
-        return HRS_BENCHMARKS.filter((b) => (weights[b.component] ?? 0) > 0);
-      },
+      benchmarksFor: hrsBenchmarksFor,
       wods: HRS_WODS,
       wodList: HRS_WOD_LIST,
       sampleProfile: DEMO_PROFILE,
@@ -102,11 +109,7 @@ export function brandConfig(brand: Brand): BrandConfig {
     components: [...CORE_COMPONENT_IDS],
     // Only the benchmarks whose component the pathway actually weights — so
     // strength pathways (powerlifter/bodybuilder) drop cardio entirely.
-    benchmarksFor: (id) => {
-      const weights: Partial<Record<ComponentId, number | null>> =
-        (HRS_PATHWAY_CONFIGS as Record<string, PathwayConfig>)[id]?.weights ?? {};
-      return HRS_BENCHMARKS.filter((b) => (weights[b.component] ?? 0) > 0);
-    },
+    benchmarksFor: hrsBenchmarksFor,
     wods: HRS_WODS,
     wodList: HRS_WOD_LIST,
     sampleProfile: DEMO_PROFILE,

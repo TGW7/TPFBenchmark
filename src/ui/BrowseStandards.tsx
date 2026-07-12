@@ -88,9 +88,11 @@ export function BrowseStandards({ benchmarks, wods, sex, unisex, onSexChange }: 
       <h3 style={{ marginTop: 20 }}>Benchmark workouts</h3>
       <Table rows={wodRows} />
       <p className="subtle" style={{ marginTop: 12 }}>
-        Thresholds shown are tiered at the 50th / 70th / 85th / top 5% levels.
-        Bodyweight lifts are ×bodyweight; enter your stats in the Calculator to see
-        absolute targets and your percentile.
+        Thresholds shown are the selected pathway&apos;s tiers at the
+        50 / 70 / 85 / 100 anchor levels. All values are absolute — kg for
+        lifts, times for runs and the erg (fixed-load sports don&apos;t scale
+        with bodyweight, so the standards don&apos;t either). Enter your stats
+        in the Calculator to see your scores and percentile.
       </p>
     </div>
   );

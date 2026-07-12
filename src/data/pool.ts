@@ -23,6 +23,13 @@ export interface BuildPoolArgs {
   overall?: number | null;
 }
 
+/** Pool cell key for the composite overall score. Versioned: v2 =
+ *  2026-07-12 absolute per-pathway recalibration — old rows scored on the
+ *  ×BW calibration must not mix into the new percentile cells. */
+export function overallPoolKey(pathwayId: string): string {
+  return `overall:${pathwayId}:v2`;
+}
+
 export function buildPoolSubmissions(args: BuildPoolArgs): PoolRow[] {
   const band = ageBand(args.profile.ageYears) ?? null;
   const rows: PoolRow[] = [];
@@ -39,9 +46,13 @@ export function buildPoolSubmissions(args: BuildPoolArgs): PoolRow[] {
         ? raw / args.profile.bodyweightKg
         : raw;
 
+    // 2026-07-12 — lifts flipped ×BW → absolute kg: partition their pool
+    // cells by unit so historical ×BW rows can't pollute kg percentiles.
+    const cellId = b.source === 'orm' && b.unit === 'kg' ? `${b.id}:kg` : b.id;
+
     rows.push({
       brand: args.brand,
-      benchmark_id: b.id,
+      benchmark_id: cellId,
       sex: args.profile.sex,
       age_band: band,
       bodyweight_kg: args.profile.bodyweightKg,
@@ -59,7 +70,7 @@ export function buildPoolSubmissions(args: BuildPoolArgs): PoolRow[] {
   if (args.pathwayId && args.overall != null) {
     rows.push({
       brand: args.brand,
-      benchmark_id: `overall:${args.pathwayId}`,
+      benchmark_id: overallPoolKey(args.pathwayId),
       sex: args.profile.sex,
       age_band: band,
       bodyweight_kg: args.profile.bodyweightKg,

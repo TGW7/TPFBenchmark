@@ -24,6 +24,7 @@ workbook location with the `HRS_STANDARDS_XLSX` env var.
 |--------|-----------|-------|
 | `BENCHMARK_SOURCING` (21) | Benchmarks_Sourcing | populated |
 | `STANDARDS_THRESHOLDS` | Standards | thresholds TODO (null) |
+| `PATHWAY_STANDARD_OVERRIDES` | Standards_Pathway | per-pathway tier overrides |
 | `PATHWAY_WEIGHTS` | Weights | weights TODO (null), each col → 100 |
 | `WOD_STANDARDS` (7) | WOD_Standards | thresholds TODO (null) |
 | `QUALITY_MIX` | Quality_Mix | vectors TODO (null), rows → 1 |
