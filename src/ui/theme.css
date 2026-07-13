@@ -1,8 +1,14 @@
 /* =========================================================================
    TPF design tokens — the ONLY place colour hex appears.
-   Four-colour brand palette: off-white, black, OD-green, red.
-   Reds/black match the TPF app + logo (brand red = #e31e24). Operator adds olive.
-   All component colours derive from these four tokens via color-mix().
+   Brand palette: off-white, black, OD-green, red, TPF Hybrid blue.
+   All component colours derive from these tokens via color-mix().
+
+   2026-07-13 — the benchmark's DEFAULT accent is now TPF Hybrid steel blue
+   (#3B7DD8), matching the paid TPF Hybrid app (BRAND_META.hybrid in
+   tpf-app). The benchmark IS the Hybrid Athlete Benchmark, so both the
+   default/lift and the hybrid brand share the app's blue identity. Red is
+   retained for semantic ALERTS only (never the brand accent now). Operator
+   keeps its distinct tactical olive — it is a separate product (ORS).
    ========================================================================= */
 
 :root {
@@ -10,11 +16,12 @@
   --tpf-offwhite: #f4f1e8;
   --tpf-black: #161616;
   --tpf-od-green: #5c6e3a; /* Operator / tactical only */
-  --tpf-red: #e31e24;
+  --tpf-red: #e31e24;      /* semantic alerts only */
+  --tpf-blue: #3b7dd8;     /* TPF Hybrid steel blue — the default brand accent */
 
-  /* Brand accent + canvas. DEFAULT = Lift: Black / Red / White (red primary).
-     Operator overrides to the tactical olive palette. */
-  --brand: var(--tpf-red);
+  /* Brand accent + canvas. DEFAULT = TPF Hybrid blue. Operator overrides to
+     the tactical olive palette. */
+  --brand: var(--tpf-blue);
   --canvas: var(--tpf-white);
 }
 [data-brand='operator'] {
@@ -22,7 +29,7 @@
   --canvas: var(--tpf-offwhite);
 }
 [data-brand='hybrid'] {
-  --brand: #3B7DD8;
+  --brand: var(--tpf-blue);
 }
 
 /* ---- Light theme (default) ---- */
@@ -38,6 +45,13 @@
   --alert: var(--tpf-red);
   --alert-weak: color-mix(in srgb, var(--tpf-red) 14%, var(--canvas));
   --on-accent: var(--tpf-white);
+}
+/* TPF Hybrid blue is darkened a touch on white for readability — matches
+   the app's [data-brand="hybrid"] .app.light value (#2a65bb). Operator's
+   olive keeps its own light-mode value from the base rule above. */
+[data-theme='light']:not([data-brand='operator']) {
+  --primary: #2a65bb;
+  --primary-weak: color-mix(in srgb, #2a65bb 14%, var(--canvas));
 }
 
 /* ---- Dark theme: black canvas ---- */
@@ -123,6 +137,12 @@ a {
   flex: 0 0 auto;
   width: 46px;
   height: 46px;
+}
+/* The mark asset (tpf-mark.png) is red-sourced; blue-tint it to TPF Hybrid
+   steel blue for the HABS brands, matching the app's [data-brand="hybrid"]
+   logo hue-rotate. Operator keeps the red mark untouched. */
+html:not([data-brand='operator']) .brandlogo {
+  filter: hue-rotate(215deg) saturate(0.92) brightness(0.97);
 }
 .brandmark .accent {
   color: var(--primary);

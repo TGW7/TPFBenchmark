@@ -37,7 +37,8 @@ import { Landing } from './Landing';
 import { Footer } from './Footer';
 import { benchmarkLabel, componentLabel, formatPercentile } from './format';
 import { event } from '../lib/analytics';
-import { shareResult } from './shareImage';
+import { shareScoreCard } from './shareCard';
+import { habsLevelInfo } from '../engine/levels';
 import { type Units, loadUnits, saveUnits } from '../lib/units';
 
 const BRAND = detectBrand();
@@ -184,16 +185,28 @@ export function App() {
   async function shareImg() {
     if (result.overall == null) return;
     event('result_shared', { brand: BRAND, pathway: pathwayId });
+    // Same portrait score card the paid app hands out (see shareCard.ts):
+    // brand-blue ring + level + component bars.
+    const level = habsLevelInfo(result.overall).level;
+    const components = result.components
+      .filter((c): c is typeof c & { percent: number } => c.percent != null)
+      .map((c) => ({ label: componentLabel(c.component), score: c.percent }));
     try {
-      const res = await shareResult(
+      const res = await shareScoreCard(
         {
-          brand: BRAND, shortName: META.scoreLabel, scoreText: String(Math.round(result.overall)),
-          percentileText: formatPercentile(percentile), pathway: pathway.label,
-          weakest: weakness.limiters.map(componentLabel)[0] ?? '—', site: SITE.replace('https://', ''),
+          brand: BRAND,
+          score: result.overall,
+          level,
+          scoreLabel: META.scoreLabel,
+          pathwayLabel: pathway.label,
+          components,
+          siteDisplay: SITE.replace('https://', ''),
+          appDisplay: META.appUrl.replace('https://', ''),
         },
-        `My ${META.scoreLabel} — ${Math.round(result.overall)} (${pathway.label}). Score yours free.`,
+        `I am Level ${level} — ${META.scoreLabel} ${Math.round(result.overall)} (${pathway.label}) on TPF. ` +
+          `Score yours free → ${SITE.replace('https://', '')}`,
       );
-      setShareMsg(res === 'shared' ? 'Shared!' : 'Image downloaded.');
+      setShareMsg(res === 'shared' ? 'Shared!' : res === 'downloaded' ? 'Image downloaded.' : 'Couldn’t make the image.');
     } catch {
       setShareMsg('Couldn’t make the image.');
     }

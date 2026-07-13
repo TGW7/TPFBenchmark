@@ -63,7 +63,9 @@ const slugify = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').repla
 
 // ---- HTML shell ------------------------------------------------------------
 function page({ brand, path, title, description, h1, lede, body, host, jsonLd = [] }) {
-  const accent = brand === 'operator' ? '#5c6e3a' : '#e31e24';
+  // 2026-07-13 — non-operator accent is TPF Hybrid blue (matches the app +
+  // the live benchmark theme). Operator keeps tactical olive.
+  const accent = brand === 'operator' ? '#5c6e3a' : '#3b7dd8';
   const cta = brand === 'operator' ? 'Score your readiness free' : 'Score yourself free';
   return `<!doctype html>
 <html lang="en" data-theme="light" data-brand="${brand}">
