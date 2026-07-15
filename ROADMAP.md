@@ -90,7 +90,17 @@ Turn user submissions into trustworthy, self-correcting percentiles.
       from trust-weighted, winsorised pool quantiles → review diff (`recalibration-proposal.md`)
 - [ ] Per-benchmark live percentiles in the radar (currently overall only)
 - [ ] Verification flow for high-percentile claims (gate `needsVerification` exists; UI TODO)
-- [ ] Operator (per-unit, unisex) recalibration grouping; `--apply` write-back to the workbook
+- [x] **Operator (per-unit, unisex) recalibration** (`npm run recalibrate:operator`) —
+      migration 0004 tags pool submissions with the unit they were scored under
+      (Operator tiers are per-unit, unlike Lift's pathway-independent ones);
+      proposes into `recalibration-proposal-operator.md`. `--apply` write-back
+      still manual (edit the workbook + `npm run codegen`).
+- [x] **Shared standards source of truth** (`docs/SHARED-STANDARDS.md`) — a
+      `benchmark_published_standards` table (same Supabase project tpf-app
+      already shares) that `npm run publish-standards` pushes HABS + ORS
+      config into. tpf-app reading from it (replacing its two hardcoded
+      mirror files) is a separate follow-up — app repo is off-limits to
+      write without explicit go-ahead.
 - [x] **Lift standards recalibrated to the July 2026 external audit** (see
       `docs/STANDARDS-AUDIT-2026-07.md` + `docs/AUDIT-IMPLEMENTATION-HANDOFF.md`) —
       corrected elite tiers that sat at top 0.5–2% instead of top 5%, male

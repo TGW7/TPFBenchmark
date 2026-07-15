@@ -31,13 +31,11 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
     "label": "US Marine Corps (PFT/CFT)",
     "region": "US",
     "weights": {
-      "running": 25,
-      "rucking": 10,
-      "lower_strength": 10,
-      "upper_strength": 5,
-      "upper_endurance": 25,
-      "core_endurance": 10,
-      "stability": 15
+      "running": 31,
+      "lower_strength": 13,
+      "upper_strength": 6,
+      "upper_endurance": 31,
+      "stability": 19
     },
     "weightsInferred": false,
     "benchmarks": [
@@ -51,7 +49,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "thresholds": {
           "pass": 1660,
           "good": 1260,
-          "excellent": 1080,
+          "excellent": 1170,
           "elite": 1080
         }
       },
@@ -63,24 +61,10 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "unit": "kg",
         "lowerIsBetter": false,
         "thresholds": {
-          "pass": 100,
+          "pass": 95,
           "good": 125,
-          "excellent": 150,
-          "elite": 175
-        }
-      },
-      {
-        "id": "conventional_dl",
-        "name": "Conventional DL",
-        "component": "lower_strength",
-        "source": "orm",
-        "unit": "kg",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 110,
-          "good": 137.5,
-          "excellent": 165,
-          "elite": 190
+          "excellent": 145,
+          "elite": 170
         }
       },
       {
@@ -93,8 +77,22 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "thresholds": {
           "pass": 120,
           "good": 150,
-          "excellent": 180,
-          "elite": 210
+          "excellent": 175,
+          "elite": 195
+        }
+      },
+      {
+        "id": "conventional_dl",
+        "name": "Conventional DL",
+        "component": "lower_strength",
+        "source": "orm",
+        "unit": "kg",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 105,
+          "good": 135,
+          "excellent": 160,
+          "elite": 180
         }
       },
       {
@@ -105,52 +103,10 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "unit": "kg",
         "lowerIsBetter": false,
         "thresholds": {
-          "pass": 80,
-          "good": 100,
-          "excellent": 120,
-          "elite": 140
-        }
-      },
-      {
-        "id": "overhead_press",
-        "name": "Overhead Press",
-        "component": "upper_strength",
-        "source": "orm",
-        "unit": "kg",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 50,
-          "good": 62.5,
-          "excellent": 75,
-          "elite": 87.5
-        }
-      },
-      {
-        "id": "broad_jump",
-        "name": "Broad Jump",
-        "component": "power",
-        "source": "manual",
-        "unit": "m",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 2.1,
-          "good": 2.4,
-          "excellent": 2.65,
-          "elite": 2.9
-        }
-      },
-      {
-        "id": "power_clean",
-        "name": "Power Clean",
-        "component": "power",
-        "source": "orm",
-        "unit": "kg",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 65,
-          "good": 85,
-          "excellent": 100,
-          "elite": 120
+          "pass": 75,
+          "good": 95,
+          "excellent": 115,
+          "elite": 130
         }
       },
       {
@@ -163,7 +119,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "thresholds": {
           "pass": 3,
           "good": 12,
-          "excellent": 23,
+          "excellent": 18,
           "elite": 23
         }
       },
@@ -177,7 +133,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "thresholds": {
           "pass": 42,
           "good": 60,
-          "excellent": 87,
+          "excellent": 75,
           "elite": 87
         }
       },
@@ -191,7 +147,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "thresholds": {
           "pass": 63,
           "good": 180,
-          "excellent": 225,
+          "excellent": 210,
           "elite": 225
         }
       },
@@ -217,10 +173,38 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "unit": "sec",
         "lowerIsBetter": false,
         "thresholds": {
-          "pass": 40,
-          "good": 65,
-          "excellent": 95,
+          "pass": 30,
+          "good": 60,
+          "excellent": 90,
           "elite": 120
+        }
+      },
+      {
+        "id": "power_clean",
+        "name": "Power Clean",
+        "component": "power",
+        "source": "orm",
+        "unit": "kg",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 60,
+          "good": 80,
+          "excellent": 95,
+          "elite": 115
+        }
+      },
+      {
+        "id": "broad_jump",
+        "name": "Broad Jump",
+        "component": "power",
+        "source": "manual",
+        "unit": "m",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 1.8,
+          "good": 2,
+          "excellent": 2.2,
+          "elite": 2.4
         }
       }
     ]
@@ -255,8 +239,8 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         }
       },
       {
-        "id": "8_km_ruck_35_lb",
-        "name": "8 km ruck (35 lb)",
+        "id": "8_km_ruck",
+        "name": "8 km ruck",
         "component": "rucking",
         "source": "race_times",
         "unit": "sec",
@@ -265,7 +249,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "pass": 5400,
           "good": 4900,
           "excellent": 4500,
-          "elite": 2700
+          "elite": 4100
         }
       },
       {
@@ -276,24 +260,10 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "unit": "kg",
         "lowerIsBetter": false,
         "thresholds": {
-          "pass": 95,
-          "good": 120,
-          "excellent": 142.5,
-          "elite": 167.5
-        }
-      },
-      {
-        "id": "conventional_dl",
-        "name": "Conventional DL",
-        "component": "lower_strength",
-        "source": "orm",
-        "unit": "kg",
-        "lowerIsBetter": false,
-        "thresholds": {
           "pass": 105,
-          "good": 132.5,
-          "excellent": 155,
-          "elite": 182.5
+          "good": 125,
+          "excellent": 145,
+          "elite": 165
         }
       },
       {
@@ -306,8 +276,22 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "thresholds": {
           "pass": 115,
           "good": 145,
-          "excellent": 170,
-          "elite": 200
+          "excellent": 185,
+          "elite": 205
+        }
+      },
+      {
+        "id": "conventional_dl",
+        "name": "Conventional DL",
+        "component": "lower_strength",
+        "source": "orm",
+        "unit": "kg",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 110,
+          "good": 140,
+          "excellent": 165,
+          "elite": 185
         }
       },
       {
@@ -319,51 +303,9 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "lowerIsBetter": false,
         "thresholds": {
           "pass": 80,
-          "good": 100,
-          "excellent": 120,
+          "good": 95,
+          "excellent": 115,
           "elite": 135
-        }
-      },
-      {
-        "id": "overhead_press",
-        "name": "Overhead Press",
-        "component": "upper_strength",
-        "source": "orm",
-        "unit": "kg",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 50,
-          "good": 62.5,
-          "excellent": 75,
-          "elite": 82.5
-        }
-      },
-      {
-        "id": "broad_jump",
-        "name": "Broad Jump",
-        "component": "power",
-        "source": "manual",
-        "unit": "m",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 2.15,
-          "good": 2.45,
-          "excellent": 2.7,
-          "elite": 2.95
-        }
-      },
-      {
-        "id": "power_clean",
-        "name": "Power Clean",
-        "component": "power",
-        "source": "orm",
-        "unit": "kg",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 70,
-          "good": 90,
-          "excellent": 105,
-          "elite": 125
         }
       },
       {
@@ -374,10 +316,10 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "unit": "reps",
         "lowerIsBetter": false,
         "thresholds": {
-          "pass": 6,
+          "pass": 5,
           "good": 10,
-          "excellent": 15,
-          "elite": 20
+          "excellent": 14,
+          "elite": 18
         }
       },
       {
@@ -444,10 +386,38 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "unit": "sec",
         "lowerIsBetter": false,
         "thresholds": {
-          "pass": 40,
-          "good": 65,
-          "excellent": 95,
+          "pass": 30,
+          "good": 60,
+          "excellent": 90,
           "elite": 120
+        }
+      },
+      {
+        "id": "power_clean",
+        "name": "Power Clean",
+        "component": "power",
+        "source": "orm",
+        "unit": "kg",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 60,
+          "good": 80,
+          "excellent": 95,
+          "elite": 115
+        }
+      },
+      {
+        "id": "broad_jump",
+        "name": "Broad Jump",
+        "component": "power",
+        "source": "manual",
+        "unit": "m",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 1.8,
+          "good": 2,
+          "excellent": 2.2,
+          "elite": 2.4
         }
       }
     ]
@@ -618,20 +588,6 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "unit": "kg",
         "lowerIsBetter": false,
         "thresholds": {
-          "pass": 110,
-          "good": 137.5,
-          "excellent": 165,
-          "elite": 192.5
-        }
-      },
-      {
-        "id": "conventional_dl",
-        "name": "Conventional DL",
-        "component": "lower_strength",
-        "source": "orm",
-        "unit": "kg",
-        "lowerIsBetter": false,
-        "thresholds": {
           "pass": 120,
           "good": 150,
           "excellent": 180,
@@ -646,10 +602,24 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "unit": "kg",
         "lowerIsBetter": false,
         "thresholds": {
-          "pass": 132.5,
+          "pass": 145,
+          "good": 180,
+          "excellent": 210,
+          "elite": 235
+        }
+      },
+      {
+        "id": "conventional_dl",
+        "name": "Conventional DL",
+        "component": "lower_strength",
+        "source": "orm",
+        "unit": "kg",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 130,
           "good": 165,
-          "excellent": 197.5,
-          "elite": 230
+          "excellent": 195,
+          "elite": 215
         }
       },
       {
@@ -678,34 +648,6 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "good": 70,
           "excellent": 90,
           "elite": 105
-        }
-      },
-      {
-        "id": "broad_jump",
-        "name": "Broad Jump",
-        "component": "power",
-        "source": "manual",
-        "unit": "m",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 2.2,
-          "good": 2.5,
-          "excellent": 2.75,
-          "elite": 3
-        }
-      },
-      {
-        "id": "power_clean",
-        "name": "Power Clean",
-        "component": "power",
-        "source": "orm",
-        "unit": "kg",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 80,
-          "good": 100,
-          "excellent": 120,
-          "elite": 140
         }
       },
       {
@@ -787,9 +729,37 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "lowerIsBetter": false,
         "thresholds": {
           "pass": 45,
-          "good": 70,
-          "excellent": 100,
-          "elite": 130
+          "good": 75,
+          "excellent": 110,
+          "elite": 150
+        }
+      },
+      {
+        "id": "power_clean",
+        "name": "Power Clean",
+        "component": "power",
+        "source": "orm",
+        "unit": "kg",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 80,
+          "good": 100,
+          "excellent": 120,
+          "elite": 140
+        }
+      },
+      {
+        "id": "broad_jump",
+        "name": "Broad Jump",
+        "component": "power",
+        "source": "manual",
+        "unit": "m",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 1.8,
+          "good": 2,
+          "excellent": 2.2,
+          "elite": 2.4
         }
       }
     ]
@@ -824,8 +794,8 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         }
       },
       {
-        "id": "500_yd_swim",
-        "name": "500 yd swim",
+        "id": "500_m_swim",
+        "name": "500 m swim",
         "component": "swimming",
         "source": "race_times",
         "unit": "sec",
@@ -846,23 +816,9 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "lowerIsBetter": false,
         "thresholds": {
           "pass": 100,
-          "good": 125,
+          "good": 135,
           "excellent": 150,
-          "elite": 175
-        }
-      },
-      {
-        "id": "conventional_dl",
-        "name": "Conventional DL",
-        "component": "lower_strength",
-        "source": "orm",
-        "unit": "kg",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 110,
-          "good": 137.5,
-          "excellent": 165,
-          "elite": 190
+          "elite": 180
         }
       },
       {
@@ -873,10 +829,24 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "unit": "kg",
         "lowerIsBetter": false,
         "thresholds": {
-          "pass": 120,
-          "good": 150,
-          "excellent": 180,
-          "elite": 210
+          "pass": 130,
+          "good": 160,
+          "excellent": 190,
+          "elite": 215
+        }
+      },
+      {
+        "id": "conventional_dl",
+        "name": "Conventional DL",
+        "component": "lower_strength",
+        "source": "orm",
+        "unit": "kg",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 115,
+          "good": 145,
+          "excellent": 175,
+          "elite": 195
         }
       },
       {
@@ -894,48 +864,6 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         }
       },
       {
-        "id": "overhead_press",
-        "name": "Overhead Press",
-        "component": "upper_strength",
-        "source": "orm",
-        "unit": "kg",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 50,
-          "good": 62.5,
-          "excellent": 75,
-          "elite": 87.5
-        }
-      },
-      {
-        "id": "broad_jump",
-        "name": "Broad Jump",
-        "component": "power",
-        "source": "manual",
-        "unit": "m",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 2.1,
-          "good": 2.4,
-          "excellent": 2.65,
-          "elite": 2.9
-        }
-      },
-      {
-        "id": "power_clean",
-        "name": "Power Clean",
-        "component": "power",
-        "source": "orm",
-        "unit": "kg",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 65,
-          "good": 85,
-          "excellent": 100,
-          "elite": 120
-        }
-      },
-      {
         "id": "pull_ups_no_time",
         "name": "Pull-ups (no time)",
         "component": "upper_endurance",
@@ -943,10 +871,10 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "unit": "reps",
         "lowerIsBetter": false,
         "thresholds": {
-          "pass": 10,
-          "good": 15,
-          "excellent": 20,
-          "elite": 25
+          "pass": 8,
+          "good": 13,
+          "excellent": 18,
+          "elite": 22
         }
       },
       {
@@ -958,9 +886,9 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "lowerIsBetter": false,
         "thresholds": {
           "pass": 50,
-          "good": 80,
-          "excellent": 100,
-          "elite": 120
+          "good": 65,
+          "excellent": 80,
+          "elite": 100
         }
       },
       {
@@ -972,9 +900,9 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "lowerIsBetter": false,
         "thresholds": {
           "pass": 50,
-          "good": 80,
-          "excellent": 100,
-          "elite": 120
+          "good": 75,
+          "excellent": 90,
+          "elite": 110
         }
       },
       {
@@ -1018,6 +946,34 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "excellent": 110,
           "elite": 150
         }
+      },
+      {
+        "id": "power_clean",
+        "name": "Power Clean",
+        "component": "power",
+        "source": "orm",
+        "unit": "kg",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 65,
+          "good": 85,
+          "excellent": 100,
+          "elite": 120
+        }
+      },
+      {
+        "id": "broad_jump",
+        "name": "Broad Jump",
+        "component": "power",
+        "source": "manual",
+        "unit": "m",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 1.8,
+          "good": 2,
+          "excellent": 2.2,
+          "elite": 2.4
+        }
       }
     ]
   },
@@ -1051,8 +1007,8 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         }
       },
       {
-        "id": "8_km_ruck_35_lb",
-        "name": "8 km ruck (35 lb)",
+        "id": "8_km_ruck",
+        "name": "8 km ruck",
         "component": "rucking",
         "source": "race_times",
         "unit": "sec",
@@ -1061,12 +1017,12 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "pass": 5400,
           "good": 4500,
           "excellent": 3600,
-          "elite": 2700
+          "elite": 3000
         }
       },
       {
-        "id": "500_yd_swim",
-        "name": "500 yd swim",
+        "id": "500_m_swim",
+        "name": "500 m swim",
         "component": "swimming",
         "source": "race_times",
         "unit": "sec",
@@ -1088,22 +1044,8 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "thresholds": {
           "pass": 95,
           "good": 120,
-          "excellent": 142.5,
-          "elite": 167.5
-        }
-      },
-      {
-        "id": "conventional_dl",
-        "name": "Conventional DL",
-        "component": "lower_strength",
-        "source": "orm",
-        "unit": "kg",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 105,
-          "good": 132.5,
-          "excellent": 155,
-          "elite": 182.5
+          "excellent": 145,
+          "elite": 175
         }
       },
       {
@@ -1115,9 +1057,9 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "lowerIsBetter": false,
         "thresholds": {
           "pass": 115,
-          "good": 145,
+          "good": 140,
           "excellent": 170,
-          "elite": 200
+          "elite": 195
         }
       },
       {
@@ -1132,48 +1074,6 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "good": 95,
           "excellent": 115,
           "elite": 135
-        }
-      },
-      {
-        "id": "overhead_press",
-        "name": "Overhead Press",
-        "component": "upper_strength",
-        "source": "orm",
-        "unit": "kg",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 47.5,
-          "good": 60,
-          "excellent": 72.5,
-          "elite": 82.5
-        }
-      },
-      {
-        "id": "broad_jump",
-        "name": "Broad Jump",
-        "component": "power",
-        "source": "manual",
-        "unit": "m",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 2.05,
-          "good": 2.35,
-          "excellent": 2.6,
-          "elite": 2.85
-        }
-      },
-      {
-        "id": "power_clean",
-        "name": "Power Clean",
-        "component": "power",
-        "source": "orm",
-        "unit": "kg",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 60,
-          "good": 80,
-          "excellent": 95,
-          "elite": 110
         }
       },
       {
@@ -1256,8 +1156,36 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "thresholds": {
           "pass": 45,
           "good": 75,
-          "excellent": 105,
-          "elite": 140
+          "excellent": 110,
+          "elite": 150
+        }
+      },
+      {
+        "id": "power_clean",
+        "name": "Power Clean",
+        "component": "power",
+        "source": "orm",
+        "unit": "kg",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 60,
+          "good": 80,
+          "excellent": 95,
+          "elite": 110
+        }
+      },
+      {
+        "id": "broad_jump",
+        "name": "Broad Jump",
+        "component": "power",
+        "source": "manual",
+        "unit": "m",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 1.8,
+          "good": 2,
+          "excellent": 2.2,
+          "elite": 2.4
         }
       }
     ]
@@ -1321,20 +1249,6 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         }
       },
       {
-        "id": "conventional_dl",
-        "name": "Conventional DL",
-        "component": "lower_strength",
-        "source": "orm",
-        "unit": "kg",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 110,
-          "good": 140,
-          "excellent": 170,
-          "elite": 195
-        }
-      },
-      {
         "id": "hex_bar_dl",
         "name": "Hex-bar DL",
         "component": "lower_strength",
@@ -1349,6 +1263,20 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         }
       },
       {
+        "id": "conventional_dl",
+        "name": "Conventional DL",
+        "component": "lower_strength",
+        "source": "orm",
+        "unit": "kg",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 110,
+          "good": 140,
+          "excellent": 170,
+          "elite": 195
+        }
+      },
+      {
         "id": "bench_press",
         "name": "Bench Press",
         "component": "upper_strength",
@@ -1360,20 +1288,6 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "good": 95,
           "excellent": 115,
           "elite": 135
-        }
-      },
-      {
-        "id": "overhead_press",
-        "name": "Overhead Press",
-        "component": "upper_strength",
-        "source": "orm",
-        "unit": "kg",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 47.5,
-          "good": 60,
-          "excellent": 72.5,
-          "elite": 82.5
         }
       },
       {
@@ -1467,10 +1381,14 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
     "label": "US Police PFT",
     "region": "US",
     "weights": {
-      "running": 35,
-      "upper_endurance": 30,
-      "core_endurance": 20,
-      "power": 15
+      "running": 25,
+      "lower_strength": 10,
+      "upper_strength": 5,
+      "upper_endurance": 25,
+      "core_endurance": 10,
+      "stability": 10,
+      "grip": 10,
+      "power": 5
     },
     "weightsInferred": false,
     "benchmarks": [
@@ -1479,27 +1397,83 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "name": "1.5-mile run",
         "component": "running",
         "source": "race_times",
-        "unit": "min:sec",
+        "unit": "sec",
         "lowerIsBetter": true,
         "thresholds": {
-          "pass": 840,
-          "good": 720,
+          "pass": 750,
+          "good": 690,
           "excellent": 630,
-          "elite": 525
+          "elite": 570
         }
       },
       {
-        "id": "vertical_jump",
-        "name": "Vertical jump",
-        "component": "power",
-        "source": "manual",
-        "unit": "inches",
+        "id": "back_squat",
+        "name": "Back Squat",
+        "component": "lower_strength",
+        "source": "orm",
+        "unit": "kg",
         "lowerIsBetter": false,
         "thresholds": {
-          "pass": 14,
-          "good": 19,
-          "excellent": 24,
-          "elite": 29
+          "pass": 80,
+          "good": 100,
+          "excellent": 120,
+          "elite": 140
+        }
+      },
+      {
+        "id": "hex_bar_dl",
+        "name": "Hex-bar DL",
+        "component": "lower_strength",
+        "source": "orm",
+        "unit": "kg",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 100,
+          "good": 125,
+          "excellent": 150,
+          "elite": 170
+        }
+      },
+      {
+        "id": "conventional_dl",
+        "name": "Conventional DL",
+        "component": "lower_strength",
+        "source": "orm",
+        "unit": "kg",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 90,
+          "good": 115,
+          "excellent": 140,
+          "elite": 160
+        }
+      },
+      {
+        "id": "bench_press",
+        "name": "Bench Press",
+        "component": "upper_strength",
+        "source": "orm",
+        "unit": "kg",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 65,
+          "good": 80,
+          "excellent": 95,
+          "elite": 110
+        }
+      },
+      {
+        "id": "pull_ups_no_time",
+        "name": "Pull-ups (no time)",
+        "component": "upper_endurance",
+        "source": "manual",
+        "unit": "reps",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 4,
+          "good": 8,
+          "excellent": 12,
+          "elite": 15
         }
       },
       {
@@ -1510,10 +1484,10 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "unit": "reps",
         "lowerIsBetter": false,
         "thresholds": {
-          "pass": 25,
-          "good": 40,
-          "excellent": 56,
-          "elite": 72
+          "pass": 30,
+          "good": 45,
+          "excellent": 60,
+          "elite": 75
         }
       },
       {
@@ -1525,9 +1499,79 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "lowerIsBetter": false,
         "thresholds": {
           "pass": 30,
-          "good": 40,
-          "excellent": 50,
-          "elite": 60
+          "good": 45,
+          "excellent": 60,
+          "elite": 75
+        }
+      },
+      {
+        "id": "plank_front",
+        "name": "Plank (front)",
+        "component": "stability",
+        "source": "manual",
+        "unit": "sec",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 60,
+          "good": 90,
+          "excellent": 150,
+          "elite": 210
+        }
+      },
+      {
+        "id": "side_plank_per_side",
+        "name": "Side plank (per side)",
+        "component": "stability",
+        "source": "manual",
+        "unit": "sec",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 45,
+          "good": 60,
+          "excellent": 90,
+          "elite": 120
+        }
+      },
+      {
+        "id": "dead_hang",
+        "name": "Dead hang",
+        "component": "grip",
+        "source": "manual",
+        "unit": "sec",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 30,
+          "good": 50,
+          "excellent": 75,
+          "elite": 100
+        }
+      },
+      {
+        "id": "power_clean",
+        "name": "Power Clean",
+        "component": "power",
+        "source": "orm",
+        "unit": "kg",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 45,
+          "good": 60,
+          "excellent": 75,
+          "elite": 90
+        }
+      },
+      {
+        "id": "broad_jump",
+        "name": "Broad Jump",
+        "component": "power",
+        "source": "manual",
+        "unit": "m",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 1.7,
+          "good": 1.9,
+          "excellent": 2.1,
+          "elite": 2.3
         }
       }
     ]
@@ -1537,13 +1581,14 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
     "label": "US SWAT",
     "region": "US",
     "weights": {
-      "running": 20,
+      "running": 15,
       "lower_strength": 15,
       "upper_strength": 10,
       "upper_endurance": 20,
-      "core_endurance": 10,
+      "core_endurance": 5,
+      "stability": 15,
       "grip": 10,
-      "power": 15
+      "power": 10
     },
     "weightsInferred": false,
     "benchmarks": [
@@ -1552,27 +1597,13 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "name": "1.5-mile run",
         "component": "running",
         "source": "race_times",
-        "unit": "min:sec",
+        "unit": "sec",
         "lowerIsBetter": true,
         "thresholds": {
-          "pass": 720,
-          "good": 630,
-          "excellent": 570,
-          "elite": 495
-        }
-      },
-      {
-        "id": "tactical_obstacle_course_full_kit_25_lb",
-        "name": "Tactical obstacle course (full kit ~25 lb)",
-        "component": "running",
-        "source": "race_times",
-        "unit": "min:sec",
-        "lowerIsBetter": true,
-        "thresholds": {
-          "pass": 330,
-          "good": 270,
-          "excellent": 210,
-          "elite": 150
+          "pass": 660,
+          "good": 600,
+          "excellent": 540,
+          "elite": 510
         }
       },
       {
@@ -1590,20 +1621,6 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         }
       },
       {
-        "id": "conventional_dl",
-        "name": "Conventional DL",
-        "component": "lower_strength",
-        "source": "orm",
-        "unit": "kg",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 115,
-          "good": 145,
-          "excellent": 170,
-          "elite": 195
-        }
-      },
-      {
         "id": "hex_bar_dl",
         "name": "Hex-bar DL",
         "component": "lower_strength",
@@ -1615,6 +1632,20 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "good": 160,
           "excellent": 185,
           "elite": 210
+        }
+      },
+      {
+        "id": "conventional_dl",
+        "name": "Conventional DL",
+        "component": "lower_strength",
+        "source": "orm",
+        "unit": "kg",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 115,
+          "good": 145,
+          "excellent": 170,
+          "elite": 195
         }
       },
       {
@@ -1646,17 +1677,87 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         }
       },
       {
-        "id": "broad_jump",
-        "name": "Broad Jump",
-        "component": "power",
+        "id": "pull_ups_no_time",
+        "name": "Pull-ups (no time)",
+        "component": "upper_endurance",
         "source": "manual",
-        "unit": "m",
+        "unit": "reps",
         "lowerIsBetter": false,
         "thresholds": {
-          "pass": 1.9,
-          "good": 2.1,
-          "excellent": 2.3,
-          "elite": 2.5
+          "pass": 8,
+          "good": 12,
+          "excellent": 16,
+          "elite": 22
+        }
+      },
+      {
+        "id": "push_ups_1_min",
+        "name": "Push-ups (1 min)",
+        "component": "upper_endurance",
+        "source": "manual",
+        "unit": "reps",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 40,
+          "good": 55,
+          "excellent": 70,
+          "elite": 90
+        }
+      },
+      {
+        "id": "sit_ups_2_min",
+        "name": "Sit-ups (2 min)",
+        "component": "core_endurance",
+        "source": "manual",
+        "unit": "reps",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 40,
+          "good": 55,
+          "excellent": 70,
+          "elite": 90
+        }
+      },
+      {
+        "id": "plank_front",
+        "name": "Plank (front)",
+        "component": "stability",
+        "source": "manual",
+        "unit": "sec",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 90,
+          "good": 150,
+          "excellent": 210,
+          "elite": 270
+        }
+      },
+      {
+        "id": "side_plank_per_side",
+        "name": "Side plank (per side)",
+        "component": "stability",
+        "source": "manual",
+        "unit": "sec",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 60,
+          "good": 90,
+          "excellent": 120,
+          "elite": 180
+        }
+      },
+      {
+        "id": "dead_hang",
+        "name": "Dead hang",
+        "component": "grip",
+        "source": "manual",
+        "unit": "sec",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 45,
+          "good": 75,
+          "excellent": 100,
+          "elite": 130
         }
       },
       {
@@ -1674,59 +1775,17 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         }
       },
       {
-        "id": "pull_ups",
-        "name": "Pull-ups",
-        "component": "upper_endurance",
+        "id": "broad_jump",
+        "name": "Broad Jump",
+        "component": "power",
         "source": "manual",
-        "unit": "reps",
+        "unit": "m",
         "lowerIsBetter": false,
         "thresholds": {
-          "pass": 12,
-          "good": 18,
-          "excellent": 25,
-          "elite": 32
-        }
-      },
-      {
-        "id": "push_ups_1_min",
-        "name": "Push-ups (1 min)",
-        "component": "upper_endurance",
-        "source": "manual",
-        "unit": "reps",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 50,
-          "good": 70,
-          "excellent": 90,
-          "elite": 110
-        }
-      },
-      {
-        "id": "sit_ups_2_min",
-        "name": "Sit-ups (2 min)",
-        "component": "core_endurance",
-        "source": "manual",
-        "unit": "reps",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 60,
-          "good": 80,
-          "excellent": 100,
-          "elite": 120
-        }
-      },
-      {
-        "id": "dead_hang_grip",
-        "name": "Dead hang (grip)",
-        "component": "grip",
-        "source": "manual",
-        "unit": "sec",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 45,
-          "good": 75,
-          "excellent": 100,
-          "elite": 130
+          "pass": 1.9,
+          "good": 2.1,
+          "excellent": 2.3,
+          "elite": 2.5
         }
       }
     ]
@@ -1747,17 +1806,17 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
     "weightsInferred": false,
     "benchmarks": [
       {
-        "id": "1_5_mile_run",
-        "name": "1.5-mile run",
+        "id": "2_km_run_best_effort",
+        "name": "2 km run (best effort)",
         "component": "running",
         "source": "race_times",
         "unit": "sec",
         "lowerIsBetter": true,
         "thresholds": {
-          "pass": 600,
-          "good": 570,
-          "excellent": 520,
-          "elite": 480
+          "pass": 495,
+          "good": 465,
+          "excellent": 435,
+          "elite": 405
         }
       },
       {
@@ -1768,9 +1827,9 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "unit": "sec",
         "lowerIsBetter": true,
         "thresholds": {
-          "pass": 6600,
-          "good": 6300,
-          "excellent": 6000,
+          "pass": 7200,
+          "good": 6600,
+          "excellent": 6120,
           "elite": 5700
         }
       },
@@ -1782,24 +1841,10 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "unit": "kg",
         "lowerIsBetter": false,
         "thresholds": {
-          "pass": 80,
-          "good": 100,
-          "excellent": 120,
-          "elite": 140
-        }
-      },
-      {
-        "id": "conventional_dl",
-        "name": "Conventional DL",
-        "component": "lower_strength",
-        "source": "orm",
-        "unit": "kg",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 87.5,
-          "good": 110,
-          "excellent": 132.5,
-          "elite": 152.5
+          "pass": 100,
+          "good": 120,
+          "excellent": 140,
+          "elite": 160
         }
       },
       {
@@ -1810,10 +1855,24 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "unit": "kg",
         "lowerIsBetter": false,
         "thresholds": {
-          "pass": 95,
-          "good": 120,
-          "excellent": 145,
-          "elite": 167.5
+          "pass": 110,
+          "good": 140,
+          "excellent": 180,
+          "elite": 200
+        }
+      },
+      {
+        "id": "conventional_dl",
+        "name": "Conventional DL",
+        "component": "lower_strength",
+        "source": "orm",
+        "unit": "kg",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 105,
+          "good": 135,
+          "excellent": 160,
+          "elite": 180
         }
       },
       {
@@ -1825,51 +1884,9 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "lowerIsBetter": false,
         "thresholds": {
           "pass": 75,
-          "good": 95,
-          "excellent": 115,
-          "elite": 135
-        }
-      },
-      {
-        "id": "overhead_press",
-        "name": "Overhead Press",
-        "component": "upper_strength",
-        "source": "orm",
-        "unit": "kg",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 47.5,
-          "good": 60,
-          "excellent": 72.5,
-          "elite": 82.5
-        }
-      },
-      {
-        "id": "broad_jump",
-        "name": "Broad Jump",
-        "component": "power",
-        "source": "manual",
-        "unit": "m",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 2.05,
-          "good": 2.35,
-          "excellent": 2.6,
-          "elite": 2.85
-        }
-      },
-      {
-        "id": "power_clean",
-        "name": "Power Clean",
-        "component": "power",
-        "source": "orm",
-        "unit": "kg",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 55,
-          "good": 75,
-          "excellent": 90,
-          "elite": 110
+          "good": 90,
+          "excellent": 110,
+          "elite": 130
         }
       },
       {
@@ -1955,6 +1972,34 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "excellent": 90,
           "elite": 120
         }
+      },
+      {
+        "id": "power_clean",
+        "name": "Power Clean",
+        "component": "power",
+        "source": "orm",
+        "unit": "kg",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 55,
+          "good": 75,
+          "excellent": 90,
+          "elite": 110
+        }
+      },
+      {
+        "id": "broad_jump",
+        "name": "Broad Jump",
+        "component": "power",
+        "source": "manual",
+        "unit": "m",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 1.8,
+          "good": 2,
+          "excellent": 2.2,
+          "elite": 2.4
+        }
       }
     ]
   },
@@ -1991,17 +2036,31 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         }
       },
       {
-        "id": "30_mile_ruck",
-        "name": "30-mile ruck",
+        "id": "10_mile_ruck",
+        "name": "10-mile ruck",
         "component": "rucking",
         "source": "race_times",
         "unit": "sec",
         "lowerIsBetter": true,
         "thresholds": {
-          "pass": 28800,
-          "good": 27000,
-          "excellent": 25200,
-          "elite": 23400
+          "pass": 7560,
+          "good": 6930,
+          "excellent": 6426,
+          "elite": 5985
+        }
+      },
+      {
+        "id": "500_m_swim",
+        "name": "500 m swim",
+        "component": "swimming",
+        "source": "race_times",
+        "unit": "sec",
+        "lowerIsBetter": true,
+        "thresholds": {
+          "pass": 863,
+          "good": 690,
+          "excellent": 621,
+          "elite": 552
         }
       },
       {
@@ -2012,24 +2071,10 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "unit": "kg",
         "lowerIsBetter": false,
         "thresholds": {
-          "pass": 110,
-          "good": 137.5,
-          "excellent": 165,
-          "elite": 192.5
-        }
-      },
-      {
-        "id": "conventional_dl",
-        "name": "Conventional DL",
-        "component": "lower_strength",
-        "source": "orm",
-        "unit": "kg",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 120,
-          "good": 150,
-          "excellent": 180,
-          "elite": 210
+          "pass": 100,
+          "good": 135,
+          "excellent": 150,
+          "elite": 180
         }
       },
       {
@@ -2040,10 +2085,24 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "unit": "kg",
         "lowerIsBetter": false,
         "thresholds": {
-          "pass": 132.5,
-          "good": 165,
-          "excellent": 197.5,
-          "elite": 230
+          "pass": 130,
+          "good": 160,
+          "excellent": 190,
+          "elite": 215
+        }
+      },
+      {
+        "id": "conventional_dl",
+        "name": "Conventional DL",
+        "component": "lower_strength",
+        "source": "orm",
+        "unit": "kg",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 115,
+          "good": 145,
+          "excellent": 175,
+          "elite": 195
         }
       },
       {
@@ -2058,262 +2117,6 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "good": 100,
           "excellent": 120,
           "elite": 140
-        }
-      },
-      {
-        "id": "overhead_press",
-        "name": "Overhead Press",
-        "component": "upper_strength",
-        "source": "orm",
-        "unit": "kg",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 50,
-          "good": 62.5,
-          "excellent": 75,
-          "elite": 87.5
-        }
-      },
-      {
-        "id": "broad_jump",
-        "name": "Broad Jump",
-        "component": "power",
-        "source": "manual",
-        "unit": "m",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 2.05,
-          "good": 2.35,
-          "excellent": 2.6,
-          "elite": 2.85
-        }
-      },
-      {
-        "id": "power_clean",
-        "name": "Power Clean",
-        "component": "power",
-        "source": "orm",
-        "unit": "kg",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 60,
-          "good": 80,
-          "excellent": 95,
-          "elite": 115
-        }
-      },
-      {
-        "id": "pull_ups_no_time",
-        "name": "Pull-ups (no time)",
-        "component": "upper_endurance",
-        "source": "manual",
-        "unit": "reps",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 8,
-          "good": 13,
-          "excellent": 18,
-          "elite": 22
-        }
-      },
-      {
-        "id": "push_ups_2_min",
-        "name": "Push-ups (2 min)",
-        "component": "upper_endurance",
-        "source": "manual",
-        "unit": "reps",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 50,
-          "good": 65,
-          "excellent": 80,
-          "elite": 100
-        }
-      },
-      {
-        "id": "sit_ups_2_min",
-        "name": "Sit-ups (2 min)",
-        "component": "core_endurance",
-        "source": "manual",
-        "unit": "reps",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 50,
-          "good": 75,
-          "excellent": 90,
-          "elite": 110
-        }
-      },
-      {
-        "id": "plank_front",
-        "name": "Plank (front)",
-        "component": "stability",
-        "source": "manual",
-        "unit": "sec",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 90,
-          "good": 150,
-          "excellent": 210,
-          "elite": 270
-        }
-      },
-      {
-        "id": "side_plank_per_side",
-        "name": "Side plank (per side)",
-        "component": "stability",
-        "source": "manual",
-        "unit": "sec",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 60,
-          "good": 90,
-          "excellent": 120,
-          "elite": 180
-        }
-      },
-      {
-        "id": "dead_hang_grip",
-        "name": "Dead hang (grip)",
-        "component": "grip",
-        "source": "manual",
-        "unit": "sec",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 35,
-          "good": 60,
-          "excellent": 90,
-          "elite": 120
-        }
-      }
-    ]
-  },
-  {
-    "id": "uk_special_forces_sas_sbs",
-    "label": "UK Special Forces (SAS/SBS)",
-    "region": "UK",
-    "weights": {
-      "running": 10,
-      "rucking": 30,
-      "lower_strength": 10,
-      "upper_strength": 5,
-      "upper_endurance": 15,
-      "core_endurance": 5,
-      "stability": 20,
-      "grip": 5
-    },
-    "weightsInferred": false,
-    "benchmarks": [
-      {
-        "id": "1_5_mile_run",
-        "name": "1.5-mile run",
-        "component": "running",
-        "source": "race_times",
-        "unit": "sec",
-        "lowerIsBetter": true,
-        "thresholds": {
-          "pass": 630,
-          "good": 570,
-          "excellent": 540,
-          "elite": 481
-        }
-      },
-      {
-        "id": "back_squat",
-        "name": "Back Squat",
-        "component": "lower_strength",
-        "source": "orm",
-        "unit": "kg",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 100,
-          "good": 125,
-          "excellent": 150,
-          "elite": 175
-        }
-      },
-      {
-        "id": "conventional_dl",
-        "name": "Conventional DL",
-        "component": "lower_strength",
-        "source": "orm",
-        "unit": "kg",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 110,
-          "good": 137.5,
-          "excellent": 165,
-          "elite": 190
-        }
-      },
-      {
-        "id": "hex_bar_dl",
-        "name": "Hex-bar DL",
-        "component": "lower_strength",
-        "source": "orm",
-        "unit": "kg",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 120,
-          "good": 150,
-          "excellent": 180,
-          "elite": 210
-        }
-      },
-      {
-        "id": "bench_press",
-        "name": "Bench Press",
-        "component": "upper_strength",
-        "source": "orm",
-        "unit": "kg",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 90,
-          "good": 110,
-          "excellent": 130,
-          "elite": 150
-        }
-      },
-      {
-        "id": "overhead_press",
-        "name": "Overhead Press",
-        "component": "upper_strength",
-        "source": "orm",
-        "unit": "kg",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 55,
-          "good": 67.5,
-          "excellent": 80,
-          "elite": 92.5
-        }
-      },
-      {
-        "id": "broad_jump",
-        "name": "Broad Jump",
-        "component": "power",
-        "source": "manual",
-        "unit": "m",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 2.25,
-          "good": 2.55,
-          "excellent": 2.8,
-          "elite": 3.05
-        }
-      },
-      {
-        "id": "power_clean",
-        "name": "Power Clean",
-        "component": "power",
-        "source": "orm",
-        "unit": "kg",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 80,
-          "good": 100,
-          "excellent": 120,
-          "elite": 135
         }
       },
       {
@@ -2395,9 +2198,237 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "lowerIsBetter": false,
         "thresholds": {
           "pass": 45,
-          "good": 70,
+          "good": 75,
+          "excellent": 110,
+          "elite": 150
+        }
+      },
+      {
+        "id": "power_clean",
+        "name": "Power Clean",
+        "component": "power",
+        "source": "orm",
+        "unit": "kg",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 65,
+          "good": 85,
           "excellent": 100,
-          "elite": 130
+          "elite": 120
+        }
+      },
+      {
+        "id": "broad_jump",
+        "name": "Broad Jump",
+        "component": "power",
+        "source": "manual",
+        "unit": "m",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 1.8,
+          "good": 2,
+          "excellent": 2.2,
+          "elite": 2.4
+        }
+      }
+    ]
+  },
+  {
+    "id": "uk_special_forces_sas_sbs",
+    "label": "UK Special Forces (SAS/SBS)",
+    "region": "UK",
+    "weights": {
+      "running": 10,
+      "rucking": 30,
+      "lower_strength": 10,
+      "upper_strength": 5,
+      "upper_endurance": 15,
+      "core_endurance": 5,
+      "stability": 20,
+      "grip": 5
+    },
+    "weightsInferred": false,
+    "benchmarks": [
+      {
+        "id": "2_km_run_best_effort",
+        "name": "2 km run (best effort)",
+        "component": "running",
+        "source": "race_times",
+        "unit": "sec",
+        "lowerIsBetter": true,
+        "thresholds": {
+          "pass": 522,
+          "good": 472,
+          "excellent": 447,
+          "elite": 399
+        }
+      },
+      {
+        "id": "5_mile_ruck_30_kg",
+        "name": "5-mile ruck (30 kg)",
+        "component": "rucking",
+        "source": "race_times",
+        "unit": "sec",
+        "lowerIsBetter": true,
+        "thresholds": {
+          "pass": 4500,
+          "good": 4200,
+          "excellent": 3900,
+          "elite": 3600
+        }
+      },
+      {
+        "id": "fan_dance_24_km_35_lb_rifle_optional",
+        "name": "Fan Dance (24 km @ 35 lb + rifle) — optional",
+        "component": "rucking",
+        "source": "race_times",
+        "unit": "sec",
+        "lowerIsBetter": true,
+        "thresholds": {
+          "pass": 14400,
+          "good": 12600,
+          "excellent": 11700,
+          "elite": 10800
+        }
+      },
+      {
+        "id": "back_squat",
+        "name": "Back Squat",
+        "component": "lower_strength",
+        "source": "orm",
+        "unit": "kg",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 100,
+          "good": 125,
+          "excellent": 140,
+          "elite": 165
+        }
+      },
+      {
+        "id": "hex_bar_dl",
+        "name": "Hex-bar DL",
+        "component": "lower_strength",
+        "source": "orm",
+        "unit": "kg",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 130,
+          "good": 160,
+          "excellent": 175,
+          "elite": 200
+        }
+      },
+      {
+        "id": "conventional_dl",
+        "name": "Conventional DL",
+        "component": "lower_strength",
+        "source": "orm",
+        "unit": "kg",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 115,
+          "good": 145,
+          "excellent": 165,
+          "elite": 185
+        }
+      },
+      {
+        "id": "bench_press",
+        "name": "Bench Press",
+        "component": "upper_strength",
+        "source": "orm",
+        "unit": "kg",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 80,
+          "good": 95,
+          "excellent": 110,
+          "elite": 140
+        }
+      },
+      {
+        "id": "pull_ups_no_time",
+        "name": "Pull-ups (no time)",
+        "component": "upper_endurance",
+        "source": "manual",
+        "unit": "reps",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 8,
+          "good": 13,
+          "excellent": 18,
+          "elite": 22
+        }
+      },
+      {
+        "id": "push_ups_2_min",
+        "name": "Push-ups (2 min)",
+        "component": "upper_endurance",
+        "source": "manual",
+        "unit": "reps",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 50,
+          "good": 65,
+          "excellent": 80,
+          "elite": 100
+        }
+      },
+      {
+        "id": "sit_ups_2_min",
+        "name": "Sit-ups (2 min)",
+        "component": "core_endurance",
+        "source": "manual",
+        "unit": "reps",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 50,
+          "good": 75,
+          "excellent": 90,
+          "elite": 110
+        }
+      },
+      {
+        "id": "plank_front",
+        "name": "Plank (front)",
+        "component": "stability",
+        "source": "manual",
+        "unit": "sec",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 90,
+          "good": 150,
+          "excellent": 210,
+          "elite": 270
+        }
+      },
+      {
+        "id": "side_plank_per_side",
+        "name": "Side plank (per side)",
+        "component": "stability",
+        "source": "manual",
+        "unit": "sec",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 60,
+          "good": 90,
+          "excellent": 120,
+          "elite": 180
+        }
+      },
+      {
+        "id": "dead_hang_grip",
+        "name": "Dead hang (grip)",
+        "component": "grip",
+        "source": "manual",
+        "unit": "sec",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 45,
+          "good": 75,
+          "excellent": 110,
+          "elite": 150
         }
       }
     ]
@@ -2419,17 +2450,17 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
     "weightsInferred": false,
     "benchmarks": [
       {
-        "id": "1_5_mile_run_best_effort",
-        "name": "1.5-mile run (best effort)",
+        "id": "2_km_run_best_effort",
+        "name": "2 km run (best effort)",
         "component": "running",
         "source": "race_times",
         "unit": "sec",
         "lowerIsBetter": true,
         "thresholds": {
-          "pass": 630,
-          "good": 570,
-          "excellent": 510,
-          "elite": 480
+          "pass": 615,
+          "good": 525,
+          "excellent": 465,
+          "elite": 435
         }
       },
       {
@@ -2461,20 +2492,6 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         }
       },
       {
-        "id": "conventional_dl",
-        "name": "Conventional DL",
-        "component": "lower_strength",
-        "source": "orm",
-        "unit": "kg",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 110,
-          "good": 140,
-          "excellent": 170,
-          "elite": 195
-        }
-      },
-      {
         "id": "hex_bar_dl",
         "name": "Hex-bar DL",
         "component": "lower_strength",
@@ -2489,6 +2506,20 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         }
       },
       {
+        "id": "conventional_dl",
+        "name": "Conventional DL",
+        "component": "lower_strength",
+        "source": "orm",
+        "unit": "kg",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 110,
+          "good": 140,
+          "excellent": 170,
+          "elite": 195
+        }
+      },
+      {
         "id": "bench_press",
         "name": "Bench Press",
         "component": "upper_strength",
@@ -2500,20 +2531,6 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "good": 95,
           "excellent": 115,
           "elite": 135
-        }
-      },
-      {
-        "id": "overhead_press",
-        "name": "Overhead Press",
-        "component": "upper_strength",
-        "source": "orm",
-        "unit": "kg",
-        "lowerIsBetter": false,
-        "thresholds": {
-          "pass": 47.5,
-          "good": 60,
-          "excellent": 72.5,
-          "elite": 82.5
         }
       },
       {

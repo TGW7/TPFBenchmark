@@ -12,8 +12,8 @@
  * Reading the whole pool needs the SERVICE_ROLE key (RLS hides other users' rows
  * from the anon key) — set SUPABASE_SERVICE_ROLE_KEY in .env.local for a real run.
  *
- * Operator standards are per-unit (and unisex) — recalibrating those needs a
- * different grouping and is a separate, later job.
+ * Lift-only. Operator standards are per-unit (and unisex) — a different
+ * grouping — see `recalibrate-operator.mjs` (npm run recalibrate:operator).
  */
 
 import { readFileSync, writeFileSync } from 'node:fs';

@@ -41,7 +41,14 @@ const { error: pcErr } = await supabase.rpc('benchmark_pool_count', {
 if (pcErr) { console.log(`  ✗ function benchmark_pool_count: ${pcErr.message}`); ok = false; }
 else console.log('  ✓ function benchmark_pool_count');
 
+// 0003 — shared published-standards table (HABS + ORS single source of truth).
+{
+  const { error } = await supabase.from('benchmark_published_standards').select('*', { count: 'exact', head: true });
+  if (error) { console.log(`  ✗ table benchmark_published_standards: ${error.message}`); ok = false; }
+  else console.log('  ✓ table benchmark_published_standards');
+}
+
 console.log(ok
-  ? '\n✅ All good — accounts, the percentile pool, email capture + "vs N" are wired up.'
+  ? '\n✅ All good — accounts, the percentile pool, email capture, "vs N" + published standards are wired up.'
   : '\n⚠️  Something is missing. If tables/functions are absent, that migration hasn’t run yet.');
 process.exit(ok ? 0 : 1);

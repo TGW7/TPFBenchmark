@@ -42,6 +42,22 @@ describe('buildPoolSubmissions', () => {
     expect(rows).toHaveLength(0); // 600 kg exceeds the hard bound
   });
 
+  it('tags Operator rows with the pathway (unit) they were scored under; Lift rows stay untagged', () => {
+    const opDef: BenchmarkDef = { ...squat, id: 'back_squat', unit: 'kg' };
+    const opLogs: AthleteLogs = { orm: [{ benchmarkId: 'back_squat', weightKg: 150, reps: 1 }], raceTimes: [], manual: [], wod: [] };
+    const opRows = buildPoolSubmissions({
+      brand: 'operator', benchmarks: [opDef], profile: PROFILE, logs: opLogs,
+      signedIn: true, pathwayId: 'navy_seal_bud_s',
+    });
+    expect(opRows[0].pathway_id).toBe('navy_seal_bud_s');
+
+    const liftRows = buildPoolSubmissions({
+      brand: 'lift', benchmarks: [squat], profile: PROFILE, logs: logs(150),
+      signedIn: true, pathwayId: 'hybrid_athlete',
+    });
+    expect(liftRows[0].pathway_id).toBeNull(); // tiers are pathway-independent for Lift
+  });
+
   it('versions the composite overall cell (v2 = absolute recalibration)', () => {
     const rows = buildPoolSubmissions({
       brand: 'lift', benchmarks: [], profile: PROFILE, logs: logs(0), signedIn: true,

@@ -63,6 +63,10 @@ export function buildPoolSubmissions(args: BuildPoolArgs): PoolRow[] {
         withinPlausibleRange: audit.level === 'ok',
       }),
       user_id: args.userId ?? null,
+      // Operator tiers are per-unit (same benchmark id, different thresholds
+      // across units) — tag the unit so recalibration can group correctly.
+      // Lift/Hybrid tiers are pathway-independent, so this stays null there.
+      pathway_id: args.brand === 'operator' ? args.pathwayId ?? null : null,
     });
   }
 

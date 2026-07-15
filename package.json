@@ -17,7 +17,9 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "check:supabase": "node --env-file=.env.local scripts/check-supabase.mjs",
-    "recalibrate": "node --env-file=.env.local scripts/recalibrate.mjs"
+    "recalibrate": "node --env-file=.env.local scripts/recalibrate.mjs",
+    "recalibrate:operator": "node --env-file=.env.local scripts/recalibrate-operator.mjs",
+    "publish-standards": "node --env-file=.env.local scripts/publish-standards.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.0",

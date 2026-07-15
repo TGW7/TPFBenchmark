@@ -105,6 +105,9 @@ export interface PoolRow {
   trust: number;
   verified?: boolean;
   user_id?: string | null;
+  /** Operator only — the unit a benchmark was scored under (tiers are
+   *  pathway-specific there, unlike Lift). See migration 0004. */
+  pathway_id?: string | null;
 }
 
 export async function submitToPool(rows: PoolRow[]): Promise<void> {
