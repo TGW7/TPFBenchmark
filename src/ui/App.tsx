@@ -92,7 +92,7 @@ export function App() {
       const [p, ours, appLogs] = await Promise.all([
         loadProfile(user.id),
         loadEntries(user.id),
-        syncFromApp(user.id),
+        syncFromApp(user.id, BRAND),
       ]);
       if (cancelled) return;
       if (p) { setProfile(p.profile); setPathwayId(p.pathway); }

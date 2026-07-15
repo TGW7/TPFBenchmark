@@ -14,10 +14,19 @@
 
 import { supabase } from '../lib/supabase';
 import { emptyLogs } from './stores';
+import { lbToKg } from '../lib/units';
+import type { Brand } from '../brand';
 import type { AthleteLogs } from '../engine/types';
 
-/** benchmark id → the app's ORM lift name (exact title-case key in profiles.orm). */
+/**
+ * benchmark id → the app's ORM lift name (exact title-case key in profiles.orm).
+ * Covers both the Lift/Hybrid vocabulary (`*_1rm` ids, from HRS_BENCHMARKS)
+ * and the Operator vocabulary (bare ids, from operator.generated.ts) — the two
+ * id sets never collide (Lift/Hybrid always ends `_1rm`), so one flat map is
+ * enough; no brand check needed at the call site.
+ */
 export const ORM_TO_APP: Record<string, string> = {
+  // Lift / Hybrid
   back_squat_1rm: 'Back Squat',
   front_squat_1rm: 'Front Squat',
   deadlift_1rm: 'Deadlift',
@@ -27,10 +36,20 @@ export const ORM_TO_APP: Record<string, string> = {
   // 2026-07-12 — the app has Olympic 1RM slots (Phase 68), so these sync now.
   snatch_1rm: 'Snatch',
   clean_jerk_1rm: 'Clean & Jerk',
+  // Operator (2026-07-16 audit — these never synced before; verified exact
+  // string matches against tpf-app/src/lib/constants.ts DEFAULT_ORM_LIFTS).
+  back_squat: 'Back Squat',
+  conventional_dl: 'Deadlift',
+  hex_bar_dl: 'Hex Bar DL',
+  bench_press: 'Bench Press',
+  overhead_press: 'Overhead Press',
+  power_clean: 'Power Clean',
+  // pull_dynamometer / push_dynamometer omitted — isometric force-plate
+  // tests, no weight×reps ORM slot exists for these in the app.
 };
 
 /** benchmark id → the app's race modality + event key in profiles.race_times. */
-export const RACE_TO_APP: Record<string, { modality: string; event: string }> = {
+export const RACE_TO_APP: Record<string, { modality: string; event: string; loadKg?: number }> = {
   run_1mi: { modality: 'run', event: 'mile' },
   run_5k: { modality: 'run', event: '5k' },
   row_2k: { modality: 'row', event: '2k' },
@@ -41,19 +60,73 @@ export const RACE_TO_APP: Record<string, { modality: string; event: string }> = 
   swim_1500m: { modality: 'swim', event: '1500m' },
   bike_20k: { modality: 'bike', event: '20k' },
   bike_40k: { modality: 'bike', event: '40k' },
-  // ruck_time omitted — the app's ruck events are distance-specific (TODO map).
+  // ruck_time (generic HRS benchmark) omitted — the app's ruck events are
+  // distance-specific (TODO map, would need a per-distance HRS benchmark).
+
+  // Operator (2026-07-16 audit — verified exact matches against tpf-app's
+  // MODALITY_EVENTS; the app's own ORS config was previously bitten by
+  // approximate-distance mapping causing 20-30% unit drift, so anything
+  // below that isn't an EXACT distance match is deliberately left unmapped
+  // rather than guessed).
+  '2_mile_run': { modality: 'run', event: '2mi' },
+  // "best effort" is the same real-world distance, different test protocol —
+  // both target the same event (no unit ever offers both at once, checked).
+  // Listed first so the plain id below wins reverse-pull ties (see APP_TO_RACE).
+  '1_5_mile_run_best_effort': { modality: 'run', event: '1.5mile' },
+  '1_5_mile_run': { modality: 'run', event: '1.5mile' },
+  '10_mile_ruck': { modality: 'ruck', event: '10mi' },
+  '12_mile_ruck': { modality: 'ruck', event: '12mi' },
+  // Loaded variants target the same event + a fixed loadKg (the load is a
+  // property of the benchmark id itself, e.g. "...35_lb", not user input).
+  '8_km_ruck_35_lb': { modality: 'ruck', event: '8k', loadKg: Math.round(lbToKg(35) * 10) / 10 },
+  '12_mile_ruck_35_lb': { modality: 'ruck', event: '12mi', loadKg: Math.round(lbToKg(35) * 10) / 10 },
+  // Deliberately NOT mapped (no exact-distance app event, or no load-carrying
+  // field on that modality — see the ORS-audit comments in tpf-app's
+  // multimodal_race_times_storage.ts for why approximating these is unsafe):
+  //   3_mile_run, 5_mile_run, 30_mile_ruck   — no matching distance key
+  //   500_yd_swim                            — yards, app swim events are metric
+  //   8_mile_loaded_march_25_kg              — "8mi" ruck key doesn't exist (only "8k")
+  //   vested_1_mile_run_7_kg                 — run events have no load field (unlike ruck)
+  //   tactical_obstacle_course_full_kit_25_lb — no modality fits an obstacle course
 };
 
-const APP_TO_ORM: Record<string, string> = Object.fromEntries(
-  Object.entries(ORM_TO_APP).map(([id, name]) => [name, id]),
-);
+// Several app lift names are shared by a Lift/Hybrid id AND an Operator id
+// (e.g. "Back Squat" ← both back_squat_1rm and back_squat) — they're the same
+// real lift, so this is correct, not a bug. But it makes the app → calculator
+// pull direction ambiguous without knowing which brand is asking: a user
+// reconstructing their profile on the Operator calculator wants `back_squat`
+// prefilled, not `back_squat_1rm`. Build two reverse maps, each with its own
+// vocabulary winning name collisions (`_1rm` suffix = Lift/Hybrid).
+function buildReverseOrm(preferOperatorIds: boolean): Record<string, string> {
+  const entries = Object.entries(ORM_TO_APP);
+  const isLiftId = ([id]: [string, string]) => id.endsWith('_1rm');
+  const ordered = preferOperatorIds
+    ? [...entries.filter(isLiftId), ...entries.filter((e) => !isLiftId(e))]
+    : [...entries.filter((e) => !isLiftId(e)), ...entries.filter(isLiftId)];
+  return Object.fromEntries(ordered.map(([id, name]) => [name, id]));
+}
+const LIFT_APP_TO_ORM = buildReverseOrm(false);
+const OPERATOR_APP_TO_ORM = buildReverseOrm(true);
+// Reverse maps for pulling app data back in. Several benchmark ids can share
+// one (modality, event) target (loaded vs unloaded ruck; "best effort" vs
+// pass/fail run) — reconstructing a single id from just the event key would
+// be a guess. Loaded records DO carry a loadKg we can key on, so those get
+// their own map, checked first; everything else falls back to the plain
+// default (the non-loaded, non-"best effort" id for that target).
 const APP_TO_RACE: Record<string, string> = Object.fromEntries(
-  Object.entries(RACE_TO_APP).map(([id, m]) => [`${m.modality}:${m.event}`, id]),
+  Object.entries(RACE_TO_APP)
+    .filter(([, m]) => m.loadKg == null)
+    .map(([id, m]) => [`${m.modality}:${m.event}`, id]),
+);
+const LOADED_APP_TO_RACE: Record<string, string> = Object.fromEntries(
+  Object.entries(RACE_TO_APP)
+    .filter(([, m]) => m.loadKg != null)
+    .map(([id, m]) => [`${m.modality}:${m.event}`, id]),
 );
 
 interface OrmEntryApp { w: string; r: string }
 type OrmStore = Record<string, OrmEntryApp>;
-interface RaceTimeApp { timeSec: number; updatedAt: string; predicted?: boolean }
+interface RaceTimeApp { timeSec: number; updatedAt: string; predicted?: boolean; loadKg?: number }
 type MultimodalRaceTimes = Record<string, Record<string, RaceTimeApp>>;
 
 // ---- pure mappers (tested) ------------------------------------------------
@@ -72,25 +145,39 @@ export function racePatchFromLogs(logs: AthleteLogs, isoNow: string): Multimodal
   for (const e of logs.raceTimes) {
     const m = RACE_TO_APP[e.benchmarkId];
     if (!m) continue;
-    (out[m.modality] ??= {})[m.event] = { timeSec: e.timeSec, updatedAt: isoNow, predicted: false };
+    (out[m.modality] ??= {})[m.event] = {
+      timeSec: e.timeSec, updatedAt: isoNow, predicted: false,
+      ...(m.loadKg != null ? { loadKg: m.loadKg } : {}),
+    };
   }
   return out;
 }
 
-/** Rebuild benchmark logs (orm + race only) from the app's profile blobs. */
+/**
+ * Rebuild benchmark logs (orm + race only) from the app's profile blobs.
+ * `brand` resolves which id vocabulary wins when an app lift name is shared
+ * (see LIFT_APP_TO_ORM / OPERATOR_APP_TO_ORM above) — required, not optional,
+ * so a caller can't forget it and silently reconstruct the wrong pathway's ids.
+ */
 export function logsFromAppProfile(
-  orm?: OrmStore | null,
-  race?: MultimodalRaceTimes | null,
+  orm: OrmStore | null | undefined,
+  race: MultimodalRaceTimes | null | undefined,
+  brand: Brand,
 ): AthleteLogs {
   const logs = emptyLogs();
+  const appToOrm = brand === 'operator' ? OPERATOR_APP_TO_ORM : LIFT_APP_TO_ORM;
   for (const [name, v] of Object.entries(orm ?? {})) {
-    const id = APP_TO_ORM[name];
+    const id = appToOrm[name];
     if (id && v) logs.orm.push({ benchmarkId: id, weightKg: Number(v.w), reps: Number(v.r) || 1 });
   }
   for (const [modality, events] of Object.entries(race ?? {})) {
     for (const [event, v] of Object.entries(events ?? {})) {
-      const id = APP_TO_RACE[`${modality}:${event}`];
-      if (id && v) logs.raceTimes.push({ benchmarkId: id, modality, event, timeSec: Number(v.timeSec) });
+      if (!v) continue;
+      const key = `${modality}:${event}`;
+      // A pulled record carrying a loadKg reconstructs to the loaded-variant
+      // id when we have one for this event; otherwise the plain/default id.
+      const id = (v.loadKg != null && LOADED_APP_TO_RACE[key]) || APP_TO_RACE[key];
+      if (id) logs.raceTimes.push({ benchmarkId: id, modality, event, timeSec: Number(v.timeSec) });
     }
   }
   return logs;
@@ -99,7 +186,7 @@ export function logsFromAppProfile(
 // ---- async (no-op / safe defaults when Supabase isn't configured) ---------
 
 /** Pull the athlete's shared 1RMs + times from the app to prefill the calculator. */
-export async function syncFromApp(userId: string): Promise<AthleteLogs> {
+export async function syncFromApp(userId: string, brand: Brand): Promise<AthleteLogs> {
   if (!supabase) return emptyLogs();
   const { data, error } = await supabase
     .from('profiles')
@@ -107,7 +194,7 @@ export async function syncFromApp(userId: string): Promise<AthleteLogs> {
     .eq('id', userId)
     .maybeSingle();
   if (error || !data) return emptyLogs();
-  return logsFromAppProfile(data.orm as OrmStore, data.race_times as MultimodalRaceTimes);
+  return logsFromAppProfile(data.orm as OrmStore, data.race_times as MultimodalRaceTimes, brand);
 }
 
 export interface SyncResult {
