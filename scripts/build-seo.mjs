@@ -23,8 +23,18 @@ const lift = JSON.parse(readFileSync(resolve(REPO, 'src/config/generated/lift.da
 const operator = JSON.parse(readFileSync(resolve(REPO, 'src/config/generated/operator.data.json'), 'utf8'));
 
 // ---- formatting ------------------------------------------------------------
-const TIERS = ['pass', 'good', 'excellent', 'elite'];
-const TIER_LABEL = { pass: 'Pass', good: 'Good', excellent: 'Excellent', elite: 'Elite' };
+// Six-tier (Beginner/Novice/Experienced/Intermediate/Advanced/Elite, anchored
+// 50/60/70/80/90/100%) superseded the legacy four-tier pass/good/excellent/elite
+// (50/70/85/100%) for lift/hybrid standards in 2026-07 — but only benchmarks the
+// app's HABS actually covers got novice/intermediate/advanced values; the
+// gymnastics/skill benchmarks (broad_jump, strict_pullups, ...) and ALL Operator
+// standards never did, so they're still genuinely four-tier, not stale. Detect
+// per benchmark via `novice != null`, the same signal src/engine/tier-curve.ts
+// uses to pick a scoring curve — never hardcode which ids are which.
+const TIERS4 = ['pass', 'good', 'excellent', 'elite'];
+const TIER4_LABEL = { pass: 'Pass', good: 'Good', excellent: 'Excellent', elite: 'Elite' };
+const TIERS6 = ['pass', 'novice', 'good', 'intermediate', 'advanced', 'elite'];
+const TIER6_LABEL = { pass: 'Beginner', novice: 'Novice', good: 'Experienced', intermediate: 'Intermediate', advanced: 'Advanced', elite: 'Elite' };
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const clock = (s) => {
   const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), sec = Math.round(s % 60);
@@ -247,25 +257,36 @@ const liftBench = lift.sourcing.filter((b) => !b.optional && BENCH[b.id] && lift
 for (const b of liftBench) {
   const [label, slug] = BENCH[b.id];
   const t = lift.standards[b.id];
+  const sixTier = t.M.novice != null;
+  const TIERS = sixTier ? TIERS6 : TIERS4;
+  const TIER_LABEL = sixTier ? TIER6_LABEL : TIER4_LABEL;
   const rows = TIERS.map((k) => [TIER_LABEL[k], fmt(b.unit, t.M[k]), fmt(b.unit, t.F[k])]);
   const inPathways = Object.entries(lift.weights)
     .filter(([, w]) => (w[b.component] ?? 0) > 0)
     .map(([pid]) => PATHWAY[pid]).filter(Boolean);
   const dir = b.lowerIsBetter ? 'lower is faster' : b.normalization === 'bodyweight' ? 'as a multiple of bodyweight' : 'higher is better';
   const tips = tipsFor(b.id);
-  const faqs = [
+  const tierNames = TIERS.map((k) => TIER_LABEL[k].toLowerCase()).join(' / ');
+  const titleRange = sixTier ? 'Beginner to Elite' : 'Pass to Elite';
+  const faqs = sixTier ? [
+    { q: `What is a good ${label}?`, a: `An "Experienced" ${label} sits around the 70th percentile of trained athletes — see the table above for the exact figure for your sex. "Advanced" is roughly the top 10%, and "Elite" is the top 5%.` },
+    { q: `How is the ${label} scored?`, a: `Your result is placed on a 0–100 curve anchored at the ${tierNames} tiers${b.normalization === 'bodyweight' ? ', measured as a multiple of bodyweight and adjusted for sex' : ', adjusted for sex'}. ${b.lowerIsBetter ? 'A faster time scores higher.' : 'A higher number scores higher.'}` },
+    { q: `How can I improve my ${label}?`, a: tips.join(' ') },
+  ] : [
     { q: `What is a good ${label}?`, a: `A "Good" ${label} sits around the 70th percentile of trained athletes — see the table above for the exact figure for your sex. "Excellent" is roughly the top 15%, and "Elite" is the top 5%.` },
-    { q: `How is the ${label} scored?`, a: `Your result is placed on a 0–100 curve anchored at the pass / good / excellent / elite tiers${b.normalization === 'bodyweight' ? ', measured as a multiple of bodyweight and adjusted for sex' : ', adjusted for sex'}. ${b.lowerIsBetter ? 'A faster time scores higher.' : 'A higher number scores higher.'}` },
+    { q: `How is the ${label} scored?`, a: `Your result is placed on a 0–100 curve anchored at the ${tierNames} tiers${b.normalization === 'bodyweight' ? ', measured as a multiple of bodyweight and adjusted for sex' : ', adjusted for sex'}. ${b.lowerIsBetter ? 'A faster time scores higher.' : 'A higher number scores higher.'}` },
     { q: `How can I improve my ${label}?`, a: tips.join(' ') },
   ];
   emit(`/standards/${slug}/`, page({
     brand: 'lift', host: LIFT_HOST, path: `/standards/${slug}/`,
-    title: `${label} Standards — Pass / Good / Excellent / Elite | Take Point Fitness`,
+    title: `${label} Standards — ${titleRange} | Take Point Fitness`,
     description: `${label} standards by tier and sex (${dir}). See what counts as a good ${label.toLowerCase()} and score yours free.`,
     h1: `${label} Standards`,
-    lede: `How does your ${label.toLowerCase()} stack up? These are the pass / good / excellent / elite tiers (${dir}), by sex.`,
+    lede: `How does your ${label.toLowerCase()} stack up? These are the ${tierNames} tiers (${dir}), by sex.`,
     body: table(['Tier', 'Male', 'Female'], rows) +
-      `<p class="note">Tiers map to roughly the 50th / 70th / 85th / top 5% of trained athletes.</p>` +
+      (sixTier
+        ? `<p class="note">Tiers map to roughly the 50th / 60th / 70th / 80th / 90th / 100th percentile of trained athletes.</p>`
+        : `<p class="note">Tiers map to roughly the 50th / 70th / 85th / top 5% of trained athletes.</p>`) +
       (inPathways.length ? `<p>Counts toward: ${inPathways.map(([l, s]) => `<a href="/pathways/${s}/">${esc(l)}</a>`).join(' · ')}</p>` : '') +
       `<h2>How to improve your ${esc(label)}</h2>` + bullets(tips) +
       faqHtml(faqs),
@@ -306,7 +327,7 @@ for (const [pid, [label, slug]] of Object.entries(PATHWAY)) {
 // ---- Operator unit pages ---------------------------------------------------
 for (const u of operator) {
   const slug = slugify(u.id);
-  const rows = u.benchmarks.map((b) => [b.name, ...TIERS.map((k) => fmt(b.unit, b.thresholds[k]))]);
+  const rows = u.benchmarks.map((b) => [b.name, ...TIERS4.map((k) => fmt(b.unit, b.thresholds[k]))]);
   const eventNames = u.benchmarks.slice(0, 4).map((b) => b.name).join(', ');
   const faqs = [
     { q: `What are the ${u.label} fitness requirements?`, a: `The ${u.label} standard is scored per event — ${eventNames}${u.benchmarks.length > 4 ? ' and more' : ''} — across strength, engine and work capacity. See the table above for the pass / good / excellent / elite tiers.` },
@@ -334,7 +355,7 @@ emit('/standards/', page({
   brand: 'lift', host: LIFT_HOST, path: '/standards/',
   title: 'Strength & Fitness Standards by Lift | Take Point Fitness',
   description: 'Browse strength and fitness standards for every major lift and benchmark — squat, deadlift, bench, runs, rows and more.',
-  h1: 'Benchmark Standards', lede: 'Pick a lift or benchmark to see the pass / good / excellent / elite tiers by sex.',
+  h1: 'Benchmark Standards', lede: 'Pick a lift or benchmark to see the beginner-to-elite tiers by sex.',
   body: indexList(liftBench.map((b) => [BENCH[b.id][0], `/standards/${BENCH[b.id][1]}/`])),
 }));
 emit('/pathways/', page({
