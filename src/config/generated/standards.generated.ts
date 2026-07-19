@@ -176,6 +176,21 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "notes": "Anchor ratio vs bench / bodyweight; refine from own data | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
   },
   {
+    "id": "barbell_row_1rm",
+    "component": "upper_strength",
+    "source": "orm",
+    "unit": "kg",
+    "lowerIsBetter": false,
+    "normalization": "absolute",
+    "optional": false,
+    "dataSource": "Mirrors tpf-app habs_pathway_standards.ts / hybrid_readiness.ts",
+    "license": "n/a",
+    "commercialUse": "Yes",
+    "referencePopulation": "Trained adults",
+    "launchMethod": "Mirrored from tpf-app (2026-07-19)",
+    "notes": ""
+  },
+  {
     "id": "snatch_1rm",
     "component": "olympic",
     "source": "orm",
@@ -597,6 +612,26 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
       "intermediate": 40,
       "advanced": 50,
       "elite": 55
+    }
+  },
+  "barbell_row_1rm": {
+    "M": {
+      "pass": 55,
+      "novice": 65,
+      "good": 80,
+      "excellent": 105,
+      "intermediate": 95,
+      "advanced": 115,
+      "elite": 130
+    },
+    "F": {
+      "pass": 30,
+      "novice": 40,
+      "good": 50,
+      "excellent": 64,
+      "intermediate": 60,
+      "advanced": 70,
+      "elite": 78
     }
   },
   "snatch_1rm": {

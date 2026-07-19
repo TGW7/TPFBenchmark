@@ -33,6 +33,7 @@ export const ORM_TO_APP: Record<string, string> = {
   bench_1rm: 'Bench Press',
   strict_press_1rm: 'Overhead Press',
   power_clean_1rm: 'Power Clean',
+  barbell_row_1rm: 'Barbell Row',
   // 2026-07-12 — the app has Olympic 1RM slots (Phase 68), so these sync now.
   snatch_1rm: 'Snatch',
   clean_jerk_1rm: 'Clean & Jerk',

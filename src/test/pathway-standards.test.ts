@@ -42,6 +42,10 @@ describe('absolute standards (2026-07-12 conversion)', () => {
       bench_1rm:        { M: [70, 85, 100, 120, 140, 160],    F: [40, 50, 55, 65, 80, 90] },
       strict_press_1rm: { M: [40, 50, 60, 70, 85, 95],        F: [20, 30, 35, 40, 50, 55] },
       power_clean_1rm:  { M: [50, 60, 75, 90, 105, 120],      F: [30, 40, 50, 60, 70, 78] },
+      // 2026-07-19 — the app's 6th base HABS lift, previously missing from
+      // tpf-benchmark entirely (a coverage gap, not a drift). No pathway
+      // ever overrides it on the app side, so only the base table exists.
+      barbell_row_1rm:  { M: [55, 65, 80, 95, 115, 130],      F: [30, 40, 50, 60, 70, 78] },
       run_1mi:          { M: [545, 455, 390, 370, 330, 300],  F: [620, 520, 455, 435, 395, 360] },
       run_5k:           { M: [1805, 1500, 1320, 1170, 1140, 1050], F: [2080, 1735, 1525, 1355, 1335, 1245] },
       row_2k:           { M: [555, 505, 460, 425, 405, 390],  F: [640, 580, 525, 485, 455, 435] },
@@ -84,6 +88,7 @@ describe('absolute standards (2026-07-12 conversion)', () => {
         bench_1rm: { M: [70, 85, 100, 120, 140, 160], F: [40, 50, 55, 65, 80, 90] },
         strict_press_1rm: { M: [40, 50, 60, 70, 85, 95], F: [20, 30, 35, 40, 50, 55] },
         power_clean_1rm: { M: [50, 60, 75, 90, 105, 120], F: [30, 40, 50, 60, 70, 78] },
+        barbell_row_1rm: { M: [55, 65, 80, 95, 115, 130], F: [30, 40, 50, 60, 70, 78] },
         run_1mi: { M: [545, 455, 390, 370, 330, 300], F: [620, 520, 455, 435, 395, 360] },
         run_5k: { M: [1805, 1500, 1320, 1170, 1140, 1050], F: [2080, 1735, 1525, 1355, 1335, 1245] },
         row_2k: { M: [555, 505, 460, 425, 405, 390], F: [640, 580, 525, 485, 455, 435] },
@@ -94,6 +99,7 @@ describe('absolute standards (2026-07-12 conversion)', () => {
         bench_1rm: { M: [70, 85, 100, 120, 140, 160], F: [40, 50, 55, 65, 80, 90] },
         strict_press_1rm: { M: [40, 50, 60, 70, 85, 95], F: [20, 30, 35, 40, 50, 55] },
         power_clean_1rm: { M: [50, 60, 75, 90, 105, 120], F: [30, 40, 50, 60, 70, 78] },
+        barbell_row_1rm: { M: [55, 65, 80, 95, 115, 130], F: [30, 40, 50, 60, 70, 78] },
         run_1mi: { M: [620, 545, 470, 415, 375, 345], F: [725, 635, 550, 490, 445, 410] },
         run_5k: { M: [2080, 1815, 1575, 1385, 1240, 1140], F: [2355, 2080, 1825, 1610, 1450, 1350] },
         row_2k: { M: [580, 530, 485, 445, 420, 405], F: [660, 605, 550, 505, 475, 460] },
@@ -104,6 +110,8 @@ describe('absolute standards (2026-07-12 conversion)', () => {
         bench_1rm: { M: [70, 85, 100, 115, 130, 140], F: [35, 45, 50, 65, 80, 90] },
         strict_press_1rm: { M: [40, 50, 60, 70, 85, 95], F: [20, 30, 35, 40, 50, 55] },
         power_clean_1rm: { M: [55, 65, 80, 100, 120, 135], F: [35, 45, 50, 65, 80, 95] },
+        // no barbell_row override — inherits base
+        barbell_row_1rm: { M: [55, 65, 80, 95, 115, 130], F: [30, 40, 50, 60, 70, 78] },
         run_1mi: { M: [570, 505, 440, 385, 345, 330], F: [660, 580, 500, 445, 405, 380] },
         run_5k: { M: [1870, 1670, 1480, 1315, 1190, 1110], F: [2110, 1885, 1670, 1490, 1365, 1290] },
         row_2k: { M: [545, 495, 450, 415, 395, 380], F: [620, 565, 520, 485, 455, 440] },
@@ -114,7 +122,8 @@ describe('absolute standards (2026-07-12 conversion)', () => {
         bench_1rm: { M: [55, 65, 80, 95, 110, 125], F: [30, 40, 50, 60, 65, 75] },
         strict_press_1rm: { M: [35, 45, 50, 60, 70, 80], F: [20, 25, 30, 40, 45, 52] },
         power_clean_1rm: { M: [45, 55, 65, 80, 90, 105], F: [30, 40, 45, 55, 65, 72] },
-        // no run/row override — inherits base
+        // no run/row/barbell_row override — inherits base
+        barbell_row_1rm: { M: [55, 65, 80, 95, 115, 130], F: [30, 40, 50, 60, 70, 78] },
         run_1mi: { M: [545, 455, 390, 370, 330, 300], F: [620, 520, 455, 435, 395, 360] },
         run_5k: { M: [1805, 1500, 1320, 1170, 1140, 1050], F: [2080, 1735, 1525, 1355, 1335, 1245] },
         row_2k: { M: [555, 505, 460, 425, 405, 390], F: [640, 580, 525, 485, 455, 435] },
@@ -125,6 +134,8 @@ describe('absolute standards (2026-07-12 conversion)', () => {
         bench_1rm: { M: [45, 55, 65, 80, 90, 105], F: [25, 40, 45, 55, 60, 70] },
         strict_press_1rm: { M: [30, 40, 45, 55, 60, 70], F: [20, 25, 30, 35, 40, 48] },
         power_clean_1rm: { M: [40, 50, 55, 65, 80, 90], F: [25, 35, 40, 50, 60, 66] },
+        // no barbell_row override — inherits base
+        barbell_row_1rm: { M: [55, 65, 80, 95, 115, 130], F: [30, 40, 50, 60, 70, 78] },
         run_1mi: { M: [515, 460, 405, 355, 315, 280], F: [600, 535, 470, 415, 365, 330] },
         run_5k: { M: [1735, 1520, 1325, 1175, 1060, 980], F: [2010, 1770, 1545, 1375, 1245, 1160] },
         // round 13 — row_2k override removed (erg weight 0 for the
@@ -137,7 +148,8 @@ describe('absolute standards (2026-07-12 conversion)', () => {
         bench_1rm: { M: [85, 105, 130, 160, 195, 240], F: [50, 60, 75, 90, 110, 135] },
         strict_press_1rm: { M: [55, 65, 80, 95, 110, 135], F: [35, 40, 45, 55, 65, 75] },
         power_clean_1rm: { M: [50, 60, 75, 90, 105, 120], F: [30, 40, 50, 60, 70, 78] },
-        // no run/row override — inherits base
+        // no run/row/barbell_row override — inherits base
+        barbell_row_1rm: { M: [55, 65, 80, 95, 115, 130], F: [30, 40, 50, 60, 70, 78] },
         run_1mi: { M: [545, 455, 390, 370, 330, 300], F: [620, 520, 455, 435, 395, 360] },
         run_5k: { M: [1805, 1500, 1320, 1170, 1140, 1050], F: [2080, 1735, 1525, 1355, 1335, 1245] },
         row_2k: { M: [555, 505, 460, 425, 405, 390], F: [640, 580, 525, 485, 455, 435] },
@@ -148,7 +160,8 @@ describe('absolute standards (2026-07-12 conversion)', () => {
         bench_1rm: { M: [70, 85, 100, 120, 140, 160], F: [40, 50, 55, 65, 75, 85] },
         strict_press_1rm: { M: [40, 50, 65, 75, 90, 100], F: [20, 30, 40, 45, 55, 62] },
         power_clean_1rm: { M: [50, 60, 75, 90, 105, 120], F: [30, 40, 50, 60, 70, 78] },
-        // no run/row override — inherits base
+        // no run/row/barbell_row override — inherits base
+        barbell_row_1rm: { M: [55, 65, 80, 95, 115, 130], F: [30, 40, 50, 60, 70, 78] },
         run_1mi: { M: [545, 455, 390, 370, 330, 300], F: [620, 520, 455, 435, 395, 360] },
         run_5k: { M: [1805, 1500, 1320, 1170, 1140, 1050], F: [2080, 1735, 1525, 1355, 1335, 1245] },
         row_2k: { M: [555, 505, 460, 425, 405, 390], F: [640, 580, 525, 485, 455, 435] },
@@ -172,7 +185,7 @@ describe('absolute standards (2026-07-12 conversion)', () => {
   it('every populated benchmark carries novice/intermediate/advanced tiers (six levels, not four)', () => {
     for (const s of BENCHMARK_SOURCING) {
       if (s.id.includes('front_squat') || s.id.includes('snatch') || s.id.includes('clean_jerk')
-        || ['back_squat_1rm', 'deadlift_1rm', 'bench_1rm', 'strict_press_1rm', 'power_clean_1rm', 'run_1mi', 'run_5k', 'row_2k'].includes(s.id)) {
+        || ['back_squat_1rm', 'deadlift_1rm', 'bench_1rm', 'strict_press_1rm', 'power_clean_1rm', 'barbell_row_1rm', 'run_1mi', 'run_5k', 'row_2k'].includes(s.id)) {
         const t = STANDARDS_THRESHOLDS[s.id];
         expect(t.M.novice, `${s.id}/M novice`).not.toBeNull();
         expect(t.M.intermediate, `${s.id}/M intermediate`).not.toBeNull();
