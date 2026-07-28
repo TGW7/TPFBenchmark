@@ -7,12 +7,16 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   build: {
-    rollupOptions: {
+    // Vite 8 (Rolldown): manualChunks' object form is removed outright, the
+    // function form deprecated — codeSplitting.groups is the replacement.
+    rolldownOptions: {
       output: {
         // Split heavy vendors into cacheable chunks (and clear the 500 kB warning).
-        manualChunks: {
-          'vendor-react': ['react', 'react-dom', 'react-dom/client'],
-          'vendor-supabase': ['@supabase/supabase-js'],
+        codeSplitting: {
+          groups: [
+            { name: 'vendor-react', test: /node_modules\/(react|react-dom)\// },
+            { name: 'vendor-supabase', test: /node_modules\/@supabase\/supabase-js/ },
+          ],
         },
       },
     },
