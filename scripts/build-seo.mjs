@@ -267,7 +267,6 @@ for (const b of liftBench) {
   const dir = b.lowerIsBetter ? 'lower is faster' : b.normalization === 'bodyweight' ? 'as a multiple of bodyweight' : 'higher is better';
   const tips = tipsFor(b.id);
   const tierNames = TIERS.map((k) => TIER_LABEL[k].toLowerCase()).join(' / ');
-  const titleRange = sixTier ? 'Beginner to Elite' : 'Pass to Elite';
   const faqs = sixTier ? [
     { q: `What is a good ${label}?`, a: `An "Experienced" ${label} sits around the 70th percentile of trained athletes — see the table above for the exact figure for your sex. "Advanced" is roughly the top 10%, and "Elite" is the top 5%.` },
     { q: `How is the ${label} scored?`, a: `Your result is placed on a 0–100 curve anchored at the ${tierNames} tiers${b.normalization === 'bodyweight' ? ', measured as a multiple of bodyweight and adjusted for sex' : ', adjusted for sex'}. ${b.lowerIsBetter ? 'A faster time scores higher.' : 'A higher number scores higher.'}` },
@@ -279,7 +278,7 @@ for (const b of liftBench) {
   ];
   emit(`/standards/${slug}/`, page({
     brand: 'lift', host: LIFT_HOST, path: `/standards/${slug}/`,
-    title: `${label} Standards — ${titleRange} | Take Point Fitness`,
+    title: `${label} Standards | Take Point Fitness`,
     description: `${label} standards by tier and sex (${dir}). See what counts as a good ${label.toLowerCase()} and score yours free.`,
     h1: `${label} Standards`,
     lede: `How does your ${label.toLowerCase()} stack up? These are the ${tierNames} tiers (${dir}), by sex.`,
@@ -310,7 +309,7 @@ for (const [pid, [label, slug]] of Object.entries(PATHWAY)) {
   ];
   emit(`/pathways/${slug}/`, page({
     brand: 'lift', host: LIFT_HOST, path: `/pathways/${slug}/`,
-    title: `${label} Fitness Standards & Calculator | Take Point Fitness`,
+    title: `${label} Fitness Standards | Take Point Fitness`,
     description: `${label} standards: what to train and how you're scored across ${comps.length} areas. Free calculator, see your weak link.`,
     h1: `${label} Standards`,
     lede: `What does it take to be a strong ${label}? Your score weights ${comps.length} areas — here's what counts and how to benchmark it.`,
@@ -374,16 +373,24 @@ emit('/units/', page({
         `<h2>UK</h2>${indexList(operator.filter((u) => u.region === 'UK').map((u) => [u.label, `/units/${slugify(u.id)}/`]))}`,
 }));
 
-// ---- sitemap ---------------------------------------------------------------
-const urls = [
-  `${LIFT_HOST}/`, `${OP_HOST}/`,
-  ...out.map((p) => (p.startsWith('/units') ? OP_HOST : LIFT_HOST) + p),
-];
-const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+// ---- sitemaps ----------------------------------------------------------------
+// One file PER HOST, each listing only that host's own URLs — a sitemap
+// listing a different domain's URLs is against the sitemap protocol (Google:
+// "all URLs must reside on the same host as the sitemap") and those entries
+// are liable to be silently ignored. Two separate custom domains on the same
+// Vercel project/build, so this can't be "one sitemap, host-negotiated" —
+// each host's robots.txt must point at its own file (see public/robots.txt).
+const liftUrls = [`${LIFT_HOST}/`, ...out.filter((p) => !p.startsWith('/units')).map((p) => LIFT_HOST + p)];
+const operatorUrls = [`${OP_HOST}/`, ...out.filter((p) => p.startsWith('/units')).map((p) => OP_HOST + p)];
+function writeSitemap(filename, urls) {
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map((u) => `  <url><loc>${u}</loc><changefreq>weekly</changefreq></url>`).join('\n')}
 </urlset>
 `;
-writeFileSync(resolve(DIST, 'sitemap.xml'), sitemap);
+  writeFileSync(resolve(DIST, filename), xml);
+}
+writeSitemap('sitemap-lift.xml', liftUrls);
+writeSitemap('sitemap-operator.xml', operatorUrls);
 
-console.log(`[seo] generated ${out.length} pages + sitemap (${urls.length} urls) into dist/`);
+console.log(`[seo] generated ${out.length} pages + 2 sitemaps (${liftUrls.length} lift + ${operatorUrls.length} operator urls) into dist/`);

@@ -22,6 +22,26 @@ if (!desc) {
 }
 desc.setAttribute('content', LANDING_COPY[brand].oneLiner);
 
+// index.html's canonical + OG/Twitter tags are static, hardcoded to the Lift
+// brand (the apex default) — uncorrected, the Operator domain self-declares
+// benchmark.takepointfitness.com/ as canonical (telling Google not to index
+// it separately) and every social share of an operatorbenchmark.* link shows
+// Lift branding/copy. Correct all of them here too, not just title+description.
+// Still a real gap for crawlers/unfurlers that never execute JS — the
+// complete fix needs per-domain static builds; this covers Google (which
+// does render JS) and any JS-executing viewer.
+const pageUrl = `${location.origin}${location.pathname}`;
+const { headline: ogTitle, subhead: ogDesc } = LANDING_COPY[brand].hero;
+const heroImage = `${location.origin}/hero.jpg`;
+document.querySelector('link[rel="canonical"]')?.setAttribute('href', pageUrl);
+document.querySelector('meta[property="og:url"]')?.setAttribute('content', pageUrl);
+document.querySelector('meta[property="og:title"]')?.setAttribute('content', ogTitle);
+document.querySelector('meta[property="og:description"]')?.setAttribute('content', ogDesc);
+document.querySelector('meta[property="og:image"]')?.setAttribute('content', heroImage);
+document.querySelector('meta[name="twitter:title"]')?.setAttribute('content', ogTitle);
+document.querySelector('meta[name="twitter:description"]')?.setAttribute('content', ogDesc);
+document.querySelector('meta[name="twitter:image"]')?.setAttribute('content', heroImage);
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AuthProvider>
