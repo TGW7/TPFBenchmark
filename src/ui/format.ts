@@ -1,6 +1,7 @@
 /** Display helpers + human labels for the UI. */
 
 import type { ComponentId, ThresholdSet } from '../engine/types';
+import { BENCHMARK_DISPLAY } from '../config/benchmarkDisplay';
 
 export const COMPONENT_LABELS: Record<ComponentId, string> = {
   running: 'Running',
@@ -21,25 +22,31 @@ export const COMPONENT_LABELS: Record<ComponentId, string> = {
 
 export const componentLabel = (c: ComponentId): string => COMPONENT_LABELS[c] ?? c;
 
-const BENCH_LABEL_OVERRIDES: Record<string, string> = {
-  back_squat_1rm: 'Back Squat', front_squat_1rm: 'Front Squat', deadlift_1rm: 'Deadlift', bench_1rm: 'Bench Press',
-  strict_press_1rm: 'Strict Press', power_clean_1rm: 'Power Clean', barbell_row_1rm: 'Barbell Row',
-  snatch_1rm: 'Snatch', clean_jerk_1rm: 'Clean & Jerk',
+/**
+ * In-app text deliberately differs from BENCHMARK_DISPLAY's canonical/SEO
+ * label for a few ids — brevity in a dense table (HSPU, T2B, Plank), the
+ * CrossFit-precise term over the more-searched public one (Strict Press vs.
+ * Overhead Press), or inline-sentence style over a heading's Title Case
+ * (run/row/swim/bike). Not missed duplication — everything else comes
+ * straight from the shared map.
+ */
+const LOCAL_LABEL_OVERRIDES: Record<string, string> = {
+  strict_press_1rm: 'Strict Press',
+  hspu: 'HSPU', t2b: 'T2B', plank_hold: 'Plank',
   run_1mi: '1-mile run', run_5k: '5k run', row_2k: '2k row', row_500m: '500m row',
   swim_400m: '400m swim', swim_1500m: '1500m swim', bike_20k: '20km bike TT', bike_40k: '40km bike TT',
-  hspu: 'HSPU', t2b: 'T2B', du_unbroken: 'Double-unders', max_mu: 'Muscle-ups',
-  strict_pullups: 'Strict Pull-ups', plank_hold: 'Plank', broad_jump: 'Broad Jump',
-  grip_deadhang: 'Dead Hang', ruck_time: 'Ruck',
 };
 
 /**
- * A short display label for a benchmark. Explicit overrides win first, so a
- * lift's real name is never shadowed by its `notes` annotation (e.g. Deadlift's
- * "Contested in PL"). Operator units — not in the override map — keep their real
- * name in `notes`, so that fallback still applies to them.
+ * A short display label for a benchmark. Local overrides win first, then the
+ * shared canonical label, so a lift's real name is never shadowed by its
+ * `notes` annotation (e.g. Deadlift's "Contested in PL"). Operator units —
+ * not in either map — keep their real name in `notes`, so that fallback
+ * still applies to them.
  */
 export function benchmarkLabel(b: { id: string; meta?: { notes?: string } }): string {
-  if (BENCH_LABEL_OVERRIDES[b.id]) return BENCH_LABEL_OVERRIDES[b.id];
+  if (LOCAL_LABEL_OVERRIDES[b.id]) return LOCAL_LABEL_OVERRIDES[b.id];
+  if (BENCHMARK_DISPLAY[b.id]) return BENCHMARK_DISPLAY[b.id].label;
   const note = b.meta?.notes;
   if (note && note.length <= 24 && !/[.;,]/.test(note)) return note; // operator stores the real name here
   return b.id.replace(/_1rm$/, '').replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());

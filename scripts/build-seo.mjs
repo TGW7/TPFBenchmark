@@ -13,6 +13,7 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { BENCHMARK_DISPLAY } from '../src/config/benchmarkDisplay.ts';
 
 const REPO = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = resolve(REPO, 'dist');
@@ -53,18 +54,11 @@ function fmt(unit, v) {
   return String(v);
 }
 
-const BENCH = {
-  back_squat_1rm: ['Back Squat', 'back-squat'], front_squat_1rm: ['Front Squat', 'front-squat'], deadlift_1rm: ['Deadlift', 'deadlift'],
-  bench_1rm: ['Bench Press', 'bench-press'], strict_press_1rm: ['Overhead Press', 'overhead-press'],
-  barbell_row_1rm: ['Barbell Row', 'barbell-row'],
-  snatch_1rm: ['Snatch', 'snatch'], clean_jerk_1rm: ['Clean & Jerk', 'clean-and-jerk'],
-  power_clean_1rm: ['Power Clean', 'power-clean'], broad_jump: ['Broad Jump', 'broad-jump'],
-  strict_pullups: ['Strict Pull-ups', 'strict-pull-ups'], hspu: ['Handstand Push-ups', 'handstand-push-ups'],
-  t2b: ['Toes-to-Bar', 'toes-to-bar'], du_unbroken: ['Double-Unders', 'double-unders'],
-  max_mu: ['Muscle-ups', 'muscle-ups'], plank_hold: ['Plank Hold', 'plank'],
-  run_1mi: ['1-Mile Run', '1-mile-run'], run_5k: ['5k Run', '5k-run'],
-  row_2k: ['2k Row', '2k-row'], row_500m: ['500m Row', '500m-row'],
-};
+// Label + slug now come from the shared BENCHMARK_DISPLAY (src/config/
+// benchmarkDisplay.ts) — was hand-duplicated here and in src/ui/format.ts.
+const BENCH = Object.fromEntries(
+  Object.entries(BENCHMARK_DISPLAY).filter(([, d]) => d.slug).map(([id, d]) => [id, [d.label, d.slug]]),
+);
 const PATHWAY = {
   gym_goer: ['Gym-Goer', 'gym-goer'], hybrid_athlete: ['Hybrid Athlete', 'hybrid-athlete'],
   crossfit_generalist: ['CrossFit', 'crossfit'], hyrox: ['HYROX', 'hyrox'],
@@ -178,14 +172,7 @@ const bullets = (items) => `<ul>${items.map((t) => `<li>${esc(t)}</li>`).join(''
 
 // "How to improve" tips — keyed by training quality, not standards numbers, so
 // the no-hardcoded-numbers rule stays intact. Useful evergreen content for SEO.
-const TIP_CAT = {
-  back_squat_1rm: 'barbell', front_squat_1rm: 'barbell', deadlift_1rm: 'barbell', bench_1rm: 'barbell', strict_press_1rm: 'barbell',
-  barbell_row_1rm: 'barbell',
-  snatch_1rm: 'oly', clean_jerk_1rm: 'oly', power_clean_1rm: 'oly',
-  strict_pullups: 'pull', max_mu: 'pull', hspu: 'press_bw', t2b: 'core_bw', du_unbroken: 'skill',
-  broad_jump: 'power', plank_hold: 'core',
-  run_1mi: 'engine', run_5k: 'engine', row_2k: 'engine', row_500m: 'power_engine',
-};
+// Category per id comes from the shared BENCHMARK_DISPLAY.tip.
 const TIPS = {
   barbell: [
     'Train the lift 2–3×/week with progressive overload — add a little load or a rep most sessions.',
@@ -238,7 +225,7 @@ const TIPS = {
     'Underpin it with leg strength and a solid aerobic base.',
   ],
 };
-const tipsFor = (id) => TIPS[TIP_CAT[id]] ?? [
+const tipsFor = (id) => TIPS[BENCHMARK_DISPLAY[id]?.tip] ?? [
   'Train the underlying quality 2–3×/week and re-test every 6–8 weeks.',
   'Fix your weakest position or pacing before adding intensity.',
   'Track it — what gets measured improves.',
