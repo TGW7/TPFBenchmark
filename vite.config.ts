@@ -29,6 +29,12 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html'],
+      // Vitest 4 removed coverage.all and defaults to reporting only files a
+      // test actually imported — without an explicit `include`, any source
+      // file no test ever touches (e.g. src/lib/posthog.ts) would silently
+      // vanish from the report instead of showing as 0% covered, defeating
+      // the point of a coverage report (surfacing gaps, not hiding them).
+      include: ['src/**/*.ts'],
       // Codegen output and UI components aren't unit-tested here (UI is
       // reviewed by hand/screenshot; generated/ is data, not logic) — exclude
       // so the number reflects the engine/data logic these tests actually target.
