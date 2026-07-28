@@ -1,9 +1,9 @@
 /**
  * HRS_WODS — benchmark WOD definitions + Capacity-Index quality-mix vectors.
  *
- * Thresholds and quality-mix vectors are null/TODO until the Excel master's
- * WOD_Standards / Quality_Mix sheets are filled in. WODs never feed the core
- * HRS in v1 (WOD_CORE_WEIGHT = 0); they are display-only diagnostics.
+ * Thresholds and quality-mix vectors are codegen'd from the Excel master's
+ * WOD_Standards / Quality_Mix sheets. WODs never feed the core HRS in v1
+ * (WOD_CORE_WEIGHT = 0); they are display-only diagnostics.
  */
 
 import type { WodDef, WodId } from '../engine/types';

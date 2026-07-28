@@ -1,9 +1,9 @@
 /**
- * HRS_PATHWAY_CONFIGS — the four v1 pathways.
+ * HRS_PATHWAY_CONFIGS — the seven Lift/Hybrid pathways.
  *
- * Weights are null/TODO until the Excel master's Weights sheet is filled in.
- * Once populated, each pathway's non-null weights MUST sum to 100 — enforced by
- * validatePathwayWeights() and the pathways test.
+ * Weights are codegen'd from the Excel master's Weights sheet; each
+ * pathway's weights must sum to 100 — enforced at codegen time (see
+ * `validate()` in scripts/codegen.mjs) and covered by the pathways test.
  */
 
 import type { LiftPathwayId, PathwayConfig } from '../engine/types';

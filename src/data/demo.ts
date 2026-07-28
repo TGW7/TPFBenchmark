@@ -1,13 +1,12 @@
 /**
  * ⚠️ SYNTHETIC DEMO DATA — NOT REAL STANDARDS. ⚠️
  *
- * Every number in this file is made up so the UI renders a populated dashboard
- * before the Excel master is filled in. These values are NOT in /config and are
- * NOT claimed to be calibrated standards — they are the UI equivalent of the
- * synthetic thresholds the engine tests use.
- *
- * The real catalogue (HRS_BENCHMARKS / HRS_WODS / pathways) stays null/TODO and
- * is the source of truth once the workbook is populated.
+ * Every number in this file is made up. Powers the "Load sample athlete"
+ * button (see brandConfig.ts's sampleProfile/sampleLogs), a deliberate,
+ * ongoing UX feature — not a placeholder for missing real data. These
+ * values are NOT in /config and are NOT claimed to be calibrated standards;
+ * real standards live in the Excel master, flowing through codegen into
+ * HRS_BENCHMARKS / HRS_WODS / the pathway configs.
  */
 
 import type {

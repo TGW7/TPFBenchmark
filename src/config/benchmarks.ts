@@ -1,9 +1,8 @@
 /**
  * HRS_BENCHMARKS — the benchmark catalogue.
  *
- * Shape only. Sourcing metadata is populated; tier thresholds are null/TODO
- * until the Excel master is filled in. Everything here is derived from
- * generated/standards.generated.ts — do not hand-edit standards values.
+ * Everything here is derived from generated/standards.generated.ts (itself
+ * codegen'd from the Excel master) — do not hand-edit standards values.
  */
 
 import type { BenchmarkDef, Sex, ThresholdSet } from '../engine/types';

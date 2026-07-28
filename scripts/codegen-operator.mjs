@@ -105,6 +105,33 @@ const out = ordered.map(([label, p]) => {
   return { id: slug(label), label, region: p.region, weights, weightsInferred, benchmarks: p.benchmarks };
 });
 
+// Fail loudly on data the sheets implicitly require but nothing enforced:
+// per-pathway weights summing to 100, and tier thresholds monotonic in the
+// direction lowerIsBetter implies. Mirrors codegen.mjs's Lift-side check.
+function validate(pathways) {
+  const errors = [];
+  const EPS = 0.01;
+  for (const p of pathways) {
+    const sum = Object.values(p.weights).reduce((s, v) => s + (v ?? 0), 0);
+    if (Math.abs(sum - 100) > EPS) {
+      errors.push(`Weights: unit "${p.id}" sums to ${sum}, must be 100`);
+    }
+    for (const b of p.benchmarks) {
+      const seq = ['pass', 'good', 'excellent', 'elite'].map((k) => b.thresholds[k]).filter((v) => v != null);
+      for (let i = 1; i < seq.length; i++) {
+        const ok = b.lowerIsBetter ? seq[i] < seq[i - 1] : seq[i] > seq[i - 1];
+        if (!ok) errors.push(`Standards: unit "${p.id}" "${b.id}" tiers not monotonic: [${seq.join(', ')}]`);
+      }
+    }
+  }
+  if (errors.length) {
+    console.error(`[operator-codegen] ${errors.length} validation error(s):`);
+    for (const e of errors) console.error(`  - ${e}`);
+    process.exit(1);
+  }
+}
+validate(out);
+
 const J = (v) => JSON.stringify(v, null, 2);
 const ts = `// AUTO-GENERATED from config/standards/TPF_Operator_Standards.xlsx — do not edit.
 // Regenerate with \`npm run codegen\`. Operator model: per-unit benchmarks,

@@ -360,8 +360,8 @@ function renderTs(data, sourceName) {
 // Source of truth: config/standards/${sourceName}
 // Regenerate with \`npm run codegen\`. Edit the Excel master, never this file.
 //
-// Empty threshold / weight / mix cells in the workbook are emitted as \`null\`
-// (TODO). The engine skips null benchmarks/components and re-normalises.
+// Empty threshold / weight / mix cells in the workbook are emitted as \`null\`.
+// The engine skips null benchmarks/components and re-normalises.
 
 import type {
   ComponentId,
@@ -399,7 +399,8 @@ export interface WodStandard {
 /** Populated sourcing plan (drives benchmark ids, source, unit, direction). */
 export const BENCHMARK_SOURCING: SourcingRow[] = ${J(data.sourcing)};
 
-/** Per-benchmark tier thresholds by sex. Values are TODO (null) until populated. */
+/** Per-benchmark tier thresholds by sex, from the Standards sheet. A benchmark
+ *  not yet given real values shows \`null\` for every tier. */
 export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = ${J(data.standards)};
 
 /** Per-PATHWAY tier overrides (Standards_Pathway sheet). A populated
@@ -407,13 +408,14 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = $
  *  absent falls back to STANDARDS_THRESHOLDS. */
 export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string, Record<Sex, ThresholdSet>>>> = ${J(data.pathwayStandards)};
 
-/** Pathway component weights. TODO (null) until populated; must each sum to 100. */
+/** Pathway component weights, from the Weights sheet — each pathway's
+ *  populated weights must sum to 100 (enforced by \`validate()\` above). */
 export const PATHWAY_WEIGHTS: Partial<Record<PathwayId, Partial<Record<ComponentId, number | null>>>> = ${J(data.weights)};
 
-/** Benchmark-WOD tiers by sex. TODO (null) until populated. */
+/** Benchmark-WOD tiers by sex, from the WOD_Standards sheet. */
 export const WOD_STANDARDS: Record<WodId, WodStandard> = ${J(data.wodStandards)};
 
-/** Capacity-Index quality-mix vectors. TODO (null) until populated; rows sum 1. */
+/** Capacity-Index quality-mix vectors, from the Quality_Mix sheet — each row sums to 1. */
 export const QUALITY_MIX: Record<WodId, Partial<Record<ComponentId, number | null>>> = ${J(data.qualityMix)};
 `;
 }
@@ -421,6 +423,13 @@ export const QUALITY_MIX: Record<WodId, Partial<Record<ComponentId, number | nul
 function renderReadme(data, sourceName) {
   const benchCount = data.sourcing.length;
   const wodCount = Object.keys(data.wodStandards).length;
+  // Computed fresh each run so this table can't go stale the way a hand-typed
+  // "TODO (null)" claim did — it just describes whatever's true right now.
+  const fillState = (total, filled) => (filled === total ? 'populated' : filled === 0 ? 'empty' : `${filled}/${total} populated`);
+  const standardsFilled = Object.values(data.standards).filter((s) => [s.M, s.F].some((t) => t.pass != null)).length;
+  const weightsFilled = Object.values(data.weights).filter((w) => Object.values(w).some((v) => v != null)).length;
+  const wodFilled = Object.values(data.wodStandards).filter((w) => [w.thresholds.M, w.thresholds.F].some((t) => t.pass != null)).length;
+  const mixFilled = Object.values(data.qualityMix).filter((m) => Object.values(m).some((v) => v != null)).length;
   return `# /config — generated from the Excel master
 
 **Do not hand-edit the generated values.** They are produced by
@@ -446,24 +455,70 @@ workbook location with the \`HRS_STANDARDS_XLSX\` env var.
 | Export | From sheet | State |
 |--------|-----------|-------|
 | \`BENCHMARK_SOURCING\` (${benchCount}) | Benchmarks_Sourcing | populated |
-| \`STANDARDS_THRESHOLDS\` | Standards | thresholds TODO (null) |
+| \`STANDARDS_THRESHOLDS\` | Standards | ${fillState(benchCount, standardsFilled)} |
 | \`PATHWAY_STANDARD_OVERRIDES\` | Standards_Pathway | per-pathway tier overrides |
-| \`PATHWAY_WEIGHTS\` | Weights | weights TODO (null), each col → 100 |
-| \`WOD_STANDARDS\` (${wodCount}) | WOD_Standards | thresholds TODO (null) |
-| \`QUALITY_MIX\` | Quality_Mix | vectors TODO (null), rows → 1 |
+| \`PATHWAY_WEIGHTS\` | Weights | ${fillState(Object.keys(data.weights).length, weightsFilled)}, each col → 100 |
+| \`WOD_STANDARDS\` (${wodCount}) | WOD_Standards | ${fillState(wodCount, wodFilled)} |
+| \`QUALITY_MIX\` | Quality_Mix | ${fillState(wodCount, mixFilled)}, rows → 1 |
 
 ## The hand-authored shape
 
 \`benchmarks.ts\`, \`pathways.ts\`, \`wods.ts\` import the generated data and adapt it
 into the engine-facing constants (\`HRS_BENCHMARKS\`, \`HRS_PATHWAY_CONFIGS\`,
 \`HRS_WODS\`). They contain **structure only — no standards numbers**; every real
-value flows in from the workbook via codegen. Empty cells stay \`null\` and the
-engine skips them, so the app builds and tests pass against the mostly-empty
-master.
+value flows in from the workbook via codegen. Any cell still empty stays
+\`null\` and the engine skips it rather than erroring.
 `;
 }
 
 // ---- run -------------------------------------------------------------------
+
+/**
+ * Fail loudly on data the sheets/comments claim is required but nothing was
+ * actually enforcing: pathway weights summing to 100, and tier thresholds
+ * increasing (or decreasing, for lower-is-better) monotonically. A typo in
+ * the Excel master used to ship silently — collects every violation across
+ * both checks so one run surfaces all of them, not just the first.
+ */
+function validate({ sourcing, standards, pathwayStandards, weights }) {
+  const errors = [];
+  const EPS = 0.01;
+
+  for (const [pathwayId, w] of Object.entries(weights)) {
+    const sum = Object.values(w).reduce((s, v) => s + (v ?? 0), 0);
+    if (Math.abs(sum - 100) > EPS) {
+      errors.push(`Weights: pathway "${pathwayId}" sums to ${sum}, must be 100`);
+    }
+  }
+
+  const meta = Object.fromEntries(sourcing.map((s) => [s.id, s]));
+  const TIER_KEYS = ['pass', 'novice', 'good', 'intermediate', 'advanced', 'elite'];
+  function checkMonotonic(pathwayLabel, id, sex, t) {
+    const m = meta[id];
+    if (!m) return; // unknown id — parseStandards/parsePathwayStandards already warn
+    const seq = TIER_KEYS.map((k) => t[k]).filter((v) => v != null);
+    for (let i = 1; i < seq.length; i++) {
+      const ok = m.lowerIsBetter ? seq[i] < seq[i - 1] : seq[i] > seq[i - 1];
+      if (!ok) {
+        errors.push(`Standards: ${pathwayLabel} "${id}" (${sex}) tiers not monotonic: [${seq.join(', ')}]`);
+      }
+    }
+  }
+  for (const [id, sexes] of Object.entries(standards)) {
+    for (const sex of ['M', 'F']) if (sexes[sex]) checkMonotonic('base', id, sex, sexes[sex]);
+  }
+  for (const [pathwayId, benches] of Object.entries(pathwayStandards)) {
+    for (const [id, sexes] of Object.entries(benches)) {
+      for (const sex of ['M', 'F']) if (sexes[sex]) checkMonotonic(pathwayId, id, sex, sexes[sex]);
+    }
+  }
+
+  if (errors.length) {
+    console.error(`[codegen] ${errors.length} validation error(s) in the Excel master:`);
+    for (const e of errors) console.error(`  - ${e}`);
+    process.exit(1);
+  }
+}
 
 async function main() {
   if (!existsSync(XLSX_PATH)) {
@@ -482,6 +537,7 @@ async function main() {
   const qualityMix = parseQualityMix(wb, Object.keys(wodStandards));
 
   const data = { sourcing, standards, pathwayStandards, weights, wodStandards, qualityMix };
+  validate(data);
 
   await writeFile(GEN_TS, renderTs(data, sourceName), 'utf8');
   await writeFile(README, renderReadme(data, sourceName), 'utf8');

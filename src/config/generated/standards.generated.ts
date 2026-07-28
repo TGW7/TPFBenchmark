@@ -2,8 +2,8 @@
 // Source of truth: config/standards/TPF_HRS_Standards_v0_2026-06-21.xlsx
 // Regenerate with `npm run codegen`. Edit the Excel master, never this file.
 //
-// Empty threshold / weight / mix cells in the workbook are emitted as `null`
-// (TODO). The engine skips null benchmarks/components and re-normalises.
+// Empty threshold / weight / mix cells in the workbook are emitted as `null`.
+// The engine skips null benchmarks/components and re-normalises.
 
 import type {
   ComponentId,
@@ -432,7 +432,8 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
   }
 ];
 
-/** Per-benchmark tier thresholds by sex. Values are TODO (null) until populated. */
+/** Per-benchmark tier thresholds by sex, from the Standards sheet. A benchmark
+ *  not yet given real values shows `null` for every tier. */
 export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
   "run_1mi": {
     "M": {
@@ -1674,7 +1675,8 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
   }
 };
 
-/** Pathway component weights. TODO (null) until populated; must each sum to 100. */
+/** Pathway component weights, from the Weights sheet — each pathway's
+ *  populated weights must sum to 100 (enforced by `validate()` above). */
 export const PATHWAY_WEIGHTS: Partial<Record<PathwayId, Partial<Record<ComponentId, number | null>>>> = {
   "gym_goer": {
     "running": 10,
@@ -1762,7 +1764,7 @@ export const PATHWAY_WEIGHTS: Partial<Record<PathwayId, Partial<Record<Component
   }
 };
 
-/** Benchmark-WOD tiers by sex. TODO (null) until populated. */
+/** Benchmark-WOD tiers by sex, from the WOD_Standards sheet. */
 export const WOD_STANDARDS: Record<WodId, WodStandard> = {
   "fran": {
     "unit": "mm:ss",
@@ -1969,7 +1971,7 @@ export const WOD_STANDARDS: Record<WodId, WodStandard> = {
   }
 };
 
-/** Capacity-Index quality-mix vectors. TODO (null) until populated; rows sum 1. */
+/** Capacity-Index quality-mix vectors, from the Quality_Mix sheet — each row sums to 1. */
 export const QUALITY_MIX: Record<WodId, Partial<Record<ComponentId, number | null>>> = {
   "fran": {
     "running": 0,

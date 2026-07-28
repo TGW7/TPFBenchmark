@@ -23,17 +23,16 @@ workbook location with the `HRS_STANDARDS_XLSX` env var.
 | Export | From sheet | State |
 |--------|-----------|-------|
 | `BENCHMARK_SOURCING` (26) | Benchmarks_Sourcing | populated |
-| `STANDARDS_THRESHOLDS` | Standards | thresholds TODO (null) |
+| `STANDARDS_THRESHOLDS` | Standards | 24/26 populated |
 | `PATHWAY_STANDARD_OVERRIDES` | Standards_Pathway | per-pathway tier overrides |
-| `PATHWAY_WEIGHTS` | Weights | weights TODO (null), each col → 100 |
-| `WOD_STANDARDS` (7) | WOD_Standards | thresholds TODO (null) |
-| `QUALITY_MIX` | Quality_Mix | vectors TODO (null), rows → 1 |
+| `PATHWAY_WEIGHTS` | Weights | populated, each col → 100 |
+| `WOD_STANDARDS` (7) | WOD_Standards | populated |
+| `QUALITY_MIX` | Quality_Mix | populated, rows → 1 |
 
 ## The hand-authored shape
 
 `benchmarks.ts`, `pathways.ts`, `wods.ts` import the generated data and adapt it
 into the engine-facing constants (`HRS_BENCHMARKS`, `HRS_PATHWAY_CONFIGS`,
 `HRS_WODS`). They contain **structure only — no standards numbers**; every real
-value flows in from the workbook via codegen. Empty cells stay `null` and the
-engine skips them, so the app builds and tests pass against the mostly-empty
-master.
+value flows in from the workbook via codegen. Any cell still empty stays
+`null` and the engine skips it rather than erroring.
