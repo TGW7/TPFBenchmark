@@ -19,7 +19,7 @@
 import { readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import * as XLSX from 'xlsx';
+import * as XLSX from '@e965/xlsx';
 
 const REPO = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const XLSX_PATH = resolve(REPO, 'config/standards/TPF_HRS_Standards_v0_2026-06-21.xlsx');
