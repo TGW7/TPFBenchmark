@@ -22,5 +22,13 @@ export default defineConfig({
     include: ['src/**/*.test.ts'],
     // Never let tests touch a real Supabase project, even with .env.local present.
     env: { VITE_SUPABASE_URL: '', VITE_SUPABASE_ANON_KEY: '' },
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'html'],
+      // Codegen output and UI components aren't unit-tested here (UI is
+      // reviewed by hand/screenshot; generated/ is data, not logic) — exclude
+      // so the number reflects the engine/data logic these tests actually target.
+      exclude: ['src/config/generated/**', 'src/ui/**', 'src/test/**', '**/*.d.ts'],
+    },
   },
 });
