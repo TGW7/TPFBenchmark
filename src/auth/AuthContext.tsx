@@ -14,6 +14,7 @@ import {
 import type { Session, User } from '@supabase/supabase-js';
 import { isSupabaseConfigured, supabase } from '../lib/supabase';
 import { editionKey, identifyUser, resetUser } from '../lib/posthog';
+import { isPreExistingAccount } from '../lib/signup_existing_account';
 import { detectBrand } from '../brand';
 import { event } from '../lib/analytics';
 
@@ -82,12 +83,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // — these two surfaces create accounts in the SAME Supabase auth.users, so
     // between them they have to fire it once per account and never twice.
     // Identify first where we can, so the event lands on the right person.
-    if (data.session?.user) identifyUser(data.session.user.id, detectBrand());
-    // editionKey(), not detectBrand() — this site's own key for Lift is
-    // 'lift', but every other surface (and the dashboard) calls that edition
-    // 'hypertrophy'. Sending the raw key here would make this one property
-    // disagree with the tpf_brand super property on the very same event.
-    event('user_signed_up', { surface: 'benchmark', brand: editionKey(detectBrand()) });
+    // signUp() succeeds silently when the email already exists, so a non-error
+    // response is NOT proof an account was created. Firing the event here
+    // regardless would emit a second `user_signed_up` for an account the app
+    // already reported — the two share auth.users — and quietly corrupt the
+    // dashboard's signup attribution.
+    if (!isPreExistingAccount(data.user)) {
+      if (data.session?.user) identifyUser(data.session.user.id, detectBrand());
+      // editionKey(), not detectBrand() — this site's own key for Lift is
+      // 'lift', but every other surface (and the dashboard) calls that edition
+      // 'hypertrophy'. Sending the raw key here would make this one property
+      // disagree with the tpf_brand super property on the very same event.
+      event('user_signed_up', { surface: 'benchmark', brand: editionKey(detectBrand()) });
+    }
 
     return { needsConfirmation: !data.session };
   };
