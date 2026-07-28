@@ -31,7 +31,7 @@ let started = false;
  * the internal edition key ('hypertrophy') for the same edition. Translate on
  * the way out so `tpf_brand` means one thing across all three surfaces.
  */
-function editionKey(brand: Brand): string {
+export function editionKey(brand: Brand): string {
   return brand === 'lift' ? 'hypertrophy' : brand;
 }
 
