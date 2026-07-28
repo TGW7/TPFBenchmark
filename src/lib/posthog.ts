@@ -121,8 +121,12 @@ export function startAnalytics(brand: Brand): void {
 export function stopAnalytics(): void {
   if (!started) return;
   try {
-    posthog.opt_out_capturing();
+    // Order is load-bearing. reset() internally calls consent.reset(), which
+    // wipes PostHog's own opt-out flag — so opting out first and resetting
+    // second silently un-opts-out the visitor and capture resumes. Clear the
+    // stored identity FIRST, then opt out, so the opt-out is what persists.
     posthog.reset(true);
+    posthog.opt_out_capturing();
   } catch {
     /* non-fatal */
   }

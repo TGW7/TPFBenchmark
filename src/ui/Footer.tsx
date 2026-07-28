@@ -1,6 +1,19 @@
 /** Junk-drawer footer — every secondary link, kept out of the main flow. */
 
 import type { BrandMeta } from '../brand';
+import { clearConsent } from '../lib/consent';
+import { stopAnalytics } from '../lib/posthog';
+
+/**
+ * Withdrawing consent has to be as easy as giving it, so this sits next to the
+ * privacy links on every page. Stops capture immediately, then reloads so the
+ * banner reappears and the visitor can choose again.
+ */
+function reopenConsent() {
+  stopAnalytics();
+  clearConsent();
+  location.reload();
+}
 
 interface Props {
   meta: BrandMeta;
@@ -39,6 +52,7 @@ export function Footer({ meta, onCalculator, onStandards }: Props) {
             <span className="subtle" style={{ textTransform: 'uppercase', letterSpacing: '0.06em', fontSize: '0.7rem' }}>Legal</span>
             <a className="linklike" href="https://takepointfitness.com/privacy">Privacy</a>
             <a className="linklike" href="https://takepointfitness.com/terms">Terms</a>
+            <button className="linklike" onClick={reopenConsent}>Cookie settings</button>
           </div>
         </div>
       </div>
