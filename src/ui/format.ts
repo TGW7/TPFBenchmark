@@ -1,6 +1,6 @@
 /** Display helpers + human labels for the UI. */
 
-import type { ComponentId } from '../engine/types';
+import type { ComponentId, ThresholdSet } from '../engine/types';
 
 export const COMPONENT_LABELS: Record<ComponentId, string> = {
   running: 'Running',
@@ -103,6 +103,28 @@ export function formatValue(value: number, unit: string): string {
   if (unit === 'reps') return `${Math.round(value)} reps`;
   if (unit === 'rounds') return `${value} rounds`;
   return String(value);
+}
+
+/**
+ * One monotonic tier column set for display tables — Pass/Novice/Good/
+ * Intermediate/Advanced/Elite, not the seven raw ThresholdSet fields in
+ * storage order. Six-tier benchmarks (`novice` populated) drop `excellent`
+ * entirely — it's vestigial there, never read by the scoring engine
+ * (src/engine/tier-curve.ts), and showing it at its legacy position breaks
+ * the visible ordering (e.g. a back squat reading 80/100/120/155/145/165/190
+ * — a real dip, since 155 doesn't sit between 120 and 145). Legacy four-tier
+ * benchmarks (no `novice`) have no Intermediate/Advanced distinction, so
+ * their one real upper-mid tier (`excellent`) is shown under Advanced, the
+ * closer of the two anchors (85% vs. Intermediate's 80% / Advanced's 90%) —
+ * Novice and Intermediate render null (displayed as "—") for these rows.
+ */
+export const TIER_COLUMNS = ['Pass', 'Novice', 'Good', 'Intermediate', 'Advanced', 'Elite'] as const;
+
+export function tierCells(t: ThresholdSet, unit: string): string[] {
+  const raw = t.novice != null
+    ? [t.pass, t.novice, t.good, t.intermediate, t.advanced, t.elite]
+    : [t.pass, null, t.good, null, t.excellent, t.elite];
+  return raw.map((v) => (v == null ? '—' : formatValue(v, unit)));
 }
 
 /** Signed one-decimal number for the Capacity Index. */

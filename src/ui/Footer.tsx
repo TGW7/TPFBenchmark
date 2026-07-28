@@ -41,6 +41,16 @@ export function Footer({ meta, onCalculator, onStandards }: Props) {
             <span className="subtle" style={{ textTransform: 'uppercase', letterSpacing: '0.06em', fontSize: '0.7rem' }}>Tools</span>
             <button className="linklike" onClick={onCalculator}>Calculator</button>
             <button className="linklike" onClick={onStandards}>Browse standards</button>
+            {/* Only internal link into the 44 static SEO pages from the live
+                app — otherwise they're islands with no on-site discovery path. */}
+            {meta.brand === 'operator' ? (
+              <a className="linklike" href="/units/">All unit standards</a>
+            ) : (
+              <>
+                <a className="linklike" href="/standards/">All lift standards</a>
+                <a className="linklike" href="/pathways/">All pathways</a>
+              </>
+            )}
           </div>
           <div style={{ display: 'grid', gap: 6 }}>
             <span className="subtle" style={{ textTransform: 'uppercase', letterSpacing: '0.06em', fontSize: '0.7rem' }}>Take Point Fitness</span>

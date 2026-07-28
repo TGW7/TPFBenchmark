@@ -286,13 +286,13 @@ export function App() {
         </div>
 
         <div className="card suite-callout" style={{ borderColor: 'var(--primary)', marginBottom: 16 }}>
-          <p style={{ margin: 0 }}>
+          <p style={{ margin: '0 0 12px' }}>
             <strong>Free tool. Free account. Free app.</strong> Scoring here needs no sign-up — and when you
             sign up to save, that same account logs you into the <strong>{APP_NAME} app</strong>, which has a
-            <strong> genuinely free version</strong>. No subscription, no card, no trial. Your scores and profile sync straight across.{' '}
-            <a className="btn" style={{ marginLeft: 4 }} href={META.appUrl}
-              onClick={() => event('get_app_click', { from: 'suite_callout', brand: BRAND })}>See the free app →</a>
+            <strong> genuinely free version</strong>. No subscription, no card, no trial. Your scores and profile sync straight across.
           </p>
+          <a className="btn" href={META.appUrl}
+            onClick={() => event('get_app_click', { from: 'suite_callout', brand: BRAND })}>See the free app →</a>
         </div>
 
         <div className="banner">{CFG.synthetic ? '⚠️ ' : ''}{CFG.banner} Nothing is saved — entries clear when you leave{user ? ', unless you Save to your profile' : ' (sign in to keep your scores)'}.</div>
@@ -399,12 +399,12 @@ export function App() {
 
         {hasData && weakness.limiters[0] && (
           <div className="card" style={{ marginTop: 16, borderColor: 'var(--primary)' }}>
-            <p style={{ margin: 0 }}>
+            <p style={{ margin: '0 0 12px' }}>
               Your weak link is <strong>{componentLabel(weakness.limiters[0])}</strong>. The {APP_NAME} app
-              turns it into a training plan and tracks it over time.{' '}
-              <a className="btn" style={{ marginLeft: 6 }} href={META.appUrl}
-                onClick={() => event('get_app_click', { from: 'bridge', brand: BRAND })}>Get the app →</a>
+              turns it into a training plan and tracks it over time.
             </p>
+            <a className="btn" href={META.appUrl}
+              onClick={() => event('get_app_click', { from: 'bridge', brand: BRAND })}>Get the app →</a>
           </div>
         )}
 

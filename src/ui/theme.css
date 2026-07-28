@@ -44,6 +44,8 @@
   --primary-weak: color-mix(in srgb, var(--brand) 14%, var(--canvas));
   --alert: var(--tpf-red);
   --alert-weak: color-mix(in srgb, var(--tpf-red) 14%, var(--canvas));
+  --notice: var(--fg-muted);
+  --notice-weak: color-mix(in srgb, var(--fg-muted) 10%, var(--canvas));
   --on-accent: var(--tpf-white);
 }
 /* TPF Hybrid blue is darkened a touch on white for readability — matches
@@ -65,6 +67,8 @@
   --primary-weak: color-mix(in srgb, var(--brand) 30%, var(--tpf-black));
   --alert: color-mix(in srgb, var(--tpf-red) 84%, var(--tpf-white));
   --alert-weak: color-mix(in srgb, var(--tpf-red) 28%, var(--tpf-black));
+  --notice: var(--fg-muted);
+  --notice-weak: color-mix(in srgb, var(--fg-muted) 16%, var(--bg));
   --on-accent: var(--tpf-white);
 }
 
@@ -152,9 +156,12 @@ html:not([data-brand='operator']) .brandlogo {
   font-size: 0.85rem;
 }
 
+/* Informational only (beta-standards / not-saved notice) — NOT an alert, so
+   it doesn't borrow --alert's red (reserved for real validation warnings,
+   see .bench-warn / .pill.alert / .bignum.alert below). */
 .banner {
-  background: var(--alert-weak);
-  border: 1px solid color-mix(in srgb, var(--alert) 40%, transparent);
+  background: var(--notice-weak);
+  border: 1px solid color-mix(in srgb, var(--notice) 35%, transparent);
   color: var(--fg);
   border-radius: 8px;
   padding: 8px 12px;

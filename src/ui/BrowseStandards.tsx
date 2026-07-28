@@ -5,16 +5,14 @@
  * Uses whatever standards are loaded (synthetic demo today; real Excel later).
  * Benchmarks/WODs with null tiers render "—".
  *
- * 2026-07-13 (round 8) — six tiers, not four: every row shows all seven raw
- * fields (Pass/Novice/Good/Excellent/Intermediate/Advanced/Elite). Lift/hybrid
- * benchmarks populate all seven; legacy operator/WOD-style benchmarks (no
- * `novice`) only populate Pass/Good/Excellent/Elite and render "—" for the
- * rest — same dual-mode split as the scoring engine (see tier-curve.ts).
+ * 2026-07-28 — one monotonic column set (Pass/Novice/Good/Intermediate/
+ * Advanced/Elite), not seven raw fields in storage order — see
+ * `TIER_COLUMNS`/`tierCells` in format.ts for why.
  */
 
 import type { BenchmarkDef, Sex, ThresholdSet, WodDef } from '../engine/types';
 import { wodPublicName, wodPublicSpec } from '../config/wods';
-import { formatValue, benchmarkLabel } from './format';
+import { benchmarkLabel, TIER_COLUMNS, tierCells } from './format';
 
 interface Props {
   benchmarks: BenchmarkDef[];
@@ -25,18 +23,13 @@ interface Props {
   onSexChange: (s: Sex) => void;
 }
 
-function cell(t: ThresholdSet, key: keyof ThresholdSet, unit: string): string {
-  const v = t[key];
-  return v == null ? '—' : formatValue(v, unit);
-}
-
 function Table({ rows }: { rows: Array<{ label: string; sub?: string; t: ThresholdSet; unit: string }> }) {
   return (
     <div style={{ overflowX: 'auto' }}>
       <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.9rem' }}>
         <thead>
           <tr>
-            {['Benchmark', 'Pass', 'Novice', 'Good', 'Excellent', 'Intermediate', 'Advanced', 'Elite'].map((h, i) => (
+            {['Benchmark', ...TIER_COLUMNS].map((h, i) => (
               <th key={h} style={{ textAlign: i === 0 ? 'left' : 'right', padding: '6px 8px', borderBottom: '2px solid var(--primary)', color: 'var(--fg-muted)', fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                 {h}
               </th>
@@ -50,9 +43,9 @@ function Table({ rows }: { rows: Array<{ label: string; sub?: string; t: Thresho
                 {r.label}
                 {r.sub && <div className="subtle" style={{ fontSize: '0.72rem' }}>{r.sub}</div>}
               </td>
-              {(['pass', 'novice', 'good', 'excellent', 'intermediate', 'advanced', 'elite'] as const).map((k) => (
-                <td key={k} style={{ padding: '7px 8px', textAlign: 'right', borderBottom: '1px solid var(--line)', fontVariantNumeric: 'tabular-nums' }}>
-                  {cell(r.t, k, r.unit)}
+              {tierCells(r.t, r.unit).map((v, i) => (
+                <td key={TIER_COLUMNS[i]} style={{ padding: '7px 8px', textAlign: 'right', borderBottom: '1px solid var(--line)', fontVariantNumeric: 'tabular-nums' }}>
+                  {v}
                 </td>
               ))}
             </tr>
@@ -95,12 +88,13 @@ export function BrowseStandards({ benchmarks, wods, sex, unisex, onSexChange }: 
       <Table rows={wodRows} />
       <p className="subtle" style={{ marginTop: 12 }}>
         Thresholds shown are the selected pathway&apos;s tiers at the
-        50 / 60 / 70 / 80 / 90 / 100 anchor levels (Excellent is a legacy
-        85% checkpoint, kept for reference — WOD-style benchmarks without a
-        Novice value still score against it). All values are absolute — kg
-        for lifts, times for runs and the erg (fixed-load sports don&apos;t
-        scale with bodyweight, so the standards don&apos;t either). Enter
-        your stats in the Calculator to see your scores and percentile.
+        50 / 60 / 70 / 80 / 90 / 100 anchor levels. A few benchmarks don&apos;t
+        have the finer Novice/Intermediate split — for those, Advanced shows
+        their one upper-mid tier and Novice/Intermediate read as
+        &ldquo;—&rdquo;. All values are absolute — kg for lifts, times for
+        runs and the erg (fixed-load sports don&apos;t scale with bodyweight,
+        so the standards don&apos;t either). Enter your stats in the
+        Calculator to see your scores and percentile.
       </p>
     </div>
   );
