@@ -141,6 +141,16 @@ describe('absolute standards (2026-07-12 conversion)', () => {
         // round 13 — row_2k override removed (erg weight 0 for the
         // triathlete: it can never be scored) → falls back to base.
         row_2k: { M: [555, 505, 460, 425, 405, 390], F: [640, 580, 525, 485, 455, 435] },
+        // No override for these either — the base table's own swim/bike
+        // rows ARE the triathlete calibration (triathlete is the only
+        // pathway that weights them). Asserted separately in the base-table
+        // test too, but this test's whole point is pinning down every
+        // pathway's EFFECTIVE value regardless of override-vs-inherited —
+        // omitting these here was the one place that pattern wasn't followed.
+        swim_400m: { M: [560, 480, 410, 360, 320, 285], F: [620, 530, 455, 400, 355, 315] },
+        swim_1500m: { M: [2270, 1950, 1660, 1460, 1300, 1160], F: [2520, 2150, 1850, 1620, 1440, 1280] },
+        bike_20k: { M: [2700, 2400, 2160, 1950, 1770, 1620], F: [3000, 2670, 2400, 2160, 1965, 1800] },
+        bike_40k: { M: [5590, 4970, 4470, 4040, 3660, 3350], F: [6210, 5530, 4970, 4470, 4070, 3730] },
       },
       powerlifter: {
         back_squat_1rm: { M: [105, 140, 180, 225, 280, 340], F: [70, 90, 115, 145, 175, 210] },
@@ -185,7 +195,7 @@ describe('absolute standards (2026-07-12 conversion)', () => {
   it('every populated benchmark carries novice/intermediate/advanced tiers (six levels, not four)', () => {
     for (const s of BENCHMARK_SOURCING) {
       if (s.id.includes('front_squat') || s.id.includes('snatch') || s.id.includes('clean_jerk')
-        || ['back_squat_1rm', 'deadlift_1rm', 'bench_1rm', 'strict_press_1rm', 'power_clean_1rm', 'barbell_row_1rm', 'run_1mi', 'run_5k', 'row_2k'].includes(s.id)) {
+        || ['back_squat_1rm', 'deadlift_1rm', 'bench_1rm', 'strict_press_1rm', 'power_clean_1rm', 'barbell_row_1rm', 'run_1mi', 'run_5k', 'row_2k', 'swim_400m', 'swim_1500m', 'bike_20k', 'bike_40k'].includes(s.id)) {
         const t = STANDARDS_THRESHOLDS[s.id];
         expect(t.M.novice, `${s.id}/M novice`).not.toBeNull();
         expect(t.M.intermediate, `${s.id}/M intermediate`).not.toBeNull();
