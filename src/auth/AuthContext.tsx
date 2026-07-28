@@ -13,6 +13,9 @@ import {
 } from 'react';
 import type { Session, User } from '@supabase/supabase-js';
 import { isSupabaseConfigured, supabase } from '../lib/supabase';
+import { identifyUser, resetUser } from '../lib/posthog';
+import { detectBrand } from '../brand';
+import { event } from '../lib/analytics';
 
 interface AuthResult {
   error?: string;
@@ -46,9 +49,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     supabase.auth.getSession().then(({ data }) => {
       setSession(data.session);
       setReady(true);
+      // Returning user with a live session — re-identify so this visit joins
+      // up with their account rather than looking anonymous.
+      if (data.session?.user) identifyUser(data.session.user.id, detectBrand());
     });
-    const { data: sub } = supabase.auth.onAuthStateChange((_event, next) => {
+    const { data: sub } = supabase.auth.onAuthStateChange((authEvent, next) => {
       setSession(next);
+      // The Supabase user id is shared with the TPF app (same auth.users), so
+      // identifying with it here is what stitches a benchmark visit to an app
+      // account in PostHog.
+      if (next?.user) identifyUser(next.user.id, detectBrand());
+      // Without a reset, the next person on this browser inherits the last
+      // user's identity.
+      if (authEvent === 'SIGNED_OUT') resetUser();
     });
     return () => sub.subscription.unsubscribe();
   }, []);
@@ -63,6 +76,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!supabase) return NOT_CONFIGURED;
     const { data, error } = await supabase.auth.signUp({ email, password });
     if (error) return { error: error.message };
+
+    // `user_signed_up` is the event name the Central Dashboard is configured
+    // to look for (POSTHOG_SIGNUP_EVENT), and it must match the app's exactly
+    // — these two surfaces create accounts in the SAME Supabase auth.users, so
+    // between them they have to fire it once per account and never twice.
+    // Identify first where we can, so the event lands on the right person.
+    if (data.session?.user) identifyUser(data.session.user.id, detectBrand());
+    event('user_signed_up', { surface: 'benchmark', brand: detectBrand() });
+
     return { needsConfirmation: !data.session };
   };
 

@@ -43,7 +43,11 @@ export function Footer({ meta, onCalculator, onStandards }: Props) {
         </div>
       </div>
       <p className="subtle" style={{ marginTop: 20, fontSize: '0.78rem' }}>
-        © Take Point Fitness. Free benchmark — no account, no tracking. Standards shown are a preview until calibrated.
+        {/* "No tracking" stopped being true the moment analytics went in.
+            Consent is opt-in and declining changes nothing, so the honest
+            version of the claim is the no-account one. */}
+        © Take Point Fitness. Free benchmark — no account needed, and analytics
+        only if you say yes. Standards shown are a preview until calibrated.
       </p>
     </footer>
   );

@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { Analytics } from '@vercel/analytics/react';
 import { App } from './ui/App';
 import { AuthProvider } from './auth/AuthContext';
+import { ConsentBanner } from './ui/ConsentBanner';
 import { brandMeta, detectBrand } from './brand';
 import { LANDING_COPY } from './content/landingCopy';
 
@@ -25,7 +26,11 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AuthProvider>
       <App />
+      {/* Cookieless, needs no consent — keeps baseline traffic visible even
+          from visitors who decline PostHog. */}
       <Analytics />
+      {/* Owns the consent decision and is the only thing that boots PostHog. */}
+      <ConsentBanner brand={brand} />
     </AuthProvider>
   </StrictMode>,
 );
