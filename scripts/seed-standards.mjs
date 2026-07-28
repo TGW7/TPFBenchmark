@@ -150,6 +150,32 @@ function qmixSheet() {
 // --- write ------------------------------------------------------------------
 
 const wb = XLSX.read(readFileSync(XLSX_PATH), { type: 'buffer' });
+
+// This script still writes the ORIGINAL v1-beta model (xBW-normalised lifts,
+// four tiers) — superseded 2026-07-12/13 by absolute-kg lifts and the
+// six-tier pass/novice/good/intermediate/advanced/elite curve. Running it
+// against a workbook that has already moved on would silently blow away
+// that calibration (and drop any benchmark, like barbell_row, added since).
+// Refuse if the current Standards sheet shows six-tier data — this only
+// ever blocks a destructive re-seed, never a genuine cold bootstrap (a new/
+// empty workbook has no `novice` column populated yet, so passes through).
+{
+  const existing = XLSX.utils.sheet_to_json(wb.Sheets['Standards'], { header: 1, defval: null });
+  const header = existing[1] ?? [];
+  const noviceCol = header.indexOf('novice (60%)');
+  const isSixTier = noviceCol !== -1 && existing.slice(2).some((r) => r[noviceCol] != null);
+  if (isSixTier) {
+    console.error(
+      '[seed] refusing to run: the current workbook already has six-tier, absolute-kg ' +
+        'standards (this script only knows the old v1-beta xBW/four-tier model and would ' +
+        'overwrite them). Edit config/standards/*.xlsx directly + `npm run codegen` instead. ' +
+        'If you genuinely want to reset to v1-beta, delete the Standards/Weights/WOD_Standards/' +
+        'Quality_Mix sheets\' contents first.',
+    );
+    process.exit(1);
+  }
+}
+
 wb.Sheets['Standards'] = standardsSheet();
 wb.Sheets['Weights'] = weightsSheet();
 wb.Sheets['WOD_Standards'] = wodSheet();
