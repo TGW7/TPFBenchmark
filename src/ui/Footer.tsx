@@ -56,12 +56,15 @@ export function Footer({ meta, onCalculator, onStandards }: Props) {
             <span className="subtle" style={{ textTransform: 'uppercase', letterSpacing: '0.06em', fontSize: '0.7rem' }}>Take Point Fitness</span>
             <a className="linklike" href={meta.appUrl}>Get the app</a>
             <a className="linklike" href={otherBrand.href}>{otherBrand.label}</a>
-            <a className="linklike" href="https://takepointfitness.com">Main site</a>
+            <a className="linklike" href="https://www.takepointfitness.com">Main site</a>
           </div>
           <div style={{ display: 'grid', gap: 6 }}>
             <span className="subtle" style={{ textTransform: 'uppercase', letterSpacing: '0.06em', fontSize: '0.7rem' }}>Legal</span>
-            <a className="linklike" href="https://takepointfitness.com/privacy">Privacy</a>
-            <a className="linklike" href="https://takepointfitness.com/terms">Terms</a>
+            {/* These paths never existed on the marketing site (no /legal/*
+                prefix) — Search Console flagged the 404. The real pages live
+                on the app, same as the marketing site's own footer links them. */}
+            <a className="linklike" href={`${meta.appUrl}/legal/privacy`}>Privacy</a>
+            <a className="linklike" href={`${meta.appUrl}/legal/terms`}>Terms</a>
             <button className="linklike" onClick={reopenConsent}>Cookie settings</button>
           </div>
         </div>
