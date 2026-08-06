@@ -50,6 +50,10 @@ export function EmailCapture({ brand, pathway, userId }: Props) {
         <input
           type="email"
           inputMode="email"
+          // 2026-08-05 — the only visible cue was the placeholder, which
+          // disappears on typing and is not an accessible name.
+          aria-label="Email address for benchmark updates"
+          autoComplete="email"
           placeholder="you@email.com"
           value={email}
           style={{ flex: '1 1 220px' }}
