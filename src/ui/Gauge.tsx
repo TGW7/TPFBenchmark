@@ -1,17 +1,17 @@
 /** Radial HRS gauge — pure SVG, themed with the four TPF tokens only. */
 
-import { formatPercent, scoreColor } from './format';
+import { formatScore, scoreColor } from './format';
 
 interface GaugeProps {
   value: number | null;
-  /** Curve caps at 110 (elite bonus); the gauge ring uses the same ceiling. */
+  /** Elite = 100 is the hard ceiling (Phase 107 HABS model); the ring closes exactly there. */
   max?: number;
   caption?: string;
   /** Score label shown under the number (brand-aware: "HABS Score" / "ORS"). */
   label?: string;
 }
 
-export function Gauge({ value, max = 110, caption, label = 'HABS Score' }: GaugeProps) {
+export function Gauge({ value, max = 100, caption, label = 'HABS Score' }: GaugeProps) {
   const size = 200;
   const stroke = 18;
   const r = (size - stroke) / 2;
@@ -26,7 +26,7 @@ export function Gauge({ value, max = 110, caption, label = 'HABS Score' }: Gauge
   return (
     <div style={{ textAlign: 'center' }}>
       <svg viewBox={`0 0 ${size} ${size}`} width={size} height={size} role="img"
-        aria-label={`Overall ${label} ${formatPercent(value)}`}>
+        aria-label={`Overall ${label} ${formatScore(value)}`}>
         <circle cx={cx} cy={cy} r={r} fill="none" stroke="var(--line)" strokeWidth={stroke} />
         {value != null && (
           <circle
@@ -43,7 +43,7 @@ export function Gauge({ value, max = 110, caption, label = 'HABS Score' }: Gauge
         )}
         <text x={cx} y={cy - 2} textAnchor="middle" dominantBaseline="middle"
           fontSize="2.4rem" fontWeight={800} fill={color}>
-          {formatPercent(value)}
+          {formatScore(value)}
         </text>
         <text x={cx} y={cy + 26} textAnchor="middle" fontSize="0.7rem" fill="var(--fg-muted)"
           letterSpacing="0.08em">

@@ -87,14 +87,14 @@ export function BrowseStandards({ benchmarks, wods, sex, unisex, onSexChange }: 
       <h3 style={{ marginTop: 20 }}>Benchmark workouts</h3>
       <Table rows={wodRows} />
       <p className="subtle" style={{ marginTop: 12 }}>
-        Thresholds shown are the selected pathway&apos;s tiers at the
-        50 / 60 / 70 / 80 / 90 / 100 anchor levels. A few benchmarks don&apos;t
-        have the finer Novice/Intermediate split — for those, Advanced shows
-        their one upper-mid tier and Novice/Intermediate read as
-        &ldquo;—&rdquo;. All values are absolute — kg for lifts, times for
-        runs and the erg (fixed-load sports don&apos;t scale with bodyweight,
-        so the standards don&apos;t either). Enter your stats in the
-        Calculator to see your scores and percentile.
+        Thresholds shown are the selected pathway&apos;s tiers, Beginner to
+        Elite, at the 50 / 60 / 70 / 80 / 90 / 100 score anchors. A benchmark
+        without the finer six-tier split shows its one upper-mid tier under
+        Advanced and &ldquo;—&rdquo; for Novice/Intermediate. All values are
+        absolute — kg for lifts, times for runs and the erg (fixed-load
+        sports don&apos;t scale with bodyweight, so the standards don&apos;t
+        either). Enter your stats in the Calculator to see your scores and
+        percentile.
       </p>
     </div>
   );

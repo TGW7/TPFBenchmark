@@ -12,6 +12,7 @@ import {
   PATHWAY_STANDARD_OVERRIDES,
   STANDARDS_THRESHOLDS,
   BENCHMARK_SOURCING,
+  WOD_STANDARDS,
 } from '../config/generated/standards.generated';
 import { brandConfig } from '../data/brandConfig';
 
@@ -192,17 +193,27 @@ describe('absolute standards (2026-07-12 conversion)', () => {
     }
   });
 
-  it('every populated benchmark carries novice/intermediate/advanced tiers (six levels, not four)', () => {
+  it('EVERY populated benchmark and WOD carries novice/intermediate/advanced tiers (six levels, not four)', () => {
+    // 2026-08-07 — was a hardcoded app-shared subset; now universal. The last
+    // four-tier holdouts (row_500m, broad_jump, gymnastics reps, plank, WODs)
+    // were filled by scripts/fill-interpolated-tiers.mjs, so the Browse
+    // Standards table has no "—" holes between Novice and Intermediate.
     for (const s of BENCHMARK_SOURCING) {
-      if (s.id.includes('front_squat') || s.id.includes('snatch') || s.id.includes('clean_jerk')
-        || ['back_squat_1rm', 'deadlift_1rm', 'bench_1rm', 'strict_press_1rm', 'power_clean_1rm', 'barbell_row_1rm', 'run_1mi', 'run_5k', 'row_2k', 'swim_400m', 'swim_1500m', 'bike_20k', 'bike_40k'].includes(s.id)) {
-        const t = STANDARDS_THRESHOLDS[s.id];
-        expect(t.M.novice, `${s.id}/M novice`).not.toBeNull();
-        expect(t.M.intermediate, `${s.id}/M intermediate`).not.toBeNull();
-        expect(t.M.advanced, `${s.id}/M advanced`).not.toBeNull();
-        expect(t.F.novice, `${s.id}/F novice`).not.toBeNull();
-        expect(t.F.intermediate, `${s.id}/F intermediate`).not.toBeNull();
-        expect(t.F.advanced, `${s.id}/F advanced`).not.toBeNull();
+      const t = STANDARDS_THRESHOLDS[s.id];
+      if (!t) continue;
+      for (const sex of ['M', 'F'] as const) {
+        if (t[sex].pass == null) continue; // still a genuine TODO row
+        expect(t[sex].novice, `${s.id}/${sex} novice`).not.toBeNull();
+        expect(t[sex].intermediate, `${s.id}/${sex} intermediate`).not.toBeNull();
+        expect(t[sex].advanced, `${s.id}/${sex} advanced`).not.toBeNull();
+      }
+    }
+    for (const [id, wod] of Object.entries(WOD_STANDARDS)) {
+      for (const sex of ['M', 'F'] as const) {
+        if (wod.thresholds[sex].pass == null) continue;
+        expect(wod.thresholds[sex].novice, `${id}/${sex} novice`).not.toBeNull();
+        expect(wod.thresholds[sex].intermediate, `${id}/${sex} intermediate`).not.toBeNull();
+        expect(wod.thresholds[sex].advanced, `${id}/${sex} advanced`).not.toBeNull();
       }
     }
   });

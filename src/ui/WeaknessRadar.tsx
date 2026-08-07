@@ -1,6 +1,6 @@
 /** Radar over arbitrary axes (components OR per-lift). Pure SVG, TPF tokens. */
 
-import { formatPercent } from './format';
+import { formatScore } from './format';
 
 export interface RadarAxis {
   label: string;
@@ -23,7 +23,7 @@ export function WeaknessRadar({ axes, scale = 100 }: RadarProps) {
       <div style={{ width: '100%', maxWidth: 320 }}>
         {axes.map((a) => (
           <div key={a.label}>
-            <div className="barlabel"><span>{a.label}</span><span>{formatPercent(a.percent)}</span></div>
+            <div className="barlabel"><span>{a.label}</span><span>{formatScore(a.percent)}</span></div>
             <div className="bartrack">
               <div className={`barfill ${a.percent != null && a.percent < 50 ? 'weak' : ''}`} style={{ width: `${frac(a.percent) * 100}%` }} />
             </div>
@@ -68,7 +68,7 @@ export function WeaknessRadar({ axes, scale = 100 }: RadarProps) {
           <text key={a.label} x={x} y={y} textAnchor={anchor} dominantBaseline="middle"
             fontSize="0.62rem" fill={a.percent == null ? 'var(--fg-muted)' : 'var(--fg)'}>
             {a.label}
-            <tspan dx={4} fill="var(--fg-muted)">{formatPercent(a.percent)}</tspan>
+            <tspan dx={4} fill="var(--fg-muted)">{formatScore(a.percent)}</tspan>
           </text>
         );
       })}

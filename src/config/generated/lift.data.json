@@ -455,20 +455,20 @@
     "row_500m": {
       "M": {
         "pass": 110,
-        "novice": null,
+        "novice": 105,
         "good": 100,
         "excellent": 93,
-        "intermediate": null,
-        "advanced": null,
+        "intermediate": 95,
+        "advanced": 90,
         "elite": 85
       },
       "F": {
         "pass": 125,
-        "novice": null,
+        "novice": 120,
         "good": 115,
         "excellent": 107,
-        "intermediate": null,
-        "advanced": null,
+        "intermediate": 110,
+        "advanced": 105,
         "elite": 102
       }
     },
@@ -655,140 +655,140 @@
     "broad_jump": {
       "M": {
         "pass": 200,
-        "novice": null,
+        "novice": 215,
         "good": 230,
         "excellent": 260,
-        "intermediate": null,
-        "advanced": null,
+        "intermediate": 250,
+        "advanced": 270,
         "elite": 285
       },
       "F": {
         "pass": 160,
-        "novice": null,
+        "novice": 175,
         "good": 185,
         "excellent": 210,
-        "intermediate": null,
-        "advanced": null,
+        "intermediate": 200,
+        "advanced": 215,
         "elite": 220
       }
     },
     "strict_pullups": {
       "M": {
         "pass": 5,
-        "novice": null,
+        "novice": 8,
         "good": 11,
         "excellent": 18,
-        "intermediate": null,
-        "advanced": null,
+        "intermediate": 16,
+        "advanced": 20,
         "elite": 25
       },
       "F": {
         "pass": 1,
-        "novice": null,
+        "novice": 3,
         "good": 5,
         "excellent": 10,
-        "intermediate": null,
-        "advanced": null,
+        "intermediate": 8,
+        "advanced": 13,
         "elite": 18
       }
     },
     "hspu": {
       "M": {
         "pass": 3,
-        "novice": null,
+        "novice": 6,
         "good": 8,
         "excellent": 15,
-        "intermediate": null,
-        "advanced": null,
+        "intermediate": 13,
+        "advanced": 18,
         "elite": 25
       },
       "F": {
         "pass": 1,
-        "novice": null,
+        "novice": 3,
         "good": 4,
         "excellent": 8,
-        "intermediate": null,
-        "advanced": null,
+        "intermediate": 7,
+        "advanced": 10,
         "elite": 15
       }
     },
     "t2b": {
       "M": {
         "pass": 8,
-        "novice": null,
+        "novice": 13,
         "good": 18,
         "excellent": 30,
-        "intermediate": null,
-        "advanced": null,
+        "intermediate": 26,
+        "advanced": 35,
         "elite": 45
       },
       "F": {
         "pass": 5,
-        "novice": null,
+        "novice": 9,
         "good": 12,
         "excellent": 22,
-        "intermediate": null,
-        "advanced": null,
+        "intermediate": 19,
+        "advanced": 26,
         "elite": 35
       }
     },
     "du_unbroken": {
       "M": {
         "pass": 20,
-        "novice": null,
+        "novice": 35,
         "good": 50,
         "excellent": 100,
-        "intermediate": null,
-        "advanced": null,
+        "intermediate": 85,
+        "advanced": 115,
         "elite": 150
       },
       "F": {
         "pass": 15,
-        "novice": null,
+        "novice": 30,
         "good": 45,
         "excellent": 90,
-        "intermediate": null,
-        "advanced": null,
+        "intermediate": 75,
+        "advanced": 105,
         "elite": 130
       }
     },
     "max_mu": {
       "M": {
         "pass": 1,
-        "novice": null,
+        "novice": 3,
         "good": 4,
         "excellent": 9,
-        "intermediate": null,
-        "advanced": null,
+        "intermediate": 7,
+        "advanced": 11,
         "elite": 14
       },
       "F": {
         "pass": 1,
-        "novice": null,
+        "novice": 1.5,
         "good": 2,
         "excellent": 5,
-        "intermediate": null,
-        "advanced": null,
+        "intermediate": 4,
+        "advanced": 6,
         "elite": 8
       }
     },
     "plank_hold": {
       "M": {
         "pass": 90,
-        "novice": null,
+        "novice": 120,
         "good": 150,
         "excellent": 180,
-        "intermediate": null,
-        "advanced": null,
+        "intermediate": 170,
+        "advanced": 220,
         "elite": 300
       },
       "F": {
         "pass": 90,
-        "novice": null,
+        "novice": 120,
         "good": 150,
         "excellent": 180,
-        "intermediate": null,
-        "advanced": null,
+        "intermediate": 170,
+        "advanced": 220,
         "elite": 300
       }
     },
@@ -1720,20 +1720,20 @@
       "thresholds": {
         "M": {
           "pass": 360,
-          "novice": null,
+          "novice": 300,
           "good": 240,
           "excellent": 210,
-          "intermediate": null,
-          "advanced": null,
+          "intermediate": 220,
+          "advanced": 195,
           "elite": 165
         },
         "F": {
           "pass": 420,
-          "novice": null,
+          "novice": 360,
           "good": 300,
           "excellent": 270,
-          "intermediate": null,
-          "advanced": null,
+          "intermediate": 280,
+          "advanced": 250,
           "elite": 210
         }
       },
@@ -1749,20 +1749,20 @@
       "thresholds": {
         "M": {
           "pass": 300,
-          "novice": null,
+          "novice": 265,
           "good": 225,
           "excellent": 165,
-          "intermediate": null,
-          "advanced": null,
+          "intermediate": 185,
+          "advanced": 155,
           "elite": 135
         },
         "F": {
           "pass": 360,
-          "novice": null,
+          "novice": 300,
           "good": 240,
           "excellent": 165,
-          "intermediate": null,
-          "advanced": null,
+          "intermediate": 190,
+          "advanced": 160,
           "elite": 145
         }
       },
@@ -1778,20 +1778,20 @@
       "thresholds": {
         "M": {
           "pass": 840,
-          "novice": null,
+          "novice": 750,
           "good": 660,
           "excellent": 540,
-          "intermediate": null,
-          "advanced": null,
+          "intermediate": 580,
+          "advanced": 510,
           "elite": 450
         },
         "F": {
           "pass": 960,
-          "novice": null,
+          "novice": 870,
           "good": 780,
           "excellent": 630,
-          "intermediate": null,
-          "advanced": null,
+          "intermediate": 680,
+          "advanced": 590,
           "elite": 510
         }
       },
@@ -1807,20 +1807,20 @@
       "thresholds": {
         "M": {
           "pass": 600,
-          "novice": null,
+          "novice": 495,
           "good": 390,
           "excellent": 285,
-          "intermediate": null,
-          "advanced": null,
+          "intermediate": 320,
+          "advanced": 260,
           "elite": 210
         },
         "F": {
           "pass": 720,
-          "novice": null,
+          "novice": 600,
           "good": 480,
           "excellent": 360,
-          "intermediate": null,
-          "advanced": null,
+          "intermediate": 400,
+          "advanced": 325,
           "elite": 255
         }
       },
@@ -1836,20 +1836,20 @@
       "thresholds": {
         "M": {
           "pass": 12,
-          "novice": null,
+          "novice": 15,
           "good": 18,
           "excellent": 22,
-          "intermediate": null,
-          "advanced": null,
+          "intermediate": 21,
+          "advanced": 23,
           "elite": 25
         },
         "F": {
           "pass": 10,
-          "novice": null,
+          "novice": 13,
           "good": 16,
           "excellent": 20,
-          "intermediate": null,
-          "advanced": null,
+          "intermediate": 19,
+          "advanced": 21,
           "elite": 22
         }
       },
@@ -1865,20 +1865,20 @@
       "thresholds": {
         "M": {
           "pass": 250,
-          "novice": null,
+          "novice": 285,
           "good": 320,
           "excellent": 360,
-          "intermediate": null,
-          "advanced": null,
+          "intermediate": 345,
+          "advanced": 380,
           "elite": 420
         },
         "F": {
           "pass": 200,
-          "novice": null,
+          "novice": 235,
           "good": 270,
           "excellent": 310,
-          "intermediate": null,
-          "advanced": null,
+          "intermediate": 295,
+          "advanced": 330,
           "elite": 370
         }
       },
@@ -1894,20 +1894,20 @@
       "thresholds": {
         "M": {
           "pass": 5700,
-          "novice": null,
+          "novice": 5430,
           "good": 5160,
           "excellent": 4620,
-          "intermediate": null,
-          "advanced": null,
+          "intermediate": 4800,
+          "advanced": 4440,
           "elite": 4080
         },
         "F": {
           "pass": 6600,
-          "novice": null,
+          "novice": 6300,
           "good": 6000,
           "excellent": 5340,
-          "intermediate": null,
-          "advanced": null,
+          "intermediate": 5560,
+          "advanced": 5140,
           "elite": 4740
         }
       },
