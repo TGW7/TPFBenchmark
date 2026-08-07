@@ -4,7 +4,7 @@ import type { CapacityResult, HrsResult, WeaknessReport } from '../engine/types'
 import { wodPublicName } from '../config/wods';
 import { HABS_MAX_LEVEL, habsLevelInfo } from '../engine/levels';
 import { Gauge } from './Gauge';
-import { componentLabel, formatPercent, formatPercentile, formatSigned, scoreColor, scoreTier } from './format';
+import { componentLabel, formatPercentile, formatScore, formatSigned, scoreColor, scoreTier } from './format';
 
 interface DashboardProps {
   result: HrsResult;
@@ -93,7 +93,7 @@ export function Dashboard({ result, capacity, weakness, pathwayLabel, percentile
               <div className="statline" key={w.wodId}>
                 <span>{wodPublicName(w.wodId)}</span>
                 <span className="muted">
-                  {formatPercent(w.actual)} vs {formatPercent(w.predicted)} ={' '}
+                  {formatScore(w.actual)} vs {formatScore(w.predicted)} ={' '}
                   <strong>{formatSigned(w.delta)}</strong>
                 </span>
               </div>
@@ -114,7 +114,7 @@ export function Dashboard({ result, capacity, weakness, pathwayLabel, percentile
               return (
                 <div className="statline" key={c}>
                   <span>{componentLabel(c)}</span>
-                  <span className="muted">{formatPercent(cs?.percent ?? null)}</span>
+                  <span className="muted">{formatScore(cs?.percent ?? null)}</span>
                 </div>
               );
             })}

@@ -52,8 +52,11 @@ export function benchmarkLabel(b: { id: string; meta?: { notes?: string } }): st
   return b.id.replace(/_1rm$/, '').replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
-export function formatPercent(p: number | null): string {
-  return p == null ? '—' : `${Math.round(p)}%`;
+/** HABS/ORS numbers are SCORES on a 0–100 scale, not percentages — render
+ *  them bare (2026-08-07, owner). Use plain string interpolation for the few
+ *  genuine percentages (coverage, weights). */
+export function formatScore(p: number | null): string {
+  return p == null ? '—' : String(Math.round(p));
 }
 
 /**
@@ -107,25 +110,29 @@ export function formatValue(value: number, unit: string): string {
   if (unit.includes(':')) return formatSeconds(value);
   if (unit === 'xBW') return `${value.toFixed(2)}×BW`;
   if (unit === 'cm') return `${Math.round(value)} cm`;
-  if (unit === 'reps') return `${Math.round(value)} reps`;
+  // A tier threshold can be fractional (interpolated — e.g. max_mu F novice
+  // 1.5): show one decimal rather than rounding onto its neighbour tier.
+  if (unit === 'reps') return `${Number.isInteger(value) ? value : value.toFixed(1)} reps`;
   if (unit === 'rounds') return `${value} rounds`;
   return String(value);
 }
 
 /**
- * One monotonic tier column set for display tables — Pass/Novice/Good/
- * Intermediate/Advanced/Elite, not the seven raw ThresholdSet fields in
- * storage order. Six-tier benchmarks (`novice` populated) drop `excellent`
- * entirely — it's vestigial there, never read by the scoring engine
- * (src/engine/tier-curve.ts), and showing it at its legacy position breaks
- * the visible ordering (e.g. a back squat reading 80/100/120/155/145/165/190
- * — a real dip, since 155 doesn't sit between 120 and 145). Legacy four-tier
- * benchmarks (no `novice`) have no Intermediate/Advanced distinction, so
+ * One monotonic tier column set for display tables, using the same ladder
+ * names as the score badge (`scoreTier`) and the SEO pages' TIER6_LABEL:
+ * Beginner(pass) / Novice / Experienced(good) / Intermediate / Advanced /
+ * Elite — not the seven raw ThresholdSet fields in storage order. Six-tier
+ * benchmarks (`novice` populated) drop `excellent` entirely — it's vestigial
+ * there, never read by the scoring engine (src/engine/tier-curve.ts), and
+ * showing it at its legacy position breaks the visible ordering (e.g. a back
+ * squat reading 80/100/120/155/145/165/190 — a real dip, since 155 doesn't
+ * sit between 120 and 145). Legacy four-tier benchmarks (no `novice` — now
+ * only the Operator standards) have no Intermediate/Advanced distinction, so
  * their one real upper-mid tier (`excellent`) is shown under Advanced, the
  * closer of the two anchors (85% vs. Intermediate's 80% / Advanced's 90%) —
  * Novice and Intermediate render null (displayed as "—") for these rows.
  */
-export const TIER_COLUMNS = ['Pass', 'Novice', 'Good', 'Intermediate', 'Advanced', 'Elite'] as const;
+export const TIER_COLUMNS = ['Beginner', 'Novice', 'Experienced', 'Intermediate', 'Advanced', 'Elite'] as const;
 
 export function tierCells(t: ThresholdSet, unit: string): string[] {
   const raw = t.novice != null

@@ -289,12 +289,16 @@ function parseWodStandards(wb) {
     unit: findCol(head, (s) => s === 'unit'),
     lib: findCol(head, (s) => s === 'lower_is_better'),
     pass: findCol(head, (s) => s.startsWith('pass')),
+    novice: findCol(head, (s) => s.startsWith('novice')),
     good: findCol(head, (s) => s.startsWith('good')),
     excellent: findCol(head, (s) => s.startsWith('excellent')),
+    intermediate: findCol(head, (s) => s.startsWith('intermediate')),
+    advanced: findCol(head, (s) => s.startsWith('advanced')),
     elite: findCol(head, (s) => s.startsWith('elite')),
     load: findCol(head, (s) => s === 'rx_load_kg'),
     move: findCol(head, (s) => s === 'load_movement'),
   };
+  const opt = (col, unit, r) => (col >= 0 ? parseThreshold(cell(r, col), unit) : null);
   const byId = {};
   for (let i = h + 1; i < rows.length; i++) {
     const r = rows[i] || [];
@@ -308,14 +312,16 @@ function parseWodStandards(wb) {
       thresholds: { M: NULL_TS, F: NULL_TS },
       load: { movement: '', M: null, F: null },
     };
-    // WODs stay four-tier — no "solid" column on this sheet.
+    // 2026-08-07 — WODs carry the six-tier ladder too (novice/intermediate/
+    // advanced interpolated into the sheet by scripts/fill-interpolated-tiers.mjs);
+    // a workbook without those columns still parses as legacy four-tier.
     byId[id].thresholds[sex] = thresholdSet(
       parseThreshold(cell(r, C.pass), unit),
-      null,
+      opt(C.novice, unit, r),
       parseThreshold(cell(r, C.good), unit),
       parseThreshold(cell(r, C.excellent), unit),
-      null,
-      null,
+      opt(C.intermediate, unit, r),
+      opt(C.advanced, unit, r),
       parseThreshold(cell(r, C.elite), unit),
     );
     const move = str(cell(r, C.move));
@@ -480,7 +486,7 @@ value flows in from the workbook via codegen. Any cell still empty stays
  * the Excel master used to ship silently — collects every violation across
  * both checks so one run surfaces all of them, not just the first.
  */
-function validate({ sourcing, standards, pathwayStandards, weights }) {
+function validate({ sourcing, standards, pathwayStandards, weights, wodStandards }) {
   const errors = [];
   const EPS = 0.01;
 
@@ -493,23 +499,29 @@ function validate({ sourcing, standards, pathwayStandards, weights }) {
 
   const meta = Object.fromEntries(sourcing.map((s) => [s.id, s]));
   const TIER_KEYS = ['pass', 'novice', 'good', 'intermediate', 'advanced', 'elite'];
-  function checkMonotonic(pathwayLabel, id, sex, t) {
-    const m = meta[id];
-    if (!m) return; // unknown id — parseStandards/parsePathwayStandards already warn
+  function checkMonotonic(pathwayLabel, id, sex, t, lowerIsBetter) {
     const seq = TIER_KEYS.map((k) => t[k]).filter((v) => v != null);
     for (let i = 1; i < seq.length; i++) {
-      const ok = m.lowerIsBetter ? seq[i] < seq[i - 1] : seq[i] > seq[i - 1];
+      const ok = lowerIsBetter ? seq[i] < seq[i - 1] : seq[i] > seq[i - 1];
       if (!ok) {
         errors.push(`Standards: ${pathwayLabel} "${id}" (${sex}) tiers not monotonic: [${seq.join(', ')}]`);
       }
     }
   }
+  // Unknown benchmark ids — parseStandards/parsePathwayStandards already warn.
   for (const [id, sexes] of Object.entries(standards)) {
-    for (const sex of ['M', 'F']) if (sexes[sex]) checkMonotonic('base', id, sex, sexes[sex]);
+    if (!meta[id]) continue;
+    for (const sex of ['M', 'F']) if (sexes[sex]) checkMonotonic('base', id, sex, sexes[sex], meta[id].lowerIsBetter);
   }
   for (const [pathwayId, benches] of Object.entries(pathwayStandards)) {
     for (const [id, sexes] of Object.entries(benches)) {
-      for (const sex of ['M', 'F']) if (sexes[sex]) checkMonotonic(pathwayId, id, sex, sexes[sex]);
+      if (!meta[id]) continue;
+      for (const sex of ['M', 'F']) if (sexes[sex]) checkMonotonic(pathwayId, id, sex, sexes[sex], meta[id].lowerIsBetter);
+    }
+  }
+  for (const [id, wod] of Object.entries(wodStandards)) {
+    for (const sex of ['M', 'F']) {
+      if (wod.thresholds[sex]) checkMonotonic('WOD', id, sex, wod.thresholds[sex], wod.lowerIsBetter);
     }
   }
 
