@@ -81,7 +81,7 @@ const LIFT: LandingCopy = {
     empathy:
       'We train the way you do — and we got tired of grinding for months with no clear signal it was working.',
     authority: [
-      'Built by ex-British Army PTIs',
+      'Built by British Army PTIs',
       'Transparent, percentile-based standards — no black box',
       'Free to use · private, no tracking',
     ],
@@ -149,7 +149,7 @@ const OPERATOR: LandingCopy = {
     empathy:
       'We’ve carried the weight too — and we know the cost of finding a weakness in the field instead of in training.',
     authority: [
-      'Built by ex-British Army PTIs',
+      'Built by British Army PTIs',
       'Standards modelled on tactical demands',
       'Free to use · private, no tracking',
     ],
@@ -217,7 +217,7 @@ const HYBRID: LandingCopy = {
     empathy:
       'We train the same way — and we know the frustration of improving one side and watching the other fall behind.',
     authority: [
-      'Built by ex-British Army PTIs',
+      'Built by British Army PTIs',
       'Balanced strength + engine standards — not specialist charts',
       'Free to use · private, no tracking',
     ],

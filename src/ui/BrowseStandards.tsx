@@ -29,8 +29,8 @@ function Table({ rows }: { rows: Array<{ label: string; sub?: string; t: Thresho
       <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.9rem' }}>
         <thead>
           <tr>
-            {['Benchmark', ...TIER_COLUMNS].map((h, i) => (
-              <th key={h} style={{ textAlign: i === 0 ? 'left' : 'right', padding: '6px 8px', borderBottom: '2px solid var(--primary)', color: 'var(--fg-muted)', fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+            {['Benchmark', ...TIER_COLUMNS].map((h) => (
+              <th key={h} style={{ textAlign: 'center', padding: '6px 8px', borderBottom: '2px solid var(--primary)', color: 'var(--fg-muted)', fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                 {h}
               </th>
             ))}
@@ -39,12 +39,12 @@ function Table({ rows }: { rows: Array<{ label: string; sub?: string; t: Thresho
         <tbody>
           {rows.map((r) => (
             <tr key={r.label}>
-              <td style={{ padding: '7px 8px', borderBottom: '1px solid var(--line)' }}>
+              <td style={{ padding: '7px 8px', textAlign: 'center', borderBottom: '1px solid var(--line)' }}>
                 {r.label}
                 {r.sub && <div className="subtle" style={{ fontSize: '0.72rem' }}>{r.sub}</div>}
               </td>
               {tierCells(r.t, r.unit).map((v, i) => (
-                <td key={TIER_COLUMNS[i]} style={{ padding: '7px 8px', textAlign: 'right', borderBottom: '1px solid var(--line)', fontVariantNumeric: 'tabular-nums' }}>
+                <td key={TIER_COLUMNS[i]} style={{ padding: '7px 8px', textAlign: 'center', borderBottom: '1px solid var(--line)', fontVariantNumeric: 'tabular-nums' }}>
                   {v}
                 </td>
               ))}

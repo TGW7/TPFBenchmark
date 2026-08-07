@@ -101,9 +101,8 @@ a{color:var(--accent)}
 h1{font-size:2rem;line-height:1.15;margin:24px 0 8px}
 .lede{font-size:1.15rem;color:var(--muted);margin:0 0 20px}
 table{width:100%;border-collapse:collapse;margin:16px 0;font-variant-numeric:tabular-nums}
-th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+th,td{text-align:center;padding:8px 10px;border-bottom:1px solid var(--line)}
 th{font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
-td.r,th.r{text-align:right}
 .cta{margin:28px 0;padding:20px;border:1px solid var(--accent);border-radius:12px;text-align:center}
 .links{display:flex;flex-wrap:wrap;gap:8px 16px;margin:12px 0}
 footer{margin-top:40px;border-top:1px solid var(--line);padding-top:16px;color:var(--muted);font-size:.85rem}
@@ -139,9 +138,11 @@ ${body}
 </div></body></html>`;
 }
 
+// 2026-08-07 — every cell centres (owner), so the old right-align `r` class
+// on all-but-the-first column is gone rather than left as dead markup.
 function table(headers, rows) {
-  const head = headers.map((h, i) => `<th class="${i ? 'r' : ''}">${esc(h)}</th>`).join('');
-  const body = rows.map((r) => `<tr>${r.map((c, i) => `<td class="${i ? 'r' : ''}">${esc(c)}</td>`).join('')}</tr>`).join('');
+  const head = headers.map((h) => `<th>${esc(h)}</th>`).join('');
+  const body = rows.map((r) => `<tr>${r.map((c) => `<td>${esc(c)}</td>`).join('')}</tr>`).join('');
   return `<table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`;
 }
 
