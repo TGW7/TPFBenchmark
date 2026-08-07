@@ -154,6 +154,11 @@ html:not([data-brand='operator']) .brandlogo {
 .subtle {
   color: var(--fg-muted);
   font-size: 0.85rem;
+  /* The feature blurbs run two lines and left one short word stranded on
+     the second ("...weighted to the / pathway"). text-wrap: pretty only
+     rescues some of them; balance evens both lines. Chrome ignores balance
+     past ~6 lines, so the longer .subtle copy is unaffected. */
+  text-wrap: balance;
 }
 
 /* Informational only (beta-standards / not-saved notice) — NOT an alert, so
@@ -237,6 +242,12 @@ html:not([data-brand='operator']) .brandlogo {
   border-radius: 8px;
   padding: 8px 14px;
   cursor: pointer;
+  /* Five call sites style an <a> as a .btn (the header CTA, the two app
+     bridges, the landing CTAs). Nothing here cleared the user-agent link
+     underline, so those five rendered as filled buttons with underlined
+     labels while every <button class="btn"> did not. .linklike keeps its
+     own hover underline — that one is meant to read as a link. */
+  text-decoration: none;
 }
 .btn.ghost {
   background: transparent;
