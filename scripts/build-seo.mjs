@@ -380,4 +380,22 @@ ${urls.map((u) => `  <url><loc>${u}</loc><changefreq>weekly</changefreq></url>`)
 writeSitemap('sitemap-lift.xml', liftUrls);
 writeSitemap('sitemap-operator.xml', operatorUrls);
 
+// ---- IndexNow key file ------------------------------------------------------
+// This is a static build with no server, so unlike tpf-app/tpf-marketing's
+// dynamic /api/indexnow/key route, the key has to be baked in at build time.
+// Written as a plain file named after the key itself (the IndexNow spec's own
+// convention) at the dist root, so it's served as a real static file on both
+// benchmark.* and operatorbenchmark.* without needing a rewrite exception —
+// vercel.json's SPA catch-all only applies when no static file matches.
+// Set INDEXNOW_KEY in Vercel (both this project's only deploy target) and
+// redeploy; rotate by changing the env var, which changes the filename too,
+// so the old key file simply stops being referenced.
+const indexNowKey = process.env.INDEXNOW_KEY;
+if (indexNowKey) {
+  writeFileSync(resolve(DIST, `${indexNowKey}.txt`), indexNowKey);
+  console.log(`[seo] wrote IndexNow key file /${indexNowKey}.txt`);
+} else {
+  console.log('[seo] INDEXNOW_KEY not set — skipping IndexNow key file');
+}
+
 console.log(`[seo] generated ${out.length} pages + 2 sitemaps (${liftUrls.length} lift + ${operatorUrls.length} operator urls) into dist/`);
