@@ -263,10 +263,29 @@ for (const b of liftBench) {
     { q: `How is the ${label} scored?`, a: `Your result is placed on a 0–100 curve anchored at the ${tierNames} tiers${b.normalization === 'bodyweight' ? ', measured as a multiple of bodyweight and adjusted for sex' : ', adjusted for sex'}. ${b.lowerIsBetter ? 'A faster time scores higher.' : 'A higher number scores higher.'}` },
     { q: `How can I improve my ${label}?`, a: tips.join(' ') },
   ];
+  // Meta description: Bing flagged the earlier one-liner here as both "too
+  // short" (~110 chars, target ~150-160) and "too similar" across all ~29 of
+  // these pages (same sentence, only the label swapped). Fixed by pulling in
+  // data that's already computed per-page and genuinely varies — tier count,
+  // first/last tier name, which pathways this counts toward — instead of
+  // just padding words around the label. See the same fix applied below for
+  // pathway pages and operator unit pages (2026-08-26).
+  const firstTier = TIER_LABEL[TIERS[0]];
+  const lastTier = TIER_LABEL[TIERS[TIERS.length - 1]];
+  const scoreDir = b.lowerIsBetter
+    ? 'Faster times score higher'
+    : b.normalization === 'bodyweight'
+      ? 'Scored as a multiple of your bodyweight'
+      : 'Higher numbers score higher';
+  const pathwayNames = inPathways.map(([l]) => l);
+  const pathwayNote = pathwayNames.length
+    ? ` Counts toward ${pathwayNames.slice(0, 2).join(', ')}${pathwayNames.length > 2 ? ` +${pathwayNames.length - 2} more` : ''}.`
+    : '';
+  const metaDescription = `${label} standards, ${sixTier ? 'six' : 'four'}-tier and split by sex, from ${firstTier} to ${lastTier}.${pathwayNote} ${scoreDir} — score yours free, no sign-up.`;
   emit(`/standards/${slug}/`, page({
     brand: 'lift', host: LIFT_HOST, path: `/standards/${slug}/`,
     title: `${label} Standards | Take Point Fitness`,
-    description: `${label} standards by tier and sex (${dir}). See what counts as a good ${label.toLowerCase()} and score yours free.`,
+    description: metaDescription,
     h1: `${label} Standards`,
     lede: `How does your ${label.toLowerCase()} stack up? These are the ${tierNames} tiers (${dir}), by sex.`,
     body: table(['Tier', 'Male', 'Female'], rows) +
@@ -294,10 +313,18 @@ for (const [pid, [label, slug]] of Object.entries(PATHWAY)) {
     { q: `What does the ${label} score measure?`, a: `It weights ${comps.length} training areas (${compNames}) into a single 0–100 score, so you can see where you’re strong and where you’re holding yourself back.` },
     { q: `How do I improve my ${label} score?`, a: `Your score is dragged down most by your weakest weighted area, not your best lift. Find that area in the free calculator and train it — that’s the fastest way to raise the number.` },
   ];
+  // Same fix as the standards-page description above: use the actual
+  // weighted components (compNames), which genuinely differ per pathway,
+  // instead of a "scored across N areas" placeholder that reads identically
+  // everywhere except the number.
+  const compList = comps.map(([c]) => c.replace(/_/g, ' '));
+  const compNote = compList.length > 3
+    ? `${compList.slice(0, 3).join(', ')} +${compList.length - 3} more`
+    : compList.join(', ');
   emit(`/pathways/${slug}/`, page({
     brand: 'lift', host: LIFT_HOST, path: `/pathways/${slug}/`,
     title: `${label} Fitness Standards | Take Point Fitness`,
-    description: `${label} standards: what to train and how you're scored across ${comps.length} areas. Free calculator, see your weak link.`,
+    description: `${label} training standards: your score weights ${compNote} — find your weakest area and fix it first, free, no sign-up.`,
     h1: `${label} Standards`,
     lede: `What does it take to be a strong ${label}? Your score weights ${comps.length} areas — here's what counts and how to benchmark it.`,
     body: table(['Area', 'Weight'], comps.map(([c, v]) => [c.replace(/_/g, ' '), `${v}%`])) +
@@ -319,10 +346,14 @@ for (const u of operator) {
     { q: `What are the ${u.label} fitness requirements?`, a: `The ${u.label} standard is scored per event — ${eventNames}${u.benchmarks.length > 4 ? ' and more' : ''} — across strength, engine and work capacity. See the table above for the pass / good / excellent / elite tiers.` },
     { q: `How do I train for the ${u.label} standard?`, a: `Build a deep aerobic base, train load carriage and rucking, and keep your strength high relative to bodyweight. Test against the standard regularly and attack your weakest event first.` },
   ];
+  // Same fix again: eventNames already varies genuinely per unit (Ranger
+  // RASP's events aren't Navy SEAL's), so lead with the real events instead
+  // of the generic "strength, engine and work capacity" that read the same
+  // on all 17 of these pages (and previously repeated u.label twice).
   emit(`/units/${slug}/`, page({
     brand: 'operator', host: OP_HOST, path: `/units/${slug}/`,
     title: `${u.label} Fitness Standards | TPF Operator`,
-    description: `${u.label} fitness standards across strength, engine and work capacity. Score your readiness free against the ${u.label} benchmark.`,
+    description: `${u.label} fitness standards: ${eventNames}${u.benchmarks.length > 4 ? ' and more' : ''}, scored pass through elite. Score your readiness free, no sign-up.`,
     h1: `${u.label} Fitness Standards`,
     lede: `Could you meet the ${u.label} standard? These are the per-event tiers (unisex, absolute) used to score readiness.`,
     body: table(['Benchmark', 'Pass', 'Good', 'Excellent', 'Elite'], rows) +
