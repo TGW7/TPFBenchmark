@@ -85,6 +85,15 @@ next time you touch Operator standards, since it's a specific real
 occupation with a rich, well-reasoned benchmark set in the app, not a
 generic catch-all.
 
+> **2026-10-02 addendum.** The app has since added `navy` and `air_force`,
+> both first scored on its US Army baseline (so, like `us_army`, generic and
+> not mirrored). On 2026-10-02 the app moved `navy` onto the US Navy PRT's own
+> table (tpf-app `docs/build/51_STANDARDS_REBUILD_2026-10-02.md` §11), and it
+> is now mirrored here as `us_navy_prt` — 13 mirrored units. `air_force` stays
+> on the Army baseline and is still not mirrored. The comparison is now
+> scripted: `npm run check:app-ors -- <path to tpf-app>` (see
+> `docs/STANDARDS.md`, "Operator (ORS) standards").
+
 ### Known data-quality issues inherited from the app (flagging, not silently fixing)
 
 Because the app is being treated as authoritative, mirroring means these

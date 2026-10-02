@@ -114,6 +114,10 @@ export function formatValue(value: number, unit: string): string {
   // 1.5): show one decimal rather than rounding onto its neighbour tier.
   if (unit === 'reps') return `${Number.isInteger(value) ? value : value.toFixed(1)} reps`;
   if (unit === 'rounds') return `${value} rounds`;
+  // 2026-10-02 — Operator times and holds are stored as plain seconds
+  // ('sec'): a 13:30 run read "810". A minute or more reads as m:ss; a short
+  // sprint or hold keeps seconds.
+  if (unit === 'sec') return value >= 60 ? formatSeconds(value) : `${Number.isInteger(value) ? value : value.toFixed(1)} s`;
   return String(value);
 }
 

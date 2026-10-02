@@ -50,6 +50,20 @@ const C = {
   region: col('region'), pathway: col('pathway'), component: col('component'),
   benchmark: col('benchmark'), unit: col('unit'), direction: col('direction'),
   pass: col('pass'), good: col('good'), excellent: col('excellent'), elite: col('elite'),
+  // 2026-10-02 — two optional columns (absent / blank = the old behaviour):
+  //   id                — overrides the id otherwise made from the benchmark's
+  //                       name (so a unit can share an existing input's id,
+  //                       e.g. the US Navy PRT's 2 km row is `row_2k`);
+  //   alternative_group — benchmarks in one component sharing a group are
+  //                       ALTERNATIVES, scored once at the best member (the
+  //                       app's ORSBenchmark.alternativeGroup — the Navy
+  //                       PRT's run / row / swims). See src/engine/score.ts.
+  id: col('id'), alternativeGroup: col('alternative_group'),
+};
+const cell = (r, i) => {
+  if (i < 0) return null;
+  const v = r[i];
+  return v == null || String(v).trim() === '' ? null : String(v).trim();
 };
 
 const pathways = new Map(); // pathway label -> { region, benchmarks: [], components:Set }
@@ -66,10 +80,12 @@ for (let i = sh + 1; i < S.length; i++) {
   if (thresholds.pass == null && thresholds.good == null && thresholds.excellent == null && thresholds.elite == null) continue;
   if (!pathways.has(pathway)) pathways.set(pathway, { region: r[C.region], benchmarks: [], components: new Set() });
   const p = pathways.get(pathway);
+  const group = cell(r, C.alternativeGroup);
   p.benchmarks.push({
-    id: slug(r[C.benchmark]), name: r[C.benchmark], component,
+    id: cell(r, C.id) ?? slug(r[C.benchmark]), name: r[C.benchmark], component,
     source: source(unit, component), unit, lowerIsBetter: /lower/.test(String(r[C.direction])),
     thresholds,
+    ...(group ? { alternativeGroup: group } : {}),
   });
   p.components.add(component);
 }
@@ -116,6 +132,23 @@ function validate(pathways) {
     if (Math.abs(sum - 100) > EPS) {
       errors.push(`Weights: unit "${p.id}" sums to ${sum}, must be 100`);
     }
+    // Ids must be unique within a unit (the `id` column can now set one).
+    const ids = p.benchmarks.map((b) => b.id);
+    for (const id of new Set(ids.filter((id, i) => ids.indexOf(id) !== i))) {
+      errors.push(`Standards: unit "${p.id}" has benchmark id "${id}" more than once`);
+    }
+    // A set of alternatives is one event: two or more members, one component,
+    // one direction (the engine scores the group within a component).
+    const groups = new Map();
+    for (const b of p.benchmarks) {
+      if (!b.alternativeGroup) continue;
+      groups.set(b.alternativeGroup, [...(groups.get(b.alternativeGroup) ?? []), b]);
+    }
+    for (const [g, members] of groups) {
+      if (members.length < 2) errors.push(`Standards: unit "${p.id}" alternative group "${g}" has one member`);
+      if (new Set(members.map((b) => b.component)).size > 1) errors.push(`Standards: unit "${p.id}" alternative group "${g}" spans components`);
+      if (new Set(members.map((b) => b.lowerIsBetter)).size > 1) errors.push(`Standards: unit "${p.id}" alternative group "${g}" mixes directions`);
+    }
     for (const b of p.benchmarks) {
       const seq = ['pass', 'good', 'excellent', 'elite'].map((k) => b.thresholds[k]).filter((v) => v != null);
       for (let i = 1; i < seq.length; i++) {
@@ -148,6 +181,12 @@ export interface OperatorBenchmark {
   lowerIsBetter: boolean;
   /** Unisex thresholds (same standard for M/F). */
   thresholds: ThresholdSet;
+  /** Benchmarks in one component sharing a group are ALTERNATIVES (the test
+   *  lets the athlete do any one of them — the US Navy PRT's cardio event):
+   *  the component counts the group once, at its best member. Absent = an
+   *  ordinary benchmark, averaged as before. Mirrors tpf-app's
+   *  ORSBenchmark.alternativeGroup. */
+  alternativeGroup?: string;
 }
 
 export interface OperatorPathway {

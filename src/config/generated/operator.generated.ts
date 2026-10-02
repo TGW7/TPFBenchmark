@@ -13,6 +13,12 @@ export interface OperatorBenchmark {
   lowerIsBetter: boolean;
   /** Unisex thresholds (same standard for M/F). */
   thresholds: ThresholdSet;
+  /** Benchmarks in one component sharing a group are ALTERNATIVES (the test
+   *  lets the athlete do any one of them — the US Navy PRT's cardio event):
+   *  the component counts the group once, at its best member. Absent = an
+   *  ordinary benchmark, averaged as before. Mirrors tpf-app's
+   *  ORSBenchmark.alternativeGroup. */
+  alternativeGroup?: string;
 }
 
 export interface OperatorPathway {
@@ -50,7 +56,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "pass": 1660,
           "good": 1260,
           "excellent": 1170,
-          "elite": 1080
+          "elite": 1025
         }
       },
       {
@@ -120,7 +126,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "pass": 3,
           "good": 12,
           "excellent": 18,
-          "elite": 23
+          "elite": 25
         }
       },
       {
@@ -134,7 +140,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "pass": 42,
           "good": 60,
           "excellent": 75,
-          "elite": 87
+          "elite": 96
         }
       },
       {
@@ -148,7 +154,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "pass": 63,
           "good": 180,
           "excellent": 210,
-          "elite": 225
+          "elite": 250
         }
       },
       {
@@ -871,7 +877,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "unit": "reps",
         "lowerIsBetter": false,
         "thresholds": {
-          "pass": 8,
+          "pass": 10,
           "good": 13,
           "excellent": 18,
           "elite": 22
@@ -1377,6 +1383,209 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
     ]
   },
   {
+    "id": "us_navy_prt",
+    "label": "US Navy (PRT)",
+    "region": "US",
+    "weights": {
+      "running": 35,
+      "lower_strength": 10,
+      "upper_strength": 5,
+      "upper_endurance": 20,
+      "stability": 20,
+      "grip": 5,
+      "power": 5
+    },
+    "weightsInferred": false,
+    "benchmarks": [
+      {
+        "id": "1_5_mile_run",
+        "name": "1.5-mile run",
+        "component": "running",
+        "source": "race_times",
+        "unit": "sec",
+        "lowerIsBetter": true,
+        "thresholds": {
+          "pass": 765,
+          "good": 600,
+          "excellent": 555,
+          "elite": 470
+        },
+        "alternativeGroup": "prt_cardio"
+      },
+      {
+        "id": "row_2k",
+        "name": "2 km row (alternate)",
+        "component": "running",
+        "source": "race_times",
+        "unit": "sec",
+        "lowerIsBetter": true,
+        "thresholds": {
+          "pass": 560,
+          "good": 490,
+          "excellent": 450,
+          "elite": 400
+        },
+        "alternativeGroup": "prt_cardio"
+      },
+      {
+        "id": "500_yd_swim_alternate",
+        "name": "500-yd swim (alternate)",
+        "component": "running",
+        "source": "race_times",
+        "unit": "sec",
+        "lowerIsBetter": true,
+        "thresholds": {
+          "pass": 765,
+          "good": 555,
+          "excellent": 465,
+          "elite": 370
+        },
+        "alternativeGroup": "prt_cardio"
+      },
+      {
+        "id": "450_m_swim_alternate",
+        "name": "450 m swim (alternate)",
+        "component": "running",
+        "source": "race_times",
+        "unit": "sec",
+        "lowerIsBetter": true,
+        "thresholds": {
+          "pass": 755,
+          "good": 545,
+          "excellent": 455,
+          "elite": 360
+        },
+        "alternativeGroup": "prt_cardio"
+      },
+      {
+        "id": "back_squat",
+        "name": "Back Squat",
+        "component": "lower_strength",
+        "source": "orm",
+        "unit": "kg",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 80,
+          "good": 105,
+          "excellent": 130,
+          "elite": 155
+        }
+      },
+      {
+        "id": "hex_bar_dl",
+        "name": "Hex-bar DL",
+        "component": "lower_strength",
+        "source": "orm",
+        "unit": "kg",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 100,
+          "good": 130,
+          "excellent": 160,
+          "elite": 185
+        }
+      },
+      {
+        "id": "conventional_dl",
+        "name": "Conventional DL",
+        "component": "lower_strength",
+        "source": "orm",
+        "unit": "kg",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 90,
+          "good": 115,
+          "excellent": 145,
+          "elite": 170
+        }
+      },
+      {
+        "id": "bench_press",
+        "name": "Bench Press",
+        "component": "upper_strength",
+        "source": "orm",
+        "unit": "kg",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 60,
+          "good": 80,
+          "excellent": 100,
+          "elite": 120
+        }
+      },
+      {
+        "id": "push_ups_2_min",
+        "name": "Push-ups (2 min)",
+        "component": "upper_endurance",
+        "source": "manual",
+        "unit": "reps",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 42,
+          "good": 68,
+          "excellent": 82,
+          "elite": 101
+        }
+      },
+      {
+        "id": "plank_front",
+        "name": "Forearm plank",
+        "component": "stability",
+        "source": "manual",
+        "unit": "sec",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 71,
+          "good": 143,
+          "excellent": 184,
+          "elite": 225
+        }
+      },
+      {
+        "id": "dead_hang_grip",
+        "name": "Dead hang (grip)",
+        "component": "grip",
+        "source": "manual",
+        "unit": "sec",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 30,
+          "good": 50,
+          "excellent": 75,
+          "elite": 100
+        }
+      },
+      {
+        "id": "power_clean",
+        "name": "Power Clean",
+        "component": "power",
+        "source": "orm",
+        "unit": "kg",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 50,
+          "good": 70,
+          "excellent": 90,
+          "elite": 110
+        }
+      },
+      {
+        "id": "broad_jump",
+        "name": "Broad Jump",
+        "component": "power",
+        "source": "manual",
+        "unit": "m",
+        "lowerIsBetter": false,
+        "thresholds": {
+          "pass": 1.7,
+          "good": 1.9,
+          "excellent": 2.1,
+          "elite": 2.3
+        }
+      }
+    ]
+  },
+  {
     "id": "us_police_pft",
     "label": "US Police PFT",
     "region": "US",
@@ -1403,7 +1612,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "pass": 810,
           "good": 645,
           "excellent": 585,
-          "elite": 510
+          "elite": 485
         }
       },
       {
@@ -1487,7 +1696,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "pass": 30,
           "good": 45,
           "excellent": 57,
-          "elite": 67
+          "elite": 74
         }
       },
       {
@@ -1501,7 +1710,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "pass": 33,
           "good": 43,
           "excellent": 51,
-          "elite": 58
+          "elite": 64
         }
       },
       {

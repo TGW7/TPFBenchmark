@@ -33,6 +33,30 @@
  * All twelve app-mirrored units were re-compared with the app's
  * operational_readiness.ts the same day (a textual read of that file): no
  * other threshold differs.
+ *
+ * 2026-10-02, later — the Navy PRT and the minimum / good / maximum rule
+ * (tpf-app docs/build/51_STANDARDS_REBUILD_2026-10-02.md §11; the workbook
+ * edit is scripts/apply-navy-prt-and-military-tiers-2026-10-02.py). The
+ * fixture was REGENERATED from operator.data.json (the strip() shape below,
+ * which now also carries `alternativeGroup`) after checking it against the
+ * app's live ORS_PATHWAY_CONFIGS with scripts/check-operator-vs-app.mjs — 0
+ * differences across 13 mirrored units. What moved, old → new:
+ *   us_marine_corps_pft_cft 3_mile_run       Elite 1080 → 1025 (above the PFT max)
+ *   us_marine_corps_pft_cft pull_ups_no_time Elite 23 → 25
+ *   us_marine_corps_pft_cft push_ups_2_min   Elite 87 → 96
+ *   us_marine_corps_pft_cft plank_front      Elite 225 → 250
+ *   us_police_pft 1_5_mile_run               Elite 510 → 485 (above Navy 20-24 max)
+ *   us_police_pft push_ups_1_min             Elite 67 → 74 (above USAF PFRA max)
+ *   us_police_pft sit_ups_1_min              Elite 58 → 64
+ *   navy_seal_bud_s pull_ups_no_time         Pass 8 → 10 (the BUD/S PST minimum)
+ *   us_navy_prt                              NEW unit, 13 benchmarks (the app's
+ *                                            `navy`), cardio = one alternative group
+ * No other value in the fixture changed (diffed). The values themselves are
+ * pinned against the app in operator-navy-prt.test.ts.
+ *
+ * NOTE: this fixture is a snapshot of THIS repository's generated data, so it
+ * catches drift here but cannot see the app move — run
+ * `npm run check:app-ors -- <path to tpf-app>` for that.
  */
 import { describe, expect, it } from 'vitest';
 import { OPERATOR_PATHWAYS } from '../config/generated/operator.generated';
@@ -48,6 +72,7 @@ const strip = (pathways: typeof OPERATOR_PATHWAYS) =>
       unit: b.unit,
       lowerIsBetter: b.lowerIsBetter,
       thresholds: b.thresholds,
+      ...(b.alternativeGroup ? { alternativeGroup: b.alternativeGroup } : {}),
     })),
   }));
 
@@ -56,13 +81,14 @@ describe('Operator lockstep snapshot', () => {
     expect(strip(OPERATOR_PATHWAYS)).toEqual(snapshot);
   });
 
-  it('the snapshot itself covers all 15 pathways currently expected', () => {
+  it('the snapshot itself covers all 16 pathways currently expected', () => {
+    // 2026-10-02 — 15 → 16: us_navy_prt (the app's `navy`, now on the Navy PRT).
     const ids = snapshot.map((p: { id: string }) => p.id).sort();
     expect(ids).toEqual([
       'navy_seal_bud_s', 'uk_aru_sco19', 'uk_infantry', 'uk_parachute_regiment_p_coy',
       'uk_police_jrft', 'uk_royal_marines_cdo_course', 'uk_special_forces_sas_sbs',
       'us_army_airborne', 'us_army_ranger_rasp_entry', 'us_army_special_forces_sfas',
-      'us_infantry', 'us_marine_corps_pft_cft', 'us_police_pft', 'us_swat', 'usaf_pararescue_pj',
+      'us_infantry', 'us_marine_corps_pft_cft', 'us_navy_prt', 'us_police_pft', 'us_swat', 'usaf_pararescue_pj',
     ]);
   });
 });

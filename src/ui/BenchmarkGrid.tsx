@@ -137,7 +137,12 @@ export function BenchmarkGrid({ benchmarks, profile, units, logs, resetKey, onOr
     logs.orm.some((e) => e.benchmarkId === id) ||
     logs.raceTimes.some((e) => e.benchmarkId === id) ||
     logs.manual.some((e) => e.benchmarkId === id);
-  const entered = list.filter((b) => hasEntry(b.id)).length;
+  // 2026-10-02 — a set of alternatives (BenchmarkDef.alternativeGroup — the
+  // US Navy PRT's run / row / swims) is ONE event, so it counts once here,
+  // exactly as it does in the score.
+  const eventKey = (b: BenchmarkDef) => (b.alternativeGroup ? `alt:${b.alternativeGroup}` : `id:${b.id}`);
+  const eventCount = new Set(list.map(eventKey)).size;
+  const entered = new Set(list.filter((b) => hasEntry(b.id)).map(eventKey)).size;
 
   // Group by component so the inputs chunk into labelled areas (Miller's Law /
   // Law of Common Region) and mirror the radar + limiters — a consistent model.
@@ -177,11 +182,14 @@ export function BenchmarkGrid({ benchmarks, profile, units, logs, resetKey, onOr
       {groups.map((g) => (
         <div key={g.component} className="bench-group">
           <div className="bench-group-label">{componentLabel(g.component)}</div>
+          {g.items.some((b) => b.alternativeGroup) && (
+            <p className="subtle" style={{ margin: '0 0 6px' }}>Alternatives — enter any one; only your best counts.</p>
+          )}
           <div className="bench-grid">{g.items.map(renderRow)}</div>
         </div>
       ))}
       <p className="subtle" style={{ marginTop: 14, marginBottom: 0 }}>
-        <strong style={{ color: 'var(--fg)' }}>{entered} of {list.length} entered.</strong>{' '}
+        <strong style={{ color: 'var(--fg)' }}>{entered} of {eventCount} entered.</strong>{' '}
         Fill in what you know — the more you add, the more complete your score. It updates as you type.
       </p>
     </div>

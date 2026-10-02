@@ -51,6 +51,8 @@ function fmt(unit, v) {
   if (unit === 'reps') return `${v} reps`;
   if (unit === 'rounds') return `${v} rounds`;
   if (unit === 'level') return `L${v}`;
+  // 2026-10-02 — 'sec' (Operator times and holds) printed raw: "810" for 13:30.
+  if (unit === 'sec') return v >= 60 ? clock(v) : `${v} s`;
   return String(v);
 }
 
@@ -342,6 +344,12 @@ for (const u of operator) {
   const slug = slugify(u.id);
   const rows = u.benchmarks.map((b) => [b.name, ...TIERS4.map((k) => fmt(b.unit, b.thresholds[k]))]);
   const eventNames = u.benchmarks.slice(0, 4).map((b) => b.name).join(', ');
+  // 2026-10-02 — a set of alternatives (the US Navy PRT's cardio event) is
+  // ONE event; say so, or the table reads as four tests.
+  const groups = new Map();
+  for (const b of u.benchmarks) if (b.alternativeGroup) groups.set(b.alternativeGroup, [...(groups.get(b.alternativeGroup) ?? []), b.name]);
+  const altNote = [...groups.values()].map((names) =>
+    `<p class="note">${esc(names.join(', '))}: alternatives — the test is any one of them, and the best one you log is scored.</p>`).join('');
   const faqs = [
     { q: `What are the ${u.label} fitness requirements?`, a: `The ${u.label} standard is scored per event — ${eventNames}${u.benchmarks.length > 4 ? ' and more' : ''} — across strength, engine and work capacity. See the table above for the pass / good / excellent / elite tiers.` },
     { q: `How do I train for the ${u.label} standard?`, a: `Build a deep aerobic base, train load carriage and rucking, and keep your strength high relative to bodyweight. Test against the standard regularly and attack your weakest event first.` },
@@ -356,7 +364,7 @@ for (const u of operator) {
     description: `${u.label} fitness standards: ${eventNames}${u.benchmarks.length > 4 ? ' and more' : ''}, scored pass through elite. Score your readiness free, no sign-up.`,
     h1: `${u.label} Fitness Standards`,
     lede: `Could you meet the ${u.label} standard? These are the per-event tiers (unisex, absolute) used to score readiness.`,
-    body: table(['Benchmark', 'Pass', 'Good', 'Excellent', 'Elite'], rows) +
+    body: table(['Benchmark', 'Pass', 'Good', 'Excellent', 'Elite'], rows) + altNote +
       `<p class="note">${u.region} unit. Where the unit's published test or a public military fitness table exists, tiers are set from or checked against it; the rest are Take Point Fitness's own (beta) and recalibrate with athlete data.</p>` +
       faqHtml(faqs),
     jsonLd: [
