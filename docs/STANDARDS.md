@@ -110,6 +110,94 @@ Operator (unisex, Pass / Good / Excellent / Elite):
 | Navy SEAL · 500 m swim | 12:30 / 10:00 / 9:00 / 8:00 | **13:45 / 11:00 / 9:54 / 8:48** | the PST swim is 500 **yards**; × 1.0995 (Riegel 1.06) to 500 m |
 | Royal Marines · 500 m swim | 14:23 / 11:30 / 10:21 / 9:12 | **15:48 / 12:39 / 11:23 / 10:07** | derived: the corrected SEAL swim × 1.15 |
 
+(The US Police PFT Elites above moved again later the same day — next section.)
+
+### Later the same day: the Navy PRT, and the minimum / good / maximum rule
+
+Owner, 2026-10-02, answering the app's question on the Navy and Air Force
+pathways: *"Use navy tables. Military standards should be roughly
+interchangeable but generally considered low as they are unlikely to consider
+special forces. Be careful to differentiate between minimum standards and good
+standards too, as minimums are often very low."* The app made the change first
+(tpf-app `docs/build/51_STANDARDS_REBUILD_2026-10-02.md` §11);
+`scripts/apply-navy-prt-and-military-tiers-2026-10-02.py` is the cell-by-cell
+record of this repository's edit.
+
+**The rule.** A ladder read off a **general** military score table (Navy PRT,
+Army AFT, USAF PFRA, USMC PFT / CFT) puts the official **minimum** at Pass at
+most (never easier than it), an official **"good"** standard in the middle
+tiers, and the official **maximum** at Excellent at most — **Elite sits
+strictly above it**. No published number exists above a general table's
+maximum, so Elite there is **TPF's stated margin, not data**: the maximum
++ 10 % (reps, hold time, load) or − 5 % (time), rounded to the event's step
+(1 rep, 5 s). A special-forces pipeline's own standard (BUD/S PST, SFAS, RASP,
+PJ PAST) may set its own top tiers.
+
+| Unit · benchmark | Old | New | Why |
+|---|---|---|---|
+| US Marine Corps · 3-mile run | 27:40 / 21:00 / 19:30 / 18:00 | 27:40 / 21:00 / 19:30 / **17:05** | Elite was the PFT maximum |
+| US Marine Corps · pull-ups | 3 / 12 / 18 / 23 | 3 / 12 / 18 / **25** | Elite was the PFT maximum |
+| US Marine Corps · push-ups (2 min) | 42 / 60 / 75 / 87 | 42 / 60 / 75 / **96** | Elite was the PFT maximum |
+| US Marine Corps · plank (front) | 1:03 / 3:00 / 3:30 / 3:45 | 1:03 / 3:00 / 3:30 / **4:10** | Elite was the PFT maximum |
+| US Police PFT · 1.5-mile run | 13:30 / 10:45 / 9:45 / 8:30 | 13:30 / 10:45 / 9:45 / **8:05** | Elite was the Navy PRT (20–24) Outstanding High |
+| US Police PFT · push-ups (1 min) | 30 / 45 / 57 / 67 | 30 / 45 / 57 / **74** | Elite was the USAF PFRA maximum |
+| US Police PFT · sit-ups (1 min) | 33 / 43 / 51 / 58 | 33 / 43 / 51 / **64** | Elite was the USAF PFRA maximum |
+| Navy SEAL · pull-ups | 8 / 13 / 18 / 22 | **10** / 13 / 18 / 22 | Pass was **below** the BUD/S PST minimum of 10 |
+
+Every other unit's tiers are unchanged — the app checked them against the rule
+(its §11.3) and they already obey it, and the mirror was re-compared with the
+app's live config (below).
+
+**New unit: US Navy (PRT)** (`us_navy_prt`) — the app's `navy` pathway. Its
+description in the app: *"US Navy (general — any rate). For the sailor who is
+not chasing a SOF pipeline. Scored against the Navy PRT: push-ups, forearm
+plank and one cardio event (1.5-mile run, or a 2 km row / 500-yd / 450 m
+swim), plus moderate strength."* Until 2026-10-02 the app scored it on a copy
+of its US Army baseline, which is why it was never mirrored here (this
+repository's curated set drops the generic army units). Source: US Navy PRP
+**Guide-5, Physical Readiness Test, JAN 2025, Table 4-1** (a US government
+work), the **men 17–19** column — ORS has no sex split, and every US unit reads
+its own table's youngest men's column (USMC 17–20, the AFT 17–21).
+Pass = Probationary, Good = Good High, Excellent = Excellent High, Elite above
+Outstanding High (the margin above).
+
+| Event | Pass | Good | Excellent | Elite | Navy maximum |
+|---|---|---|---|---|---|
+| 1.5-mile run | 12:45 | 10:00 | 9:15 | **7:50** | 8:15 |
+| 2 km row (alternate cardio) | 9:20 | 8:10 | 7:30 | **6:40** | 7:00 |
+| 500-yd swim (alternate cardio) | 12:45 | 9:15 | 7:45 | **6:10** | 6:30 |
+| 450 m swim (alternate cardio) | 12:35 | 9:05 | 7:35 | **6:00** | 6:20 |
+| Push-ups (2 min) | 42 | 68 | 82 | **101** | 92 |
+| Forearm plank | 1:11 | 2:23 | 3:04 | **3:45** | 3:24 |
+| Back squat / hex-bar DL / conventional DL / bench, dead hang, power clean, broad jump | TPF's own — the app's general-military rows (the PRT has no strength, grip or power event) | | | | — |
+
+Weights (TPF judgement, the app's): running 35 (the cardio event), upper
+endurance 20, stability 20, lower strength 10, upper strength 5, grip 5,
+power 5.
+
+**The cardio event is ONE of four.** The run, row and two swims are
+*alternatives* (`alternative_group` = `prt_cardio` in the workbook): the
+component counts the group **once, at the athlete's best option**, the others
+are marked `counted: false`, and an option not done costs nothing — exactly the
+app's `computeORS`. The calculator's entry grid counts the four as one event
+and says so; the unit's SEO page carries the same note.
+
+Two things this repository represents differently from the app:
+- **The swims are timed entries here** (`race_times` source, a mm:ss box), not
+  the app's typed manual inputs; neither side converts them onto a 500 m event,
+  and neither syncs to the app (no app Race Times event exists for 500 yd or
+  450 m).
+- **The 2 km row's id is `row_2k`** (set in the new `id` column), so it shares
+  the app-sync mapping the Lift calculator already uses — the same app Race
+  Times 2 km row the app's Navy pathway reads. The forearm plank's id is
+  `plank_front`, the id every other unit's plank uses (the app scores one
+  `plank` input across all pathways). The app's grid heading for this
+  component, *"Cardio (run, row or swim)"*, is **not** mirrored: the component
+  still shows as *Running* here.
+
+**Air Force** stays on the app's US Army baseline and is still not mirrored here
+(generic, like `us_army`).
+
 ### Gaps — standards with no permitted anchor (TPF's own judgement stands)
 
 HYROX lower tiers (both sexes; Elite only is anchored) · Diane, Cindy, Fight
@@ -119,7 +207,10 @@ Gone Bad · overhead press, power clean, barbell row (ratio checks only) · bike
 rows · the UK units' tests (Crown copyright status unconfirmed) · US SWAT · the
 Pararescue 500 m swim pass (12:00 matches neither published minimum the app
 found — left as is, an owner question in the app's record) · Operator has no sex
-split anywhere, so a woman is scored on the men's columns (pre-existing).
+split anywhere, so a woman is scored on the men's columns (pre-existing) ·
+**the margin above a military maximum** (+10 % / −5 %) is TPF's judgement, and
+which Navy column to read (17–19, not 20–24) is TPF's choice — both are owner
+questions in the app's record (§11.6 Q1, Q2).
 
 ## How to change them
 
@@ -159,6 +250,28 @@ has no permission to use. What the script originally did:
   column — REVIEW THOSE. Heuristics: squat ×1.25/1.5/1.75 off pass; Hex DL ≈
   squat ×1.2; Conventional DL ≈ Hex ÷1.1 (Cholewa 2019); OHP ≈ bench ×0.62;
   sparse run/rep tiers interpolated/extrapolated monotonically.
+
+**Since 2026-10-02** the master has two optional columns on its Standards sheet
+(blank on every row that predates them, so those rows are unchanged):
+`id`, which overrides the benchmark id codegen otherwise makes from the name,
+and `alternative_group`, which marks benchmarks in one component as
+alternatives scored once at the best (codegen refuses a group with one member,
+across components, or mixing directions, and any duplicate id in a unit). The
+curated set is now **10 US + 6 UK** units — `US Navy (PRT)` was added that day.
+
+**Lockstep with the app.** `src/test/operator-lockstep.test.ts` diffs the
+generated data against a snapshot of itself — it catches a change HERE, not a
+change in the app. `npm run check:app-ors -- <path to tpf-app>`
+(`scripts/check-operator-vs-app.mjs`) is the cross-repo check: it runs the
+app's own `tsx` against the app's `src/lib/operational_readiness.ts`
+(read-only) and diffs every mirrored unit's weights, tiers, direction and
+alternative groups against `operator.data.json`. 2026-10-02: **0 differences**
+across the 13 mirrored units. It is not part of `npm test` (CI has no app
+checkout). Matching numbers do not make the two **scores** identical: this
+site re-normalises over the components you test with no penalty and caps each
+benchmark at 100; the app takes 5 % off the score per unscored category, lets
+a benchmark read up to 110 before capping the component, and predicts a run
+distance from other logged runs.
 
 Model differences from Lift: **unisex** (one standard regardless of sex),
 **absolute kg** strength, **per-unit benchmarks** (each unit its own run/ruck

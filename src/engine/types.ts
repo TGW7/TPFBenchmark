@@ -137,6 +137,15 @@ export interface BenchmarkDef {
   thresholds: Record<Sex, ThresholdSet>;
   /** Optional carry-over components (grip, rucking) ship off by default. */
   optional?: boolean;
+  /** 2026-10-02 — benchmarks in ONE component that share an
+   *  `alternativeGroup` are ALTERNATIVES: the test lets the athlete do any one
+   *  of them (the US Navy PRT's cardio event is the 1.5-mile run, or a 2 km
+   *  row, a 500-yd or a 450 m swim). The group counts ONCE in the component
+   *  average, at its best-scoring member; the others are reported with
+   *  `counted: false`, and an alternative not done costs nothing. Absent =
+   *  averaged as before. Mirrors tpf-app's `ORSBenchmark.alternativeGroup`
+   *  and its `computeORS` (operational_readiness.ts). */
+  alternativeGroup?: string;
   meta?: BenchmarkMeta;
 }
 
@@ -236,6 +245,10 @@ export interface BenchmarkScore {
   /** null = no data or thresholds not yet populated (skipped). */
   percent: number | null;
   raw: number | null;
+  /** 2026-10-02 — false on a scored ALTERNATIVE that is not its group's best
+   *  (`BenchmarkDef.alternativeGroup`), so it does not count toward the
+   *  component. Absent otherwise. */
+  counted?: false;
 }
 
 export interface ComponentScore {

@@ -29,6 +29,8 @@ function toBenchmarkDef(b: OperatorBenchmark): BenchmarkDef {
     lowerIsBetter: b.lowerIsBetter,
     normalization: 'absolute',
     thresholds: { M: b.thresholds, F: b.thresholds }, // unisex
+    // 2026-10-02 — alternatives score once, at the best (engine/score.ts).
+    ...(b.alternativeGroup ? { alternativeGroup: b.alternativeGroup } : {}),
     meta: { notes: b.name },
   };
 }

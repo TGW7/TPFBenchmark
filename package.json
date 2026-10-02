@@ -8,6 +8,7 @@
     "codegen": "node scripts/codegen.mjs && node scripts/codegen-operator.mjs",
     "seed": "node scripts/seed-standards.mjs",
     "build:operator-standards": "node scripts/build-operator-standards.mjs",
+    "check:app-ors": "node scripts/check-operator-vs-app.mjs",
     "predev": "npm run codegen",
     "dev": "vite",
     "prebuild": "npm run codegen",

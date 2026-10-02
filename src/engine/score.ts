@@ -82,7 +82,16 @@ export function scoreBenchmark(
   return { benchmarkId: benchmark.id, percent, raw };
 }
 
-/** Average the logged, scoreable benchmarks within one component. */
+/**
+ * Average the logged, scoreable benchmarks within one component.
+ *
+ * 2026-10-02 — a set of ALTERNATIVES (`BenchmarkDef.alternativeGroup`, the US
+ * Navy PRT's run / row / swims) is one event: it contributes ONE value, its
+ * best member's % (the first listed wins a tie), and its other scored members
+ * are marked `counted: false`. An alternative with no data costs nothing.
+ * Exactly tpf-app's `computeORS` rule; with no group in a component the
+ * average is unchanged.
+ */
 export function scoreComponent(
   component: ComponentId,
   benchmarks: BenchmarkDef[],
@@ -91,11 +100,25 @@ export function scoreComponent(
   options: EngineOptions = {},
 ): ComponentScore {
   const inComponent = benchmarks.filter((b) => b.component === component);
-  const scores = inComponent.map((b) => scoreBenchmark(b, profile, logs, options));
-  const present = scores.filter((s): s is BenchmarkScore & { percent: number } => s.percent != null);
+  const scores: BenchmarkScore[] = inComponent.map((b) => scoreBenchmark(b, profile, logs, options));
+  const counted: number[] = [];
+  const groupBest = new Map<string, number>(); // group → index of its best scored member
+  inComponent.forEach((b, i) => {
+    const pct = scores[i].percent;
+    if (pct == null) return;
+    const g = b.alternativeGroup;
+    if (!g) { counted.push(pct); return; }
+    const best = groupBest.get(g);
+    if (best == null || pct > (scores[best].percent as number)) groupBest.set(g, i);
+  });
+  for (const best of groupBest.values()) counted.push(scores[best].percent as number);
+  inComponent.forEach((b, i) => {
+    const g = b.alternativeGroup;
+    if (g && scores[i].percent != null && groupBest.get(g) !== i) scores[i] = { ...scores[i], counted: false };
+  });
   const percent =
-    present.length > 0
-      ? present.reduce((sum, s) => sum + s.percent, 0) / present.length
+    counted.length > 0
+      ? counted.reduce((sum, p) => sum + p, 0) / counted.length
       : null;
   return { component, percent, benchmarks: scores };
 }
