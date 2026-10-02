@@ -83,8 +83,8 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "thresholds": {
           "pass": 120,
           "good": 150,
-          "excellent": 175,
-          "elite": 195
+          "excellent": 190,
+          "elite": 230
         }
       },
       {
@@ -97,8 +97,8 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "thresholds": {
           "pass": 105,
           "good": 135,
-          "excellent": 160,
-          "elite": 180
+          "excellent": 175,
+          "elite": 215
         }
       },
       {
@@ -140,7 +140,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "pass": 42,
           "good": 60,
           "excellent": 75,
-          "elite": 96
+          "elite": 100
         }
       },
       {
@@ -154,7 +154,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "pass": 63,
           "good": 180,
           "excellent": 210,
-          "elite": 250
+          "elite": 270
         }
       },
       {
@@ -240,8 +240,8 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "thresholds": {
           "pass": 954,
           "good": 870,
-          "excellent": 810,
-          "elite": 750
+          "excellent": 750,
+          "elite": 705
         }
       },
       {
@@ -282,8 +282,8 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "thresholds": {
           "pass": 115,
           "good": 145,
-          "excellent": 185,
-          "elite": 205
+          "excellent": 195,
+          "elite": 240
         }
       },
       {
@@ -296,8 +296,8 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "thresholds": {
           "pass": 110,
           "good": 140,
-          "excellent": 165,
-          "elite": 185
+          "excellent": 180,
+          "elite": 220
         }
       },
       {
@@ -555,7 +555,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "pass": 912,
           "good": 840,
           "excellent": 780,
-          "elite": 720
+          "elite": 675
         }
       },
       {
@@ -610,8 +610,8 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "thresholds": {
           "pass": 145,
           "good": 180,
-          "excellent": 210,
-          "elite": 235
+          "excellent": 220,
+          "elite": 255
         }
       },
       {
@@ -624,8 +624,8 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "thresholds": {
           "pass": 130,
           "good": 165,
-          "excellent": 195,
-          "elite": 215
+          "excellent": 200,
+          "elite": 230
         }
       },
       {
@@ -639,7 +639,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "pass": 90,
           "good": 110,
           "excellent": 130,
-          "elite": 155
+          "elite": 160
         }
       },
       {
@@ -681,7 +681,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "pass": 49,
           "good": 65,
           "excellent": 80,
-          "elite": 100
+          "elite": 105
         }
       },
       {
@@ -695,7 +695,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "pass": 59,
           "good": 75,
           "excellent": 90,
-          "elite": 100
+          "elite": 110
         }
       },
       {
@@ -787,7 +787,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
     "benchmarks": [
       {
         "id": "1_5_mile_run",
-        "name": "1.5-mile run",
+        "name": "1.5-mile run (PST: in boots and trousers)",
         "component": "running",
         "source": "race_times",
         "unit": "sec",
@@ -796,12 +796,12 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "pass": 630,
           "good": 570,
           "excellent": 540,
-          "elite": 510
+          "elite": 495
         }
       },
       {
         "id": "500_m_swim",
-        "name": "500 m swim",
+        "name": "500 m swim (PST: 500 yd sidestroke or breaststroke, converted)",
         "component": "swimming",
         "source": "race_times",
         "unit": "sec",
@@ -824,7 +824,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "pass": 100,
           "good": 135,
           "excellent": 150,
-          "elite": 180
+          "elite": 190
         }
       },
       {
@@ -837,8 +837,8 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "thresholds": {
           "pass": 130,
           "good": 160,
-          "excellent": 190,
-          "elite": 215
+          "excellent": 205,
+          "elite": 250
         }
       },
       {
@@ -851,8 +851,8 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "thresholds": {
           "pass": 115,
           "good": 145,
-          "excellent": 175,
-          "elite": 195
+          "excellent": 185,
+          "elite": 225
         }
       },
       {
@@ -866,7 +866,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "pass": 80,
           "good": 100,
           "excellent": 120,
-          "elite": 140
+          "elite": 160
         }
       },
       {
@@ -880,7 +880,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "pass": 10,
           "good": 13,
           "excellent": 18,
-          "elite": 22
+          "elite": 25
         }
       },
       {
@@ -894,7 +894,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "pass": 50,
           "good": 65,
           "excellent": 80,
-          "elite": 100
+          "elite": 105
         }
       },
       {
@@ -1009,7 +1009,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "pass": 610,
           "good": 570,
           "excellent": 540,
-          "elite": 510
+          "elite": 495
         }
       },
       {
@@ -1028,7 +1028,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
       },
       {
         "id": "500_m_swim",
-        "name": "500 m swim",
+        "name": "500 m swim (PAST: freestyle, breaststroke or sidestroke)",
         "component": "swimming",
         "source": "race_times",
         "unit": "sec",
@@ -1051,7 +1051,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "pass": 95,
           "good": 120,
           "excellent": 145,
-          "elite": 175
+          "elite": 190
         }
       },
       {
@@ -1064,8 +1064,8 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "thresholds": {
           "pass": 115,
           "good": 140,
-          "excellent": 170,
-          "elite": 195
+          "excellent": 195,
+          "elite": 245
         }
       },
       {
@@ -1079,7 +1079,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "pass": 75,
           "good": 95,
           "excellent": 115,
-          "elite": 135
+          "elite": 160
         }
       },
       {
@@ -1093,7 +1093,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "pass": 8,
           "good": 12,
           "excellent": 18,
-          "elite": 22
+          "elite": 25
         }
       },
       {
@@ -1107,7 +1107,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "pass": 50,
           "good": 70,
           "excellent": 85,
-          "elite": 100
+          "elite": 105
         }
       },
       {
@@ -1121,7 +1121,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "pass": 54,
           "good": 70,
           "excellent": 90,
-          "elite": 100
+          "elite": 110
         }
       },
       {
@@ -1177,7 +1177,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "pass": 60,
           "good": 80,
           "excellent": 95,
-          "elite": 110
+          "elite": 120
         }
       },
       {
@@ -1264,8 +1264,8 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "thresholds": {
           "pass": 120,
           "good": 155,
-          "excellent": 185,
-          "elite": 210
+          "excellent": 200,
+          "elite": 245
         }
       },
       {
@@ -1278,8 +1278,8 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "thresholds": {
           "pass": 110,
           "good": 140,
-          "excellent": 170,
-          "elite": 195
+          "excellent": 185,
+          "elite": 225
         }
       },
       {
@@ -1481,8 +1481,8 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "thresholds": {
           "pass": 100,
           "good": 130,
-          "excellent": 160,
-          "elite": 185
+          "excellent": 180,
+          "elite": 225
         }
       },
       {
@@ -1495,8 +1495,8 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "thresholds": {
           "pass": 90,
           "good": 115,
-          "excellent": 145,
-          "elite": 170
+          "excellent": 165,
+          "elite": 210
         }
       },
       {
@@ -1538,7 +1538,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "pass": 71,
           "good": 143,
           "excellent": 184,
-          "elite": 225
+          "elite": 270
         }
       },
       {
@@ -1639,8 +1639,8 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "thresholds": {
           "pass": 100,
           "good": 125,
-          "excellent": 150,
-          "elite": 170
+          "excellent": 175,
+          "elite": 220
         }
       },
       {
@@ -1653,8 +1653,8 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "thresholds": {
           "pass": 90,
           "good": 115,
-          "excellent": 140,
-          "elite": 160
+          "excellent": 160,
+          "elite": 205
         }
       },
       {
@@ -1839,8 +1839,8 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "thresholds": {
           "pass": 130,
           "good": 160,
-          "excellent": 185,
-          "elite": 210
+          "excellent": 205,
+          "elite": 245
         }
       },
       {
@@ -1853,8 +1853,8 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "thresholds": {
           "pass": 115,
           "good": 145,
-          "excellent": 170,
-          "elite": 195
+          "excellent": 185,
+          "elite": 225
         }
       },
       {
@@ -2025,7 +2025,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "pass": 495,
           "good": 465,
           "excellent": 435,
-          "elite": 405
+          "elite": 380
         }
       },
       {
@@ -2066,8 +2066,8 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "thresholds": {
           "pass": 110,
           "good": 140,
-          "excellent": 180,
-          "elite": 200
+          "excellent": 190,
+          "elite": 235
         }
       },
       {
@@ -2080,8 +2080,8 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "thresholds": {
           "pass": 105,
           "good": 135,
-          "excellent": 160,
-          "elite": 180
+          "excellent": 175,
+          "elite": 215
         }
       },
       {
@@ -2296,8 +2296,8 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "thresholds": {
           "pass": 130,
           "good": 160,
-          "excellent": 190,
-          "elite": 215
+          "excellent": 205,
+          "elite": 250
         }
       },
       {
@@ -2310,8 +2310,8 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "thresholds": {
           "pass": 115,
           "good": 145,
-          "excellent": 175,
-          "elite": 195
+          "excellent": 185,
+          "elite": 225
         }
       },
       {
@@ -2483,18 +2483,18 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "pass": 4500,
           "good": 4200,
           "excellent": 3900,
-          "elite": 3600
+          "elite": 3300
         }
       },
       {
         "id": "fan_dance_24_km_35_lb_rifle_optional",
-        "name": "Fan Dance (24 km @ 35 lb + rifle) — optional",
+        "name": "Fan Dance (24 km, 18 kg bergen + rifle + water) — optional",
         "component": "rucking",
         "source": "race_times",
         "unit": "sec",
         "lowerIsBetter": true,
         "thresholds": {
-          "pass": 14400,
+          "pass": 15000,
           "good": 12600,
           "excellent": 11700,
           "elite": 10800
@@ -2511,7 +2511,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "pass": 100,
           "good": 125,
           "excellent": 140,
-          "elite": 165
+          "elite": 190
         }
       },
       {
@@ -2524,8 +2524,8 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "thresholds": {
           "pass": 130,
           "good": 160,
-          "excellent": 175,
-          "elite": 200
+          "excellent": 205,
+          "elite": 245
         }
       },
       {
@@ -2538,8 +2538,8 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "thresholds": {
           "pass": 115,
           "good": 145,
-          "excellent": 165,
-          "elite": 185
+          "excellent": 185,
+          "elite": 225
         }
       },
       {
@@ -2553,7 +2553,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "pass": 80,
           "good": 95,
           "excellent": 110,
-          "elite": 140
+          "elite": 160
         }
       },
       {
@@ -2567,7 +2567,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "pass": 8,
           "good": 13,
           "excellent": 18,
-          "elite": 22
+          "elite": 25
         }
       },
       {
@@ -2581,7 +2581,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
           "pass": 50,
           "good": 65,
           "excellent": 80,
-          "elite": 100
+          "elite": 105
         }
       },
       {
@@ -2710,8 +2710,8 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "thresholds": {
           "pass": 120,
           "good": 155,
-          "excellent": 185,
-          "elite": 210
+          "excellent": 200,
+          "elite": 245
         }
       },
       {
@@ -2724,8 +2724,8 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "thresholds": {
           "pass": 110,
           "good": 140,
-          "excellent": 170,
-          "elite": 195
+          "excellent": 185,
+          "elite": 225
         }
       },
       {

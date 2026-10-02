@@ -75,6 +75,13 @@ export const RACE_TO_APP: Record<string, { modality: string; event: string; load
   // Listed first so the plain id below wins reverse-pull ties (see APP_TO_RACE).
   '1_5_mile_run_best_effort': { modality: 'run', event: '1.5mile' },
   '1_5_mile_run': { modality: 'run', event: '1.5mile' },
+  // 2026-10-02 — the 500 m swim (Navy SEAL, USAF Pararescue, UK Royal
+  // Marines). The app scores all three pathways' `swim_500m` from
+  // race_times.swim["500m"] (its MODALITY_EVENTS swim `500m`, added for
+  // exactly these benchmarks), and since the 2026-10-02 rebuild every one
+  // of the site's three rows is a 500 METRE time (the SEAL PST's 500 yd is
+  // converted, × 1.0995) — an exact-distance match.
+  '500_m_swim': { modality: 'swim', event: '500m' },
   '10_mile_ruck': { modality: 'ruck', event: '10mi' },
   '12_mile_ruck': { modality: 'ruck', event: '12mi' },
   // Loaded variants target the same event + a fixed loadKg (the load is a
@@ -85,10 +92,19 @@ export const RACE_TO_APP: Record<string, { modality: string; event: string; load
   // field on that modality — see the ORS-audit comments in tpf-app's
   // multimodal_race_times_storage.ts for why approximating these is unsafe):
   //   3_mile_run, 5_mile_run, 30_mile_ruck   — no matching distance key
-  //   500_yd_swim                            — yards, app swim events are metric
-  //   8_mile_loaded_march_25_kg              — "8mi" ruck key doesn't exist (only "8k")
+  //   500_yd_swim_alternate                  — yards, app swim events are metric
+  //                                            (and the app's Navy swims are manual inputs)
+  //   450_m_swim_alternate                   — no 450 m swim event in the app
   //   vested_1_mile_run_7_kg                 — run events have no load field (unlike ruck)
   //   tactical_obstacle_course_full_kit_25_lb — no modality fits an obstacle course
+  // Not mapped YET, though the app now has an exact event (checked
+  // 2026-10-02 against tpf-app MODALITY_EVENTS / ORS_PATHWAY_CONFIGS; left
+  // for a separate change because the loaded rucks need their load matched):
+  //   2_km_run_best_effort                   — app run "2k" (the UK units' run_2k)
+  //   8_km_ruck                              — app ruck "8k" (Airborne, PJ ruck_8k)
+  //   5_mile_ruck_30_kg                      — app ruck "5mi" (UKSF ruck_5mi_30kg)
+  //   8_mile_loaded_march_25_kg              — app ruck "8mi" (added 2026-07-16; UK
+  //                                            Infantry ruck_8mi_25kg, requiredLoadKg 25)
 };
 
 // Several app lift names are shared by a Lift/Hybrid id AND an Operator id

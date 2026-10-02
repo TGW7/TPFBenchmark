@@ -127,7 +127,7 @@ details p{margin:8px 0 0;color:var(--muted)}
 <p class="lede">${esc(lede)}</p>
 ${body}
 <div class="cta">
-  <p style="margin:0 0 12px;font-weight:600">See exactly where you rank — free, no sign-up.</p>
+  <p style="margin:0 0 12px;font-weight:600">See exactly where you stand — free, no sign-up.</p>
   <a class="btn" href="/">${cta} →</a>
 </div>
 </main>
@@ -257,11 +257,16 @@ for (const b of liftBench) {
   const tips = tipsFor(b.id);
   const tierNames = TIERS.map((k) => TIER_LABEL[k].toLowerCase()).join(' / ');
   const faqs = sixTier ? [
-    { q: `What is a good ${label}?`, a: `An "Experienced" ${label} sits around the 70th percentile of trained athletes — see the table above for the exact figure for your sex. "Advanced" is roughly the top 10%, and "Elite" is the top 5%.` },
+    // 2026-10-02 — these answers used to say "around the 70th percentile of
+    // trained athletes … the top 10% … the top 5%". The tiers are TPF's own
+    // standards, not population percentiles (docs/STANDARDS.md), so no page
+    // may say where a tier sits in a population. Pinned by
+    // src/test/no-percentile-claims.test.ts.
+    { q: `What is a good ${label}?`, a: `"Experienced" is the middle of Take Point Fitness's six tiers and a solid ${label} for a trained athlete — see the table above for the exact figure for your sex. "Advanced" is a high standard, and "Elite" is our top tier. These are our own standards, not population percentiles.` },
     { q: `How is the ${label} scored?`, a: `Your result is placed on a 0–100 curve anchored at the ${tierNames} tiers${b.normalization === 'bodyweight' ? ', measured as a multiple of bodyweight and adjusted for sex' : ', adjusted for sex'}. ${b.lowerIsBetter ? 'A faster time scores higher.' : 'A higher number scores higher.'}` },
     { q: `How can I improve my ${label}?`, a: tips.join(' ') },
   ] : [
-    { q: `What is a good ${label}?`, a: `A "Good" ${label} sits around the 70th percentile of trained athletes — see the table above for the exact figure for your sex. "Excellent" is roughly the top 15%, and "Elite" is the top 5%.` },
+    { q: `What is a good ${label}?`, a: `"Good" is the second of Take Point Fitness's four tiers and a solid ${label} for a trained athlete — see the table above for the exact figure for your sex. "Excellent" is a high standard, and "Elite" is our top tier. These are our own standards, not population percentiles.` },
     { q: `How is the ${label} scored?`, a: `Your result is placed on a 0–100 curve anchored at the ${tierNames} tiers${b.normalization === 'bodyweight' ? ', measured as a multiple of bodyweight and adjusted for sex' : ', adjusted for sex'}. ${b.lowerIsBetter ? 'A faster time scores higher.' : 'A higher number scores higher.'}` },
     { q: `How can I improve my ${label}?`, a: tips.join(' ') },
   ];
@@ -292,8 +297,8 @@ for (const b of liftBench) {
     lede: `How does your ${label.toLowerCase()} stack up? These are the ${tierNames} tiers (${dir}), by sex.`,
     body: table(['Tier', 'Male', 'Female'], rows) +
       (sixTier
-        ? `<p class="note">These are Take Point Fitness's own standards, set to sit at roughly the 50th / 60th / 70th / 80th / 90th / 100th percentile of trained athletes, and checked against openly licensed research or public test tables where one exists.</p>`
-        : `<p class="note">These are Take Point Fitness's own standards, set to sit at roughly the 50th / 70th / 85th / top 5% of trained athletes, and checked against openly licensed research or public test tables where one exists.</p>`) +
+        ? `<p class="note">These are Take Point Fitness's own standards, checked against openly licensed research or public test tables where one exists. Each tier is a point on the 0–100 score (50 / 60 / 70 / 80 / 90 / 100), not a population percentile.</p>`
+        : `<p class="note">These are Take Point Fitness's own standards, checked against openly licensed research or public test tables where one exists. Each tier is a point on the 0–100 score (50 / 70 / 85 / 100), not a population percentile.</p>`) +
       (inPathways.length ? `<p>Counts toward: ${inPathways.map(([l, s]) => `<a href="/pathways/${s}/">${esc(l)}</a>`).join(' · ')}</p>` : '') +
       `<h2>How to improve your ${esc(label)}</h2>` + bullets(tips) +
       faqHtml(faqs),

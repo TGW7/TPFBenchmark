@@ -16,6 +16,13 @@
  * benchmarks, tiers, direction and alternative groups against
  * src/config/generated/operator.data.json. Exit 0 = no differences.
  *
+ * 2026-10-03 — two more things are compared: each benchmark's LABEL (the
+ * app's `label` against the site's name; LABEL_KEPT lists the three known,
+ * pinned differences), and the rows of a ZERO-WEIGHT component wherever the
+ * site holds them (unscored by both engines, but published on the unit
+ * pages — plan 55 moved two such Pararescue rows, which this check could not
+ * see before).
+ *
  * It needs the app checked out with its node_modules installed. It is not
  * part of `npm test` (CI has no app checkout); run it after any ORS change in
  * either repository.
@@ -65,6 +72,22 @@ const ID_ALIAS = {
   'navy/swim_500yd': '500_yd_swim_alternate',
   'navy/swim_450m': '450_m_swim_alternate',
   'navy/plank': 'plank_front',
+  // 2026-10-03 — plan 55 renamed these rows to the app's labels; their site ids
+  // were pinned (the workbook's `id` column) because ids are stored.
+  'seal/run_15mi': '1_5_mile_run',
+  'pararescue/swim_500m': '500_m_swim',
+  'uksf/fan_dance': 'fan_dance_24_km_35_lb_rifle_optional',
+};
+
+/** 2026-10-03 — labels are compared too (an alias above hides a label change
+ *  from the id match: plan 55's SEAL swim relabel was invisible to this check
+ *  until then). These rows' site names differ from the app's labels and were
+ *  left so before the comparison existed; each pins BOTH sides, so a change on
+ *  either still shows: `app pathway/app id` → [app label, site name]. */
+const LABEL_KEPT = {
+  'navy/row_2k': ['2 km row (PRT alternate cardio)', '2 km row (alternate)'],
+  'navy/swim_500yd': ['500-yd swim (PRT alternate cardio)', '500-yd swim (alternate)'],
+  'navy/swim_450m': ['450 m swim (PRT alternate cardio)', '450 m swim (alternate)'],
 };
 
 const slug = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
@@ -103,12 +126,23 @@ export function compare(appConfigs, siteUnits) {
     if (key(aw) !== key(sw)) diffs.push(`${s} weights: app ${JSON.stringify(aw)} · site ${JSON.stringify(sw)}`);
     const matched = new Set();
     for (const [comp, list] of Object.entries(ac.benchmarks)) {
-      if (!(aw[comp] > 0)) continue;
+      // 2026-10-03 — a zero-weight component is not scored, but where the site
+      // HOLDS the row it still publishes the tiers (the unit pages), so those
+      // rows are compared too; the site is not required to hold them.
+      const scored = aw[comp] > 0;
+      if (!scored && sw[comp] > 0) continue; // a weight mismatch, reported above
       for (const b of list) {
         const id = ID_ALIAS[`${a}/${b.id}`] ?? slug(b.label);
         const sb = sp.benchmarks.find((x) => x.id === id && x.component === comp);
-        if (!sb) { diffs.push(`${s}: app ${comp}/${b.id} ("${b.label}") has no site benchmark "${id}"`); continue; }
+        if (!sb) {
+          if (scored) diffs.push(`${s}: app ${comp}/${b.id} ("${b.label}") has no site benchmark "${id}"`);
+          continue;
+        }
         matched.add(`${comp}/${sb.id}`);
+        const kept = LABEL_KEPT[`${a}/${b.id}`];
+        if (kept ? (kept[0] !== b.label || kept[1] !== sb.name) : b.label !== sb.name) {
+          diffs.push(`${s} ${comp}/${id}: label app "${b.label}" · site "${sb.name}"`);
+        }
         const at = [b.pass, b.good, b.excellent, b.elite];
         const st = ['pass', 'good', 'excellent', 'elite'].map((k) => sb.thresholds[k]);
         if (JSON.stringify(at) !== JSON.stringify(st)) diffs.push(`${s} ${comp}/${id}: app ${at.join(' / ')} · site ${st.join(' / ')}`);
@@ -119,7 +153,7 @@ export function compare(appConfigs, siteUnits) {
       }
     }
     for (const sb of sp.benchmarks) {
-      if (sw[sb.component] > 0 && !matched.has(`${sb.component}/${sb.id}`)) {
+      if (!matched.has(`${sb.component}/${sb.id}`) && (sw[sb.component] > 0 || ac.benchmarks[sb.component]?.length)) {
         diffs.push(`${s}: site benchmark ${sb.component}/${sb.id} has no app counterpart`);
       }
     }

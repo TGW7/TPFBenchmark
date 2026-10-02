@@ -28,7 +28,7 @@ No sign-up. The public hook.
 - [x] Strength pathways (Powerlifter / Bodybuilder) drop cardio + show a **per-lift radar**
 - [x] Input-first calculator: editable sex/bodyweight/age, session-only entries,
       pathway switch preserves entries, clears on leave
-- [x] Estimated percentile + weakness radar + limiters
+- [x] ~~Estimated percentile~~ + weakness radar + limiters — *the estimated percentile was WITHDRAWN on 2026-10-02: it mapped a tier score onto a "percentile", and the tiers are TPF's own standards, not population percentiles. A percentile is now shown only when the pool has measured one (`src/ui/resultCopy.ts`).*
 - [x] Input audit (sanity bounds, consistency, trust) with live feedback
 - [x] Licensing-safe WOD names
 - [x] **Browse Standards** table (Strength-Level-style view, no input needed)
@@ -84,8 +84,9 @@ Turn user submissions into trustworthy, self-correcting percentiles.
 - [x] Robust outlier stats (median/MAD, winsorize, weightedQuantile) — `src/engine/stats.ts`, tested
 - [x] Trust-weighted percentile — SQL `benchmark_percentile()` + `stats.ts` mirror
 - [x] Contribute-to-pool flow (consent + `buildPoolSubmissions`, incl. composite overall row)
-- [x] **Live data-driven overall percentile** in the dashboard (`fetchPercentile`),
-      falls back to the tier estimate until a (sex, age-band) cell has enough trusted data
+- [x] **Live data-driven overall percentile** in the dashboard (`fetchPercentile`);
+      until a (sex, age-band) cell has enough trusted data it shows **no** percentile
+      (2026-10-02 — it used to fall back to the tier estimate, now removed)
 - [x] **Tier recalibration job** (`npm run recalibrate`) — proposes new pass/good/excellent/elite
       from trust-weighted, winsorised pool quantiles → review diff (`recalibration-proposal.md`)
 - [ ] Per-benchmark live percentiles in the radar (currently overall only)

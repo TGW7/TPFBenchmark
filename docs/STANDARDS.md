@@ -1,23 +1,49 @@
 # Standards — what the numbers mean & where they come from
 
-## Status: v1 beta (Lift)
+## Status: v1 beta (Lift and Operator)
 
-The Lift brand now scores against **real, expert-seeded tiers** (not synthetic
-placeholders). They are explicitly **beta** — good enough to be useful, not yet
-calibrated to our own population. The UI says so. Operator is still synthetic
-until its standards are added.
+Both brands score against **real tiers** (not synthetic placeholders): Lift
+(and Hybrid, which shares its standards) from
+`config/standards/TPF_HRS_Standards_v0_2026-06-21.xlsx`, Operator from
+`config/standards/TPF_Operator_Standards.xlsx` (see "Operator (ORS)
+standards" below — live since 2026-07, mirrored from the TPF app). They are
+explicitly **beta** — good enough to be useful, not yet calibrated to our own
+population. The UI says so.
+
+*Corrected 2026-10-02: this section said "Operator is still synthetic until its
+standards are added". That had not been true since Operator went live on the
+curated workbook; the section further down already said so.*
 
 ## What the tiers mean
 
-Every benchmark has four tiers, anchored to the same percentile across domains
-so the composite and weakness radar stay coherent:
+Every benchmark's tiers sit at the same points on the 0–100 score across
+domains, so the composite and the weakness radar stay coherent. The tiers are
+**TPF's own standards** (next section) — they are **not population
+percentiles**, and nothing here says what share of athletes reaches a tier.
 
-| Tier | Score | ≈ percentile (trained adults) |
-|---|---|---|
-| pass | 50% | ~50th |
-| good | 70% | ~70th |
-| excellent | 85% | ~85th |
-| elite | 100% | top 1–2% |
+| Tier (four-tier rows: Operator, WODs) | Score | Six-tier rows (Lift) | Score |
+|---|---|---|---|
+| pass | 50 | Beginner | 50 |
+| | | Novice | 60 |
+| good | 70 | Experienced | 70 |
+| | | Intermediate | 80 |
+| excellent | 85 | Advanced | 90 |
+| elite | 100 | Elite | 100 |
+
+**Percentiles.** The calculator shows a percentile **only when it is measured**:
+the trust-weighted pool percentile (`benchmark_percentile()`, read by
+`fetchPercentile`), which the server returns only once the athlete's
+(sex, age-band) cell holds enough trusted submissions (30 by default). With
+no measured percentile the result shows the score, tier and level and says it
+is scored against TPF's standards, not a ranking (`src/ui/resultCopy.ts`).
+
+*Corrected 2026-10-02: this table used to carry a "≈ percentile (trained
+adults)" column (pass ~50th … elite top 1–2 %), and the site turned a score
+into "≈ Nth percentile" through it (`estimatedPercentile`, now removed) whenever
+the pool had no data. After the standards rebuild the tiers are TPF's own, so
+that column described no population. The landing copy, the SEO pages' tier
+notes and FAQs, and the copied result were changed the same day;
+`src/test/no-percentile-claims.test.ts` pins it.*
 
 Bodyweight lifts are stored ×bodyweight per sex; times are seconds (lower is
 better); reps/distance are absolute per sex.
@@ -168,7 +194,7 @@ Outstanding High (the margin above).
 | 500-yd swim (alternate cardio) | 12:45 | 9:15 | 7:45 | **6:10** | 6:30 |
 | 450 m swim (alternate cardio) | 12:35 | 9:05 | 7:35 | **6:00** | 6:20 |
 | Push-ups (2 min) | 42 | 68 | 82 | **101** | 92 |
-| Forearm plank | 1:11 | 2:23 | 3:04 | **3:45** | 3:24 |
+| Forearm plank | 1:11 | 2:23 | 3:04 | **3:45** → **4:30** (moved again later the same day — next section) | 3:24 |
 | Back squat / hex-bar DL / conventional DL / bench, dead hang, power clean, broad jump | TPF's own — the app's general-military rows (the PRT has no strength, grip or power event) | | | | — |
 
 Weights (TPF judgement, the app's): running 35 (the cardio event), upper
@@ -198,6 +224,151 @@ Two things this repository represents differently from the app:
 **Air Force** stays on the app's US Army baseline and is still not mirrored here
 (generic, like `us_army`).
 
+### Later again: compare, then borrow — and the deadlift Elite over 200 kg
+
+The app's record is tpf-app `docs/build/54_MILITARY_TOP_TIERS_COMPARISON.md`
+§11; `scripts/apply-military-top-tiers-2026-10-02.py` is the cell-by-cell
+record of this repository's edit (it is built as a list of changesets, so a
+later mirror is appended to it rather than written as a new script).
+
+**The rule, refined** (the app's `benchmark_derived_tiers.ts`, "COMPARE, THEN
+BORROW"). On a ladder read off a general military table, Pass and Good stay
+on the table. The **top tier** is now **the harder of** a comparison ladder's
+"elite for an operator" point and the table maximum + TPF's margin — so the
+margin of the section above is now only the floor that keeps Elite above the
+maximum. For push-ups (2 min) the comparison is the special-forces median top
+rung (100); for the plank, the app's own operator plank Elite (4:30). The
+second-from-top tier moves only where the table maximum is weaker than the
+comparison's "really good" point; no mirrored Operator row met that case
+except the Navy plank, which the app overrode to keep Excellent at Excellent
+High (its F5).
+
+| Unit · benchmark | Old | New |
+|---|---|---|
+| US Marine Corps · push-ups (2 min) | 42 / 60 / 75 / 96 | 42 / 60 / 75 / **100** |
+| US Marine Corps · plank (front) | 1:03 / 3:00 / 3:30 / 4:10 | 1:03 / 3:00 / 3:30 / **4:30** |
+| US Navy (PRT) · forearm plank | 1:11 / 2:23 / 3:04 / 3:45 | 1:11 / 2:23 / 3:04 / **4:30** |
+
+**The deadlift Elite is always over 200 kg.** The owner, answering the app's
+plan 54 Q9: *"elite deadlift shoukd always be over 200kg adjust accordingly"*.
+Both bars move — the hex bar is the same deadlift slot in the app (the athlete
+picks which bar is scored), so a hex Elite left behind would make Elite
+reachable at a conventional-equivalent under 200 kg. How the app set each value
+(**TPF's method, not a source**): conventional = the smallest 5 kg value over
+200 that keeps the order between units; hex = the smallest value at least
+1.06 × the new conventional that keeps the hex order. **Pass, Good and
+Excellent are unchanged**, so a 200 kg conventional (≈ 218 kg hex) lift reads
+Excellent, never Elite, on every unit. Elite only (kg):
+
+| Unit | Conventional | Hex bar |
+|---|---|---|
+| US Police PFT | 160 → **205** | 170 → **220** |
+| US Navy (PRT) | 170 → **210** | 185 → **225** |
+| UK Parachute Regiment (P Coy) | 180 → **215** | 200 → **235** |
+| US Marine Corps | 180 → **215** | 195 → **230** |
+| USAF Pararescue (PJ) | — (hex only) | 195 → **230** |
+| US Army Airborne | 185 → **220** | 205 → **240** |
+| UK Special Forces (SAS/SBS) | 185 → **220** | 200 → **235** |
+| UK Royal Marines (Cdo Course) | 195 → **225** | 215 → **250** |
+| US Infantry | 195 → **225** | 210 → **245** |
+| Navy SEAL (BUD/S) | 195 → **225** | 215 → **250** |
+| UK Infantry | 195 → **225** | 210 → **245** |
+| US SWAT | 195 → **225** | 210 → **245** |
+| US Army Special Forces (SFAS) | 215 → **230** | 235 → **255** |
+
+The three units this site has and the app does not (US Army Ranger RASP, UK
+Police JRFT, UK ARU / SCO19) have no deadlift row, so no Elite here is under
+200 kg. Pinned by `src/test/operator-deadlift-elite-over-200.test.ts`; the
+mirror re-checked with `npm run check:app-ors` (0 differences, 13 units).
+Open in the app's record (§11.6), each an owner question: whether Excellent
+should move too (the top step is 65 kg on police and the US Army baseline), and
+that ORS has no sex split, so a woman also needs over 200 kg for an Elite
+deadlift.
+
+*2026-10-03: two sentences above are no longer current.* Excellent did move
+(the next section), so "Pass, Good and Excellent are unchanged" holds for Pass
+and Good only, and a 218 kg hex lift on US Army Special Forces now reads the top
+of Good, not Excellent. Three Elites in the table moved again (UKSF 225 / 245,
+Pararescue hex 245), which breaks "order between units kept" on purpose for
+those rows.
+
+### 2026-10-03: special-forces and elite-unit tiers (plan 55), and the deadlift Excellent evened out
+
+The app's record is tpf-app `docs/build/55_SPECIAL_FORCES_AND_ELITE_UNIT_TIERS.md`
+§10 (§10.2 lists every value that moved, each marked ORS or Benchmarks-only;
+only ORS rows of the 13 shared units are mirrored here). The edit is changesets
+2 and 3 of `scripts/apply-military-top-tiers-2026-10-02.py`; `npm run
+check:app-ors` then reported **0 differences** across the 13 mirrored units.
+
+**Special-forces tops** (the owner, 2026-10-02, *"As you suggest"*): a
+special-forces top is the **harder of** the general Elite and the hardest
+general unit's top for the same event (TPF's rule, plan 55 §4.1). Elite only,
+old → new:
+
+| Unit | Squat | Bench | Pull-ups | Push-ups (2 min) | Sit-ups (2 min) | Deadlift |
+|---|---|---|---|---|---|---|
+| Navy SEAL (BUD/S) | 180 → **190** | 140 → **160** | 22 → **25** | 100 → **105** | — | — |
+| USAF Pararescue (PJ) | 175 → **190** | 135 → **160** † | 22 → **25** | 100 → **105** | 100 → **110** | hex 230 → **245** |
+| US Army Special Forces (SFAS) | — | 155 → **160** | — | 100 → **105** | 100 → **110** | — |
+| UK Special Forces (SAS/SBS) | 165 → **190** | 140 → **160** | 22 → **25** | 100 → **105** | — | 220 → **225**, hex 235 → **245** |
+
+† Pararescue's bench and power clean (Elite 110 → **120**) have weight 0 in
+both repositories, so they do not score; the unit page still shows them.
+
+**Runs and rucks:** SEAL and Pararescue 1.5-mile Elite 8:30 → **8:15**; SFAS
+2-mile 12:00 → **11:15**; Para Reg 2 km 6:45 → **6:20** (the owner: the paras
+may be the fastest runners); US Army Airborne 2-mile Excellent 13:30 → **12:30**
+and Elite 12:30 → **11:45** (the AFT test's "Elite" rung and Tier 1); UKSF
+5-mile @ 30 kg Elite 1:00:00 → **55:00**.
+
+**The Fan Dance** (the owner: *"Fan dance should be with proper weight"*): the
+row now names the selection load, "Fan Dance (24 km, 18 kg bergen + rifle +
+water) — optional", and its Pass moved to the published cut-off, 4:00:00 →
+**4:10:00**. Good 3:30, Excellent 3:15 and Elite 3:00 are kept. The load rests
+on third-party accounts only (no official source exists; the app's §10.3).
+
+**Condition labels** (the owner: *"label conditions"*; no number converted): the
+SEAL 1.5-mile run is "(PST: in boots and trousers)", the SEAL swim "(PST: 500 yd
+sidestroke or breaststroke, converted)", the Pararescue swim "(PAST: freestyle,
+breaststroke or sidestroke)". **The renamed rows keep their ids** (the
+workbook's `id` column), because ids are stored — submissions, saved entries,
+the app sync. The Fan Dance's id is still spelled with the old 35 lb load; it is
+never shown, and `src/ui/format.ts` gives it the grid label "Fan Dance (18 kg +
+rifle) — optional" (and keeps the swim's "500 m swim"), since the full names are
+too long for the grid's name fallback.
+
+**The deadlift Excellent, evened out** (the owner, 2026-10-03, shown police at
+90 / 115 / 140 / 205: *"Even it out a bit 170kg is barely elite, wouldn't say.
+Even [in] a police unit"*). On every unit and both bars: **Excellent = (Good +
+Elite) / 2, rounded to the nearest 5 kg** (a half rounds up), and only ever
+raised. All 25 deadlift rows here rose; Pass, Good and Elite did not move.
+
+| Unit | Conventional | Hex bar |
+|---|---|---|
+| US Police PFT | 140 → **160** | 150 → **175** |
+| US Navy (PRT) | 145 → **165** | 160 → **180** |
+| UK Parachute Regiment (P Coy) | 160 → **175** | 180 → **190** |
+| US Marine Corps | 160 → **175** | 175 → **190** |
+| USAF Pararescue (PJ) | — (hex only) | 170 → **195** |
+| US Army Airborne | 165 → **180** | 185 → **195** |
+| UK Special Forces (SAS/SBS) | 165 → **185** | 175 → **205** |
+| UK Royal Marines (Cdo Course) | 175 → **185** | 190 → **205** |
+| US Infantry | 170 → **185** | 185 → **200** |
+| Navy SEAL (BUD/S) | 175 → **185** | 190 → **205** |
+| UK Infantry | 170 → **185** | 185 → **200** |
+| US SWAT | 170 → **185** | 185 → **205** |
+| US Army Special Forces (SFAS) | 195 → **200** | 210 → **220** |
+
+Pinned by `src/test/operator-special-forces-tops.test.ts` (every value above
+that is not a deadlift Excellent; the labels and kept ids; every special-forces
+Elite at or above every general unit's top on the same event — 185 pairs on 12
+events) and `src/test/operator-deadlift-elite-over-200.test.ts` (the Excellent
+rule against a typed table, raised only). **Not mirrored**, because this site
+has no row for them: the Benchmarks-only rows (the SFAS, RASP, PJ PAST and
+Airborne tests), the app's generic pathways, and the app's run / ruck
+comparisons on its own HABS scale. ORS has no sex split, so all of this applies
+to women too.
+
 ### Gaps — standards with no permitted anchor (TPF's own judgement stands)
 
 HYROX lower tiers (both sexes; Elite only is anchored) · Diane, Cindy, Fight
@@ -210,7 +381,13 @@ found — left as is, an owner question in the app's record) · Operator has no 
 split anywhere, so a woman is scored on the men's columns (pre-existing) ·
 **the margin above a military maximum** (+10 % / −5 %) is TPF's judgement, and
 which Navy column to read (17–19, not 20–24) is TPF's choice — both are owner
-questions in the app's record (§11.6 Q1, Q2).
+questions in the app's record (§11.6 Q1, Q2) · the Operator deadlift Elites
+(over 200 kg by the owner's rule, but each value by TPF's method — smallest
+step keeping the order, hex ≥ 1.06 × conventional) · *(2026-10-03)* the
+special-forces tops (TPF's "harder of" rule, plan 55) and the evened-out
+deadlift Excellents (TPF's midpoint rule) · the Fan Dance load (third-party
+accounts only) and its kept 3:30 / 3:15 / 3:00 at that load (an owner question
+in the app's record, §10.8).
 
 ## How to change them
 
@@ -266,7 +443,12 @@ change in the app. `npm run check:app-ors -- <path to tpf-app>`
 app's own `tsx` against the app's `src/lib/operational_readiness.ts`
 (read-only) and diffs every mirrored unit's weights, tiers, direction and
 alternative groups against `operator.data.json`. 2026-10-02: **0 differences**
-across the 13 mirrored units. It is not part of `npm test` (CI has no app
+across the 13 mirrored units. *2026-10-03:* it also compares each benchmark's
+**label** with the site's name (three Navy PRT rows keep a shorter site name and
+are pinned both sides in `LABEL_KEPT`), and the rows of a **zero-weight**
+component wherever the site holds them (unscored, but shown on the unit pages);
+an alias is needed wherever a renamed row kept its id. After plan 55: **0
+differences**, 13 units. It is not part of `npm test` (CI has no app
 checkout). Matching numbers do not make the two **scores** identical: this
 site re-normalises over the components you test with no penalty and caps each
 benchmark at 100; the app takes 5 % off the score per unscored category, lets

@@ -41,7 +41,7 @@ export const BRAND_META: Record<Brand, BrandMeta> = {
     brand: 'lift',
     shortName: 'HABS',
     fullName: 'Hybrid Athlete Benchmark Scoring',
-    tagline: 'Free benchmark calculator · pick a pathway, enter your numbers, see where you rank',
+    tagline: 'Free benchmark calculator · pick a pathway, enter your numbers, see where you stand',
     scoreLabel: 'HABS Score',
     appUrl: 'https://app.takepointfitness.com',
   },

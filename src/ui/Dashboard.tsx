@@ -4,18 +4,23 @@ import type { CapacityResult, HrsResult, WeaknessReport } from '../engine/types'
 import { wodPublicName } from '../config/wods';
 import { HABS_MAX_LEVEL, habsLevelInfo } from '../engine/levels';
 import { Gauge } from './Gauge';
-import { componentLabel, formatPercentile, formatScore, formatSigned, scoreColor, scoreTier } from './format';
+import { componentLabel, formatScore, formatSigned, scoreColor, scoreTier } from './format';
+import { livePercentileLine, noPercentileNote } from './resultCopy';
 
 interface DashboardProps {
   result: HrsResult;
   capacity: CapacityResult;
   weakness: WeaknessReport;
   pathwayLabel: string;
-  percentile: number | null;
-  /** true when the percentile is measured from the live data pool (vs estimated). */
-  percentileLive?: boolean;
+  /** The MEASURED pool percentile (fetchPercentile), or null. Never an
+   *  estimate: with none, the card says the score is against TPF's standards
+   *  and makes no percentile claim (2026-10-02, src/ui/resultCopy.ts). */
+  livePercentile: number | null;
   /** Pool size behind a live percentile — shows "vs N athletes". */
   percentileN?: number | null;
+  /** Whether a pool exists at all (Supabase configured) — only then does the
+   *  card say a percentile can appear later. */
+  poolAvailable?: boolean;
   /** Capacity Index is WOD-derived — hidden for pathways without WODs. */
   showCapacity?: boolean;
   /** Stack the cards vertically (for the dashboard side column) instead of a row. */
@@ -31,7 +36,7 @@ function capacityVerdict(index: number | null): string {
   return 'Expresses raw fitness about as expected.';
 }
 
-export function Dashboard({ result, capacity, weakness, pathwayLabel, percentile, percentileLive = false, percentileN = null, showCapacity = true, stacked = false, scoreLabel = 'HABS Score' }: DashboardProps) {
+export function Dashboard({ result, capacity, weakness, pathwayLabel, livePercentile, percentileN = null, poolAvailable = false, showCapacity = true, stacked = false, scoreLabel = 'HABS Score' }: DashboardProps) {
   const coveragePct = Math.round(result.coverage * 100);
   const scoredWods = capacity.perWod.filter((w) => w.delta != null);
 
@@ -65,16 +70,18 @@ export function Dashboard({ result, capacity, weakness, pathwayLabel, percentile
             })()}
           </div>
         )}
-        {percentile != null && (
-          <p style={{ textAlign: 'center', margin: '6px 0 0' }}>
-            ≈ <strong>{formatPercentile(percentile)}</strong> percentile{' '}
-            <span className="subtle">
-              {percentileLive
-                ? (percentileN ? `(live — vs ${percentileN.toLocaleString()} athletes)` : '(live — vs real athletes)')
-                : '(estimated)'}
-            </span>
-          </p>
-        )}
+        {result.overall != null && (() => {
+          const live = livePercentileLine(livePercentile, percentileN);
+          return live ? (
+            <p style={{ textAlign: 'center', margin: '6px 0 0' }}>
+              <strong>{live.main}</strong> <span className="subtle">({live.context})</span>
+            </p>
+          ) : (
+            <p className="subtle" style={{ textAlign: 'center', margin: '6px 0 0' }}>
+              {noPercentileNote(poolAvailable)}
+            </p>
+          );
+        })()}
       </div>
 
       {showCapacity && (

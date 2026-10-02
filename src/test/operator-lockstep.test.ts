@@ -54,6 +54,36 @@
  * No other value in the fixture changed (diffed). The values themselves are
  * pinned against the app in operator-navy-prt.test.ts.
  *
+ * 2026-10-02, latest — plan 54's military top tiers (tpf-app
+ * docs/build/54_MILITARY_TOP_TIERS_COMPARISON.md §11; the workbook edit is
+ * scripts/apply-military-top-tiers-2026-10-02.py). The fixture was REGENERATED
+ * from operator.data.json with the same strip() shape after
+ * scripts/check-operator-vs-app.mjs reported 0 differences across the 13
+ * mirrored units. 28 values moved, every one an Elite:
+ *   us_marine_corps_pft_cft push_ups_2_min   Elite 96 → 100
+ *   us_marine_corps_pft_cft plank_front      Elite 250 → 270 (4:30)
+ *   us_navy_prt plank_front                  Elite 225 → 270 (4:30)
+ *   every unit's conventional_dl / hex_bar_dl Elite → 205–255 kg (25 values;
+ *   the table is in operator-deadlift-elite-over-200.test.ts, which pins them)
+ * No Pass, Good or Excellent changed, and no other benchmark (diffed: 28 lines
+ * out, 28 in, all `elite`).
+ *
+ * 2026-10-03 — plan 55's special-forces and elite-unit tiers, and the deadlift
+ * Excellent evened out (tpf-app docs/build/55_SPECIAL_FORCES_AND_ELITE_UNIT_TIERS.md
+ * §10.2; changesets 2 and 3 of scripts/apply-military-top-tiers-2026-10-02.py).
+ * The fixture was REGENERATED from operator.data.json with the same strip()
+ * shape after scripts/check-operator-vs-app.mjs reported 0 differences across
+ * the 13 mirrored units (labels and held zero-weight rows now included). 53
+ * values moved, diffed against the previous fixture: 26 Excellent (all 25
+ * deadlift rows, round5((Good + Elite) / 2), plus US Army Airborne's 2-mile
+ * 810 → 750), 26 Elite (SEAL / Pararescue / SFAS / UKSF strength and
+ * endurance tops, their runs, UKSF 5-mile ruck 3600 → 3300, Para Reg 2 km
+ * 405 → 380, US Airborne 2-mile 750 → 705) and 1 Pass (the Fan Dance 14400 →
+ * 15000). No id, order, unit, direction or weight changed — the four rows
+ * plan 55 renamed kept their ids (the workbook's `id` column), and names are
+ * not in this fixture. Pinned value by value in operator-special-forces-tops.test.ts
+ * and operator-deadlift-elite-over-200.test.ts.
+ *
  * NOTE: this fixture is a snapshot of THIS repository's generated data, so it
  * catches drift here but cannot see the app move — run
  * `npm run check:app-ors -- <path to tpf-app>` for that.

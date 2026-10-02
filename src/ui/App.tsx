@@ -5,7 +5,6 @@ import {
   analyseWeaknesses,
   computeCapacityIndex,
   computeHRS,
-  estimatedPercentile,
   toComponentScoreMap,
 } from '../engine';
 import type {
@@ -35,7 +34,8 @@ import { EmailCapture } from './EmailCapture';
 import { BrowseStandards } from './BrowseStandards';
 import { Landing } from './Landing';
 import { Footer } from './Footer';
-import { benchmarkLabel, componentLabel, formatPercentile } from './format';
+import { benchmarkLabel, componentLabel } from './format';
+import { resultShareText } from './resultCopy';
 import { event } from '../lib/analytics';
 import { shareScoreCard } from './shareCard';
 import { habsLevelInfo } from '../engine/levels';
@@ -115,8 +115,11 @@ export function App() {
   const weakness = useMemo(() => analyseWeaknesses(result), [result]);
   const hasData = result.overall != null;
 
-  // Data-driven overall percentile from the pool; falls back to the tier estimate
-  // until a (sex, age-band) cell has enough trusted submissions.
+  // Data-driven overall percentile from the pool. The server returns null
+  // until the (sex, age-band) cell has enough trusted submissions, and then
+  // NO percentile is shown: the tiers are TPF's own standards, not population
+  // percentiles, so there is nothing honest to estimate one from (2026-10-02,
+  // src/ui/resultCopy.ts).
   const [poolPct, setPoolPct] = useState<number | null>(null);
   const [poolN, setPoolN] = useState<number | null>(null);
   useEffect(() => {
@@ -134,7 +137,6 @@ export function App() {
     }, 400);
     return () => { cancelled = true; clearTimeout(t); };
   }, [pathwayId, profile.sex, profile.ageYears, result.overall]);
-  const percentile = poolPct ?? estimatedPercentile(result.overall);
 
   // Radar axes: per-lift for strength pathways, per-component otherwise.
   const radarAxes = useMemo<RadarAxis[]>(() => {
@@ -171,11 +173,15 @@ export function App() {
 
   function copyResult() {
     if (result.overall == null) return;
-    const weak = weakness.limiters.map(componentLabel).join(', ') || '—';
-    const text =
-      `My ${META.scoreLabel} — ${pathway.label}: ${Math.round(result.overall)}/100 ` +
-      `(≈ ${formatPercentile(percentile)} percentile). Weakest: ${weak}. ` +
-      `Score yours free → ${SITE}`;
+    const text = resultShareText({
+      scoreLabel: META.scoreLabel,
+      pathwayLabel: pathway.label,
+      overall: result.overall,
+      livePercentile: poolPct,
+      poolN,
+      weak: weakness.limiters.map(componentLabel).join(', '),
+      site: SITE,
+    });
     navigator.clipboard?.writeText(text).then(
       () => setShareMsg('Copied — paste it anywhere.'),
       () => setShareMsg('Couldn’t copy automatically.'),
@@ -363,9 +369,9 @@ export function App() {
               capacity={capacity}
               weakness={weakness}
               pathwayLabel={pathway.label}
-              percentile={percentile}
-              percentileLive={poolPct != null}
+              livePercentile={poolPct}
               percentileN={poolPct != null ? poolN : null}
+              poolAvailable={isSupabaseConfigured}
               showCapacity={showWods}
               stacked
               scoreLabel={META.scoreLabel}

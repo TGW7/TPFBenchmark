@@ -94,7 +94,7 @@ export function BrowseStandards({ benchmarks, wods, sex, unisex, onSexChange }: 
         absolute — kg for lifts, times for runs and the erg (fixed-load
         sports don&apos;t scale with bodyweight, so the standards don&apos;t
         either). Enter your stats in the Calculator to see your scores and
-        percentile.
+        tiers.
       </p>
       {/* 2026-10-02 — standards rebuild: the stated basis of every tier (see
           docs/STANDARDS.md). Keep this in step with that file. */}

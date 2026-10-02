@@ -1,17 +1,25 @@
 # HRS — Hybrid Readiness Score
 
 A fitness-benchmarking engine + app for CrossFit and hybrid athletes. A single
-**0–100 % readiness score** (with a small bonus to a 110 % cap) that grades an
+**0–100 readiness score** (elite is a hard ceiling — no bonus above it since
+2026-07-11, as in the TPF app) that grades an
 athlete against a **pathway-specific** set of benchmarks, plus a WOD layer and a
 signature **Capacity Index** diagnostic alongside it.
 
-> **Status: v1 live (Lift) · Operator standards landed.** Engine, scoring, UI and
-> accounts (Supabase + two-way app sync) are complete and tested. **Lift scores on
-> real v1-beta standards**, codegen'd from `config/standards/TPF_HRS_Standards_*.xlsx`
-> (see `docs/STANDARDS.md`). The real **ORS matrix** (15 unit pathways) is in the
-> repo too; wiring it into Operator *scoring* is the next step (it's a unisex,
-> absolute-kg, per-unit model). No standards numbers are hardcoded in TS — they all
+> **Status: v1 live (Lift and Operator).** Engine, scoring, UI and accounts
+> (Supabase + two-way app sync) are complete and tested. **Lift scores on real
+> v1-beta standards**, codegen'd from `config/standards/TPF_HRS_Standards_*.xlsx`
+> (see `docs/STANDARDS.md`). **Operator scores on the curated ORS master**,
+> `config/standards/TPF_Operator_Standards.xlsx` — **16 units** (10 US, 6 UK;
+> 190 benchmark definitions), a unisex, absolute-kg, per-unit model; 13 of the
+> units mirror the TPF app's ORS and are checked against it with
+> `npm run check:app-ors`. No standards numbers are hardcoded in TS — they all
 > flow from the Excel masters via codegen.
+>
+> *Corrected 2026-10-02: this said "the real ORS matrix (15 unit pathways) … wiring
+> it into Operator scoring is the next step". Operator has scored on the curated
+> master since 2026-07; the count is 16 since the US Navy (PRT) unit was added on
+> 2026-10-02.*
 
 ## ORS lineage
 
@@ -19,8 +27,9 @@ HRS is a standalone off-shoot of the **Operational Readiness Score (ORS)** and
 mirrors that engine's architecture and naming where it makes sense:
 
 - The **tier curve** (`pass / good / excellent / elite` anchored at
-  `50 / 70 / 85 / 100 %`, with elite bonus and lower-is-better inversion) is
-  reused verbatim from ORS.
+  `50 / 70 / 85 / 100`, with lower-is-better inversion) is reused from ORS. The
+  elite bonus it once had was removed on 2026-07-11 (elite is the ceiling).
+  The tiers are TPF's own standards, not population percentiles.
 - Components, pathways, missing-data re-normalisation and coverage follow ORS.
 - The optional **grip** and **rucking** components are ORS carry-overs, shipped
   off by default.
@@ -47,8 +56,11 @@ raw input
 
 - **8 scored components:** running, erg_engine, lower_strength, upper_strength,
   olympic, power, gymnastics, core_endurance (+ optional grip, rucking).
-- **4 pathways:** crossfit_generalist, hyrox, strength_lean, endurance_lean.
-  Each pathway's component weights **must sum to 100** (enforced in tests).
+- **7 Lift pathways:** gym_goer, hybrid_athlete, crossfit_generalist, hyrox,
+  powerlifter, bodybuilder, triathlete (the Hybrid brand shows a subset);
+  Operator scores per unit. Each pathway's component weights **must sum to
+  100** (enforced in tests). *(Corrected 2026-10-02 — this listed four
+  pathways, crossfit_generalist, hyrox, strength_lean and endurance_lean.)*
 - **Missing data is never penalised:** untested components are dropped and the
   remaining pathway weights re-normalised. `coverage` reports the fraction of the
   pathway's weight actually tested.
@@ -94,10 +106,12 @@ src/
     weakness.ts        rank components, flag limiters & coverage gaps
   config/              engine-facing standards catalogue (from codegen)
     generated/         AUTO-GENERATED — do not hand-edit
-  data/                in-memory stores + SYNTHETIC demo dataset
+  data/                stores, Supabase remote + app sync, the pool, and the
+                       sample athlete's SYNTHETIC inputs (demo.ts)
   ui/                  React UI (Vite) — dashboard, radar, entry, WOD log
     theme.css          the ONLY place colour hex lives (4 TPF tokens)
-  test/                Vitest unit tests (synthetic thresholds only)
+  test/                Vitest: engine tests on synthetic thresholds, plus
+                       lockstep pins on the real generated standards
 ```
 
 ## Develop
@@ -139,7 +153,10 @@ alerts and negative Capacity Index.
 
 ## What's deliberately NOT done
 
-- No real thresholds, weights, standards or quality-mix numbers (the whole
-  point — they arrive from the workbook).
+- ~~No real thresholds, weights, standards or quality-mix numbers (the whole
+  point — they arrive from the workbook).~~ *Superseded: real v1-beta standards
+  now arrive from the workbooks for Lift and Operator (see Status).*
 - WODs / Capacity Index are not folded into the core HRS in v1.
-- No persistence/auth/backend — `src/data` is an in-memory holding pen.
+- ~~No persistence/auth/backend — `src/data` is an in-memory holding pen.~~
+  *Superseded: Supabase accounts, the percentile pool and two-way app sync are
+  built (`src/data/remote.ts`, `src/data/appSync.ts`).*

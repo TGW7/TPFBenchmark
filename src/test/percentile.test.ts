@@ -1,20 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { ageBand, estimatedPercentile, percentileRank, profileCell } from '../engine/percentile';
+import { ageBand, percentileRank, profileCell } from '../engine/percentile';
 
-describe('estimatedPercentile', () => {
-  it('maps tier anchors to their methodology percentiles', () => {
-    expect(estimatedPercentile(50)).toBeCloseTo(50);
-    expect(estimatedPercentile(70)).toBeCloseTo(70);
-    expect(estimatedPercentile(85)).toBeCloseTo(85);
-    expect(estimatedPercentile(100)).toBeCloseTo(99); // elite = ceiling ≈ top 1%
-  });
-  it('interpolates and clamps', () => {
-    expect(estimatedPercentile(60)).toBeCloseTo(60); // halfway pass->good
-    expect(estimatedPercentile(0)).toBe(0);
-    expect(estimatedPercentile(110)).toBeCloseTo(99); // clamped to the 100 ceiling
-    expect(estimatedPercentile(null)).toBeNull();
-  });
-});
+// 2026-10-02 — the `estimatedPercentile` tests were removed with the function:
+// a tier score is not a percentile (src/engine/percentile.ts header). What
+// replaced them is src/test/no-percentile-claims.test.ts.
 
 describe('ageBand', () => {
   it('buckets ages', () => {
