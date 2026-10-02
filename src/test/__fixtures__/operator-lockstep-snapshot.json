@@ -614,10 +614,10 @@
         "unit": "sec",
         "lowerIsBetter": true,
         "thresholds": {
-          "pass": 750,
-          "good": 600,
-          "excellent": 540,
-          "elite": 480
+          "pass": 825,
+          "good": 660,
+          "excellent": 594,
+          "elite": 528
         }
       },
       {
@@ -1090,10 +1090,10 @@
         "unit": "sec",
         "lowerIsBetter": true,
         "thresholds": {
-          "pass": 750,
-          "good": 690,
-          "excellent": 630,
-          "elite": 570
+          "pass": 810,
+          "good": 645,
+          "excellent": 585,
+          "elite": 510
         }
       },
       {
@@ -1158,8 +1158,8 @@
         "thresholds": {
           "pass": 30,
           "good": 45,
-          "excellent": 60,
-          "elite": 75
+          "excellent": 57,
+          "elite": 67
         }
       },
       {
@@ -1167,10 +1167,10 @@
         "unit": "reps",
         "lowerIsBetter": false,
         "thresholds": {
-          "pass": 30,
-          "good": 45,
-          "excellent": 60,
-          "elite": 75
+          "pass": 33,
+          "good": 43,
+          "excellent": 51,
+          "elite": 58
         }
       },
       {
@@ -1612,10 +1612,10 @@
         "unit": "sec",
         "lowerIsBetter": true,
         "thresholds": {
-          "pass": 863,
-          "good": 690,
-          "excellent": 621,
-          "elite": 552
+          "pass": 948,
+          "good": 759,
+          "excellent": 683,
+          "elite": 607
         }
       },
       {

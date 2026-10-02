@@ -1,5 +1,20 @@
 # Standards Audit — July 2026 (external validation)
 
+> **2026-10-02 — read this first.** This is a record of a July 2026
+> *validation* pass, kept as written. Several of the references it compared
+> against — Strength Level / Running Level / Rowing Level, the Kilgore tables,
+> Concept2 rankings, parkrun statistics, the WOD-logging and WOD-calculator
+> sites, the third-party percentiles printed in PMC8228530 beside that study's
+> own sample, HyroxDataLab and other analyses of HYROX results — are sources
+> TPF has no permission to use. **None of them is the basis of any standard
+> now.** Every tier is TPF's own (owner-set), checked against permitted
+> anchors only; see `docs/STANDARDS.md` → "Provenance (honest) — rebuilt
+> 2026-10-02". The 2 km row recommendations below (built on Concept2
+> rankings) are superseded: the 2 km row was rebuilt that day from the US Navy
+> PRT 2,000 m row and the GB Rowing 2026 senior minimum, the 500 m row is now
+> derived from it, and the HYROX race Elite is anchored on Rappelt et al. 2026
+> (CC BY) instead of a results-site distribution.
+
 Full validation of the live HABS standards against external references. **No
 standards were changed** — this is the evidence + recommendations for PTI
 review. Approved changes go through the Excel master / `seed-standards.mjs` →
