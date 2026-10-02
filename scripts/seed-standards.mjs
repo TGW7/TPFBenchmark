@@ -2,7 +2,13 @@
  * Seed the Excel master with v1 BETA standards, then `npm run codegen` flows
  * them into /config. Re-runnable (idempotent): edit the values here, re-run.
  *
- * PROVENANCE / HONESTY:
+ * ⚠ RETIRED (refuses to run on the six-tier workbook) and its provenance
+ * note below is HISTORY: since the 2026-10-02 standards rebuild every tier is
+ * TPF's own (owner-set), checked against permitted anchors only — see
+ * docs/STANDARDS.md. The OpenPowerlifting / WMA attributions below describe
+ * the original v1-beta seed and are not the basis of any current standard.
+ *
+ * PROVENANCE / HONESTY (v1-beta, superseded):
  *   These are EXPERT-CURATED STARTER tiers for a trained-adult population,
  *   anchored to the methodology (pass≈50th / good≈70th / excellent≈85th /
  *   elite≈top 1–2% percentile). Powerlifts lean on OpenPowerlifting (CC0)

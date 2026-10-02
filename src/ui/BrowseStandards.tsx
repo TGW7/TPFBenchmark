@@ -1,5 +1,5 @@
 /**
- * Browse Standards — Strength-Level-style reference tables. No input needed:
+ * Browse Standards — tier reference tables. No input needed:
  * pick a sex and read the tier thresholds per benchmark.
  *
  * Uses whatever standards are loaded (synthetic demo today; real Excel later).
@@ -95,6 +95,14 @@ export function BrowseStandards({ benchmarks, wods, sex, unisex, onSexChange }: 
         sports don&apos;t scale with bodyweight, so the standards don&apos;t
         either). Enter your stats in the Calculator to see your scores and
         percentile.
+      </p>
+      {/* 2026-10-02 — standards rebuild: the stated basis of every tier (see
+          docs/STANDARDS.md). Keep this in step with that file. */}
+      <p className="subtle" style={{ marginTop: 8 }}>
+        These are Take Point Fitness&apos;s own standards. Where a reference
+        we&apos;re allowed to use exists — openly licensed research or a public
+        military fitness test — they&apos;re checked against it; none is copied
+        from a third-party chart.
       </p>
     </div>
   );

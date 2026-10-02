@@ -18,6 +18,21 @@
  * A FAILURE here means the generated Operator data changed — expected after
  * a deliberate edit (re-run the snapshot generator described in that commit
  * to update the fixture), a real problem if unexpected.
+ *
+ * 2026-10-02 — standards rebuild (tpf-app docs/build/51_STANDARDS_REBUILD_2026-10-02.md
+ * §2.10). Five benchmarks in the fixture were edited by hand to the app's new
+ * values — and only those five; every other value is the 2026-07-28 snapshot:
+ *   us_police_pft 1_5_mile_run   750/690/630/570 → 810/645/585/510 (US Navy PRT
+ *                                1.5-mile, men 20-24 — was stated as Cooper)
+ *   us_police_pft push_ups_1_min  30/45/60/75 → 30/45/57/67 (USAF PFRA, men <25)
+ *   us_police_pft sit_ups_1_min   30/45/60/75 → 33/43/51/58 (USAF PFRA, men <25)
+ *   navy_seal_bud_s 500_m_swim   750/600/540/480 → 825/660/594/528 (the PST
+ *                                swim is 500 YARDS; × 1.0995 to 500 m)
+ *   uk_royal_marines_cdo_course 500_m_swim 863/690/621/552 → 948/759/683/607
+ *                                (derived: the corrected SEAL swim × 1.15)
+ * All twelve app-mirrored units were re-compared with the app's
+ * operational_readiness.ts the same day (a textual read of that file): no
+ * other threshold differs.
  */
 import { describe, expect, it } from 'vitest';
 import { OPERATOR_PATHWAYS } from '../config/generated/operator.generated';

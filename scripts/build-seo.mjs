@@ -290,8 +290,8 @@ for (const b of liftBench) {
     lede: `How does your ${label.toLowerCase()} stack up? These are the ${tierNames} tiers (${dir}), by sex.`,
     body: table(['Tier', 'Male', 'Female'], rows) +
       (sixTier
-        ? `<p class="note">Tiers map to roughly the 50th / 60th / 70th / 80th / 90th / 100th percentile of trained athletes.</p>`
-        : `<p class="note">Tiers map to roughly the 50th / 70th / 85th / top 5% of trained athletes.</p>`) +
+        ? `<p class="note">These are Take Point Fitness's own standards, set to sit at roughly the 50th / 60th / 70th / 80th / 90th / 100th percentile of trained athletes, and checked against openly licensed research or public test tables where one exists.</p>`
+        : `<p class="note">These are Take Point Fitness's own standards, set to sit at roughly the 50th / 70th / 85th / top 5% of trained athletes, and checked against openly licensed research or public test tables where one exists.</p>`) +
       (inPathways.length ? `<p>Counts toward: ${inPathways.map(([l, s]) => `<a href="/pathways/${s}/">${esc(l)}</a>`).join(' · ')}</p>` : '') +
       `<h2>How to improve your ${esc(label)}</h2>` + bullets(tips) +
       faqHtml(faqs),
@@ -357,7 +357,7 @@ for (const u of operator) {
     h1: `${u.label} Fitness Standards`,
     lede: `Could you meet the ${u.label} standard? These are the per-event tiers (unisex, absolute) used to score readiness.`,
     body: table(['Benchmark', 'Pass', 'Good', 'Excellent', 'Elite'], rows) +
-      `<p class="note">${u.region} unit. Some tiers are expert-derived (beta) and recalibrate with athlete data.</p>` +
+      `<p class="note">${u.region} unit. Where the unit's published test or a public military fitness table exists, tiers are set from or checked against it; the rest are Take Point Fitness's own (beta) and recalibrate with athlete data.</p>` +
       faqHtml(faqs),
     jsonLd: [
       breadcrumb(OP_HOST, [{ name: 'Home', path: '/' }, { name: 'Operator Units', path: '/units/' }, { name: u.label, path: `/units/${slug}/` }]),

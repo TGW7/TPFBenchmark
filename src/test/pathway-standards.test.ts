@@ -49,7 +49,17 @@ describe('absolute standards (2026-07-12 conversion)', () => {
       barbell_row_1rm:  { M: [55, 65, 80, 95, 115, 130],      F: [30, 40, 50, 60, 70, 78] },
       run_1mi:          { M: [545, 455, 390, 370, 330, 300],  F: [620, 520, 455, 435, 395, 360] },
       run_5k:           { M: [1805, 1500, 1320, 1170, 1140, 1050], F: [2080, 1735, 1525, 1355, 1335, 1245] },
-      row_2k:           { M: [555, 505, 460, 425, 405, 390],  F: [640, 580, 525, 485, 455, 435] },
+      // 2026-10-02 — standards rebuild (tpf-app docs/build/51_STANDARDS_REBUILD_2026-10-02.md
+      // §2.3): the 2 km row was derived from a third-party logbook TPF has no
+      // permission to use, so the app rebuilt it from the US Navy PRT 2,000 m
+      // row (ages 17-19) + the GB Rowing 2026 senior minimum × 1.07. Was
+      // M [555, 505, 460, 425, 405, 390] / F [640, 580, 525, 485, 455, 435].
+      row_2k:           { M: [560, 510, 460, 420, 405, 390],  F: [640, 580, 520, 480, 465, 450] },
+      // 2026-10-02 — the 500 m row is now DERIVED from the 2 km row, as the
+      // app derives it (riegelStd(row_2k, (500/2000)^1.06, 1) — Riegel 1.06 at
+      // 1 s steps). Was M [110, 105, 100, 95, 90, 85] / F [125, 120, 115, 110,
+      // 105, 102], a third-party-ranking ladder the app no longer copies.
+      row_500m:         { M: [129, 117, 106, 97, 93, 90],     F: [147, 133, 120, 110, 107, 104] },
       // 2026-07-13 (round 13) — triathlete swim/bike benchmarks. Base rows
       // ARE the triathlete calibration (only that pathway weights them);
       // app source: hybrid_readiness.ts SWIM_400/BIKE_20K + riegelStd.
@@ -82,6 +92,15 @@ describe('absolute standards (2026-07-12 conversion)', () => {
     // silently drift again. Powerlifter/hyrox/hybrid_athlete had already
     // been exact-verified by other tests in this file; included here too
     // for one single source of truth.
+    //
+    // 2026-10-02 — standards rebuild (tpf-app docs/build/51_STANDARDS_REBUILD_2026-10-02.md):
+    // row_2k moved on the base ladder (so on every pathway that inherits it),
+    // and row_500m is now derived from each pathway's EFFECTIVE row_2k
+    // (riegelStd(row_2k, (500/2000)^1.06, 1), as the app's standards_links.ts
+    // does), so it is pinned per pathway too. The same check also found that
+    // the app has carried barbell_row overrides for hyrox / triathlete /
+    // powerlifter / bodybuilder since 2026-07-12, which this test had wrongly
+    // pinned as "inherits base" — those are now the app's values.
     const shared: Record<string, Record<string, { M: number[]; F: number[] }>> = {
       hybrid_athlete: {
         back_squat_1rm: { M: [80, 100, 120, 145, 165, 190], F: [50, 60, 75, 90, 105, 120] },
@@ -92,7 +111,8 @@ describe('absolute standards (2026-07-12 conversion)', () => {
         barbell_row_1rm: { M: [55, 65, 80, 95, 115, 130], F: [30, 40, 50, 60, 70, 78] },
         run_1mi: { M: [545, 455, 390, 370, 330, 300], F: [620, 520, 455, 435, 395, 360] },
         run_5k: { M: [1805, 1500, 1320, 1170, 1140, 1050], F: [2080, 1735, 1525, 1355, 1335, 1245] },
-        row_2k: { M: [555, 505, 460, 425, 405, 390], F: [640, 580, 525, 485, 455, 435] },
+        row_2k: { M: [560, 510, 460, 420, 405, 390], F: [640, 580, 520, 480, 465, 450] },
+        row_500m: { M: [129, 117, 106, 97, 93, 90], F: [147, 133, 120, 110, 107, 104] },
       },
       gym_goer: {
         back_squat_1rm: { M: [80, 100, 120, 145, 165, 190], F: [50, 60, 75, 90, 105, 120] },
@@ -104,6 +124,8 @@ describe('absolute standards (2026-07-12 conversion)', () => {
         run_1mi: { M: [620, 545, 470, 415, 375, 345], F: [725, 635, 550, 490, 445, 410] },
         run_5k: { M: [2080, 1815, 1575, 1385, 1240, 1140], F: [2355, 2080, 1825, 1610, 1450, 1350] },
         row_2k: { M: [580, 530, 485, 445, 420, 405], F: [660, 605, 550, 505, 475, 460] },
+        // 2026-10-02 — derived from this pathway's own row_2k (was the base 500 m ladder).
+        row_500m: { M: [133, 122, 112, 102, 97, 93], F: [152, 139, 127, 116, 109, 106] },
       },
       crossfit_generalist: {
         back_squat_1rm: { M: [85, 110, 135, 160, 185, 210], F: [60, 75, 90, 110, 130, 150] },
@@ -116,6 +138,8 @@ describe('absolute standards (2026-07-12 conversion)', () => {
         run_1mi: { M: [570, 505, 440, 385, 345, 330], F: [660, 580, 500, 445, 405, 380] },
         run_5k: { M: [1870, 1670, 1480, 1315, 1190, 1110], F: [2110, 1885, 1670, 1490, 1365, 1290] },
         row_2k: { M: [545, 495, 450, 415, 395, 380], F: [620, 565, 520, 485, 455, 440] },
+        // 2026-10-02 — derived from this pathway's own row_2k (was the base 500 m ladder).
+        row_500m: { M: [125, 114, 104, 95, 91, 87], F: [143, 130, 120, 112, 105, 101] },
       },
       hyrox: {
         back_squat_1rm: { M: [70, 85, 105, 130, 150, 170], F: [45, 55, 70, 85, 95, 110] },
@@ -123,11 +147,15 @@ describe('absolute standards (2026-07-12 conversion)', () => {
         bench_1rm: { M: [55, 65, 80, 95, 110, 125], F: [30, 40, 50, 60, 65, 75] },
         strict_press_1rm: { M: [35, 45, 50, 60, 70, 80], F: [20, 25, 30, 40, 45, 52] },
         power_clean_1rm: { M: [45, 55, 65, 80, 90, 105], F: [30, 40, 45, 55, 65, 72] },
-        // no run/row/barbell_row override — inherits base
-        barbell_row_1rm: { M: [55, 65, 80, 95, 115, 130], F: [30, 40, 50, 60, 70, 78] },
+        // 2026-10-02 — the app's own override (since 2026-07-12); this test
+        // used to pin the base ladder [55, 65, 80, 95, 115, 130] / [30, 40,
+        // 50, 60, 70, 78] here, which was a drift, not the app's value.
+        barbell_row_1rm: { M: [45, 55, 70, 85, 95, 110], F: [30, 40, 45, 55, 65, 72] },
+        // no run/row override — inherits base
         run_1mi: { M: [545, 455, 390, 370, 330, 300], F: [620, 520, 455, 435, 395, 360] },
         run_5k: { M: [1805, 1500, 1320, 1170, 1140, 1050], F: [2080, 1735, 1525, 1355, 1335, 1245] },
-        row_2k: { M: [555, 505, 460, 425, 405, 390], F: [640, 580, 525, 485, 455, 435] },
+        row_2k: { M: [560, 510, 460, 420, 405, 390], F: [640, 580, 520, 480, 465, 450] },
+        row_500m: { M: [129, 117, 106, 97, 93, 90], F: [147, 133, 120, 110, 107, 104] },
       },
       triathlete: {
         back_squat_1rm: { M: [65, 75, 90, 110, 125, 145], F: [45, 55, 70, 85, 95, 110] },
@@ -135,13 +163,15 @@ describe('absolute standards (2026-07-12 conversion)', () => {
         bench_1rm: { M: [45, 55, 65, 80, 90, 105], F: [25, 40, 45, 55, 60, 70] },
         strict_press_1rm: { M: [30, 40, 45, 55, 60, 70], F: [20, 25, 30, 35, 40, 48] },
         power_clean_1rm: { M: [40, 50, 55, 65, 80, 90], F: [25, 35, 40, 50, 60, 66] },
-        // no barbell_row override — inherits base
-        barbell_row_1rm: { M: [55, 65, 80, 95, 115, 130], F: [30, 40, 50, 60, 70, 78] },
+        // 2026-10-02 — the app's own override (since 2026-07-12), not the base
+        // ladder this test used to pin (see the comment at the top).
+        barbell_row_1rm: { M: [40, 50, 60, 70, 85, 95], F: [25, 40, 45, 55, 60, 70] },
         run_1mi: { M: [515, 460, 405, 355, 315, 280], F: [600, 535, 470, 415, 365, 330] },
         run_5k: { M: [1735, 1520, 1325, 1175, 1060, 980], F: [2010, 1770, 1545, 1375, 1245, 1160] },
         // round 13 — row_2k override removed (erg weight 0 for the
         // triathlete: it can never be scored) → falls back to base.
-        row_2k: { M: [555, 505, 460, 425, 405, 390], F: [640, 580, 525, 485, 455, 435] },
+        row_2k: { M: [560, 510, 460, 420, 405, 390], F: [640, 580, 520, 480, 465, 450] },
+        row_500m: { M: [129, 117, 106, 97, 93, 90], F: [147, 133, 120, 110, 107, 104] },
         // No override for these either — the base table's own swim/bike
         // rows ARE the triathlete calibration (triathlete is the only
         // pathway that weights them). Asserted separately in the base-table
@@ -159,11 +189,14 @@ describe('absolute standards (2026-07-12 conversion)', () => {
         bench_1rm: { M: [85, 105, 130, 160, 195, 240], F: [50, 60, 75, 90, 110, 135] },
         strict_press_1rm: { M: [55, 65, 80, 95, 110, 135], F: [35, 40, 45, 55, 65, 75] },
         power_clean_1rm: { M: [50, 60, 75, 90, 105, 120], F: [30, 40, 50, 60, 70, 78] },
-        // no run/row/barbell_row override — inherits base
-        barbell_row_1rm: { M: [55, 65, 80, 95, 115, 130], F: [30, 40, 50, 60, 70, 78] },
+        // 2026-10-02 — the app's own override (since 2026-07-12), not the base
+        // ladder this test used to pin (see the comment at the top).
+        barbell_row_1rm: { M: [80, 95, 115, 135, 150, 170], F: [45, 55, 65, 75, 90, 105] },
+        // no run/row override — inherits base
         run_1mi: { M: [545, 455, 390, 370, 330, 300], F: [620, 520, 455, 435, 395, 360] },
         run_5k: { M: [1805, 1500, 1320, 1170, 1140, 1050], F: [2080, 1735, 1525, 1355, 1335, 1245] },
-        row_2k: { M: [555, 505, 460, 425, 405, 390], F: [640, 580, 525, 485, 455, 435] },
+        row_2k: { M: [560, 510, 460, 420, 405, 390], F: [640, 580, 520, 480, 465, 450] },
+        row_500m: { M: [129, 117, 106, 97, 93, 90], F: [147, 133, 120, 110, 107, 104] },
       },
       bodybuilder: {
         back_squat_1rm: { M: [80, 100, 135, 160, 185, 210], F: [50, 60, 85, 100, 115, 130] },
@@ -171,11 +204,14 @@ describe('absolute standards (2026-07-12 conversion)', () => {
         bench_1rm: { M: [70, 85, 100, 120, 140, 160], F: [40, 50, 55, 65, 75, 85] },
         strict_press_1rm: { M: [40, 50, 65, 75, 90, 100], F: [20, 30, 40, 45, 55, 62] },
         power_clean_1rm: { M: [50, 60, 75, 90, 105, 120], F: [30, 40, 50, 60, 70, 78] },
-        // no run/row/barbell_row override — inherits base
-        barbell_row_1rm: { M: [55, 65, 80, 95, 115, 130], F: [30, 40, 50, 60, 70, 78] },
+        // 2026-10-02 — the app's own override (since 2026-07-12), not the base
+        // ladder this test used to pin (see the comment at the top).
+        barbell_row_1rm: { M: [55, 65, 95, 115, 130, 150], F: [30, 40, 50, 60, 70, 82] },
+        // no run/row override — inherits base
         run_1mi: { M: [545, 455, 390, 370, 330, 300], F: [620, 520, 455, 435, 395, 360] },
         run_5k: { M: [1805, 1500, 1320, 1170, 1140, 1050], F: [2080, 1735, 1525, 1355, 1335, 1245] },
-        row_2k: { M: [555, 505, 460, 425, 405, 390], F: [640, 580, 525, 485, 455, 435] },
+        row_2k: { M: [560, 510, 460, 420, 405, 390], F: [640, 580, 520, 480, 465, 450] },
+        row_500m: { M: [129, 117, 106, 97, 93, 90], F: [147, 133, 120, 110, 107, 104] },
       },
     };
     for (const [pathway, byBenchmark] of Object.entries(shared)) {
@@ -304,6 +340,34 @@ describe('per-pathway overrides', () => {
       const other = cfg.benchmarksFor(p).map((b) => b.id);
       expect(other, p).not.toContain('swim_400m');
       expect(other, p).not.toContain('bike_20k');
+    }
+  });
+});
+
+describe('WOD ladders shared with tpf-app (2026-10-02)', () => {
+  it('Fran / Helen / Cindy / HYROX match the app six-tier ladders, both sexes', () => {
+    // 2026-10-02 — standards rebuild. The app's Benchmarks catalogue reads
+    // these as its six-tier ladders (tpf-app src/lib/benchmark_tests.ts
+    // FRAN_/HELEN_/CINDY_/HYROX_{MEN,WOMEN}_6); Fran, Helen and Cindy are
+    // TPF's own and came FROM this repo, HYROX was rebuilt in the app:
+    // Elite = Rappelt et al. 2026 (CC BY) season-7 ELITE median × 1.187, the
+    // lower tiers keeping each sex's old spacing. Men's HYROX is unchanged;
+    // women's was [6600, 6300, 6000, 5560, 5140, 4740] (1:50:00 … 1:19:00).
+    // Tuple order: pass, novice, good, intermediate, advanced, elite.
+    const shared: Record<string, { M: number[]; F: number[] }> = {
+      fran: { M: [360, 300, 240, 220, 195, 165], F: [420, 360, 300, 280, 250, 210] },
+      helen: { M: [840, 750, 660, 580, 510, 450], F: [960, 870, 780, 680, 590, 510] },
+      cindy: { M: [12, 15, 18, 21, 23, 25], F: [10, 13, 16, 19, 21, 22] },
+      hyrox_race: { M: [5700, 5430, 5160, 4800, 4440, 4080], F: [6270, 5970, 5700, 5280, 4890, 4500] },
+    };
+    for (const [id, tiers] of Object.entries(shared)) {
+      for (const sex of ['M', 'F'] as const) {
+        const t = WOD_STANDARDS[id as keyof typeof WOD_STANDARDS].thresholds[sex];
+        expect(
+          [t.pass, t.novice, t.good, t.intermediate, t.advanced, t.elite],
+          `${id}/${sex}`,
+        ).toEqual(tiers[sex]);
+      }
     }
   });
 });

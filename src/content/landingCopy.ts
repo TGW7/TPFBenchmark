@@ -82,7 +82,12 @@ const LIFT: LandingCopy = {
       'We train the way you do — and we got tired of grinding for months with no clear signal it was working.',
     authority: [
       'Built by ex-British Army PTIs',
-      'Transparent, percentile-based standards — no black box',
+      // 2026-10-02 — was 'Transparent, percentile-based standards — no black
+      // box'. The tiers are TPF's own (owner-set), checked against openly
+      // licensed research or public test tables where one exists (several
+      // have none — docs/STANDARDS.md lists the gaps); none is derived from a
+      // third-party percentile chart.
+      'Our own standards, checked against open data where it exists',
       'Free to use · private, no tracking',
     ],
   },

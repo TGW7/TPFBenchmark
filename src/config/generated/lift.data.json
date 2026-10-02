@@ -8,12 +8,12 @@
       "lowerIsBetter": true,
       "normalization": "absolute",
       "optional": false,
-      "dataSource": "WMA age-grade + open race data",
-      "license": "CC BY 4.0",
-      "commercialUse": "Yes (attribute WMA)",
-      "referencePopulation": "General / masters runners",
-      "launchMethod": "Licensed data + expert",
-      "notes": "Age/sex normalised via WMA factors"
+      "dataSource": "TPF's own standards (owner-set; elite = the 5-500 club's sub-5 mile), checked against the USATF 2025 road open standards as age-grade % (CC0) and the US Army Fitness Test 2-mile run (2025 score tables, a US government work)",
+      "license": "TPF's own",
+      "commercialUse": "Yes",
+      "referencePopulation": "Trained adults (hybrid)",
+      "launchMethod": "Owner-set; checked against permitted anchors (2026-10-02)",
+      "notes": "Absolute time, split by sex; no age adjustment (the age-grading hook is off)"
     },
     {
       "id": "run_5k",
@@ -23,12 +23,12 @@
       "lowerIsBetter": true,
       "normalization": "absolute",
       "optional": false,
-      "dataSource": "WMA age-grade + open race distributions",
-      "license": "CC BY 4.0",
-      "commercialUse": "Yes (attribute WMA)",
-      "referencePopulation": "General runners",
-      "launchMethod": "Licensed data + expert",
-      "notes": "parkrun aggregate distributions a useful reference — confirm their data policy first"
+      "dataSource": "TPF's own standards (owner-set; owner round 12: Intermediate under 20:00), checked against the USATF 2025 road open standards as age-grade % (CC0) and the US Army Fitness Test 2-mile run (2025 score tables, a US government work)",
+      "license": "TPF's own",
+      "commercialUse": "Yes",
+      "referencePopulation": "Trained adults (hybrid)",
+      "launchMethod": "Owner-set; checked against permitted anchors (2026-10-02)",
+      "notes": "Absolute time, split by sex; no age adjustment (the age-grading hook is off)"
     },
     {
       "id": "row_2k",
@@ -38,12 +38,12 @@
       "lowerIsBetter": true,
       "normalization": "absolute",
       "optional": false,
-      "dataSource": "Concept2 rankings (reference only)",
-      "license": "Proprietary",
-      "commercialUse": "License required",
-      "referencePopulation": "Concept2 loggers (enthusiast-biased)",
-      "launchMethod": "Own-data + expert",
-      "notes": "Do NOT ingest C2 data commercially without written consent; seed tiers via expert + own users"
+      "dataSource": "TPF's own standards, rebuilt 2026-10-02: Beginner / Novice / Experienced / Intermediate = the US Navy PRT 2,000 m row categories, ages 17-19 (Probationary / Good Medium / Excellent Medium / Outstanding High — Guide-5 PRT, Jan 2025, a US government work); Elite = the GB Rowing Team 2026 senior trials minimum ergo standard (6:05 M / 7:00 F, a published participation minimum) x 1.07 for a non-specialist; Advanced = midway",
+      "license": "TPF's own (anchors: a US government work; a published selection minimum)",
+      "commercialUse": "Yes",
+      "referencePopulation": "Trained adults (hybrid)",
+      "launchMethod": "Rebuilt from permitted anchors (2026-10-02)",
+      "notes": "Replaces a ladder derived from a third-party logbook TPF has no permission to use (2026-10-02)"
     },
     {
       "id": "row_500m",
@@ -53,12 +53,12 @@
       "lowerIsBetter": true,
       "normalization": "absolute",
       "optional": false,
-      "dataSource": "Concept2 rankings (reference only)",
-      "license": "Proprietary",
-      "commercialUse": "License required",
-      "referencePopulation": "Concept2 loggers",
-      "launchMethod": "Own-data + expert",
-      "notes": "As row_2k — license or skip; seed expert"
+      "dataSource": "TPF's own: derived from TPF's 2 km row ladder (row_2k) with Riegel's formula, exponent 1.06, at 1 s steps — the same derivation the TPF app uses (2026-10-02)",
+      "license": "TPF's own",
+      "commercialUse": "Yes",
+      "referencePopulation": "Trained adults (hybrid)",
+      "launchMethod": "Derived from row_2k (2026-10-02)",
+      "notes": "Derived — change the 2 km row, not this (2026-10-02)"
     },
     {
       "id": "back_squat_1rm",
@@ -68,12 +68,12 @@
       "lowerIsBetter": false,
       "normalization": "absolute",
       "optional": false,
-      "dataSource": "StrengthLevel + Kilgore 2023 + IPF/USAPL (reference); expert-curated absolute tiers",
-      "license": "CC0 / public domain",
-      "commercialUse": "Yes (no restriction)",
-      "referencePopulation": "Competitive lifters (strong-biased)",
-      "launchMethod": "Licensed data (adjust for general pop)",
-      "notes": "Squat contested in PL; rich by sex/BW/age | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+      "dataSource": "TPF's own ladders (owner rounds 8, 9 and 12), checked against van den Hoek et al. 2024 (J Sci Med Sport 27:734, CC BY — tested raw powerlifting x bodyweight deciles) at 85 kg M / 65 kg F, with the specialist-to-generalist discount measured from Meier, Rabel, Schmidt 2021 (Sports 9:80, CC BY)",
+      "license": "TPF's own",
+      "commercialUse": "Yes",
+      "referencePopulation": "Trained adults (hybrid)",
+      "launchMethod": "Owner-set; checked against permitted anchors (2026-10-02)",
+      "notes": "Absolute kg (owner 2026-07-12: fixed-load sports don't scale with bodyweight)"
     },
     {
       "id": "front_squat_1rm",
@@ -83,12 +83,12 @@
       "lowerIsBetter": false,
       "normalization": "absolute",
       "optional": false,
-      "dataSource": "StrengthLevel + Kilgore 2023 + IPF/USAPL (reference); expert-curated absolute tiers",
-      "license": "n/a",
+      "dataSource": "TPF's own: about 0.82 x TPF's back-squat ladder (a TPF ratio); checked 2026-10-02 — every tier within 5 kg of 0.82 x the back squat",
+      "license": "TPF's own",
       "commercialUse": "Yes",
       "referencePopulation": "Trained adults",
-      "launchMethod": "Coach-curated (~0.82x back squat)",
-      "notes": "Front squat 1RM | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+      "launchMethod": "TPF ratio off the back squat",
+      "notes": "Absolute kg (owner 2026-07-12: fixed-load sports don't scale with bodyweight)"
     },
     {
       "id": "deadlift_1rm",
@@ -98,12 +98,12 @@
       "lowerIsBetter": false,
       "normalization": "absolute",
       "optional": false,
-      "dataSource": "StrengthLevel + Kilgore 2023 + IPF/USAPL (reference); expert-curated absolute tiers",
-      "license": "CC0 / public domain",
-      "commercialUse": "Yes (no restriction)",
-      "referencePopulation": "Competitive lifters",
-      "launchMethod": "Licensed data (adjust)",
-      "notes": "Contested in PL | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+      "dataSource": "TPF's own ladders (owner rounds 8, 9 and 12), checked against van den Hoek et al. 2024 (J Sci Med Sport 27:734, CC BY — tested raw powerlifting x bodyweight deciles) at 85 kg M / 65 kg F, with the specialist-to-generalist discount measured from Meier, Rabel, Schmidt 2021 (Sports 9:80, CC BY)",
+      "license": "TPF's own",
+      "commercialUse": "Yes",
+      "referencePopulation": "Trained adults (hybrid)",
+      "launchMethod": "Owner-set; checked against permitted anchors (2026-10-02)",
+      "notes": "Absolute kg (owner 2026-07-12: fixed-load sports don't scale with bodyweight)"
     },
     {
       "id": "bench_1rm",
@@ -113,12 +113,12 @@
       "lowerIsBetter": false,
       "normalization": "absolute",
       "optional": false,
-      "dataSource": "StrengthLevel + Kilgore 2023 + IPF/USAPL (reference); expert-curated absolute tiers",
-      "license": "CC0 / public domain",
-      "commercialUse": "Yes (no restriction)",
-      "referencePopulation": "Competitive lifters",
-      "launchMethod": "Licensed data (adjust)",
-      "notes": "Bench contested in PL | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+      "dataSource": "TPF's own ladders (owner rounds 8, 9 and 12), checked against van den Hoek et al. 2024 (J Sci Med Sport 27:734, CC BY — tested raw powerlifting x bodyweight deciles) at 85 kg M / 65 kg F, with the specialist-to-generalist discount measured from Meier, Rabel, Schmidt 2021 (Sports 9:80, CC BY)",
+      "license": "TPF's own",
+      "commercialUse": "Yes",
+      "referencePopulation": "Trained adults (hybrid)",
+      "launchMethod": "Owner-set; checked against permitted anchors (2026-10-02)",
+      "notes": "Absolute kg (owner 2026-07-12: fixed-load sports don't scale with bodyweight)"
     },
     {
       "id": "strict_press_1rm",
@@ -128,12 +128,12 @@
       "lowerIsBetter": false,
       "normalization": "absolute",
       "optional": false,
-      "dataSource": "StrengthLevel + Kilgore 2023 + IPF/USAPL (reference); expert-curated absolute tiers",
-      "license": "None",
-      "commercialUse": "Expert",
-      "referencePopulation": "Own users",
-      "launchMethod": "Expert-curated + own-data",
-      "notes": "Anchor ratio vs bench / bodyweight; refine from own data | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+      "dataSource": "TPF's own ladder. No openly licensed population norm exists; checked only against published ratios (women's overhead press ≈ 0.5-0.6 of men's absolute — Nuzzo 2023 review) and the CrossFit sample of Meier, Rabel, Schmidt 2021 (Sports 9:80, CC BY)",
+      "license": "TPF's own",
+      "commercialUse": "Yes",
+      "referencePopulation": "Trained adults (hybrid)",
+      "launchMethod": "Owner-set; ratio checks only (2026-10-02)",
+      "notes": "Absolute kg (owner 2026-07-12: fixed-load sports don't scale with bodyweight)"
     },
     {
       "id": "barbell_row_1rm",
@@ -143,12 +143,12 @@
       "lowerIsBetter": false,
       "normalization": "absolute",
       "optional": false,
-      "dataSource": "Mirrors tpf-app habs_pathway_standards.ts / hybrid_readiness.ts",
-      "license": "n/a",
+      "dataSource": "TPF's own ladder (the TPF app's base table, mirrored 2026-07-19). No openly licensed population norm exists (a gap)",
+      "license": "TPF's own",
       "commercialUse": "Yes",
       "referencePopulation": "Trained adults",
       "launchMethod": "Mirrored from tpf-app (2026-07-19)",
-      "notes": ""
+      "notes": "Absolute kg (owner 2026-07-12: fixed-load sports don't scale with bodyweight)"
     },
     {
       "id": "snatch_1rm",
@@ -158,12 +158,12 @@
       "lowerIsBetter": false,
       "normalization": "absolute",
       "optional": false,
-      "dataSource": "StrengthLevel + Kilgore 2023 + IPF/USAPL (reference); expert-curated absolute tiers",
-      "license": "Proprietary / unclear",
-      "commercialUse": "License required / expert",
-      "referencePopulation": "Elite weightlifters",
-      "launchMethod": "Expert-curated + own-data",
-      "notes": "Comp data elite-biased; anchor with coaching ratios | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+      "dataSource": "TPF's own expert-curated tiers (set by TPF in TPF Benchmark); checked 2026-10-02: snatch = 0.71-0.81 x clean & jerk across these tiers (published: 0.77 in a CrossFit sample, 0.79-0.84 for world records); women's = 0.60-0.70 x men's (published: 0.65-0.72); against Meier, Rabel, Schmidt 2021 (Sports 9:80, CC BY, a CrossFit sample) the median sits at about Intermediate and the top 10 % at about Elite",
+      "license": "TPF's own",
+      "commercialUse": "Yes",
+      "referencePopulation": "Trained adults (hybrid / CrossFit)",
+      "launchMethod": "Expert-curated (TPF)",
+      "notes": "Absolute kg (owner 2026-07-12: fixed-load sports don't scale with bodyweight)"
     },
     {
       "id": "clean_jerk_1rm",
@@ -173,12 +173,12 @@
       "lowerIsBetter": false,
       "normalization": "absolute",
       "optional": false,
-      "dataSource": "StrengthLevel + Kilgore 2023 + IPF/USAPL (reference); expert-curated absolute tiers",
-      "license": "Proprietary / unclear",
-      "commercialUse": "License required / expert",
-      "referencePopulation": "Elite weightlifters",
-      "launchMethod": "Expert-curated + own-data",
-      "notes": "As snatch | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+      "dataSource": "TPF's own expert-curated tiers (set by TPF in TPF Benchmark); checked 2026-10-02: snatch = 0.71-0.81 x clean & jerk across these tiers (published: 0.77 in a CrossFit sample, 0.79-0.84 for world records); women's = 0.60-0.70 x men's (published: 0.65-0.72); against Meier, Rabel, Schmidt 2021 (Sports 9:80, CC BY, a CrossFit sample) the median sits at about Intermediate and the top 10 % at about Elite",
+      "license": "TPF's own",
+      "commercialUse": "Yes",
+      "referencePopulation": "Trained adults (hybrid / CrossFit)",
+      "launchMethod": "Expert-curated (TPF)",
+      "notes": "Absolute kg (owner 2026-07-12: fixed-load sports don't scale with bodyweight)"
     },
     {
       "id": "power_clean_1rm",
@@ -188,12 +188,12 @@
       "lowerIsBetter": false,
       "normalization": "absolute",
       "optional": false,
-      "dataSource": "StrengthLevel + Kilgore 2023 + IPF/USAPL (reference); expert-curated absolute tiers",
-      "license": "None",
-      "commercialUse": "Expert",
-      "referencePopulation": "Own users",
-      "launchMethod": "Expert-curated + own-data",
-      "notes": "Ratio vs clean & jerk; refine from own data | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW) | 2026-07-12: absolute kg (owner: fixed-load sports don't scale with BW)"
+      "dataSource": "TPF's own ladder. No openly licensed population norm exists; checked only against ratios — power clean = 0.60-0.64 x TPF's back squat (M), 0.60-0.67 (F), against 0.55-0.60 published for team-sport athletes",
+      "license": "TPF's own",
+      "commercialUse": "Yes",
+      "referencePopulation": "Trained adults (hybrid)",
+      "launchMethod": "Owner-set; ratio checks only (2026-10-02)",
+      "notes": "Absolute kg (owner 2026-07-12: fixed-load sports don't scale with bodyweight)"
     },
     {
       "id": "broad_jump",
@@ -203,11 +203,11 @@
       "lowerIsBetter": false,
       "normalization": "absolute",
       "optional": false,
-      "dataSource": "Athletic / combine normative data + expert",
-      "license": "Mixed / public norms",
-      "commercialUse": "Check per source",
-      "referencePopulation": "Athletic test populations",
-      "launchMethod": "Published norms + own-data",
+      "dataSource": "TPF's own (expert-set). No openly licensed population table has been checked yet (a gap)",
+      "license": "TPF's own",
+      "commercialUse": "Yes",
+      "referencePopulation": "Trained adults",
+      "launchMethod": "Expert-set (TPF)",
       "notes": "Sex-split absolute distance"
     },
     {
@@ -218,8 +218,8 @@
       "lowerIsBetter": false,
       "normalization": "absolute",
       "optional": false,
-      "dataSource": "Expert-curated (no public dataset)",
-      "license": "None",
+      "dataSource": "TPF's own (expert-set). No openly licensed population table exists to check against (a gap)",
+      "license": "TPF's own",
       "commercialUse": "Expert",
       "referencePopulation": "Own users",
       "launchMethod": "Expert-curated + own-data",
@@ -233,8 +233,8 @@
       "lowerIsBetter": false,
       "normalization": "absolute",
       "optional": false,
-      "dataSource": "Expert-curated",
-      "license": "None",
+      "dataSource": "TPF's own (expert-set). No openly licensed population table exists to check against (a gap)",
+      "license": "TPF's own",
       "commercialUse": "Expert",
       "referencePopulation": "Own users",
       "launchMethod": "Expert-curated + own-data",
@@ -248,8 +248,8 @@
       "lowerIsBetter": false,
       "normalization": "absolute",
       "optional": false,
-      "dataSource": "Expert-curated",
-      "license": "None",
+      "dataSource": "TPF's own (expert-set). No openly licensed population table exists to check against (a gap)",
+      "license": "TPF's own",
       "commercialUse": "Expert",
       "referencePopulation": "Own users",
       "launchMethod": "Expert-curated + own-data",
@@ -263,8 +263,8 @@
       "lowerIsBetter": false,
       "normalization": "absolute",
       "optional": false,
-      "dataSource": "Expert-curated",
-      "license": "None",
+      "dataSource": "TPF's own (expert-set). No openly licensed population table exists to check against (a gap)",
+      "license": "TPF's own",
       "commercialUse": "Expert",
       "referencePopulation": "Own users",
       "launchMethod": "Expert-curated + own-data",
@@ -278,8 +278,8 @@
       "lowerIsBetter": false,
       "normalization": "absolute",
       "optional": false,
-      "dataSource": "Expert-curated",
-      "license": "None",
+      "dataSource": "TPF's own (expert-set). No openly licensed population table exists to check against (a gap)",
+      "license": "TPF's own",
       "commercialUse": "Expert",
       "referencePopulation": "Own users",
       "launchMethod": "Expert-curated + own-data",
@@ -293,11 +293,11 @@
       "lowerIsBetter": false,
       "normalization": "absolute",
       "optional": false,
-      "dataSource": "Normative fitness data + expert",
-      "license": "Mixed",
-      "commercialUse": "Expert",
-      "referencePopulation": "Own users",
-      "launchMethod": "Expert-curated + own-data",
+      "dataSource": "TPF's own (expert-set). Not yet checked against a permitted table — the US Army Fitness Test and USAF PFRA plank tables (US government works) could anchor it (a gap)",
+      "license": "TPF's own",
+      "commercialUse": "Yes",
+      "referencePopulation": "Trained adults",
+      "launchMethod": "Expert-set (TPF)",
       "notes": "Longer = better (higher_is_better)"
     },
     {
@@ -308,8 +308,8 @@
       "lowerIsBetter": false,
       "normalization": "absolute",
       "optional": true,
-      "dataSource": "Expert-curated",
-      "license": "None",
+      "dataSource": "TPF's own (expert-set). No openly licensed population table exists to check against (a gap)",
+      "license": "TPF's own",
       "commercialUse": "Expert",
       "referencePopulation": "Own users",
       "launchMethod": "Optional — off by default",
@@ -323,8 +323,8 @@
       "lowerIsBetter": true,
       "normalization": "absolute",
       "optional": true,
-      "dataSource": "Expert / military standards",
-      "license": "Mixed",
+      "dataSource": "TPF's own (expert-set); optional, off by default — not checked against a permitted table",
+      "license": "TPF's own",
       "commercialUse": "Expert",
       "referencePopulation": "Own users",
       "launchMethod": "Optional — off by default",
@@ -338,11 +338,11 @@
       "lowerIsBetter": true,
       "normalization": "absolute",
       "optional": false,
-      "dataSource": "FINA/USMS pace ladders + triathlon AG results",
-      "license": "Expert-curated",
+      "dataSource": "TPF's own triathlete-pathway anchor (round 13: elite 4:45 M ≈ 1:11/100 m), checked against the US Navy PRT 500-yd swim (a US government work), converted to 400 m with Riegel exponent 1.06",
+      "license": "TPF's own",
       "commercialUse": "Yes",
       "referencePopulation": "Triathletes (pool 400 m TT)",
-      "launchMethod": "Expert-seeded",
+      "launchMethod": "Owner-set; checked against a permitted anchor (2026-10-02)",
       "notes": "Triathlete pathway only (2026-07-13)"
     },
     {
@@ -353,8 +353,8 @@
       "lowerIsBetter": true,
       "normalization": "absolute",
       "optional": false,
-      "dataSource": "Riegel-derived from swim_400m (exp 1.06)",
-      "license": "Expert-curated",
+      "dataSource": "TPF's own: Riegel-derived from swim_400m (exp 1.06)",
+      "license": "TPF's own",
       "commercialUse": "Yes",
       "referencePopulation": "Triathletes",
       "launchMethod": "Expert-seeded",
@@ -368,11 +368,11 @@
       "lowerIsBetter": true,
       "normalization": "absolute",
       "optional": false,
-      "dataSource": "TT speed ladders + triathlon AG bike splits",
-      "license": "Expert-curated",
+      "dataSource": "TPF's own triathlete-pathway anchor (round 13: elite 27:00 M ≈ 44 km/h). No permitted anchor yet (a gap)",
+      "license": "TPF's own",
       "commercialUse": "Yes",
       "referencePopulation": "Triathletes (20 km TT)",
-      "launchMethod": "Expert-seeded",
+      "launchMethod": "Owner-set (TPF)",
       "notes": "Triathlete pathway only (2026-07-13)"
     },
     {
@@ -383,8 +383,8 @@
       "lowerIsBetter": true,
       "normalization": "absolute",
       "optional": false,
-      "dataSource": "Riegel-derived from bike_20k (exp 1.05)",
-      "license": "Expert-curated",
+      "dataSource": "TPF's own: Riegel-derived from bike_20k (exp 1.05)",
+      "license": "TPF's own",
       "commercialUse": "Yes",
       "referencePopulation": "Triathletes",
       "launchMethod": "Expert-seeded",
@@ -434,42 +434,42 @@
     },
     "row_2k": {
       "M": {
-        "pass": 555,
-        "novice": 505,
+        "pass": 560,
+        "novice": 510,
         "good": 460,
         "excellent": 410,
-        "intermediate": 425,
+        "intermediate": 420,
         "advanced": 405,
         "elite": 390
       },
       "F": {
         "pass": 640,
         "novice": 580,
-        "good": 525,
-        "excellent": 465,
-        "intermediate": 485,
-        "advanced": 455,
-        "elite": 435
+        "good": 520,
+        "excellent": 470,
+        "intermediate": 480,
+        "advanced": 465,
+        "elite": 450
       }
     },
     "row_500m": {
       "M": {
-        "pass": 110,
-        "novice": 105,
-        "good": 100,
-        "excellent": 93,
-        "intermediate": 95,
-        "advanced": 90,
-        "elite": 85
+        "pass": 129,
+        "novice": 117,
+        "good": 106,
+        "excellent": 95,
+        "intermediate": 97,
+        "advanced": 93,
+        "elite": 90
       },
       "F": {
-        "pass": 125,
-        "novice": 120,
-        "good": 115,
-        "excellent": 107,
+        "pass": 147,
+        "novice": 133,
+        "good": 120,
+        "excellent": 109,
         "intermediate": 110,
-        "advanced": 105,
-        "elite": 102
+        "advanced": 107,
+        "elite": 104
       }
     },
     "back_squat_1rm": {
@@ -934,6 +934,26 @@
           "advanced": 475,
           "elite": 460
         }
+      },
+      "row_500m": {
+        "M": {
+          "pass": 133,
+          "novice": 122,
+          "good": 112,
+          "excellent": 100,
+          "intermediate": 102,
+          "advanced": 97,
+          "elite": 93
+        },
+        "F": {
+          "pass": 152,
+          "novice": 139,
+          "good": 127,
+          "excellent": 113,
+          "intermediate": 116,
+          "advanced": 109,
+          "elite": 106
+        }
       }
     },
     "crossfit_generalist": {
@@ -1136,6 +1156,26 @@
           "advanced": 455,
           "elite": 440
         }
+      },
+      "row_500m": {
+        "M": {
+          "pass": 125,
+          "novice": 114,
+          "good": 104,
+          "excellent": 93,
+          "intermediate": 95,
+          "advanced": 91,
+          "elite": 87
+        },
+        "F": {
+          "pass": 143,
+          "novice": 130,
+          "good": 120,
+          "excellent": 109,
+          "intermediate": 112,
+          "advanced": 105,
+          "elite": 101
+        }
       }
     },
     "hyrox": {
@@ -1254,6 +1294,26 @@
           "novice": 40,
           "good": 45,
           "excellent": 59,
+          "intermediate": 55,
+          "advanced": 65,
+          "elite": 72
+        }
+      },
+      "barbell_row_1rm": {
+        "M": {
+          "pass": 45,
+          "novice": 55,
+          "good": 70,
+          "excellent": 90,
+          "intermediate": 85,
+          "advanced": 95,
+          "elite": 110
+        },
+        "F": {
+          "pass": 30,
+          "novice": 40,
+          "good": 45,
+          "excellent": 60,
           "intermediate": 55,
           "advanced": 65,
           "elite": 72
@@ -1420,6 +1480,26 @@
           "advanced": 1245,
           "elite": 1160
         }
+      },
+      "barbell_row_1rm": {
+        "M": {
+          "pass": 40,
+          "novice": 50,
+          "good": 60,
+          "excellent": 78,
+          "intermediate": 70,
+          "advanced": 85,
+          "elite": 95
+        },
+        "F": {
+          "pass": 25,
+          "novice": 40,
+          "good": 45,
+          "excellent": 58,
+          "intermediate": 55,
+          "advanced": 60,
+          "elite": 70
+        }
       }
     },
     "powerlifter": {
@@ -1522,6 +1602,26 @@
           "advanced": 65,
           "elite": 75
         }
+      },
+      "barbell_row_1rm": {
+        "M": {
+          "pass": 80,
+          "novice": 95,
+          "good": 115,
+          "excellent": 143,
+          "intermediate": 135,
+          "advanced": 150,
+          "elite": 170
+        },
+        "F": {
+          "pass": 45,
+          "novice": 55,
+          "good": 65,
+          "excellent": 83,
+          "intermediate": 75,
+          "advanced": 90,
+          "elite": 105
+        }
       }
     },
     "bodybuilder": {
@@ -1623,6 +1723,26 @@
           "intermediate": 45,
           "advanced": 55,
           "elite": 62
+        }
+      },
+      "barbell_row_1rm": {
+        "M": {
+          "pass": 55,
+          "novice": 65,
+          "good": 95,
+          "excellent": 123,
+          "intermediate": 115,
+          "advanced": 130,
+          "elite": 150
+        },
+        "F": {
+          "pass": 30,
+          "novice": 40,
+          "good": 50,
+          "excellent": 65,
+          "intermediate": 60,
+          "advanced": 70,
+          "elite": 82
         }
       }
     }
@@ -1902,13 +2022,13 @@
           "elite": 4080
         },
         "F": {
-          "pass": 6600,
-          "novice": 6300,
-          "good": 6000,
-          "excellent": 5340,
-          "intermediate": 5560,
-          "advanced": 5140,
-          "elite": 4740
+          "pass": 6270,
+          "novice": 5970,
+          "good": 5700,
+          "excellent": 5070,
+          "intermediate": 5280,
+          "advanced": 4890,
+          "elite": 4500
         }
       },
       "load": {
