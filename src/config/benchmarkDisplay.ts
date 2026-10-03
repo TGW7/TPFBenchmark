@@ -44,6 +44,10 @@ export const BENCHMARK_DISPLAY: Record<string, BenchmarkDisplay> = {
   plank_hold: { label: 'Plank Hold', slug: 'plank', tip: 'core' },
   broad_jump: { label: 'Broad Jump', slug: 'broad-jump', tip: 'power' },
   // No dedicated SEO page today — label only (see build-seo.mjs's liftBench filter).
+  // 2026-10-03 — the 10 km and half marathon join for the HABS alignment
+  // (the app's running-distance component); no page of their own yet.
+  run_10k: { label: '10k Run' },
+  run_half: { label: 'Half Marathon' },
   swim_400m: { label: '400m Swim' },
   swim_1500m: { label: '1500m Swim' },
   bike_20k: { label: '20km Bike TT' },

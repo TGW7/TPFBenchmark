@@ -10,6 +10,7 @@
     "build:operator-standards": "node scripts/build-operator-standards.mjs",
     "check:app-ors": "node scripts/check-operator-vs-app.mjs",
     "check:app-lift": "node scripts/check-lift-vs-app.mjs",
+    "check:app-habs": "node scripts/check-habs-vs-app.mjs",
     "predev": "npm run codegen",
     "dev": "vite",
     "prebuild": "npm run codegen",

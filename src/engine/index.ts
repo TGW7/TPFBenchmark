@@ -23,6 +23,25 @@ export {
   validatePathwayWeights,
 } from './score';
 export type { ComputeHrsArgs, PathwayWeightValidation } from './score';
+export {
+  HABS_COMPONENT_IDS,
+  HABS_EPLEY_DIVISOR,
+  HABS_OLY_REP_DIVISOR,
+  habsLadder,
+  habsScoreValue,
+  habsOneRepMax,
+  habsRawValue,
+  habsBenchmarkScore,
+  computeHabs,
+  habsAsHrsResult,
+} from './habs';
+export type {
+  HabsLadder,
+  HabsBenchmarkResult,
+  HabsComponentResult,
+  HabsResult,
+  ComputeHabsArgs,
+} from './habs';
 export { WOD_CORE_WEIGHT, scoreWod } from './wod';
 export {
   predictWodPercent,

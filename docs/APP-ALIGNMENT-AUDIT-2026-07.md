@@ -49,6 +49,18 @@ that's fragile.
 > are no longer the same model. When that diverged was not traced, and nothing
 > was changed for it; it needs a decision (re-mirror the app's model here, or
 > state that the site's composite is its own), not a value edit.
+>
+> **Decided and done, later on 2026-10-03.** The owner: *"make HABS score
+> align"* — the first option. The site's HABS score is now the app's model
+> (components, literal weights in a new `HABS_Weights` sheet, curve, 1RM
+> estimate, combination rule), with the 10 km and half marathon added; the
+> site's old 8-component composite now feeds only the Capacity Index.
+> `npm run check:app-habs -- <path to tpf-app>` compares the two engines'
+> scores on 708 synthetic athletes and the model data: 0 differences. Measured
+> before the change on the same athletes: 396 of the 665 scored by both
+> differed by more than 0.5 (up to 38.5 points). The record is
+> `docs/HABS-ALIGNMENT-2026-10-03.md`; how the app derived its weights from this
+> workbook's Weights sheet is its §1.5.
 
 ## 2. ORS — was significantly diverged; now mirrored
 

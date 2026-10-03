@@ -25,9 +25,15 @@ export interface BuildPoolArgs {
 
 /** Pool cell key for the composite overall score. Versioned: v2 =
  *  2026-07-12 absolute per-pathway recalibration — old rows scored on the
- *  ×BW calibration must not mix into the new percentile cells. */
-export function overallPoolKey(pathwayId: string): string {
-  return `overall:${pathwayId}:v2`;
+ *  ×BW calibration must not mix into the new percentile cells. v3 =
+ *  2026-10-03, the HABS brands only — the HABS score moved to the TPF app's
+ *  model (other components, other weights; docs/HABS-ALIGNMENT-2026-10-03.md),
+ *  so a v2 HABS composite is a different number and must not rank a v3 one.
+ *  The v2 rows are left in the table untouched (nothing here rewrites stored
+ *  data); the per-benchmark rows are raw values and keep their cells.
+ *  Operator's score did not change, so its cells stay on v2. */
+export function overallPoolKey(pathwayId: string, brand: Brand = 'lift'): string {
+  return `overall:${pathwayId}:${brand === 'operator' ? 'v2' : 'v3'}`;
 }
 
 export function buildPoolSubmissions(args: BuildPoolArgs): PoolRow[] {
@@ -74,7 +80,7 @@ export function buildPoolSubmissions(args: BuildPoolArgs): PoolRow[] {
   if (args.pathwayId && args.overall != null) {
     rows.push({
       brand: args.brand,
-      benchmark_id: overallPoolKey(args.pathwayId),
+      benchmark_id: overallPoolKey(args.pathwayId, args.brand),
       sex: args.profile.sex,
       age_band: band,
       bodyweight_kg: args.profile.bodyweightKg,

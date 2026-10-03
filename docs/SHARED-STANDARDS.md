@@ -71,6 +71,15 @@ only needs `weights` (→ `habs_pathways.ts` equivalent) and `standards` +
 `sourcing` (→ `operational_readiness.ts` equivalent); the rest (WOD data) is
 benchmark-site-only and safe to ignore.
 
+*2026-10-03 (`docs/HABS-ALIGNMENT-2026-10-03.md`):* the sentence above is out of
+date for HABS. The app's `HABS_PATHWAY_WEIGHTS` are **not** `weights` — they are
+the new `habsWeights` key (the workbook's `HABS_Weights` sheet, the app's own
+literal numbers), and each `sourcing` row now carries `habsComponent`. `weights`
+is still in the payload; it is the site's 8-component table, which the app
+derived its HABS weights from and which now feeds only this site's Capacity
+Index. (Not checked: whether anything has been published to the table — the
+status list below, unverified here, says the first publish is still pending.)
+
 ## Status
 
 - [x] Migration written (`supabase/migrations/0003_published_standards.sql`)

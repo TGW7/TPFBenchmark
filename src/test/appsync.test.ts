@@ -210,4 +210,33 @@ describe('appSync mappers (benchmark ↔ app profile JSONB)', () => {
     const back = logsFromAppProfile(undefined, { run: { '1.5mile': { timeSec: 700, updatedAt: 'x' } } }, 'operator');
     expect(back.raceTimes[0].benchmarkId).toBe('1_5_mile_run');
   });
+
+  // 2026-10-03 — the HABS alignment (docs/HABS-ALIGNMENT-2026-10-03.md).
+  it('the 10 km and half marathon sync both ways (the app\'s run `10k` / `half`, which its HABS reads)', () => {
+    const logs: AthleteLogs = {
+      orm: [], manual: [], wod: [],
+      raceTimes: [
+        { benchmarkId: 'run_10k', modality: 'run', event: 'run_10k', timeSec: 2400 },
+        { benchmarkId: 'run_half', modality: 'run', event: 'run_half', timeSec: 5400 },
+      ],
+    };
+    const patch = racePatchFromLogs(logs, '2026-10-03T00:00:00Z');
+    expect(patch.run['10k']).toMatchObject({ timeSec: 2400, predicted: false });
+    expect(patch.run.half).toMatchObject({ timeSec: 5400, predicted: false });
+    const back = logsFromAppProfile(undefined, { run: { '10k': { timeSec: 2400, updatedAt: 'x' }, half: { timeSec: 5400, updatedAt: 'x' } } }, 'hybrid');
+    expect(back.raceTimes.map((e) => e.benchmarkId).sort()).toEqual(['run_10k', 'run_half']);
+  });
+
+  it('a time the app saved as a PREDICTION is not pulled as a result (and so is never written back as one)', () => {
+    const back = logsFromAppProfile(undefined, {
+      run: {
+        '5k': { timeSec: 1320, updatedAt: 'x' },
+        '10k': { timeSec: 2750, updatedAt: 'x', predicted: true },
+        half: { timeSec: 6070, updatedAt: 'x', predicted: true },
+      },
+      row: { '2k': { timeSec: 420, updatedAt: 'x', predicted: false } },
+    }, 'hybrid');
+    expect(back.raceTimes.map((e) => e.benchmarkId).sort()).toEqual(['row_2k', 'run_5k']);
+    expect(racePatchFromLogs(back, 'now').run['10k']).toBeUndefined();
+  });
 });

@@ -7,6 +7,7 @@
 
 import type {
   ComponentId,
+  HabsComponentId,
   Normalization,
   PathwayId,
   Sex,
@@ -29,6 +30,9 @@ export interface SourcingRow {
   referencePopulation: string;
   launchMethod: string;
   notes: string;
+  /** The HABS component this benchmark feeds (the TPF app's model), or null
+   *  for a TPF Benchmark standard outside the HABS score (2026-10-03). */
+  habsComponent: HabsComponentId | null;
 }
 
 export interface WodStandard {
@@ -53,7 +57,8 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Yes",
     "referencePopulation": "Trained adults (hybrid)",
     "launchMethod": "Owner-set; checked against permitted anchors (2026-10-02)",
-    "notes": "Absolute time, split by sex; no age adjustment (the age-grading hook is off)"
+    "notes": "Absolute time, split by sex; no age adjustment (the age-grading hook is off)",
+    "habsComponent": "run_intensity"
   },
   {
     "id": "run_5k",
@@ -68,7 +73,40 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Yes",
     "referencePopulation": "Trained adults (hybrid)",
     "launchMethod": "Owner-set; checked against permitted anchors (2026-10-02)",
-    "notes": "Absolute time, split by sex; no age adjustment (the age-grading hook is off)"
+    "notes": "Absolute time, split by sex; no age adjustment (the age-grading hook is off)",
+    "habsComponent": "run_intensity"
+  },
+  {
+    "id": "run_10k",
+    "component": "running",
+    "source": "race_times",
+    "unit": "mm:ss",
+    "lowerIsBetter": true,
+    "normalization": "absolute",
+    "optional": false,
+    "dataSource": "TPF's own: derived from TPF's 5 km ladder (run_5k) with Riegel's formula, exponent 1.06, to the nearest 10 s — the same derivation the TPF app's HABS uses at runtime (2026-10-03)",
+    "license": "TPF's own",
+    "commercialUse": "Yes",
+    "referencePopulation": "Trained adults (hybrid)",
+    "launchMethod": "Derived from run_5k (2026-10-03)",
+    "notes": "Derived — change the 5 km, not this (2026-10-03)",
+    "habsComponent": "run_distance"
+  },
+  {
+    "id": "run_half",
+    "component": "running",
+    "source": "race_times",
+    "unit": "mm:ss",
+    "lowerIsBetter": true,
+    "normalization": "absolute",
+    "optional": false,
+    "dataSource": "TPF's own: derived from TPF's 5 km ladder (run_5k) with Riegel's formula, exponent 1.06, to the nearest 10 s — the same derivation the TPF app's HABS uses at runtime (2026-10-03)",
+    "license": "TPF's own",
+    "commercialUse": "Yes",
+    "referencePopulation": "Trained adults (hybrid)",
+    "launchMethod": "Derived from run_5k (2026-10-03)",
+    "notes": "Derived — change the 5 km, not this (2026-10-03)",
+    "habsComponent": "run_distance"
   },
   {
     "id": "row_2k",
@@ -83,7 +121,8 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Yes",
     "referencePopulation": "Trained adults (hybrid)",
     "launchMethod": "Rebuilt from permitted anchors (2026-10-02)",
-    "notes": "Replaces a ladder derived from a third-party logbook TPF has no permission to use (2026-10-02)"
+    "notes": "Replaces a ladder derived from a third-party logbook TPF has no permission to use (2026-10-02)",
+    "habsComponent": "erg"
   },
   {
     "id": "row_500m",
@@ -98,7 +137,8 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Yes",
     "referencePopulation": "Trained adults (hybrid)",
     "launchMethod": "Derived from row_2k (2026-10-02)",
-    "notes": "Derived — change the 2 km row, not this (2026-10-02)"
+    "notes": "Derived — change the 2 km row, not this (2026-10-02)",
+    "habsComponent": null
   },
   {
     "id": "back_squat_1rm",
@@ -113,7 +153,8 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Yes",
     "referencePopulation": "Trained adults (hybrid)",
     "launchMethod": "Owner-set; checked against permitted anchors (2026-10-02)",
-    "notes": "Absolute kg (owner 2026-07-12: fixed-load sports don't scale with bodyweight)"
+    "notes": "Absolute kg (owner 2026-07-12: fixed-load sports don't scale with bodyweight)",
+    "habsComponent": "lower_strength"
   },
   {
     "id": "front_squat_1rm",
@@ -128,7 +169,8 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Yes",
     "referencePopulation": "Trained adults",
     "launchMethod": "TPF ratio off the back squat",
-    "notes": "Absolute kg (owner 2026-07-12: fixed-load sports don't scale with bodyweight)"
+    "notes": "Absolute kg (owner 2026-07-12: fixed-load sports don't scale with bodyweight)",
+    "habsComponent": null
   },
   {
     "id": "deadlift_1rm",
@@ -143,7 +185,8 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Yes",
     "referencePopulation": "Trained adults (hybrid)",
     "launchMethod": "Owner-set; checked against permitted anchors (2026-10-02)",
-    "notes": "Absolute kg (owner 2026-07-12: fixed-load sports don't scale with bodyweight)"
+    "notes": "Absolute kg (owner 2026-07-12: fixed-load sports don't scale with bodyweight)",
+    "habsComponent": "lower_strength"
   },
   {
     "id": "bench_1rm",
@@ -158,7 +201,8 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Yes",
     "referencePopulation": "Trained adults (hybrid)",
     "launchMethod": "Owner-set; checked against permitted anchors (2026-10-02)",
-    "notes": "Absolute kg (owner 2026-07-12: fixed-load sports don't scale with bodyweight)"
+    "notes": "Absolute kg (owner 2026-07-12: fixed-load sports don't scale with bodyweight)",
+    "habsComponent": "upper_push"
   },
   {
     "id": "strict_press_1rm",
@@ -173,7 +217,8 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Yes",
     "referencePopulation": "Trained adults (hybrid)",
     "launchMethod": "Owner-set; ratio checks (2026-10-03)",
-    "notes": "Absolute kg (owner 2026-07-12: fixed-load sports don't scale with bodyweight)"
+    "notes": "Absolute kg (owner 2026-07-12: fixed-load sports don't scale with bodyweight)",
+    "habsComponent": "upper_push"
   },
   {
     "id": "barbell_row_1rm",
@@ -188,7 +233,8 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Yes",
     "referencePopulation": "Trained adults",
     "launchMethod": "Mirrored from tpf-app (2026-07-19)",
-    "notes": "Absolute kg (owner 2026-07-12: fixed-load sports don't scale with bodyweight)"
+    "notes": "Absolute kg (owner 2026-07-12: fixed-load sports don't scale with bodyweight)",
+    "habsComponent": "upper_pull"
   },
   {
     "id": "snatch_1rm",
@@ -203,7 +249,8 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Yes",
     "referencePopulation": "Trained adults (hybrid / CrossFit)",
     "launchMethod": "Expert-curated (TPF)",
-    "notes": "Absolute kg (owner 2026-07-12: fixed-load sports don't scale with bodyweight)"
+    "notes": "Absolute kg (owner 2026-07-12: fixed-load sports don't scale with bodyweight)",
+    "habsComponent": null
   },
   {
     "id": "clean_jerk_1rm",
@@ -218,7 +265,8 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Yes",
     "referencePopulation": "Trained adults (hybrid / CrossFit)",
     "launchMethod": "Expert-curated (TPF)",
-    "notes": "Absolute kg (owner 2026-07-12: fixed-load sports don't scale with bodyweight)"
+    "notes": "Absolute kg (owner 2026-07-12: fixed-load sports don't scale with bodyweight)",
+    "habsComponent": null
   },
   {
     "id": "power_clean_1rm",
@@ -233,7 +281,8 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Yes",
     "referencePopulation": "Trained adults (hybrid)",
     "launchMethod": "Owner-set; ratio checks only (2026-10-02)",
-    "notes": "Absolute kg (owner 2026-07-12: fixed-load sports don't scale with bodyweight)"
+    "notes": "Absolute kg (owner 2026-07-12: fixed-load sports don't scale with bodyweight)",
+    "habsComponent": "power"
   },
   {
     "id": "broad_jump",
@@ -248,7 +297,8 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Yes",
     "referencePopulation": "Trained adults",
     "launchMethod": "Expert-set (TPF); checked against permitted anchors (2026-10-03)",
-    "notes": "Sex-split absolute distance"
+    "notes": "Sex-split absolute distance",
+    "habsComponent": null
   },
   {
     "id": "strict_pullups",
@@ -263,7 +313,8 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Expert",
     "referencePopulation": "Own users",
     "launchMethod": "Expert-curated + own-data",
-    "notes": "Recalibrate from own data quickly"
+    "notes": "Recalibrate from own data quickly",
+    "habsComponent": null
   },
   {
     "id": "hspu",
@@ -278,7 +329,8 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Expert",
     "referencePopulation": "Own users",
     "launchMethod": "Expert-curated + own-data",
-    "notes": "Strict HSPU — head to floor, no kip, full lockout"
+    "notes": "Strict HSPU — head to floor, no kip, full lockout",
+    "habsComponent": null
   },
   {
     "id": "t2b",
@@ -293,7 +345,8 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Expert",
     "referencePopulation": "Own users",
     "launchMethod": "Expert-curated + own-data",
-    "notes": ""
+    "notes": "",
+    "habsComponent": null
   },
   {
     "id": "du_unbroken",
@@ -308,7 +361,8 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Expert",
     "referencePopulation": "Own users",
     "launchMethod": "Expert-curated + own-data",
-    "notes": "Unbroken double-unders"
+    "notes": "Unbroken double-unders",
+    "habsComponent": null
   },
   {
     "id": "max_mu",
@@ -323,7 +377,8 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Expert",
     "referencePopulation": "Own users",
     "launchMethod": "Expert-curated + own-data",
-    "notes": "Bar or ring — specify"
+    "notes": "Bar or ring — specify",
+    "habsComponent": null
   },
   {
     "id": "plank_hold",
@@ -338,7 +393,8 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Yes",
     "referencePopulation": "Trained adults",
     "launchMethod": "Expert-set (TPF)",
-    "notes": "Longer = better (higher_is_better)"
+    "notes": "Longer = better (higher_is_better)",
+    "habsComponent": null
   },
   {
     "id": "grip_deadhang",
@@ -353,7 +409,8 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Expert",
     "referencePopulation": "Own users",
     "launchMethod": "Optional — off by default",
-    "notes": "Carry-over from ORS"
+    "notes": "Carry-over from ORS",
+    "habsComponent": null
   },
   {
     "id": "ruck_time",
@@ -368,7 +425,8 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Expert",
     "referencePopulation": "Own users",
     "launchMethod": "Optional — off by default",
-    "notes": "Carry-over from ORS"
+    "notes": "Carry-over from ORS",
+    "habsComponent": null
   },
   {
     "id": "swim_400m",
@@ -383,7 +441,8 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Yes",
     "referencePopulation": "Triathletes (pool 400 m TT)",
     "launchMethod": "Owner-set; checked against a permitted anchor (2026-10-02)",
-    "notes": "Triathlete pathway only (2026-07-13)"
+    "notes": "Triathlete pathway only (2026-07-13)",
+    "habsComponent": "swimming"
   },
   {
     "id": "swim_1500m",
@@ -398,7 +457,8 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Yes",
     "referencePopulation": "Triathletes",
     "launchMethod": "Expert-seeded",
-    "notes": "Derived — tune the 400 m anchor, not this (2026-07-13)"
+    "notes": "Derived — tune the 400 m anchor, not this (2026-07-13)",
+    "habsComponent": "swimming"
   },
   {
     "id": "bike_20k",
@@ -413,7 +473,8 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Yes",
     "referencePopulation": "Triathletes (20 km TT)",
     "launchMethod": "Owner-set (TPF); checked against permitted anchors (2026-10-03)",
-    "notes": "Triathlete pathway only (2026-07-13)"
+    "notes": "Triathlete pathway only (2026-07-13)",
+    "habsComponent": "cycling"
   },
   {
     "id": "bike_40k",
@@ -428,7 +489,8 @@ export const BENCHMARK_SOURCING: SourcingRow[] = [
     "commercialUse": "Yes",
     "referencePopulation": "Triathletes",
     "launchMethod": "Expert-seeded",
-    "notes": "Derived — tune the 20 km anchor, not this (2026-07-13)"
+    "notes": "Derived — tune the 20 km anchor, not this (2026-07-13)",
+    "habsComponent": "cycling"
   }
 ];
 
@@ -473,6 +535,46 @@ export const STANDARDS_THRESHOLDS: Record<string, Record<Sex, ThresholdSet>> = {
       "intermediate": 1355,
       "advanced": 1335,
       "elite": 1245
+    }
+  },
+  "run_10k": {
+    "M": {
+      "pass": 3760,
+      "novice": 3130,
+      "good": 2750,
+      "excellent": 2470,
+      "intermediate": 2440,
+      "advanced": 2380,
+      "elite": 2190
+    },
+    "F": {
+      "pass": 4340,
+      "novice": 3620,
+      "good": 3180,
+      "excellent": 2880,
+      "intermediate": 2830,
+      "advanced": 2780,
+      "elite": 2600
+    }
+  },
+  "run_half": {
+    "M": {
+      "pass": 8300,
+      "novice": 6900,
+      "good": 6070,
+      "excellent": 5450,
+      "intermediate": 5380,
+      "advanced": 5240,
+      "elite": 4830
+    },
+    "F": {
+      "pass": 9570,
+      "novice": 7980,
+      "good": 7020,
+      "excellent": 6350,
+      "intermediate": 6230,
+      "advanced": 6140,
+      "elite": 5730
     }
   },
   "row_2k": {
@@ -962,6 +1064,46 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "elite": 1350
       }
     },
+    "run_10k": {
+      "M": {
+        "pass": 4340,
+        "novice": 3780,
+        "good": 3280,
+        "excellent": 2690,
+        "intermediate": 2890,
+        "advanced": 2590,
+        "elite": 2380
+      },
+      "F": {
+        "pass": 4910,
+        "novice": 4340,
+        "good": 3810,
+        "excellent": 3130,
+        "intermediate": 3360,
+        "advanced": 3020,
+        "elite": 2810
+      }
+    },
+    "run_half": {
+      "M": {
+        "pass": 9570,
+        "novice": 8350,
+        "good": 7250,
+        "excellent": 5930,
+        "intermediate": 6370,
+        "advanced": 5700,
+        "elite": 5240
+      },
+      "F": {
+        "pass": 10830,
+        "novice": 9570,
+        "good": 8400,
+        "excellent": 6900,
+        "intermediate": 7410,
+        "advanced": 6670,
+        "elite": 6210
+      }
+    },
     "row_2k": {
       "M": {
         "pass": 580,
@@ -1182,6 +1324,46 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "intermediate": 1490,
         "advanced": 1365,
         "elite": 1290
+      }
+    },
+    "run_10k": {
+      "M": {
+        "pass": 3900,
+        "novice": 3480,
+        "good": 3090,
+        "excellent": 2560,
+        "intermediate": 2740,
+        "advanced": 2480,
+        "elite": 2310
+      },
+      "F": {
+        "pass": 4400,
+        "novice": 3930,
+        "good": 3480,
+        "excellent": 2920,
+        "intermediate": 3110,
+        "advanced": 2850,
+        "elite": 2690
+      }
+    },
+    "run_half": {
+      "M": {
+        "pass": 8600,
+        "novice": 7680,
+        "good": 6810,
+        "excellent": 5660,
+        "intermediate": 6050,
+        "advanced": 5470,
+        "elite": 5110
+      },
+      "F": {
+        "pass": 9710,
+        "novice": 8670,
+        "good": 7680,
+        "excellent": 6440,
+        "intermediate": 6850,
+        "advanced": 6280,
+        "elite": 5930
       }
     },
     "row_2k": {
@@ -1526,6 +1708,46 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
         "intermediate": 1375,
         "advanced": 1245,
         "elite": 1160
+      }
+    },
+    "run_10k": {
+      "M": {
+        "pass": 3620,
+        "novice": 3170,
+        "good": 2760,
+        "excellent": 2290,
+        "intermediate": 2450,
+        "advanced": 2210,
+        "elite": 2040
+      },
+      "F": {
+        "pass": 4190,
+        "novice": 3690,
+        "good": 3220,
+        "excellent": 2690,
+        "intermediate": 2870,
+        "advanced": 2600,
+        "elite": 2420
+      }
+    },
+    "run_half": {
+      "M": {
+        "pass": 7980,
+        "novice": 6990,
+        "good": 6100,
+        "excellent": 5060,
+        "intermediate": 5410,
+        "advanced": 4880,
+        "elite": 4510
+      },
+      "F": {
+        "pass": 9250,
+        "novice": 8140,
+        "good": 7110,
+        "excellent": 5930,
+        "intermediate": 6330,
+        "advanced": 5730,
+        "elite": 5340
       }
     },
     "barbell_row_1rm": {
@@ -1881,6 +2103,89 @@ export const PATHWAY_WEIGHTS: Partial<Record<PathwayId, Partial<Record<Component
     "core_endurance": 0,
     "swimming": 25,
     "cycling": 25
+  }
+};
+
+/** HABS component weights per pathway, from the HABS_Weights sheet — the TPF
+ *  app's literal HABS_PATHWAY_WEIGHTS (2026-10-03). These weight the HABS
+ *  score; PATHWAY_WEIGHTS above feeds the Capacity Index. Each sums to 100. */
+export const HABS_PATHWAY_WEIGHTS: Partial<Record<PathwayId, Partial<Record<HabsComponentId, number | null>>>> = {
+  "gym_goer": {
+    "lower_strength": 28.6,
+    "power": 14.3,
+    "upper_push": 14.9,
+    "upper_pull": 13.7,
+    "run_intensity": 7.1,
+    "run_distance": 7.1,
+    "swimming": 0,
+    "cycling": 0,
+    "erg": 14.3
+  },
+  "hybrid_athlete": {
+    "lower_strength": 20,
+    "power": 13.4,
+    "upper_push": 10.4,
+    "upper_pull": 9.6,
+    "run_intensity": 13.3,
+    "run_distance": 13.3,
+    "swimming": 0,
+    "cycling": 0,
+    "erg": 20
+  },
+  "crossfit_generalist": {
+    "lower_strength": 22.6,
+    "power": 19.2,
+    "upper_push": 10.1,
+    "upper_pull": 9.3,
+    "run_intensity": 9.7,
+    "run_distance": 9.7,
+    "swimming": 0,
+    "cycling": 0,
+    "erg": 19.4
+  },
+  "hyrox": {
+    "lower_strength": 20.8,
+    "power": 9.1,
+    "upper_push": 5.4,
+    "upper_pull": 5,
+    "run_intensity": 21.4,
+    "run_distance": 21.4,
+    "swimming": 0,
+    "cycling": 0,
+    "erg": 16.9
+  },
+  "powerlifter": {
+    "lower_strength": 50,
+    "power": 11.1,
+    "upper_push": 20.2,
+    "upper_pull": 18.7,
+    "run_intensity": 0,
+    "run_distance": 0,
+    "swimming": 0,
+    "cycling": 0,
+    "erg": 0
+  },
+  "bodybuilder": {
+    "lower_strength": 43.8,
+    "power": 12.5,
+    "upper_push": 22.7,
+    "upper_pull": 21,
+    "run_intensity": 0,
+    "run_distance": 0,
+    "swimming": 0,
+    "cycling": 0,
+    "erg": 0
+  },
+  "triathlete": {
+    "lower_strength": 10,
+    "power": 5,
+    "upper_push": 5,
+    "upper_pull": 5,
+    "run_intensity": 12.5,
+    "run_distance": 12.5,
+    "swimming": 25,
+    "cycling": 25,
+    "erg": 0
   }
 };
 

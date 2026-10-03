@@ -1,6 +1,6 @@
 /** Overall HRS dashboard: gauge + coverage + Capacity Index + limiters. */
 
-import type { CapacityResult, HrsResult, WeaknessReport } from '../engine/types';
+import type { CapacityResult, ComponentId, HrsResult, WeaknessReport } from '../engine/types';
 import { wodPublicName } from '../config/wods';
 import { HABS_MAX_LEVEL, habsLevelInfo } from '../engine/levels';
 import { Gauge } from './Gauge';
@@ -27,6 +27,8 @@ interface DashboardProps {
   stacked?: boolean;
   /** Score label for the gauge (brand-aware: "HABS Score" / "ORS"). */
   scoreLabel?: string;
+  /** Component label (2026-10-03: the HABS brands pass the app's labels). */
+  labelOf?: (c: ComponentId) => string;
 }
 
 function capacityVerdict(index: number | null): string {
@@ -36,7 +38,7 @@ function capacityVerdict(index: number | null): string {
   return 'Expresses raw fitness about as expected.';
 }
 
-export function Dashboard({ result, capacity, weakness, pathwayLabel, livePercentile, percentileN = null, poolAvailable = false, showCapacity = true, stacked = false, scoreLabel = 'HABS Score' }: DashboardProps) {
+export function Dashboard({ result, capacity, weakness, pathwayLabel, livePercentile, percentileN = null, poolAvailable = false, showCapacity = true, stacked = false, scoreLabel = 'HABS Score', labelOf = componentLabel }: DashboardProps) {
   const coveragePct = Math.round(result.coverage * 100);
   const scoredWods = capacity.perWod.filter((w) => w.delta != null);
 
@@ -120,7 +122,7 @@ export function Dashboard({ result, capacity, weakness, pathwayLabel, livePercen
               const cs = weakness.ranked.find((r) => r.component === c);
               return (
                 <div className="statline" key={c}>
-                  <span>{componentLabel(c)}</span>
+                  <span>{labelOf(c)}</span>
                   <span className="muted">{formatScore(cs?.percent ?? null)}</span>
                 </div>
               );
@@ -133,7 +135,7 @@ export function Dashboard({ result, capacity, weakness, pathwayLabel, livePercen
           <p style={{ marginTop: 10 }}>
             {weakness.coverageGaps.map((c) => (
               <span className="pill alert" key={c} style={{ marginRight: 6, marginBottom: 6 }}>
-                {componentLabel(c)}: untested
+                {labelOf(c)}: untested
               </span>
             ))}
           </p>
