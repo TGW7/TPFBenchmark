@@ -84,6 +84,18 @@
  * not in this fixture. Pinned value by value in operator-special-forces-tops.test.ts
  * and operator-deadlift-elite-over-200.test.ts.
  *
+ * 2026-10-03, later — the Fan Dance's faster tiers re-set for the selection
+ * load (tpf-app plan 55 §11.1; the owner: "adjust times then"; changeset 4 of
+ * scripts/apply-military-top-tiers-2026-10-02.py). The fixture was
+ * REGENERATED from operator.data.json with the same strip() shape after
+ * scripts/check-operator-vs-app.mjs reported 0 differences across the 13
+ * mirrored units. 3 values moved, all on uk_special_forces_sas_sbs
+ * fan_dance_24_km_35_lb_rifle_optional (diffed: 3 lines out, 3 in):
+ *   Good 12600 → 14100 (3:30:00 → 3:55:00), Excellent 11700 → 13200
+ *   (3:15:00 → 3:40:00), Elite 10800 → 12600 (3:00:00 → 3:30:00).
+ * Pass (15000, 4:10:00) and every other value unchanged. Pinned in
+ * operator-special-forces-tops.test.ts.
+ *
  * NOTE: this fixture is a snapshot of THIS repository's generated data, so it
  * catches drift here but cannot see the app move — run
  * `npm run check:app-ors -- <path to tpf-app>` for that.

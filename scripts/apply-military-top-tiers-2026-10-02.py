@@ -105,6 +105,22 @@ CHANGESET 3 — the deadlift Excellent, evened out (the owner, 2026-10-03)
   still over 200 kg everywhere. `verify` re-derives every value from the
   sheet's own Good and Elite, and refuses a deadlift row the table left out.
 
+CHANGESET 4 — the Fan Dance's faster tiers re-set (the owner, 2026-10-03)
+
+  The app's record is tpf-app docs/build/55_SPECIAL_FORCES_AND_ELITE_UNIT_TIERS.md
+  section 11.1. Told that the kept 3:00 Elite at the real selection load
+  (about 23 kg) is close to unreachable, the owner: "adjust times then". On
+  the UKSF Fan Dance only: Good 3:30:00 -> 3:55:00, Excellent 3:15:00 ->
+  3:40:00, Elite 3:00:00 -> 3:30:00; Pass stays the published 4:10:00. TPF's
+  method, not a source: the app's ruck model plus its own hilly-terrain band
+  (x 1.15) for the ~1,100 m of ascent; Elite 3:30 is the harder 5-minute value
+  that sits inside the special-forces ruck band and is slower than the best
+  known 35 lb time carried to 23 kg; Good and Excellent split the 40 minutes
+  20 : 15 : 15 like the tier percentages, to the nearest 5 min. The label did
+  not change; the app's cite gained a sentence, quoted in the row's note (the
+  site emits no cite). `verify` checks the row reads exactly the app's four
+  values in seconds and is strictly ordered.
+
 Requires: python3 with openpyxl (3.1.5 checked).
 """
 
@@ -295,6 +311,53 @@ def verify_dl_excellent(ws, idx, rows):
     return errors
 
 
+# ----------------------------------------------------------- changeset 4 --
+# Added 2026-10-03. The app's values were read from its live
+# ORS_PATHWAY_CONFIGS (uksf `fan_dance`: pass 4*3600+10*60, good 3*3600+55*60,
+# excellent 3*3600+40*60, elite 3.5*3600) and its record, tpf-app
+# docs/build/55_SPECIAL_FORCES_AND_ELITE_UNIT_TIERS.md §11.1.
+
+FAN_DANCE_TIMES_NOTE = (
+    "Good 3:30:00 -> 3:55:00, Excellent 3:15:00 -> 3:40:00, Elite 3:00:00 -> 3:30:00; Pass kept at the "
+    "published 4:10:00 (the owner, 2026-10-03, told a 3:00 Elite at the ~23 kg selection load is close to "
+    "unreachable: 'adjust times then'). TPF's method, not a source: the app's ruck model plus its "
+    "hilly-terrain band (x 1.15) for the ~1,100 m of ascent; Elite 3:30 reads 2:16:38 on the app's "
+    "12 mi @ 35 lb scale (inside the special-forces band, between Pararescue and the Rangers) and is slower "
+    "than the best known 35 lb time (3:14, third-party) carried to 23 kg; Good and Excellent split the "
+    "40 minutes 20 : 15 : 15 like the tier percentages, to the nearest 5 min. Label unchanged; the app's "
+    "cite now reads: 'UKSF selection Fan Dance: 4 h 10 min allowed; 18 kg bergen + rifle + water "
+    "(third-party accounts). Faster tiers TPF's: the ruck model plus a hilly-terrain climb allowance "
+    "(plan 55 §11)' — tpf-app mirror 2026-10-03 (plan 55 §11.1)")
+
+# The app's Pass / Good / Excellent / Elite, in seconds, for `verify` (h:mm:ss strings on the sheet).
+FAN_DANCE_APP_SEC = [15000, 14100, 13200, 12600]
+
+
+def hms_to_sec(v):
+    """The sheet's h:mm:ss string (rucks) to seconds, as codegen-operator.mjs reads it."""
+    out = 0
+    for part in str(v).split(':'):
+        out = out * 60 + int(part)
+    return out
+
+
+def verify_fan_dance(ws, idx, rows):
+    """The Fan Dance row reads exactly the app's four values, strictly ordered
+    (lower is better: Pass slowest, Elite fastest)."""
+    key = row_key(UKSF, FAN_DANCE_NEW)
+    if key not in rows:
+        return [f'{key}: no such row on the sheet']
+    r = rows[key]
+    got = [hms_to_sec(ws.cell(row=r, column=idx[c]).value) for c in ('pass', 'good', 'excellent', 'elite')]
+    want = FAN_DANCE_APP_SEC
+    errors = []
+    if got != want:
+        errors.append(f'{key}: the sheet reads {got} s, the app {want} s')
+    if not all(a > b for a, b in zip(got, got[1:])):
+        errors.append(f'{key}: not strictly ordered (lower is better): {got}')
+    return errors
+
+
 CHANGESETS = [
     dict(
         name='plan 54: compare-then-borrow top tiers; the deadlift Elite always over 200 kg',
@@ -349,6 +412,23 @@ CHANGESETS = [
             "bars, Excellent = (Good + Elite) / 2 rounded to the nearest 5 kg (a half rounds up), only "
             "ever raised — all 25 deadlift rows here rose; Pass, Good and Elite unchanged. Script: "
             "scripts/apply-military-top-tiers-2026-10-02.py."
+        ),
+    ),
+    dict(
+        name="the Fan Dance's faster tiers re-set for the selection load (the owner, 2026-10-03)",
+        moves=[
+            (UKSF, FAN_DANCE_NEW, 'good', '3:30:00', '3:55:00', FAN_DANCE_TIMES_NOTE),
+            (UKSF, FAN_DANCE_NEW, 'excellent', '3:15:00', '3:40:00', FAN_DANCE_TIMES_NOTE),
+            (UKSF, FAN_DANCE_NEW, 'elite', '3:00:00', '3:30:00', FAN_DANCE_TIMES_NOTE),
+        ],
+        verify=verify_fan_dance,
+        readme=(
+            "2026-10-03, latest (the Fan Dance's faster tiers, tpf-app mirror; record: tpf-app "
+            "docs/build/55_SPECIAL_FORCES_AND_ELITE_UNIT_TIERS.md section 11.1): told the kept 3:00 Elite at "
+            "the ~23 kg selection load is close to unreachable, the owner: 'adjust times then'. UKSF Fan Dance "
+            "Good 3:30:00 -> 3:55:00, Excellent 3:15:00 -> 3:40:00, Elite 3:00:00 -> 3:30:00; Pass stays the "
+            "published 4:10:00. TPF's method (the app's ruck model plus its hilly-terrain band for the "
+            "~1,100 m climb), not a source. Script: scripts/apply-military-top-tiers-2026-10-02.py."
         ),
     ),
     # A later mirror: APPEND a dict here (name, moves, readme[, verify]). Do not edit the ones above.

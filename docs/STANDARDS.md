@@ -326,6 +326,8 @@ row now names the selection load, "Fan Dance (24 km, 18 kg bergen + rifle +
 water) — optional", and its Pass moved to the published cut-off, 4:00:00 →
 **4:10:00**. Good 3:30, Excellent 3:15 and Elite 3:00 are kept. The load rests
 on third-party accounts only (no official source exists; the app's §10.3).
+*(Superseded later the same day: those three faster tiers were re-set for the
+selection load — see "2026-10-03, later" below.)*
 
 **Condition labels** (the owner: *"label conditions"*; no number converted): the
 SEAL 1.5-mile run is "(PST: in boots and trousers)", the SEAL swim "(PST: 500 yd
@@ -369,6 +371,38 @@ Airborne tests), the app's generic pathways, and the app's run / ruck
 comparisons on its own HABS scale. ORS has no sex split, so all of this applies
 to women too.
 
+### 2026-10-03, later: the Fan Dance's faster tiers, re-set for the selection load
+
+The app's record is tpf-app `docs/build/55_SPECIAL_FORCES_AND_ELITE_UNIT_TIERS.md`
+§11.1. Told that the kept 3:00 Elite at the real selection load (about 23 kg)
+is close to unreachable, the owner: *"adjust times then"*. On the UKSF Fan
+Dance only, old → new:
+
+| Tier | Old | New |
+|---|---|---|
+| Pass | 4:10:00 | 4:10:00 (unchanged — the published cut-off) |
+| Good | 3:30:00 | **3:55:00** |
+| Excellent | 3:15:00 | **3:40:00** |
+| Elite | 3:00:00 | **3:30:00** |
+
+TPF's method, not a source: the app's ruck model (as for every other ruck) plus
+its own hilly-terrain band (× 1.15 on pace) for the route's ~1,100 m of ascent.
+Elite 3:30 is the harder of the five-minute values that sit inside the
+special-forces ruck band on the app's 12 mi @ 35 lb scale (2:16:38, between
+Pararescue and the Rangers) and stay slower than the best known civilian time
+at the lighter 35 lb (3:14, a third-party leaderboard) carried to 23 kg. Good
+and Excellent split the 40 minutes 20 : 15 : 15 like the tier percentages
+(50 / 70 / 85 / 100), to the nearest 5 minutes. The label did not change; the
+app's cite gained *"Faster tiers TPF's: the ruck model plus a hilly-terrain
+climb allowance (plan 55 §11)"* — this site emits no cite, so it is quoted in
+the workbook row's `source` note only.
+
+The edit is changeset 4 of `scripts/apply-military-top-tiers-2026-10-02.py`;
+`npm run check:app-ors` then reported **0 differences** across the 13 mirrored
+units. Pinned in `src/test/operator-special-forces-tops.test.ts`. The app's
+job-role strength battery, changed the same day (§11.2), is a Benchmarks-only
+test with no counterpart here.
+
 ### Gaps — standards with no permitted anchor (TPF's own judgement stands)
 
 HYROX lower tiers (both sexes; Elite only is anchored) · Diane, Cindy, Fight
@@ -387,7 +421,10 @@ step keeping the order, hex ≥ 1.06 × conventional) · *(2026-10-03)* the
 special-forces tops (TPF's "harder of" rule, plan 55) and the evened-out
 deadlift Excellents (TPF's midpoint rule) · the Fan Dance load (third-party
 accounts only) and its kept 3:30 / 3:15 / 3:00 at that load (an owner question
-in the app's record, §10.8).
+in the app's record, §10.8) — *(2026-10-03, later)* answered: now 3:55 / 3:40 /
+3:30, each TPF's method (the app's ruck model plus a hilly-terrain climb
+allowance chosen from the app's own terrain bands; the ascent and the fastest
+known time are third-party).
 
 ## How to change them
 

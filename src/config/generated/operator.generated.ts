@@ -2495,9 +2495,9 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "lowerIsBetter": true,
         "thresholds": {
           "pass": 15000,
-          "good": 12600,
-          "excellent": 11700,
-          "elite": 10800
+          "good": 14100,
+          "excellent": 13200,
+          "elite": 12600
         }
       },
       {

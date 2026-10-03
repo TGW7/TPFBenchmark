@@ -109,6 +109,13 @@ generic catch-all.
 > keep their ids — and `check:app-ors`, which now also compares labels and the
 > zero-weight rows the site holds, reports 0 differences across the 13 mirrored
 > units. The Benchmarks-only rows of that plan have no counterpart here.
+>
+> **2026-10-03, later** the app's plan 55 §11.1 re-set the Fan Dance's faster
+> tiers for the selection load (the owner: "adjust times then") — Good 3:55:00,
+> Excellent 3:40:00, Elite 3:30:00, Pass still 4:10:00. Mirrored as changeset 4
+> of the same script; `check:app-ors` reports 0 differences across the 13
+> mirrored units. The same day's job-role strength battery (§11.2) is
+> Benchmarks-only and has no counterpart here.
 
 ### Known data-quality issues inherited from the app (flagging, not silently fixing)
 

@@ -19,6 +19,16 @@
  * the site holds too). The OLD values below are typed from §10.2, the NEW ones
  * likewise — neither is read from the generated data this test checks.
  *
+ * 2026-10-03, later — the Fan Dance's faster tiers re-set (tpf-app plan 55
+ * §11.1; the owner, told a 3:00 Elite at the ~23 kg selection load is close to
+ * unreachable: "adjust times then"). Good 3:30:00 → 3:55:00, Excellent
+ * 3:15:00 → 3:40:00, Elite 3:00:00 → 3:30:00; Pass stays the published
+ * 4:10:00. The workbook edit is changeset 4 of the same script, and
+ * `check:app-ors` reported 0 differences afterwards. The "Good, Excellent and
+ * Elite kept" test below was rewritten to pin the new ladder (its old values
+ * are kept in it, typed, as `before`). Plan 55 §10.2's 28 values in MOVED are
+ * unchanged — the Fan Dance's Pass is the only one of them on that row.
+ *
  * Not mirrored, because the site has no row for them: the Benchmarks-only rows
  * (army_sfas, army_rasp, pj_past, army_airborne tests); the app's us_army,
  * uk_army, tactical, firefighter and air_force pathways; and the app's run and
@@ -95,8 +105,25 @@ describe('Operator special-forces and elite-unit tiers (app plan 55)', () => {
     }
   });
 
-  it('the Fan Dance: Pass is the published 4:10:00 at the selection load; Good, Excellent and Elite kept', () => {
-    expect(ladder(UKSF, 'fan_dance_24_km_35_lb_rifle_optional')).toEqual([15000, 12600, 11700, 10800]);
+  // 2026-10-03, later (plan 55 §11.1) — this test said "Good, Excellent and
+  // Elite kept" and pinned [15000, 12600, 11700, 10800]; the owner then had the
+  // three faster tiers re-set for the selection load ("adjust times then").
+  it('the Fan Dance: Pass is the published 4:10:00 at the selection load; Good 3:55, Excellent 3:40, Elite 3:30 (plan 55 §11.1)', () => {
+    const before = [15000, 12600, 11700, 10800]; // 4:10:00 / 3:30:00 / 3:15:00 / 3:00:00, plan 55 §10.2
+    const raw = ladder(UKSF, 'fan_dance_24_km_35_lb_rifle_optional');
+    expect(raw).toEqual([15000, 14100, 13200, 12600]); // 4:10:00 / 3:55:00 / 3:40:00 / 3:30:00
+    const now = raw as number[]; // no nulls: the line above
+    expect(now[0], 'Pass unchanged').toBe(before[0]);
+    for (let i = 1; i < 4; i++) expect(now[i], `tier ${i} only ever slowed`).toBeGreaterThan(before[i]);
+    // Lower is better: strictly faster at each tier up the ladder.
+    for (let i = 1; i < 4; i++) expect(now[i]).toBeLessThan(now[i - 1]);
+    // TPF's spacing: the 40 minutes from Pass to Elite split 20 : 15 : 15 (the
+    // tier percentages 50 / 70 / 85 / 100), each to the nearest 5 minutes.
+    const span = now[0] - now[3];
+    expect(span).toBe(40 * 60);
+    const round5min = (s: number) => Math.round(s / 300) * 300;
+    expect(now[1]).toBe(round5min(now[0] - span * (20 / 50)));
+    expect(now[2]).toBe(round5min(now[0] - span * (35 / 50)));
   });
 
   it('the four relabelled rows carry the app’s labels and keep their stored ids', () => {
