@@ -67,12 +67,26 @@ export async function loadProfile(userId: string): Promise<{ profile: AthletePro
   };
 }
 
-export async function saveProfile(userId: string, profile: AthleteProfile, pathway: PathwayId, brand: Brand): Promise<void> {
-  if (!supabase) return;
-  await supabase.from('benchmark_profiles').upsert({
+/**
+ * 2026-10-03 — every write below RETURNS its error (a message, or null on
+ * success) instead of dropping it. Until then `save()` in src/ui/App.tsx
+ * awaited four writes, checked none, and always said "Saved" — which is how a
+ * hybrid-brand Save could fail on every attempt (the `brand` CHECK, migration
+ * 0006) without anyone seeing it. src/data/save.ts turns these into the
+ * message the athlete sees.
+ */
+export type WriteError = string | null;
+
+const errText = (e: { message?: string } | null | undefined): WriteError =>
+  e ? (e.message || 'unknown error') : null;
+
+export async function saveProfile(userId: string, profile: AthleteProfile, pathway: PathwayId, brand: Brand): Promise<WriteError> {
+  if (!supabase) return null;
+  const { error } = await supabase.from('benchmark_profiles').upsert({
     user_id: userId, brand, sex: profile.sex, bodyweight_kg: profile.bodyweightKg,
     age_years: profile.ageYears ?? null, pathway, updated_at: new Date().toISOString(),
   });
+  return errText(error);
 }
 
 export async function loadEntries(userId: string): Promise<AthleteLogs> {
@@ -85,34 +99,79 @@ export async function loadEntries(userId: string): Promise<AthleteLogs> {
   return rowsToLogs(data as EntryRow[]);
 }
 
-/** Replace the user's saved entries with the current session (simple full sync). */
-export async function replaceEntries(userId: string, logs: AthleteLogs, brand: Brand): Promise<void> {
-  if (!supabase) return;
-  await supabase.from('benchmark_entries').delete().eq('user_id', userId);
-  const rows = logsToRows(logs).map((r) => ({ ...r, user_id: userId, brand }));
-  if (rows.length) await supabase.from('benchmark_entries').insert(rows);
+/** The few query-builder calls replaceEntries makes — so a test can hand it a
+ *  fake client (the real one is supabase-js's). */
+export interface EntriesClient {
+  from(table: 'benchmark_entries'): {
+    insert(rows: Record<string, unknown>[]): { select(cols: 'id'): PromiseLike<{ data: { id: string }[] | null; error: { message?: string } | null }> };
+    delete(): {
+      eq(col: 'user_id', v: string): PromiseLike<{ error: { message?: string } | null }> & {
+        not(col: 'id', op: 'in', list: string): PromiseLike<{ error: { message?: string } | null }>;
+      };
+    };
+  };
 }
 
-/** Anonymous contribution to the percentile pool (one row per scored benchmark). */
+/**
+ * Replace the user's saved entries with the current session (simple full
+ * sync).
+ *
+ * 2026-10-03 — INSERT FIRST, then delete the old rows. It used to delete
+ * every saved entry and then insert; when the insert was rejected (every
+ * hybrid-brand save, before migration 0006) the athlete's saved numbers were
+ * simply gone. Now a failed insert leaves the old entries exactly as they
+ * were, and a failed clean-up leaves both sets (reported, never silent —
+ * loading merges by benchmark).
+ */
+export async function replaceEntriesWith(
+  client: EntriesClient,
+  userId: string,
+  logs: AthleteLogs,
+  brand: Brand,
+): Promise<WriteError> {
+  const rows = logsToRows(logs).map((r) => ({ ...r, user_id: userId, brand }));
+  if (rows.length === 0) {
+    const { error } = await client.from('benchmark_entries').delete().eq('user_id', userId);
+    return errText(error);
+  }
+  const ins = await client.from('benchmark_entries').insert(rows).select('id');
+  if (ins.error) return errText(ins.error);
+  const kept = (ins.data ?? []).map((r) => r.id);
+  if (kept.length === 0) return 'the saved entries could not be confirmed';
+  const del = await client
+    .from('benchmark_entries')
+    .delete()
+    .eq('user_id', userId)
+    .not('id', 'in', `(${kept.join(',')})`);
+  return errText(del.error);
+}
+
+export async function replaceEntries(userId: string, logs: AthleteLogs, brand: Brand): Promise<WriteError> {
+  if (!supabase) return null;
+  return replaceEntriesWith(supabase as unknown as EntriesClient, userId, logs, brand);
+}
+
+/** A contribution to the percentile pool (one row per scored benchmark).
+ *  2026-10-03 — no account id and no bodyweight (src/data/pool.ts header;
+ *  migration 0007 strips both server-side as well). */
 export interface PoolRow {
   brand: Brand;
   benchmark_id: string;
   sex: AthleteProfile['sex'] | null;
   age_band: string | null;
-  bodyweight_kg: number;
   value: number;
   lower_is_better: boolean;
   trust: number;
   verified?: boolean;
-  user_id?: string | null;
   /** Operator only — the unit a benchmark was scored under (tiers are
    *  pathway-specific there, unlike Lift). See migration 0004. */
   pathway_id?: string | null;
 }
 
-export async function submitToPool(rows: PoolRow[]): Promise<void> {
-  if (!supabase || rows.length === 0) return;
-  await supabase.from('benchmark_submissions').insert(rows.map((r) => ({ ...r, source: 'web' })));
+export async function submitToPool(rows: PoolRow[]): Promise<WriteError> {
+  if (!supabase || rows.length === 0) return null;
+  const { error } = await supabase.from('benchmark_submissions').insert(rows.map((r) => ({ ...r, source: 'web' })));
+  return errText(error);
 }
 
 /** Trust-weighted population percentile (null until the cell has enough data). */
@@ -139,9 +198,13 @@ export async function fetchPoolCount(args: {
   return error || data == null ? null : Number(data);
 }
 
-/** Add an email to the list (list-building). Write-only; safe to call from anon. */
+/** Add an email to the list (list-building). Write-only; safe to call from anon.
+ *  Only after the visitor ticked the marketing-consent box
+ *  (src/ui/EmailCapture.tsx). 2026-10-03 — no longer stores the signed-in
+ *  account id with the address: nothing in this repo reads it, and the
+ *  notice at the point of collection says what IS stored. */
 export async function captureEmail(args: {
-  email: string; brand: Brand; source?: string; pathway?: string; userId?: string | null;
+  email: string; brand: Brand; source?: string; pathway?: string;
 }): Promise<boolean> {
   if (!supabase) return false;
   const { error } = await supabase.from('benchmark_emails').insert({
@@ -149,7 +212,6 @@ export async function captureEmail(args: {
     brand: args.brand,
     source: args.source ?? 'updates',
     pathway: args.pathway ?? null,
-    user_id: args.userId ?? null,
   });
   return !error;
 }

@@ -77,3 +77,17 @@ export {
   trustWeightedPercentile,
   weightedQuantile,
 } from './stats';
+// 2026-10-03 — the app's predicted race equivalents for HABS
+// (docs/LEGAL-FIXES-2026-10-03.md §6).
+export {
+  raceTimesWithEquivalents,
+  predictRaceTime,
+  predictRiegel,
+  withinPredictionRange,
+  isPredictableDistance,
+  MAX_PREDICTION_DISTANCE_RATIO,
+  MAX_PREDICTED_METRES,
+} from './racePrediction';
+export type { RaceStore, ModalityRecords, PredictionSource, EquivModality } from './racePrediction';
+export { predictMissingRaces, buildRaceStore, appSexOf } from './habsPredict';
+export type { RacePrediction, RaceEventRef, PredictArgs } from './habsPredict';

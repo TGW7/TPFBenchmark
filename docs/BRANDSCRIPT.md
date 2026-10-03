@@ -17,7 +17,7 @@ Two brands; the hero is always the *customer*, never us.
 | **2c. Philosophical** | People who put in the work deserve to see it pay off — effort shouldn't vanish into a black box. |
 | **2d. Villain** | The guesswork — generic, one-size standards that hide whether you're actually improving. |
 | **3a. Empathy** | "We train the way you do — and we got tired of grinding for months with no clear signal it was working." |
-| **3b. Authority (REAL only)** | Built by ex-British Army PTIs · our own standards, checked against open data where it exists · free, no account, no tracking. *(2026-10-02: was "transparent percentile-based standards" — the tiers are TPF's own standards, not population percentiles; see docs/STANDARDS.md.)* **TODO before launch:** real user counts / PRs / testimonials. |
+| **3b. Authority (REAL only)** | Built by ex-British Army PTIs · our own standards, checked against open data where it exists · free, no account, no tracking. *(2026-10-03: "no tracking" has not been true since analytics went in — opt-in, but tracking; the site now says "analytics only if you say yes", docs/LEGAL-FIXES-2026-10-03.md §7.)* *(2026-10-02: was "transparent percentile-based standards" — the tiers are TPF's own standards, not population percentiles; see docs/STANDARDS.md.)* **TODO before launch:** real user counts / PRs / testimonials. |
 | **4. Plan** | 1) Pick your pathway. 2) Enter your lifts & times. 3) See your score and train your weak link. |
 | **5a. Direct CTA** | Get the app. |
 | **5b. Transitional CTA** | Score yourself free (the calculator). |
@@ -36,7 +36,7 @@ Two brands; the hero is always the *customer*, never us.
 | **2c. Philosophical** | The job demands a real standard — "gym fit" isn't the same as "ready." |
 | **2d. Villain** | Generic fitness metrics that don't reflect what the role actually demands. |
 | **3a. Empathy** | "We've carried the weight too — and we know the cost of finding a weakness in the field instead of in training." |
-| **3b. Authority (REAL only)** | Built by ex-British Army PTIs · standards modelled on tactical demands · free, no account, no tracking. **TODO:** real proof before launch. |
+| **3b. Authority (REAL only)** | Built by ex-British Army PTIs · standards modelled on tactical demands · free, no account, no tracking. **TODO:** real proof before launch. *(2026-10-03: "no tracking" → "analytics only if you say yes", as above.)* |
 | **4. Plan** | 1) Pick your standard. 2) Enter your numbers. 3) See your readiness and close the gap. |
 | **5a. Direct CTA** | Get the app. |
 | **5b. Transitional CTA** | Score yourself free. |

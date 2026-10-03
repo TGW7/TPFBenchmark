@@ -66,7 +66,11 @@ raw input
   jump, the gymnastics rows and plank stay on the site as TPF Benchmark
   standards scored on their own, outside the HABS score.
   `npm run check:app-habs -- <path to tpf-app>` runs the app's own
-  `computeHABS` against this engine. See `docs/HABS-ALIGNMENT-2026-10-03.md`.)*
+  `computeHABS` against this engine. See `docs/HABS-ALIGNMENT-2026-10-03.md`.
+  Later the same day: a HABS race left empty is filled with the app's
+  predicted equivalent, exactly as the app fills it, shown as predicted and
+  never saved — `src/engine/racePrediction.ts`, `src/engine/habsPredict.ts`,
+  `docs/LEGAL-FIXES-2026-10-03.md` §6.)*
 - **7 Lift pathways:** gym_goer, hybrid_athlete, crossfit_generalist, hyrox,
   powerlifter, bodybuilder, triathlete (the Hybrid brand shows a subset);
   Operator scores per unit. Each pathway's component weights **must sum to
@@ -117,13 +121,18 @@ src/
     normalize.ts       resolveThresholds (bw/sex/age), calc1RMVal stub
     score.ts           scoreBenchmark/Component, computeHRS (renorm + coverage)
     habs.ts            computeHabs — the TPF app's HABS score, ported (2026-10-03)
+    racePrediction.ts  the app's predicted race equivalents (VDOT / Riegel, 4.1×), ported
+    habsPredict.ts     HABS inputs with those predictions filled in (never saved)
     wod.ts             scoreWod + scaling rules, WOD_CORE_WEIGHT
     capacity.ts        predictWodPercent, computeCapacityIndex
     weakness.ts        rank components, flag limiters & coverage gaps
   config/              engine-facing standards catalogue (from codegen)
     generated/         AUTO-GENERATED — do not hand-edit
-  data/                stores, Supabase remote + app sync, the pool, and the
-                       sample athlete's SYNTHETIC inputs (demo.ts)
+  data/                stores, Supabase remote + app sync, the pool, the Save
+                       sequence (save.ts), and the sample athlete's SYNTHETIC
+                       inputs (demo.ts)
+  content/             landing copy, and legalCopy.ts — every word shown where
+                       the site collects something (drafts for counsel)
   ui/                  React UI (Vite) — dashboard, radar, entry, WOD log
     theme.css          the ONLY place colour hex lives (4 TPF tokens)
   test/                Vitest: engine tests on synthetic thresholds, plus

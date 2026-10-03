@@ -51,3 +51,24 @@ export const HABS_STD_KEYS: Record<string, string> = {
   bike_40k: 'bike_40k',
   row_2k: 'row_2k',
 };
+
+/**
+ * 2026-10-03 — every race the lift / hybrid calculator can take, as the app's
+ * (modality, event): the HABS races above PLUS the 500 m row, a TPF Benchmark
+ * standard outside the score that the app still predicts FROM (a 500 m row
+ * predicts the 2 km — 4×, inside the 4.1× rule). The predicted equivalents
+ * (src/engine/habsPredict.ts) are built from these; pinned against the app
+ * sync's RACE_TO_APP by src/test/habs-app-map.test.ts.
+ */
+export const PREDICTION_RACE_EVENTS: Record<string, { modality: string; event: string }> = {
+  run_1mi: { modality: 'run', event: 'mile' },
+  run_5k: { modality: 'run', event: '5k' },
+  run_10k: { modality: 'run', event: '10k' },
+  run_half: { modality: 'run', event: 'half' },
+  row_2k: { modality: 'row', event: '2k' },
+  row_500m: { modality: 'row', event: '500m' },
+  swim_400m: { modality: 'swim', event: '400m' },
+  swim_1500m: { modality: 'swim', event: '1500m' },
+  bike_20k: { modality: 'bike', event: '20k' },
+  bike_40k: { modality: 'bike', event: '40k' },
+};

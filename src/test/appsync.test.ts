@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  anchorsFromAppProfile,
   logsFromAppProfile,
   ormPatchFromLogs,
   racePatchFromLogs,
@@ -238,5 +239,28 @@ describe('appSync mappers (benchmark ↔ app profile JSONB)', () => {
     }, 'hybrid');
     expect(back.raceTimes.map((e) => e.benchmarkId).sort()).toEqual(['row_2k', 'run_5k']);
     expect(racePatchFromLogs(back, 'now').run['10k']).toBeUndefined();
+  });
+});
+
+// 2026-10-03 — the app's other typed race results, pulled as prediction
+// anchors only (docs/LEGAL-FIXES-2026-10-03.md §6).
+describe('anchorsFromAppProfile', () => {
+  const race = {
+    run: {
+      '5k': { timeSec: 1320, updatedAt: 'x' }, // a site field — comes in as its value, not an anchor
+      '2k': { timeSec: 470, updatedAt: 'x' },
+      '1.5mile': { timeSec: 600, updatedAt: 'x', predicted: true }, // a stored prediction — never an anchor
+      '800m': { timeSec: 0, updatedAt: 'x' },
+    },
+    row: { '1k': { timeSec: 205, updatedAt: 'x' }, '2k': { timeSec: 420, updatedAt: 'x' } },
+    ruck: { '8k': { timeSec: 3000, updatedAt: 'x', loadKg: 15 } },
+  };
+
+  it('keeps typed run / row / bike / swim results at events the calculator has no field for', () => {
+    expect(anchorsFromAppProfile(race)).toEqual({ run: { '2k': { timeSec: 470 } }, row: { '1k': { timeSec: 205 } } });
+  });
+
+  it('is empty for an empty profile', () => {
+    expect(anchorsFromAppProfile(null)).toEqual({});
   });
 });

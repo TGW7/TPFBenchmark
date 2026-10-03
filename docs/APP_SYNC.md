@@ -107,3 +107,26 @@ by name).
 ```bash
 npm run check:supabase   # tables + function exist, keys valid
 ```
+
+## 2026-10-03 — prediction anchors, and saves that report failure
+
+*(docs/LEGAL-FIXES-2026-10-03.md §4 and §6.)*
+
+**The pull now also returns anchors.** `syncFromApp` returns `{ logs, anchors }`.
+`anchors` (`anchorsFromAppProfile`) are the athlete's other typed race results
+in the app — run / row / bike / swim events the calculator has no field for (a
+1 km row, a 2 km run, an 800 m swim …), never a `predicted: true` record, never
+an event a calculator field maps to. They are used ONLY to predict missing
+HABS races the way the app does (the app predicts from every typed event in a
+modality). They are never shown as entries, saved, written back or pooled.
+
+**The push never writes after a failed read.** `syncToApp` used to merge onto
+`data ?? {}`, so a failed read replaced the app's whole `orm` and `race_times`
+with the session's patch. It now returns `error` and writes nothing. A failed
+write is reported too (`SyncResult.error`; it used to read as `disabled`).
+
+**Not changed, noticed:** `racePatchFromLogs` writes a whole new record
+(`{ timeSec, updatedAt: now, predicted: false }`) for every mapped race on
+every Save, so a pulled race loses the app's `achievedOn` date (plan 47) and
+gets a new `updatedAt` even when its time did not change. Recorded in
+docs/LEGAL-FIXES-2026-10-03.md §10 as an owner question; not fixed here.

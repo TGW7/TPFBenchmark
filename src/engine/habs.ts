@@ -22,9 +22,11 @@
  *     renormalised, min(100). No missing-category penalty.
  *
  * What it does NOT do, by design: the app's input layer — logged e1RMs and
- * runs beating typed values, predicted equivalents for missing races, the
- * six-month "current" window (§1.8–1.9 of that document). This engine scores
- * the values it is given; the site gives it what the athlete typed.
+ * runs beating typed values, the six-month "current" window (§1.8–1.9 of that
+ * document). This engine scores the values it is given. Since 2026-10-03 the
+ * site gives it what the athlete typed PLUS the app's predicted equivalents
+ * for missing races (src/engine/habsPredict.ts — the owner's "1 yes"; the
+ * prediction is a separate step, so this file's numbers did not change).
  *
  * Pure: no React, no config imports.
  */

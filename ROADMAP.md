@@ -135,7 +135,7 @@ friction, build the list, and deepen the SEO surface.
       (bodyweight + lifts), persisted to localStorage; engine stays in kg
 - [x] **Email capture** (`src/ui/EmailCapture.tsx` + `benchmark_emails`) — honest
       updates list, anon-write RLS, only shown when Supabase is configured
-- [x] **"vs N athletes"** beside the live percentile (`benchmark_pool_count()`
+- [x] **"vs N athletes"** beside the live percentile (`benchmark_pool_count()` — *2026-10-03: now reads "vs N results": the count is pool rows, and the pool keeps no link to anyone, so it cannot count people (docs/LEGAL-FIXES-2026-10-03.md §7)*
       SECURITY DEFINER function)
 - [x] **Richer SEO pages** — FAQ + "how to improve" + FAQPage / BreadcrumbList
       JSON-LD on every benchmark, pathway and unit page (`scripts/build-seo.mjs`)

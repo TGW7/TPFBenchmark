@@ -39,6 +39,11 @@ interface Props {
     /** e.g. "Advanced · 92", or null with nothing entered. */
     scoreOf: (b: BenchmarkDef) => string | null;
   };
+  /** 2026-10-03 — HABS brands: a race with no typed time that the app's rule
+   *  fills with a predicted equivalent (src/engine/habsPredict.ts). Shown AS a
+   *  prediction — the empty field's placeholder and a line under it — never
+   *  put into the field, so it is never saved as typed. */
+  predicted?: ReadonlyMap<string, { placeholder: string; note: string }>;
 }
 
 function parseTimeInput(s: string): number | null {
@@ -74,9 +79,11 @@ interface RowProps {
   onManual: Props['onManual'];
   /** A standard outside the score: its own tier and score, shown under it. */
   ownScore?: string | null;
+  /** A predicted time for an empty race field (see Props.predicted). */
+  prediction?: { placeholder: string; note: string };
 }
 
-function BenchmarkRow({ bench, profile, units, initial, onOrm, onRaceTime, onManual, ownScore }: RowProps) {
+function BenchmarkRow({ bench, profile, units, initial, onOrm, onRaceTime, onManual, ownScore, prediction }: RowProps) {
   const [w, setW] = useState(initial.w);
   const [r, setR] = useState(initial.r);
   const [t, setT] = useState(initial.t);
@@ -128,10 +135,13 @@ function BenchmarkRow({ bench, profile, units, initial, onOrm, onRaceTime, onMan
       )}
       {bench.source === 'race_times' && (
         <div className="row bench-inputs">
-          <input placeholder="mm:ss" aria-label={`${benchmarkLabel(bench)} time`}
+          <input placeholder={prediction ? prediction.placeholder : 'mm:ss'} aria-label={`${benchmarkLabel(bench)} time`}
             value={t} style={{ width: 92 }}
             onChange={(e) => { setT(e.target.value); commitRace(e.target.value); }} />
         </div>
+      )}
+      {bench.source === 'race_times' && prediction && (
+        <div className="subtle bench-predicted" style={{ fontSize: '0.78rem', marginTop: 2 }}>{prediction.note}</div>
       )}
       {bench.source === 'manual' && (
         <div className="row bench-inputs">
@@ -147,7 +157,7 @@ function BenchmarkRow({ bench, profile, units, initial, onOrm, onRaceTime, onMan
   );
 }
 
-export function BenchmarkGrid({ benchmarks, profile, units, logs, resetKey, onOrm, onRaceTime, onManual, groupOf, outside }: Props) {
+export function BenchmarkGrid({ benchmarks, profile, units, logs, resetKey, onOrm, onRaceTime, onManual, groupOf, outside, predicted }: Props) {
   const all = benchmarks.filter((b) => !b.optional);
   const isOutside = (b: BenchmarkDef) => outside?.ids.has(b.id) ?? false;
   const list = all.filter((b) => !isOutside(b));
@@ -163,6 +173,7 @@ export function BenchmarkGrid({ benchmarks, profile, units, logs, resetKey, onOr
   const eventKey = (b: BenchmarkDef) => (b.alternativeGroup ? `alt:${b.alternativeGroup}` : `id:${b.id}`);
   const eventCount = new Set(list.map(eventKey)).size;
   const entered = new Set(list.filter((b) => hasEntry(b.id)).map(eventKey)).size;
+  const predictedCount = list.filter((b) => !hasEntry(b.id) && predicted?.has(b.id)).length;
 
   // Group by component so the inputs chunk into labelled areas (Miller's Law /
   // Law of Common Region) and mirror the radar + limiters — a consistent model.
@@ -196,6 +207,7 @@ export function BenchmarkGrid({ benchmarks, profile, units, logs, resetKey, onOr
         onRaceTime={onRaceTime}
         onManual={onManual}
         ownScore={isOutside(b) ? outside?.scoreOf(b) ?? null : undefined}
+        prediction={predicted?.get(b.id)}
       />
     );
   };
@@ -212,8 +224,9 @@ export function BenchmarkGrid({ benchmarks, profile, units, logs, resetKey, onOr
         </div>
       ))}
       <p className="subtle" style={{ marginTop: 14, marginBottom: 0 }}>
-        <strong style={{ color: 'var(--fg)' }}>{entered} of {eventCount} entered.</strong>{' '}
+        <strong style={{ color: 'var(--fg)' }}>{entered} of {eventCount} entered{predictedCount > 0 ? ` · ${predictedCount} predicted` : ''}.</strong>{' '}
         Fill in what you know — the more you add, the more complete your score. It updates as you type.
+        {predictedCount > 0 && ' A race you leave empty is predicted from one you entered, the way the TPF app predicts it, and counts until you enter your own time.'}
       </p>
       {outside && extras.length > 0 && (
         <div className="bench-group" style={{ marginTop: 18 }}>
