@@ -129,7 +129,10 @@ describe('Operator special-forces and elite-unit tiers (app plan 55)', () => {
   it('the four relabelled rows carry the app’s labels and keep their stored ids', () => {
     expect(bench(SEAL, '1_5_mile_run').name).toBe('1.5-mile run (PST: in boots and trousers)');
     expect(bench(SEAL, '500_m_swim').name).toBe('500 m swim (PST: 500 yd sidestroke or breaststroke, converted)');
-    expect(bench(PJ, '500_m_swim').name).toBe('500 m swim (PAST: freestyle, breaststroke or sidestroke)');
+    // 2026-10-03 — the app's plan 61 Part B §2.3 renamed the Pararescue swim again,
+    // for the IFT (the PAST's successor): was '500 m swim (PAST: freestyle,
+    // breaststroke or sidestroke)'. The id is still the one plan 55 pinned.
+    expect(bench(PJ, '500_m_swim').name).toBe('500 m swim (IFT, PJ column — enlistees 15:00; freestyle, breaststroke or sidestroke)');
     expect(bench(UKSF, 'fan_dance_24_km_35_lb_rifle_optional').name)
       .toBe('Fan Dance (24 km, 18 kg bergen + rifle + water) — optional');
     // The conditions are the SEAL's and Pararescue's own: units sharing the id keep theirs.

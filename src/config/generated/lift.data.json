@@ -128,11 +128,11 @@
       "lowerIsBetter": false,
       "normalization": "absolute",
       "optional": false,
-      "dataSource": "TPF's own ladder. No openly licensed population norm exists; checked only against published ratios (women's overhead press ≈ 0.5-0.6 of men's absolute — Nuzzo 2023 review) and the CrossFit sample of Meier, Rabel, Schmidt 2021 (Sports 9:80, CC BY)",
+      "dataSource": "TPF's own ladder. No openly licensed population norm exists. Checked 2026-10-03 (tpf-app plan 61 Part C §2.2) against TPF's own bench / squat / deadlift ladders x the overhead-press ratios of the CrossFit samples of Meier, Rabel, Schmidt 2021 (Sports 9:80) and Dexheimer 2019 (both CC BY): the men's ladder reproduced to within 2.5 kg; the women's Beginner 20 -> 25 kg (the empty bar sat below every anchor, 23-30 kg). Women's ≈ 0.5-0.6 of men's absolute (Nuzzo 2023 review)",
       "license": "TPF's own",
       "commercialUse": "Yes",
       "referencePopulation": "Trained adults (hybrid)",
-      "launchMethod": "Owner-set; ratio checks only (2026-10-02)",
+      "launchMethod": "Owner-set; ratio checks (2026-10-03)",
       "notes": "Absolute kg (owner 2026-07-12: fixed-load sports don't scale with bodyweight)"
     },
     {
@@ -203,11 +203,11 @@
       "lowerIsBetter": false,
       "normalization": "absolute",
       "optional": false,
-      "dataSource": "TPF's own (expert-set). No openly licensed population table has been checked yet (a gap)",
+      "dataSource": "TPF's own (expert-set), checked 2026-10-03 (tpf-app plan 61 Part B §3.3) against Norwegian conscripts 2020 (Aandstad et al. 2023, Scand J Med Sci Sports, CC BY 4.0), US Army Ranger course candidates (Physiol Rep 2026, CC BY), Serbian police students (through a CC BY review, Healthcare 2023), AFSPECWAR candidates (Feeney et al. 2023, facts) and China's National Student Physical Health Standard (2014 revision, a Ministry of Education standard). Men's Elite 285 -> 275 cm (2.85 m sat above every anchor); the women's ladder kept, about 0.80 x the men's at every tier",
       "license": "TPF's own",
       "commercialUse": "Yes",
       "referencePopulation": "Trained adults",
-      "launchMethod": "Expert-set (TPF)",
+      "launchMethod": "Expert-set (TPF); checked against permitted anchors (2026-10-03)",
       "notes": "Sex-split absolute distance"
     },
     {
@@ -368,11 +368,11 @@
       "lowerIsBetter": true,
       "normalization": "absolute",
       "optional": false,
-      "dataSource": "TPF's own triathlete-pathway anchor (round 13: elite 27:00 M ≈ 44 km/h). No permitted anchor yet (a gap)",
+      "dataSource": "TPF's own triathlete-pathway anchor (round 13: elite 27:00 M ≈ 44 km/h), checked 2026-10-03 (tpf-app plan 61 Part C §4): Beginner at the US Army AFT 12 km stationary-bike pass time (2025 tables, a US government work) scaled to 20 km (Riegel exp 1.05) — men 45:10, women 49:32, so the women's Beginner moved 50:00 -> 49:30; Elite graded against the UCI Hour Records (facts) — men's Elite 74 % of world best; sex gap 1.11. Assumes a time-trial bike (or clip-on aero bars), a flat course and still air",
       "license": "TPF's own",
       "commercialUse": "Yes",
       "referencePopulation": "Triathletes (20 km TT)",
-      "launchMethod": "Owner-set (TPF)",
+      "launchMethod": "Owner-set (TPF); checked against permitted anchors (2026-10-03)",
       "notes": "Triathlete pathway only (2026-07-13)"
     },
     {
@@ -563,7 +563,7 @@
         "elite": 95
       },
       "F": {
-        "pass": 20,
+        "pass": 25,
         "novice": 30,
         "good": 35,
         "excellent": 45,
@@ -660,7 +660,7 @@
         "excellent": 260,
         "intermediate": 250,
         "advanced": 270,
-        "elite": 285
+        "elite": 275
       },
       "F": {
         "pass": 160,
@@ -843,7 +843,7 @@
         "elite": 1620
       },
       "F": {
-        "pass": 3000,
+        "pass": 2970,
         "novice": 2670,
         "good": 2400,
         "excellent": 2280,
@@ -863,7 +863,7 @@
         "elite": 3350
       },
       "F": {
-        "pass": 6210,
+        "pass": 6150,
         "novice": 5530,
         "good": 4970,
         "excellent": 4720,
@@ -2013,8 +2013,8 @@
       "lowerIsBetter": true,
       "thresholds": {
         "M": {
-          "pass": 5700,
-          "novice": 5430,
+          "pass": 7050,
+          "novice": 5850,
           "good": 5160,
           "excellent": 4620,
           "intermediate": 4800,
@@ -2022,9 +2022,9 @@
           "elite": 4080
         },
         "F": {
-          "pass": 6270,
-          "novice": 5970,
-          "good": 5700,
+          "pass": 7770,
+          "novice": 6450,
+          "good": 5670,
           "excellent": 5070,
           "intermediate": 5280,
           "advanced": 4890,

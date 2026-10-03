@@ -151,7 +151,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "unit": "sec",
         "lowerIsBetter": false,
         "thresholds": {
-          "pass": 63,
+          "pass": 70,
           "good": 180,
           "excellent": 210,
           "elite": 270
@@ -762,10 +762,10 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "unit": "m",
         "lowerIsBetter": false,
         "thresholds": {
-          "pass": 1.8,
-          "good": 2,
-          "excellent": 2.2,
-          "elite": 2.4
+          "pass": 1.93,
+          "good": 2.16,
+          "excellent": 2.39,
+          "elite": 2.65
         }
       }
     ]
@@ -975,10 +975,10 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "unit": "m",
         "lowerIsBetter": false,
         "thresholds": {
-          "pass": 1.8,
-          "good": 2,
-          "excellent": 2.2,
-          "elite": 2.4
+          "pass": 1.93,
+          "good": 2.16,
+          "excellent": 2.39,
+          "elite": 2.65
         }
       }
     ]
@@ -1006,7 +1006,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "unit": "sec",
         "lowerIsBetter": true,
         "thresholds": {
-          "pass": 610,
+          "pass": 620,
           "good": 570,
           "excellent": 540,
           "elite": 495
@@ -1028,13 +1028,13 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
       },
       {
         "id": "500_m_swim",
-        "name": "500 m swim (PAST: freestyle, breaststroke or sidestroke)",
+        "name": "500 m swim (IFT, PJ column — enlistees 15:00; freestyle, breaststroke or sidestroke)",
         "component": "swimming",
         "source": "race_times",
         "unit": "sec",
         "lowerIsBetter": true,
         "thresholds": {
-          "pass": 720,
+          "pass": 750,
           "good": 660,
           "excellent": 600,
           "elite": 570
@@ -1084,7 +1084,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
       },
       {
         "id": "pull_ups_no_time",
-        "name": "Pull-ups (no time)",
+        "name": "Pull-ups (2 min)",
         "component": "upper_endurance",
         "source": "manual",
         "unit": "reps",
@@ -1104,7 +1104,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "unit": "reps",
         "lowerIsBetter": false,
         "thresholds": {
-          "pass": 50,
+          "pass": 40,
           "good": 70,
           "excellent": 85,
           "elite": 105
@@ -1118,7 +1118,7 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "unit": "reps",
         "lowerIsBetter": false,
         "thresholds": {
-          "pass": 54,
+          "pass": 50,
           "good": 70,
           "excellent": 90,
           "elite": 110
@@ -1188,10 +1188,10 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "unit": "m",
         "lowerIsBetter": false,
         "thresholds": {
-          "pass": 1.8,
-          "good": 2,
-          "excellent": 2.2,
-          "elite": 2.4
+          "pass": 1.93,
+          "good": 2.16,
+          "excellent": 2.39,
+          "elite": 2.65
         }
       }
     ]
@@ -1578,9 +1578,9 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "lowerIsBetter": false,
         "thresholds": {
           "pass": 1.7,
-          "good": 1.9,
-          "excellent": 2.1,
-          "elite": 2.3
+          "good": 1.95,
+          "excellent": 2.2,
+          "elite": 2.4
         }
       }
     ]
@@ -1721,10 +1721,10 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "unit": "sec",
         "lowerIsBetter": false,
         "thresholds": {
-          "pass": 60,
-          "good": 90,
-          "excellent": 150,
-          "elite": 210
+          "pass": 90,
+          "good": 150,
+          "excellent": 210,
+          "elite": 270
         }
       },
       {
@@ -1778,9 +1778,9 @@ export const OPERATOR_PATHWAYS: OperatorPathway[] = [
         "lowerIsBetter": false,
         "thresholds": {
           "pass": 1.7,
-          "good": 1.9,
-          "excellent": 2.1,
-          "elite": 2.3
+          "good": 1.95,
+          "excellent": 2.2,
+          "elite": 2.4
         }
       }
     ]

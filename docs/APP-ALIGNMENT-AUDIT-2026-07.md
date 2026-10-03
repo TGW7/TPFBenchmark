@@ -24,6 +24,32 @@ standards audit. **Every value matches exactly.** No drift, no action
 needed — the manual-mirror convention has held up so far, but see §4 for why
 that's fragile.
 
+> **2026-10-03 addendum.** "Every value matches exactly" has been kept true
+> by hand since this audit: the Lift pins in `src/test/pathway-standards.test.ts`
+> are typed literals, so they catch a change here but never the app moving.
+> On 2026-10-03 the app's plan 61 moved the HYROX ladders and three HABS base
+> cells (women's overhead press Beginner 20 → 25 kg; women's 20 / 40 km bike
+> Beginner 50:00 → 49:30 and 1:43:30 → 1:42:30); the list of values handed to
+> this repository named only the HYROX ones. `npm run check:app-lift -- <path
+> to tpf-app>` (`scripts/check-lift-vs-app.mjs`, new) now reads the app's live
+> Benchmarks catalogue, HABS base table and pathway-override rows and diffs
+> them against `lift.data.json`: against the unchanged data it reported 5
+> differences (those five ladders); after
+> `scripts/apply-standards-research-2026-10-03.py`, 0 across 4 WODs, 14 base
+> keys and 68 app pathway rows.
+>
+> ⚠ **The pathway WEIGHTS this section audited no longer match, and that
+> check does not cover them.** An ad hoc comparison on 2026-10-03 (the app's
+> live `HABS_PATHWAY_WEIGHTS` from `src/lib/habs_pathways.ts` against
+> `lift.data.json`'s `weights`) found every pathway different, and not by
+> value: the app's HABS now scores other components — `upper_push` /
+> `upper_pull` where this site has `upper_strength`, `run_intensity` /
+> `run_distance` where it has `running`, `erg` where it has `erg_engine`, and
+> no `olympic`, `gymnastics` or `core_endurance` — so the two composite scores
+> are no longer the same model. When that diverged was not traced, and nothing
+> was changed for it; it needs a decision (re-mirror the app's model here, or
+> state that the site's composite is its own), not a value edit.
+
 ## 2. ORS — was significantly diverged; now mirrored
 
 ### What tpf-app's ORS actually is
@@ -116,6 +142,21 @@ generic catch-all.
 > of the same script; `check:app-ors` reports 0 differences across the 13
 > mirrored units. The same day's job-role strength battery (§11.2) is
 > Benchmarks-only and has no counterpart here.
+>
+> **2026-10-03, last** the app's plan 61 (tpf-app
+> `docs/build/61_MISSING_STANDARDS_RESEARCH_2026-10-03.md` §8.2 / §8.6)
+> researched the missing tactical standards: Pararescue on the IFT worksheet
+> (run, swim, push-ups and sit-ups Pass; the swim and pull-ups relabelled, ids
+> kept), one flat broad-jump ladder per group (general units 1.70 / 1.95 / 2.20
+> / 2.40, special forces 1.93 / 2.16 / 2.39 / 2.65), the police plank onto the
+> operator plank and the USMC plank Pass 1:03 → 1:10 — 27 values on the units
+> mirrored here — plus a stated basis (`cite`) on every operator-plank,
+> dead-hang and broad-jump row. Mirrored by
+> `scripts/apply-standards-research-2026-10-03.py`; the workbook gained a
+> `cite` column holding the app's cites verbatim (34 rows), and
+> `check:app-ors`, which now compares those too, reports 0 differences across
+> the 13 mirrored units. The app's firefighter plank and us_army / air_force /
+> uk_army broad jumps moved as well; those units are still not mirrored.
 
 ### Known data-quality issues inherited from the app (flagging, not silently fixing)
 

@@ -96,6 +96,26 @@
  * Pass (15000, 4:10:00) and every other value unchanged. Pinned in
  * operator-special-forces-tops.test.ts.
  *
+ * 2026-10-03, last — the app's plan 61 Part B, the missing tactical standards
+ * researched (tpf-app docs/build/61_MISSING_STANDARDS_RESEARCH_2026-10-03.md
+ * §8.2 / §8.6; the workbook edit is scripts/apply-standards-research-2026-10-03.py).
+ * The fixture was REGENERATED from operator.data.json with the same strip()
+ * shape after scripts/check-operator-vs-app.mjs reported 0 differences across
+ * the 13 mirrored units (now also comparing the 34 cite cells the workbook
+ * holds). 27 values moved (diffed: 27 lines out, 27 in):
+ *   usaf_pararescue_pj 1_5_mile_run Pass 610 → 620, 500_m_swim Pass 720 → 750,
+ *     push_ups_2_min Pass 50 → 40, sit_ups_2_min Pass 54 → 50 (the IFT worksheet)
+ *   broad_jump, us_navy_prt / us_police_pft: 1.7 / 1.9 / 2.1 / 2.3 → 1.7 / 1.95 /
+ *     2.2 / 2.4 (6 values); navy_seal_bud_s / usaf_pararescue_pj /
+ *     us_army_special_forces_sfas: 1.8 / 2 / 2.2 / 2.4 → 1.93 / 2.16 / 2.39 / 2.65
+ *     (12 values)
+ *   us_police_pft plank_front 60 / 90 / 150 / 210 → 90 / 150 / 210 / 270
+ *   us_marine_corps_pft_cft plank_front Pass 63 → 70
+ * No id, order, unit, direction or weight changed. Two names changed, which
+ * this fixture does not hold: the Pararescue swim and pull-ups ("Pull-ups (2
+ * min)", id kept `pull_ups_no_time`). Pinned value by value in
+ * standards-research-2026-10-03.test.ts.
+ *
  * NOTE: this fixture is a snapshot of THIS repository's generated data, so it
  * catches drift here but cannot see the app move — run
  * `npm run check:app-ors -- <path to tpf-app>` for that.
