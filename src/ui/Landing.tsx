@@ -48,7 +48,10 @@ export function Landing({ copy, meta, onStart, heroless }: Props) {
             />
             <div className="hero-badge">
               <span className="eyebrow" style={{ margin: 0 }}>Your result</span>
-              <strong style={{ fontSize: '1.05rem' }}>≈ {copy.hero.successPercentile} percentile</strong>
+              {/* 2026-10-02 — was "≈ 84th percentile". The tiers are TPF's own
+                  standards, not population percentiles, so the sample result
+                  shows a score (src/ui/resultCopy.ts). */}
+              <strong style={{ fontSize: '1.05rem' }}>{meta.scoreLabel} {copy.hero.successScore}</strong>
               <span className="pill">{copy.hero.successLabel}</span>
             </div>
           </div>

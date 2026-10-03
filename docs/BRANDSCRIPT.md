@@ -17,12 +17,12 @@ Two brands; the hero is always the *customer*, never us.
 | **2c. Philosophical** | People who put in the work deserve to see it pay off — effort shouldn't vanish into a black box. |
 | **2d. Villain** | The guesswork — generic, one-size standards that hide whether you're actually improving. |
 | **3a. Empathy** | "We train the way you do — and we got tired of grinding for months with no clear signal it was working." |
-| **3b. Authority (REAL only)** | Built by ex-British Army PTIs · transparent percentile-based standards (no black box) · free, no account, no tracking. **TODO before launch:** real user counts / PRs / testimonials. |
+| **3b. Authority (REAL only)** | Built by ex-British Army PTIs · our own standards, checked against open data where it exists · free, no account, no tracking. *(2026-10-02: was "transparent percentile-based standards" — the tiers are TPF's own standards, not population percentiles; see docs/STANDARDS.md.)* **TODO before launch:** real user counts / PRs / testimonials. |
 | **4. Plan** | 1) Pick your pathway. 2) Enter your lifts & times. 3) See your score and train your weak link. |
 | **5a. Direct CTA** | Get the app. |
 | **5b. Transitional CTA** | Score yourself free (the calculator). |
 | **6. Failure** | Keep guessing, keep plateauing, waste months on a plan that isn't working. |
-| **7. Success** | One honest read — your score, percentile and the weak link to fix; measurably fitter. |
+| **7. Success** | One honest read — your score, tier and the weak link to fix; measurably fitter. *(2026-10-02: was "score, percentile" — a percentile is shown only once the pool has measured one.)* |
 | **8. Aspirational identity** | The athlete who trains with intent and evidence — not on vibes. |
 | **9. One-liner** | *Most lifters and hybrid athletes train hard but never know if it's working. Take Point Fitness scores your strength and conditioning against your goal, so you can stop guessing and see exactly where you stand — and what to fix.* |
 

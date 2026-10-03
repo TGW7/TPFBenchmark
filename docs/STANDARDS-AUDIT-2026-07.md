@@ -14,6 +14,12 @@
 > PRT 2,000 m row and the GB Rowing 2026 senior minimum, the 500 m row is now
 > derived from it, and the HYROX race Elite is anchored on Rappelt et al. 2026
 > (CC BY) instead of a results-site distribution.
+>
+> **Also 2026-10-02:** the tier model this audit was measured against (pass ≈
+> 50th percentile of trained adults … elite ≈ top 5 %) is **no longer claimed**.
+> The tiers are TPF's own standards, not population percentiles, and the site
+> shows a percentile only when its own pool has measured one
+> (`docs/STANDARDS.md` → "What the tiers mean").
 
 Full validation of the live HABS standards against external references. **No
 standards were changed** — this is the evidence + recommendations for PTI

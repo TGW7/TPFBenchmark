@@ -35,6 +35,22 @@ const LOCAL_LABEL_OVERRIDES: Record<string, string> = {
   hspu: 'HSPU', t2b: 'T2B', plank_hold: 'Plank',
   run_1mi: '1-mile run', run_5k: '5k run', row_2k: '2k row', row_500m: '500m row',
   swim_400m: '400m swim', swim_1500m: '1500m swim', bike_20k: '20km bike TT', bike_40k: '40km bike TT',
+  // 2026-10-03 — two Operator ids. Plan 55 gave these rows the app's longer
+  // names (the unit pages print them in full), which are too long for the
+  // `notes` fallback below, so without an entry the grid would show the id:
+  // "500 M Swim" for SEAL and Pararescue (it showed "500 m swim" before), and
+  // for the Fan Dance an id that still spells the old 35 lb load — the id is
+  // kept because ids are stored (submissions, logs, the app sync).
+  '500_m_swim': '500 m swim',
+  fan_dance_24_km_35_lb_rifle_optional: 'Fan Dance (18 kg + rifle) — optional',
+  // 2026-10-03 — Operator names the fallback below refuses (a full stop or a
+  // comma in the name, or over 24 characters), which the grid showed as the
+  // title-cased id ("1 5 Mile Run").
+  '1_5_mile_run': '1.5-mile run',
+  '8_mile_loaded_march_25_kg': '8-mile march (25 kg)',
+  bleep_test_with_armour_vest_7_kg: 'Bleep test (vest)',
+  vested_1_mile_run_7_kg: 'Vested 1-mile (7 kg)',
+  casualty_drag_75_kg_dummy_15_m: 'Casualty drag (75 kg)',
 };
 
 /**
@@ -79,10 +95,11 @@ export function scoreColor(value: number | null): string {
   if (value < 80) return '#a8a02a'; // experienced — olive
   if (value < 90) return '#6ba32b'; // intermediate — lime
   if (value < 100) return '#158a44'; // advanced — green
-  return '#0d9488'; // elite (top ~5%) — teal
+  return '#0d9488'; // elite — teal
 }
 
-/** Named scoring tier for a 0–100+ score. Elite = meeting the elite standard (≈ top 5%). */
+/** Named scoring tier for a 0–100+ score. Elite = meeting TPF's elite standard.
+ *  (A tier is TPF's own standard, not a population percentile — 2026-10-02.) */
 export function scoreTier(value: number | null): string | null {
   if (value == null) return null;
   if (value < 50) return 'Below Beginner';
@@ -152,7 +169,8 @@ export function formatSigned(n: number | null): string {
   return `${v > 0 ? '+' : ''}${v.toFixed(1)}`;
 }
 
-/** Ordinal percentile, e.g. 73 -> "73rd". */
+/** Ordinal percentile, e.g. 73 -> "73rd". Only ever for a MEASURED pool
+ *  percentile (src/ui/resultCopy.ts) — never for a tier score. */
 export function formatPercentile(p: number | null): string {
   if (p == null) return '—';
   const r = Math.round(p);

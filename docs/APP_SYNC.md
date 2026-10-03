@@ -30,6 +30,28 @@ sign-up is a TPF account. Shared performance data lives as **JSONB on
 | manual reps (pull-ups, plank, grip) | — | ❌ app keeps ORS manual inputs in **localStorage**, not Supabase |
 | WODs | — | ❌ benchmark-site-only (app has no WOD store) |
 
+*Corrected 2026-10-02:* the two ❌ rows for `snatch_1rm` / `clean_jerk_1rm`
+above are out of date — both have synced since 2026-07-12 (`ORM_TO_APP` in
+`src/data/appSync.ts`; the app gained Olympic 1RM slots). The rows are kept, as
+written, with this correction; the section "Why snatch & clean-and-jerk don't
+sync" below is history for the same reason. This table also never listed the
+Operator ids (2026-07-16 audit) — the code comments in `appSync.ts` are the
+record for those. One Operator row added 2026-10-02:
+
+| Benchmark id | App target | Synced? |
+|---|---|---|
+| `500_m_swim` (Navy SEAL, USAF Pararescue, UK Royal Marines) | `race_times.swim["500m"]` | ✅ since 2026-10-02 — the record the app's `swim_500m` reads on all three pathways; every site row is a 500 m time |
+| `500_yd_swim_alternate`, `450_m_swim_alternate` (US Navy PRT) | — | ❌ no exact metric event (and the app keeps its Navy swims as manual inputs) |
+| `2_km_run_best_effort`, `8_km_ruck`, `5_mile_ruck_30_kg`, `8_mile_loaded_march_25_kg` | `run["2k"]`, `ruck["8k"]`, `ruck["5mi"]`, `ruck["8mi"]` | ❌ **not yet** — the app has an exact event for each (checked 2026-10-02); left for a separate change because the loaded rucks need their load matched |
+
+*2026-10-03 (plan 55, no mapping changed):* the Navy SEAL `1_5_mile_run` row is now
+named "1.5-mile run (PST: in boots and trousers)", and the SEAL and Pararescue
+`500_m_swim` rows name their strokes. The ids did not change (the workbook's `id`
+column pins them), so the sync is as before — and, as in the app, the SEAL run
+still reads the ordinary `run["1.5mile"]` record: neither repository records
+whether a run was booted yet (the owner asked the app for a "boot run" switch;
+not built).
+
 Anything not synced still works on the benchmark site (scored + saved in our own
 `benchmark_entries`); it just doesn't appear in the app.
 

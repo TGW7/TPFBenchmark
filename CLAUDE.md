@@ -40,11 +40,22 @@ Four TPF tokens only (off-white, black, OD-green, red), defined once in
 
 **Lift** runs on real v1-beta standards (codegen'd from
 `config/standards/TPF_HRS_Standards_*.xlsx`); `src/data/demo.ts` now only supplies
-the sample athlete's inputs. **Operator** still uses synthetic data
-(`src/data/operatorDemo.ts`) until the real ORS workbook
-(`config/standards/TPF_ORS_Standards_*.xlsx`) is wired into operator scoring.
-Never confuse demo/synthetic data for real standards; real values only ever come
-from the Excel masters via codegen.
+the sample athlete's inputs. **Operator** runs on real standards too: the curated
+master `config/standards/TPF_Operator_Standards.xlsx` → `scripts/codegen-operator.mjs`
+→ `src/config/generated/operator.*` (16 units). It mirrors the TPF app's ORS —
+edit it only by a dated `scripts/apply-*.py`, then `npm run codegen`, then
+`npm run check:app-ors -- <path to tpf-app>` (docs/STANDARDS.md, "Operator (ORS)
+standards"). The raw `TPF_ORS_Standards_*.xlsx` is reference only. (There is no
+`src/data/operatorDemo.ts` any more; corrected 2026-10-02.) Never confuse
+demo/synthetic data for real standards; real values only ever come from the
+Excel masters via codegen.
+
+## Percentiles
+
+The tiers are TPF's own standards, **not population percentiles**. Show a
+percentile only when the pool has measured one (`fetchPercentile`); never derive
+one from a score (`src/ui/resultCopy.ts`; pinned by
+`src/test/no-percentile-claims.test.ts`).
 
 ## Commands
 

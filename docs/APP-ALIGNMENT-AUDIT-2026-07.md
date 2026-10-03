@@ -93,6 +93,29 @@ generic catch-all.
 > on the Army baseline and is still not mirrored. The comparison is now
 > scripted: `npm run check:app-ors -- <path to tpf-app>` (see
 > `docs/STANDARDS.md`, "Operator (ORS) standards").
+>
+> **Later on 2026-10-02** the app's plan 54 moved 28 more Elites (USMC
+> push-ups and plank, the Navy plank, and every unit's deadlift Elite over
+> 200 kg); mirrored by `scripts/apply-military-top-tiers-2026-10-02.py`, and
+> `check:app-ors` reports 0 differences across the 13 mirrored units.
+>
+> **2026-10-03** the app's plan 55 (tpf-app
+> `docs/build/55_SPECIAL_FORCES_AND_ELITE_UNIT_TIERS.md` §10.2) moved 28 values
+> on the special-forces and elite units (SEAL, Pararescue, SFAS, UKSF, Para Reg,
+> US Airborne: strength and endurance tops, runs, the UKSF ruck, the Fan Dance's
+> load and Pass) and relabelled four rows with their test conditions; and the
+> owner's "even it out" moved every unit's deadlift Excellent to (Good + Elite) / 2
+> (25 rows here). Mirrored as changesets 2 and 3 of the same script — renamed rows
+> keep their ids — and `check:app-ors`, which now also compares labels and the
+> zero-weight rows the site holds, reports 0 differences across the 13 mirrored
+> units. The Benchmarks-only rows of that plan have no counterpart here.
+>
+> **2026-10-03, later** the app's plan 55 §11.1 re-set the Fan Dance's faster
+> tiers for the selection load (the owner: "adjust times then") — Good 3:55:00,
+> Excellent 3:40:00, Elite 3:30:00, Pass still 4:10:00. Mirrored as changeset 4
+> of the same script; `check:app-ors` reports 0 differences across the 13
+> mirrored units. The same day's job-role strength battery (§11.2) is
+> Benchmarks-only and has no counterpart here.
 
 ### Known data-quality issues inherited from the app (flagging, not silently fixing)
 

@@ -1,17 +1,20 @@
 /**
- * Percentile estimation + age bands.
+ * Percentiles + age bands.
  *
- * Two ways to get a percentile:
- *   1. estimatedPercentile(score) — derive an ESTIMATE from the tier curve, using
- *      the standards methodology's anchoring (pass≈50th, good≈70th, excellent≈85th,
- *      elite≈top 5%). Works today with zero population data.
- *   2. percentileRank(value, samples) — a TRUE percentile against a real sample
- *      distribution. This is the hook for the user-data pool (see audit.ts); it
- *      returns null until there are enough samples for the (sex, age-band) cell.
+ * There is ONE way to get a percentile: percentileRank(value, samples) — a TRUE
+ * percentile against a real sample distribution, the hook for the user-data
+ * pool (see audit.ts and stats.ts; production reads it server-side through
+ * benchmark_percentile()). It returns null until there are enough samples for
+ * the (sex, age-band) cell, and then no percentile is shown.
  *
- * The overall HRS is a pathway-weighted blend of tier %s, so estimatedPercentile
- * of the overall is an ESTIMATE of where the athlete sits, not a measured
- * composite percentile. A measured one needs the data pool.
+ * 2026-10-02 — `estimatedPercentile(score)` was REMOVED. It mapped a tier score
+ * onto a "percentile" through fixed knots (pass ≈ 50th, good ≈ 70th, excellent
+ * ≈ 85th, elite ≈ 99th), and the site showed that as "≈ Nth percentile" whenever
+ * the pool had no data. Since the 2026-10-02 standards rebuild every tier is
+ * TPF's own standard (docs/STANDARDS.md), not a population percentile, so the
+ * mapping described no population at all. Do not reintroduce a score-to-
+ * percentile estimate; src/ui/resultCopy.ts states the display rule and
+ * src/test/no-percentile-claims.test.ts pins it.
  */
 
 import type { AthleteProfile } from './types';
@@ -30,29 +33,6 @@ export function ageBand(ageYears?: number): AgeBand | null {
 
 export function profileCell(profile: AthleteProfile): string {
   return `${profile.sex}:${ageBand(profile.ageYears) ?? 'all'}`;
-}
-
-// tier % -> percentile knots, from the standards methodology.
-const KNOTS: ReadonlyArray<readonly [number, number]> = [
-  [0, 0],
-  [50, 50], // pass
-  [70, 70], // good
-  [85, 85], // excellent
-  [95, 90], // excellent→elite midpoint
-  [98, 95],
-  [100, 99], // elite = hard ceiling ≈ top 1% (unified HABS model)
-];
-
-/** Estimate a population percentile (0–99.9) from a HABS score (0–100). */
-export function estimatedPercentile(score: number | null): number | null {
-  if (score == null) return null;
-  const s = Math.max(0, Math.min(100, score));
-  for (let i = 1; i < KNOTS.length; i++) {
-    const [x0, y0] = KNOTS[i - 1];
-    const [x1, y1] = KNOTS[i];
-    if (s <= x1) return y0 + ((s - x0) / (x1 - x0)) * (y1 - y0);
-  }
-  return 99.9;
 }
 
 /**

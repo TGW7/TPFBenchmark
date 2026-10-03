@@ -142,6 +142,43 @@ describe('appSync mappers (benchmark ↔ app profile JSONB)', () => {
     expect(patch.swim).toBeUndefined();
   });
 
+  // 2026-10-02 — the 500 m swim (SEAL, Pararescue, Royal Marines) syncs to the
+  // app's race_times.swim["500m"], the record the app's swim_500m reads on all
+  // three pathways. The Navy PRT's 500-yd and 450 m swims still do not (no
+  // exact metric event; the app keeps them as manual inputs).
+  it('maps the 500 m swim to the app’s swim 500m event, both ways', () => {
+    const logs: AthleteLogs = {
+      orm: [],
+      raceTimes: [
+        { benchmarkId: '500_m_swim', modality: 'swimming', event: '500_m_swim', timeSec: 600 },
+        { benchmarkId: '500_yd_swim_alternate', modality: 'running', event: '500_yd_swim_alternate', timeSec: 480 },
+        { benchmarkId: '450_m_swim_alternate', modality: 'running', event: '450_m_swim_alternate', timeSec: 470 },
+      ],
+      manual: [], wod: [],
+    };
+    const patch = racePatchFromLogs(logs, '2026-10-02T00:00:00Z');
+    expect(patch).toEqual({ swim: { '500m': { timeSec: 600, updatedAt: '2026-10-02T00:00:00Z', predicted: false } } });
+    const back = logsFromAppProfile(undefined, patch, 'operator');
+    expect(back.raceTimes).toEqual([{ benchmarkId: '500_m_swim', modality: 'swim', event: '500m', timeSec: 600 }]);
+  });
+
+  it('every mapped race id is a real benchmark id, and every 500 m swim the site scores is mapped', async () => {
+    const { OPERATOR_PATHWAYS } = await import('../config/generated/operator.generated');
+    const { HRS_BENCHMARKS } = await import('../config/benchmarks');
+    const known = new Set([
+      ...OPERATOR_PATHWAYS.flatMap((u) => u.benchmarks.map((b) => b.id)),
+      ...HRS_BENCHMARKS.map((b) => b.id),
+    ]);
+    const { RACE_TO_APP } = await import('../data/appSync');
+    // Found 2026-10-02: two mapped ids belong to no current benchmark (no unit
+    // in the generated data uses them). Left as they are — removing a mapping
+    // is its own change — but pinned, so a third cannot appear unnoticed.
+    const unused = Object.keys(RACE_TO_APP).filter((id) => !known.has(id)).sort();
+    expect(unused).toEqual(['1_5_mile_run_best_effort', '8_km_ruck_35_lb']);
+    const swimUnits = OPERATOR_PATHWAYS.filter((u) => u.benchmarks.some((b) => b.id === '500_m_swim')).map((u) => u.id).sort();
+    expect(swimUnits).toEqual(['navy_seal_bud_s', 'uk_royal_marines_cdo_course', 'usaf_pararescue_pj']);
+  });
+
   it('attaches a fixed loadKg for the loaded ruck benchmarks (load is a property of the id, not user input)', () => {
     const logs: AthleteLogs = {
       orm: [],

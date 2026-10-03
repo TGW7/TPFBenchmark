@@ -33,7 +33,6 @@ export type { ComponentScoreMap } from './capacity';
 export { analyseWeaknesses } from './weakness';
 export type { WeaknessOptions } from './weakness';
 export {
-  estimatedPercentile,
   percentileRank,
   ageBand,
   profileCell,
