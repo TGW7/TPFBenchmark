@@ -135,7 +135,10 @@ describe('US Navy (PRT) — the app’s `navy` pathway', () => {
     expect(tiers('us_navy_prt', 'bench_press')).toEqual([60, 80, 100, 120]);
     expect(tiers('us_navy_prt', 'dead_hang_grip')).toEqual([30, 50, 75, 100]);
     expect(tiers('us_navy_prt', 'power_clean')).toEqual([50, 70, 90, 110]);
-    expect(tiers('us_navy_prt', 'broad_jump')).toEqual([1.7, 1.9, 2.1, 2.3]);
+    // 2026-10-03 — the app's plan 61 Part B §3.2: the general flat broad-jump
+    // ladder, 1.7 / 1.9 / 2.1 / 2.3 → 1.70 / 1.95 / 2.20 / 2.40 (Norwegian
+    // conscripts' 25th / 50th / 75th, CC BY; Pass above the OPAT 1.60 m mark).
+    expect(tiers('us_navy_prt', 'broad_jump')).toEqual([1.7, 1.95, 2.2, 2.4]);
     expect(unit('us_navy_prt').benchmarks).toHaveLength(13);
   });
 
@@ -197,7 +200,9 @@ describe('Elite above a general table’s maximum; Pass never below a minimum (a
     expect(tiers('us_marine_corps_pft_cft', '3_mile_run')).toEqual([1660, 1260, 1170, 1025]);
     expect(tiers('us_marine_corps_pft_cft', 'pull_ups_no_time')).toEqual([3, 12, 18, 25]);
     expect(tiers('us_marine_corps_pft_cft', 'push_ups_2_min')).toEqual([42, 60, 75, 100]); // 2026-10-02 plan 54: 96 → 100
-    expect(tiers('us_marine_corps_pft_cft', 'plank_front')).toEqual([63, 180, 210, 270]); // 2026-10-02 plan 54: 250 → 270
+    // 2026-10-02 plan 54: Elite 250 → 270. 2026-10-03 plan 61 Part B §9.1: Pass
+    // 63 → 70 (1:03 → 1:10, the PFT plank minimum since 1 Jan 2022).
+    expect(tiers('us_marine_corps_pft_cft', 'plank_front')).toEqual([70, 180, 210, 270]);
   });
 
   it('US Police PFT: Elite moved above each table maximum (Navy 20-24 8:30; USAF PFRA 67, 58)', () => {

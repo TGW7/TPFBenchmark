@@ -41,7 +41,10 @@ describe('absolute standards (2026-07-12 conversion)', () => {
       back_squat_1rm:   { M: [80, 100, 120, 145, 165, 190],   F: [50, 60, 75, 90, 105, 120] },
       deadlift_1rm:     { M: [95, 115, 140, 165, 195, 225],   F: [65, 75, 90, 110, 125, 145] },
       bench_1rm:        { M: [70, 85, 100, 120, 140, 160],    F: [40, 50, 55, 65, 80, 90] },
-      strict_press_1rm: { M: [40, 50, 60, 70, 85, 95],        F: [20, 30, 35, 40, 50, 55] },
+      // 2026-10-03 — the app's plan 61 Part C §2.2: the women's Beginner was the
+      // empty bar (20 kg), below every anchor (23-30 kg); now 25. Was F [20, 30, ...].
+      // Found by scripts/check-lift-vs-app.mjs — plan 61's list for this repo missed it.
+      strict_press_1rm: { M: [40, 50, 60, 70, 85, 95],        F: [25, 30, 35, 40, 50, 55] },
       power_clean_1rm:  { M: [50, 60, 75, 90, 105, 120],      F: [30, 40, 50, 60, 70, 78] },
       // 2026-07-19 — the app's 6th base HABS lift, previously missing from
       // tpf-benchmark entirely (a coverage gap, not a drift). No pathway
@@ -65,8 +68,12 @@ describe('absolute standards (2026-07-12 conversion)', () => {
       // app source: hybrid_readiness.ts SWIM_400/BIKE_20K + riegelStd.
       swim_400m:        { M: [560, 480, 410, 360, 320, 285],  F: [620, 530, 455, 400, 355, 315] },
       swim_1500m:       { M: [2270, 1950, 1660, 1460, 1300, 1160], F: [2520, 2150, 1850, 1620, 1440, 1280] },
-      bike_20k:         { M: [2700, 2400, 2160, 1950, 1770, 1620], F: [3000, 2670, 2400, 2160, 1965, 1800] },
-      bike_40k:         { M: [5590, 4970, 4470, 4040, 3660, 3350], F: [6210, 5530, 4970, 4470, 4070, 3730] },
+      // 2026-10-03 — the app's plan 61 Part C §4: the women's 20 km Beginner sat
+      // 28 s easier than the US Army AFT 12 km bike pass scaled to 20 km (49:32):
+      // 50:00 → 49:30 (was F 3000), and the derived 40 km follows, 1:43:30 →
+      // 1:42:30 (was F 6210; 2970 × 2.070 to 10 s, as the app derives it).
+      bike_20k:         { M: [2700, 2400, 2160, 1950, 1770, 1620], F: [2970, 2670, 2400, 2160, 1965, 1800] },
+      bike_40k:         { M: [5590, 4970, 4470, 4040, 3660, 3350], F: [6150, 5530, 4970, 4470, 4070, 3730] },
     };
     for (const [id, tiers] of Object.entries(shared)) {
       for (const sex of ['M', 'F'] as const) {
@@ -101,12 +108,20 @@ describe('absolute standards (2026-07-12 conversion)', () => {
     // the app has carried barbell_row overrides for hyrox / triathlete /
     // powerlifter / bodybuilder since 2026-07-12, which this test had wrongly
     // pinned as "inherits base" — those are now the app's values.
+    //
+    // 2026-10-03 — the app's plan 61 moved two base cells every inheriting
+    // pathway reads: the women's overhead press Beginner 20 → 25 (hybrid,
+    // gym-goer, CrossFit; the HYROX, triathlete, bodybuilder and powerlifter
+    // pathways set their own and are unchanged) and the women's 20 / 40 km
+    // bike Beginner (triathlete). scripts/check-lift-vs-app.mjs now compares
+    // the app's literal override rows with this site's live (0 differences).
     const shared: Record<string, Record<string, { M: number[]; F: number[] }>> = {
       hybrid_athlete: {
         back_squat_1rm: { M: [80, 100, 120, 145, 165, 190], F: [50, 60, 75, 90, 105, 120] },
         deadlift_1rm: { M: [95, 115, 140, 165, 195, 225], F: [65, 75, 90, 110, 125, 145] },
         bench_1rm: { M: [70, 85, 100, 120, 140, 160], F: [40, 50, 55, 65, 80, 90] },
-        strict_press_1rm: { M: [40, 50, 60, 70, 85, 95], F: [20, 30, 35, 40, 50, 55] },
+        // 2026-10-03 — inherits the base ladder, whose women's Beginner moved 20 → 25 (app plan 61 Part C §2.2).
+        strict_press_1rm: { M: [40, 50, 60, 70, 85, 95], F: [25, 30, 35, 40, 50, 55] },
         power_clean_1rm: { M: [50, 60, 75, 90, 105, 120], F: [30, 40, 50, 60, 70, 78] },
         barbell_row_1rm: { M: [55, 65, 80, 95, 115, 130], F: [30, 40, 50, 60, 70, 78] },
         run_1mi: { M: [545, 455, 390, 370, 330, 300], F: [620, 520, 455, 435, 395, 360] },
@@ -118,7 +133,8 @@ describe('absolute standards (2026-07-12 conversion)', () => {
         back_squat_1rm: { M: [80, 100, 120, 145, 165, 190], F: [50, 60, 75, 90, 105, 120] },
         deadlift_1rm: { M: [95, 115, 140, 165, 195, 225], F: [65, 75, 90, 110, 125, 145] },
         bench_1rm: { M: [70, 85, 100, 120, 140, 160], F: [40, 50, 55, 65, 80, 90] },
-        strict_press_1rm: { M: [40, 50, 60, 70, 85, 95], F: [20, 30, 35, 40, 50, 55] },
+        // 2026-10-03 — inherits the base ladder, whose women's Beginner moved 20 → 25 (app plan 61 Part C §2.2).
+        strict_press_1rm: { M: [40, 50, 60, 70, 85, 95], F: [25, 30, 35, 40, 50, 55] },
         power_clean_1rm: { M: [50, 60, 75, 90, 105, 120], F: [30, 40, 50, 60, 70, 78] },
         barbell_row_1rm: { M: [55, 65, 80, 95, 115, 130], F: [30, 40, 50, 60, 70, 78] },
         run_1mi: { M: [620, 545, 470, 415, 375, 345], F: [725, 635, 550, 490, 445, 410] },
@@ -131,7 +147,8 @@ describe('absolute standards (2026-07-12 conversion)', () => {
         back_squat_1rm: { M: [85, 110, 135, 160, 185, 210], F: [60, 75, 90, 110, 130, 150] },
         deadlift_1rm: { M: [90, 115, 140, 165, 185, 210], F: [65, 75, 95, 110, 130, 150] },
         bench_1rm: { M: [70, 85, 100, 115, 130, 140], F: [35, 45, 50, 65, 80, 90] },
-        strict_press_1rm: { M: [40, 50, 60, 70, 85, 95], F: [20, 30, 35, 40, 50, 55] },
+        // 2026-10-03 — inherits the base ladder, whose women's Beginner moved 20 → 25 (app plan 61 Part C §2.2).
+        strict_press_1rm: { M: [40, 50, 60, 70, 85, 95], F: [25, 30, 35, 40, 50, 55] },
         power_clean_1rm: { M: [55, 65, 80, 100, 120, 135], F: [35, 45, 50, 65, 80, 95] },
         // no barbell_row override — inherits base
         barbell_row_1rm: { M: [55, 65, 80, 95, 115, 130], F: [30, 40, 50, 60, 70, 78] },
@@ -180,8 +197,10 @@ describe('absolute standards (2026-07-12 conversion)', () => {
         // omitting these here was the one place that pattern wasn't followed.
         swim_400m: { M: [560, 480, 410, 360, 320, 285], F: [620, 530, 455, 400, 355, 315] },
         swim_1500m: { M: [2270, 1950, 1660, 1460, 1300, 1160], F: [2520, 2150, 1850, 1620, 1440, 1280] },
-        bike_20k: { M: [2700, 2400, 2160, 1950, 1770, 1620], F: [3000, 2670, 2400, 2160, 1965, 1800] },
-        bike_40k: { M: [5590, 4970, 4470, 4040, 3660, 3350], F: [6210, 5530, 4970, 4470, 4070, 3730] },
+        // 2026-10-03 — the base women's Beginner 50:00 → 49:30 (was F 3000) and the
+        // derived 40 km 1:43:30 → 1:42:30 (was F 6210) — app plan 61 Part C §4.
+        bike_20k: { M: [2700, 2400, 2160, 1950, 1770, 1620], F: [2970, 2670, 2400, 2160, 1965, 1800] },
+        bike_40k: { M: [5590, 4970, 4470, 4040, 3660, 3350], F: [6150, 5530, 4970, 4470, 4070, 3730] },
       },
       powerlifter: {
         back_squat_1rm: { M: [105, 140, 180, 225, 280, 340], F: [70, 90, 115, 145, 175, 210] },
@@ -353,12 +372,22 @@ describe('WOD ladders shared with tpf-app (2026-10-02)', () => {
     // Elite = Rappelt et al. 2026 (CC BY) season-7 ELITE median × 1.187, the
     // lower tiers keeping each sex's old spacing. Men's HYROX is unchanged;
     // women's was [6600, 6300, 6000, 5560, 5140, 4740] (1:50:00 … 1:19:00).
+    //
+    // 2026-10-03 — the app's plan 61 Part A §3.4 (the owner: "build all
+    // above"): every HYROX tier below Elite now has a permitted basis, and
+    // only the bottom two move (both easier): men's Beginner / Novice = 3.9 ×
+    // TPF's 5 km Beginner / Novice, 1:35:00 → 1:57:30 and 1:30:30 → 1:37:30
+    // (were 5700 / 5430); women = men × 1.10 to 30 s, Beginner 1:44:30 →
+    // 2:09:30, Novice 1:39:30 → 1:47:30, Experienced 1:35:00 → 1:34:30 (were
+    // 6270 / 5970 / 5700). Fran, Helen and Cindy unchanged. This pin is typed;
+    // scripts/check-lift-vs-app.mjs compares the same ladders with the app's
+    // live catalogue (0 differences after this change).
     // Tuple order: pass, novice, good, intermediate, advanced, elite.
     const shared: Record<string, { M: number[]; F: number[] }> = {
       fran: { M: [360, 300, 240, 220, 195, 165], F: [420, 360, 300, 280, 250, 210] },
       helen: { M: [840, 750, 660, 580, 510, 450], F: [960, 870, 780, 680, 590, 510] },
       cindy: { M: [12, 15, 18, 21, 23, 25], F: [10, 13, 16, 19, 21, 22] },
-      hyrox_race: { M: [5700, 5430, 5160, 4800, 4440, 4080], F: [6270, 5970, 5700, 5280, 4890, 4500] },
+      hyrox_race: { M: [7050, 5850, 5160, 4800, 4440, 4080], F: [7770, 6450, 5670, 5280, 4890, 4500] },
     };
     for (const [id, tiers] of Object.entries(shared)) {
       for (const sex of ['M', 'F'] as const) {

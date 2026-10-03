@@ -65,19 +65,19 @@ confirm them.
 | Benchmarks | Basis | Checked against |
 |---|---|---|
 | Back squat, deadlift, bench | TPF's own (owner rounds 8, 9, 12) | van den Hoek et al. 2024, J Sci Med Sport 27:734 (CC BY — 809,986 tested raw powerlifting entries, × bodyweight deciles) at 85 kg M / 65 kg F, discounted ~0.80 for a generalist (the CrossFit-to-powerlifter gap measured from Meier, Rabel, Schmidt 2021, Sports 9:80, CC BY) |
-| Overhead press, power clean, barbell row | TPF's own | **No openly licensed population norm exists (a gap)** — ratio checks only (Nuzzo 2023; team-sport power clean ÷ squat) |
+| Overhead press, power clean, barbell row | TPF's own | **No openly licensed population norm exists (a gap)** — ratio checks only (Nuzzo 2023; team-sport power clean ÷ squat). *2026-10-03: the overhead press checked against the CrossFit press ratios of Meier 2021 and Dexheimer 2019 (CC BY); the women's Beginner 20 → 25 kg (below)* |
 | Front squat | TPF's own: ~0.82 × TPF's back squat | every tier within 5 kg of the ratio |
 | Snatch, clean & jerk | TPF's own, expert-curated | published ratios (snatch ÷ C&J, women ÷ men) and Meier 2021's own CrossFit sample |
 | Mile, 5 km | TPF's own (owner round 12) | USATF 2025 road open standards as age-grade % (CC0); US Army Fitness Test 2-mile (2025 tables, a US government work) |
 | 2 km row | TPF's own, **rebuilt 2026-10-02** | US Navy PRT 2,000 m row, ages 17–19 (Guide-5, Jan 2025, a US government work) for Beginner–Intermediate; GB Rowing Team 2026 senior trials minimum × 1.07 for Elite; Advanced midway |
 | 500 m row | **Derived** from the 2 km row (Riegel 1.06, 1 s steps), per pathway — as the app derives it | — |
 | 400 m / 1500 m swim | TPF's own triathlete anchor; 1500 m Riegel-derived | US Navy PRT 500-yd swim (converted, Riegel 1.06) |
-| 20 km / 40 km bike | TPF's own triathlete anchor; 40 km Riegel-derived | **no permitted anchor (a gap)** |
-| Broad jump, plank, pull-ups, HSPU, T2B, double-unders, muscle-ups | TPF's own, expert-set | **none checked (a gap)** — the AFT / PFRA plank tables could anchor plank |
+| 20 km / 40 km bike | TPF's own triathlete anchor; 40 km Riegel-derived | **no permitted anchor (a gap)** — *2026-10-03: now checked — Beginner at the US Army AFT 12 km bike pass scaled to 20 km (a US government work), Elite graded against the UCI Hour Records (facts); assumes a TT bike, flat, still air (below)* |
+| Broad jump, plank, pull-ups, HSPU, T2B, double-unders, muscle-ups | TPF's own, expert-set | **none checked (a gap)** — the AFT / PFRA plank tables could anchor plank. *2026-10-03: the broad jump is now checked (Norwegian conscripts, Aandstad 2023, CC BY; US Army Ranger candidates, CC BY; China's student standard) and its men's Elite moved 285 → 275 cm (below); the rest are still unchecked* |
 | Pathway overrides | TPF's own (owner-set) | CrossFit: Meier 2021; runs: USATF age-grade %; rows: Navy PRT; HYROX / bodybuilder lifts: van den Hoek discounted; powerlifter: van den Hoek **undiscounted** (its own population) |
 | Fran, Grace, Helen | TPF's own, expert-set | Meier 2021 — **the study's own sample only, never the third-party percentiles printed beside it** |
-| Diane, Cindy, Fight Gone Bad | TPF's own, expert-set | **no openly licensed study exists (a gap)** |
-| HYROX race | Elite = Rappelt et al. 2026 (Front Physiol, CC BY) season-7 ELITE-division median × 1.187; lower tiers TPF's own, **provisional** | — |
+| Diane, Cindy, Fight Gone Bad | TPF's own, expert-set | **no openly licensed study exists (a gap)** — *2026-10-03: Cindy is now checked (Kliszczewicz 2014, Toledo 2021, Mangine 2018, all CC BY; Forte 2022 and Butcher 2015 cross-check only) and kept; Diane and Fight Gone Bad still have none* |
+| HYROX race | Elite = Rappelt et al. 2026 (Front Physiol, CC BY) season-7 ELITE-division median × 1.187; lower tiers TPF's own, **provisional** — *2026-10-03: every tier now has a basis — Advanced the Rappelt PRO median at Open weights, Experienced Brandt et al. 2025 (CC BY), Novice / Beginner 3.9 × TPF's own 5 km; women = men × 1.10 (below)* | — |
 | Operator units | pass marks from each service's published test where one exists; upper tiers and all strength rows TPF's own | US government works for the US units; UK Crown-copyright status **unconfirmed** |
 
 **Not a source of any standard here:** Strength Level / Running Level, the
@@ -403,6 +403,121 @@ units. Pinned in `src/test/operator-special-forces-tops.test.ts`. The app's
 job-role strength battery, changed the same day (§11.2), is a Benchmarks-only
 test with no counterpart here.
 
+### 2026-10-03, last: the missing standards researched (the app's plan 61)
+
+The app's record is tpf-app `docs/build/61_MISSING_STANDARDS_RESEARCH_2026-10-03.md`
+§8 (§8.2 lists every value that moved; §8.6 the values this repository takes).
+The owner, verbatim: *"1 yes build all above"*. The edit to both workbooks is
+`scripts/apply-standards-research-2026-10-03.py`; afterwards `npm run
+check:app-ors` reported **0 differences** across the 13 mirrored units and the
+new `npm run check:app-lift` **0 differences** (below).
+
+**Lift / Hybrid** (six tiers; times h:mm:ss):
+
+| Benchmark | Sex | Beginner | Novice | Experienced | Intermediate | Advanced | Elite |
+|---|---|---|---|---|---|---|---|
+| HYROX race | M | 1:35:00 → **1:57:30** | 1:30:30 → **1:37:30** | 1:26:00 | 1:20:00 | 1:14:00 | 1:08:00 |
+| HYROX race | F | 1:44:30 → **2:09:30** | 1:39:30 → **1:47:30** | 1:35:00 → **1:34:30** | 1:28:00 | 1:21:30 | 1:15:00 |
+| Broad jump (cm) | M | 200 | 215 | 230 | 250 | 270 | 285 → **275** |
+| Overhead press (kg) | F | 20 → **25** | 30 | 35 | 40 | 50 | 55 |
+| 20 km bike TT | F | 50:00 → **49:30** | 44:30 | 40:00 | 36:00 | 32:45 | 30:00 |
+| 40 km bike TT (derived) | F | 1:43:30 → **1:42:30** | 1:32:10 | 1:22:50 | 1:14:30 | 1:07:50 | 1:02:10 |
+
+- **HYROX** (plan 61 Part A §3.4): only the bottom two tiers moved, both
+  easier. Elite stays Rappelt et al. 2026 (CC BY) season-7 ELITE median ×
+  1.187; Advanced is the median PRO racer at Open weights (Rappelt's Figure 2 ×
+  0.93 for the lighter Open stations, TPF judgement); Intermediate TPF's own,
+  between them; Experienced Brandt et al. 2025 (CC BY), recreational Open
+  median 86.5 min; **Novice and Beginner = 3.9 × TPF's own 5 km Novice /
+  Beginner** (25:00 / 30:05 — HYROX time scales with running, per those two
+  papers). Women = men × 1.10 (Rappelt), to the nearest 30 s, which makes the
+  women's Experienced 30 s harder. HYROX results and analyses of them are still
+  never a source.
+- **Cindy** kept, both sexes, and now checked (Part A §4.4–4.5): the women's /
+  men's ratio 0.83–0.91 sits inside the CrossFit evidence (Toledo 2021,
+  Mangine 2018, Kliszczewicz 2014, all CC BY; Forte 2022 and Butcher 2015 as
+  cross-checks only). Whether the men's Elite should be 25 or 28 is an open
+  owner question in the app's record, so it was not changed. **Fran and Helen**
+  unchanged.
+- **The broad jump** here is TPF Benchmark's own six-tier ladder — the app has
+  none. Plan 61 Part B §3.3 checked it against Norwegian conscripts (Aandstad
+  et al. 2023, CC BY), US Army Ranger course candidates (2026, CC BY), Serbian
+  police students (through a CC BY review), AFSPECWAR candidates (Feeney 2023,
+  facts) and China's National Student Physical Health Standard: every tier
+  sits on an anchor except the men's Elite (2.85 m, above all of them), which
+  moved to 2.75 m. The women's ladder is kept, about 0.80 × the men's at every
+  tier and exactly 0.80 at Elite. Relabelled "TPF's own, now checked".
+- **The HABS base table — not on plan 61's list for this repository.** The app
+  moved three base cells the same day (Part C §2.2 and §4): the women's
+  overhead-press Beginner (the empty bar, below every anchor) and the women's
+  20 km TT Beginner (28 s easier than the US Army AFT 12 km bike pass scaled to
+  20 km), with the derived 40 km following. This site's base table is the
+  app's (`pathway-standards.test.ts`), so they moved here too; they were found
+  by the new Lift check, run against the unchanged data first (5 differences:
+  these three and the two HYROX rows). The HYROX, triathlete and bodybuilder
+  pathways set their own women's overhead press and stay at 20 kg, as in the
+  app (an owner question in its record, §8.7 Q2).
+
+**Operator** (unisex, Pass / Good / Excellent / Elite; plan 61 Part B):
+
+| Unit · benchmark | Old | New | Basis |
+|---|---|---|---|
+| USAF Pararescue · 1.5-mile run | 10:10 / 9:30 / 9:00 / 8:15 | **10:20** / … | the USAF IFT worksheet (10 Jan 2023, PJ column — a US government work) |
+| USAF Pararescue · 500 m swim | 12:00 / 11:00 / 10:00 / 9:30 | **12:30** / … | the same worksheet's PJ column; civilians enlist on the 9T5 column, 15:00 |
+| USAF Pararescue · push-ups (2 min) | 50 / 70 / 85 / 105 | **40** / … | the same worksheet |
+| USAF Pararescue · sit-ups (2 min) | 54 / 70 / 90 / 110 | **50** / … | the same worksheet |
+| US Navy (PRT), US Police PFT · broad jump (m) | 1.7 / 1.9 / 2.1 / 2.3 | 1.7 / **1.95 / 2.2 / 2.4** | Pass above the US Army OPAT 1.60 m mark; the others Norwegian conscripts' 25th / 50th / 75th (CC BY), about the AFSPECWAR OFT minimum / 9 points / maximum |
+| Navy SEAL, Pararescue, SFAS · broad jump (m) | 1.8 / 2.0 / 2.2 / 2.4 | **1.93 / 2.16 / 2.39 / 2.65** | the AFSPECWAR OFT 8 / 9 / 10-point marks (76 / 85 / 94 in, sex-neutral); Elite near the top fifth of AFSPECWAR candidates (Feeney 2023, facts) |
+| US Police PFT · plank | 1:00 / 1:30 / 2:30 / 3:30 | **1:30 / 2:30 / 3:30 / 4:30** | the operator plank (the old ladder sat below every US entry-age minimum) |
+| US Marine Corps · plank | 1:03 / 3:00 / 3:30 / 4:30 | **1:10** / … | the PFT plank minimum since 1 Jan 2022 (secondary sources; the order returned 403) |
+
+**Two Pararescue rows were renamed to the app's labels:** the swim is now "500 m
+swim (IFT, PJ column — enlistees 15:00; freestyle, breaststroke or sidestroke)",
+and the pull-ups "Pull-ups (2 min)" (the IFT's own timing; one minute is for
+officers). **Both keep their ids** (`500_m_swim`, and `pull_ups_no_time`, pinned
+in the workbook's `id` column), because ids are stored and shared across units;
+the grid still shows the swim as "500 m swim". The combat units' broad jump
+(1.8 / 2.0 / 2.2 / 2.4) and SWAT's (1.9 / 2.1 / 2.3 / 2.5) were checked and kept.
+
+**Stated bases, new.** The app wrote a `cite` on every operator-plank,
+dead-hang and broad-jump row and the Pararescue swim. This site emits no cite,
+so the workbook gained a **`cite` column** (Standards sheet; codegen does not
+read it) holding the app's text verbatim on the 34 such rows it holds, and
+`check:app-ors` now compares every non-blank cite cell with the app — 34
+compared, 0 differences; the app's other 23 cites on the mirrored units
+predate plan 61 and are not compared (some are paraphrased in the rows'
+`source` notes, some not at all). **Two source labels
+changed in the app that have no counterpart here** (this site has no per-unit
+source label): USMC "MCO 6100.13B" → "MCO 6100.13A" and Pararescue "PAST" →
+"IFT (formerly the PAST)"; both are recorded in the rows' `source` notes.
+
+**Not mirrored**, because this site has no row for them: the app's firefighter
+plank and the us_army / air_force / uk_army broad jumps (units not mirrored);
+UKSF's broad jump (zero-weight in the app; this site holds no such row); and
+the Benchmarks-only changes — the women's Murph and DT ratios, the police
+vertical jump, the women's pull-ups and sit-ups, the cycling FTP (W/kg) ladder,
+the derived triathlon Beginners and the women's experience recommendation.
+
+**`npm run check:app-lift -- <path to tpf-app>`** (`scripts/check-lift-vs-app.mjs`,
+new) is the Lift side's cross-repo check. It runs the app's own `tsx` against
+the app's source (read-only) and diffs the Fran / Helen / Cindy / HYROX ladders
+(both sexes, six tiers, from the app's Benchmarks catalogue), the HABS base
+table (every shared key, with the 500 m row derived on both sides) and the
+app's literal pathway overrides, both directions. The typed pins in
+`pathway-standards.test.ts` catch a change here; only this sees the app move.
+After this change: 0 differences across 4 WODs, 14 base keys and 68 app pathway
+rows. It is not part of `npm test` (CI has no app checkout). ⚠ It does **not**
+compare the pathway **weights**, and an ad hoc comparison the same day found
+them structurally different — the app's HABS now scores other components
+(upper push / pull, run intensity / distance, erg) than this site's composite
+(`docs/APP-ALIGNMENT-AUDIT-2026-07.md`, §1's 2026-10-03 addendum). Not changed
+here; it needs a decision, not a value edit.
+
+Pinned value by value in `src/test/standards-research-2026-10-03.test.ts`
+(and the existing pins in `pathway-standards.test.ts`,
+`operator-navy-prt.test.ts` and `operator-special-forces-tops.test.ts`, each
+with a dated note).
+
 ### Gaps — standards with no permitted anchor (TPF's own judgement stands)
 
 HYROX lower tiers (both sexes; Elite only is anchored) · Diane, Cindy, Fight
@@ -425,6 +540,18 @@ in the app's record, §10.8) — *(2026-10-03, later)* answered: now 3:55 / 3:40
 3:30, each TPF's method (the app's ruck model plus a hilly-terrain climb
 allowance chosen from the app's own terrain bands; the ascent and the fastest
 known time are third-party).
+*(2026-10-03, last — the app's plan 61; each item above stays listed.)* Now
+anchored: the HYROX lower tiers (both sexes), Cindy (checked, kept), the bike
+20 / 40 km (the AFT bike pass and the UCI Hour Records), the six-tier broad
+jump, the Operator broad jumps and planks (the AFSPECWAR OFT, the OPAT,
+Norwegian conscripts; the AFT / PFRA / Navy / USMC planks), and the Pararescue
+swim pass (**answered**: 12:30, the IFT worksheet's PJ column). Still gaps:
+Diane and Fight Gone Bad; the power clean and barbell row (ratio checks only;
+the overhead press is now ratio-checked against CrossFit samples); the Lift
+plank and the gymnastics reps; the Operator dead hang (TPF's own, checked
+against means — no government table uses one); every Elite above a military
+maximum (TPF's margin by design); the HYROX Intermediate and the Advanced's
+× 0.93 (TPF's judgement); and the Operator sex split (still none).
 
 ## How to change them
 
@@ -485,7 +612,10 @@ across the 13 mirrored units. *2026-10-03:* it also compares each benchmark's
 are pinned both sides in `LABEL_KEPT`), and the rows of a **zero-weight**
 component wherever the site holds them (unscored, but shown on the unit pages);
 an alias is needed wherever a renamed row kept its id. After plan 55: **0
-differences**, 13 units. It is not part of `npm test` (CI has no app
+differences**, 13 units. *2026-10-03, last:* it also compares the workbook's
+new **`cite`** column with the app's `cite`, verbatim, wherever a cite cell is
+filled (34 rows after plan 61); after plan 61, **0 differences**. The Lift side
+has its own check now, `npm run check:app-lift` (see "2026-10-03, last" above). It is not part of `npm test` (CI has no app
 checkout). Matching numbers do not make the two **scores** identical: this
 site re-normalises over the components you test with no penalty and caps each
 benchmark at 100; the app takes 5 % off the score per unscored category, lets
