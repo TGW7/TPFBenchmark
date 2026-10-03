@@ -16,9 +16,9 @@ import type {
   WodDef,
   WodId,
 } from '../engine/types';
-import { CORE_COMPONENT_IDS } from '../engine/types';
+import { HABS_COMPONENT_IDS } from '../engine/habs';
 import type { Brand } from '../brand';
-import { HRS_BENCHMARKS, withPathwayStandards } from '../config/benchmarks';
+import { liftBenchmarksFor } from '../config/habs';
 import { HRS_PATHWAY_CONFIGS, HRS_PATHWAY_LIST } from '../config/pathways';
 import { HRS_WODS, HRS_WOD_LIST } from '../config/wods';
 import {
@@ -47,6 +47,9 @@ export interface BrandConfig {
   synthetic: boolean;
   /** Operator standards are unisex — hide the sex toggle where it's irrelevant. */
   unisex: boolean;
+  /** 2026-10-03 — the lift / hybrid brands score the TPF app's HABS model
+   *  (src/engine/habs.ts, src/config/habs.ts); Operator keeps computeHRS. */
+  habs: boolean;
 }
 
 const LIFT_BANNER = 'v1 beta standards — expert-seeded, recalibrating as athletes log in.';
@@ -58,16 +61,10 @@ const HYBRID_PATHWAY_ORDER = [
   'gym_goer', 'powerlifter', 'bodybuilder',
 ] as const;
 
-/** Benchmarks a lift/hybrid pathway scores: only components it weights,
- *  with any per-pathway standards overrides applied (2026-07-12). */
-function hrsBenchmarksFor(id: string): BenchmarkDef[] {
-  const weights: Partial<Record<ComponentId, number | null>> =
-    (HRS_PATHWAY_CONFIGS as Record<string, PathwayConfig>)[id]?.weights ?? {};
-  return withPathwayStandards(
-    id,
-    HRS_BENCHMARKS.filter((b) => (weights[b.component] ?? 0) > 0),
-  );
-}
+/** Benchmarks a lift/hybrid pathway lists: the HABS benchmarks it weights,
+ *  then the TPF Benchmark standards outside HABS it always listed, with any
+ *  per-pathway standards applied (src/config/habs.ts, 2026-10-03). */
+const hrsBenchmarksFor = (id: string): BenchmarkDef[] => liftBenchmarksFor(id);
 
 export function brandConfig(brand: Brand): BrandConfig {
   if (brand === 'hybrid') {
@@ -77,7 +74,7 @@ export function brandConfig(brand: Brand): BrandConfig {
     return {
       pathways: HRS_PATHWAY_CONFIGS,
       pathwayList: hybridPathwayList,
-      components: [...CORE_COMPONENT_IDS],
+      components: [...HABS_COMPONENT_IDS],
       benchmarksFor: hrsBenchmarksFor,
       wods: HRS_WODS,
       wodList: HRS_WOD_LIST,
@@ -86,6 +83,7 @@ export function brandConfig(brand: Brand): BrandConfig {
       banner: HYBRID_BANNER,
       synthetic: false,
       unisex: false,
+      habs: true,
     };
   }
   if (brand === 'operator') {
@@ -101,12 +99,13 @@ export function brandConfig(brand: Brand): BrandConfig {
       banner: OPERATOR_BANNER,
       synthetic: false,
       unisex: true,
+      habs: false,
     };
   }
   return {
     pathways: HRS_PATHWAY_CONFIGS,
     pathwayList: HRS_PATHWAY_LIST,
-    components: [...CORE_COMPONENT_IDS],
+    components: [...HABS_COMPONENT_IDS],
     // Only the benchmarks whose component the pathway actually weights — so
     // strength pathways (powerlifter/bodybuilder) drop cardio entirely.
     benchmarksFor: hrsBenchmarksFor,
@@ -117,5 +116,6 @@ export function brandConfig(brand: Brand): BrandConfig {
     banner: LIFT_BANNER,
     synthetic: false,
     unisex: false,
+    habs: true,
   };
 }

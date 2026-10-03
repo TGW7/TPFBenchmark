@@ -21,6 +21,9 @@ interface Props {
   /** Operator standards are unisex — hide the M/F toggle. */
   unisex?: boolean;
   onSexChange: (s: Sex) => void;
+  /** 2026-10-03 — TPF Benchmark standards the HABS score does not count;
+   *  marked so the table does not read as the score's inputs. */
+  outsideIds?: ReadonlySet<string>;
 }
 
 function Table({ rows }: { rows: Array<{ label: string; sub?: string; t: ThresholdSet; unit: string }> }) {
@@ -56,12 +59,14 @@ function Table({ rows }: { rows: Array<{ label: string; sub?: string; t: Thresho
   );
 }
 
-export function BrowseStandards({ benchmarks, wods, sex, unisex, onSexChange }: Props) {
+export function BrowseStandards({ benchmarks, wods, sex, unisex, onSexChange, outsideIds }: Props) {
   const liftRows = benchmarks
     .filter((b) => !b.optional)
     .map((b) => ({
       label: benchmarkLabel(b),
-      sub: b.normalization === 'bodyweight' ? '×bodyweight' : undefined,
+      sub: b.normalization === 'bodyweight'
+        ? '×bodyweight'
+        : outsideIds?.has(b.id) ? 'Not in the HABS score' : undefined,
       t: b.thresholds[sex],
       unit: b.unit,
     }));

@@ -56,6 +56,17 @@ raw input
 
 - **8 scored components:** running, erg_engine, lower_strength, upper_strength,
   olympic, power, gymnastics, core_endurance (+ optional grip, rucking).
+  *(2026-10-03: this is now the **Operator** score's shape, and on the Lift /
+  Hybrid brands it feeds only the Capacity Index. The **HABS score** those
+  brands show is the TPF app's model — nine components (lower-body strength,
+  power, upper-body push, upper-body pull, running intensity, running distance,
+  swimming, cycling, rowing / erg), the app's own weights from the workbook's
+  `HABS_Weights` sheet, its curve and combination rule, in
+  `src/engine/habs.ts`. Front squat, the Olympic lifts, the 500 m row, broad
+  jump, the gymnastics rows and plank stay on the site as TPF Benchmark
+  standards scored on their own, outside the HABS score.
+  `npm run check:app-habs -- <path to tpf-app>` runs the app's own
+  `computeHABS` against this engine. See `docs/HABS-ALIGNMENT-2026-10-03.md`.)*
 - **7 Lift pathways:** gym_goer, hybrid_athlete, crossfit_generalist, hyrox,
   powerlifter, bodybuilder, triathlete (the Hybrid brand shows a subset);
   Operator scores per unit. Each pathway's component weights **must sum to
@@ -88,7 +99,11 @@ no numbers**.
 
 The Excel sheets: `Benchmarks_Sourcing` (populated — sources, licences, units,
 direction, normalisation), `Standards` / `Weights` / `WOD_Standards` /
-`Quality_Mix` (scaffolded, blank = TODO).
+`Quality_Mix` (scaffolded, blank = TODO). *2026-10-03:* `HABS_Weights` (the
+TPF app's literal HABS weights — these weight the HABS score) and a
+`habs_component` column on `Benchmarks_Sourcing` (which HABS component a
+benchmark feeds; blank = outside the HABS score); written by
+`scripts/apply-habs-alignment-2026-10-03.py`.
 
 ## Repo structure
 
@@ -101,6 +116,7 @@ src/
     tier-curve.ts      scoreToPercentage (anchors, bonus, inversion)
     normalize.ts       resolveThresholds (bw/sex/age), calc1RMVal stub
     score.ts           scoreBenchmark/Component, computeHRS (renorm + coverage)
+    habs.ts            computeHabs — the TPF app's HABS score, ported (2026-10-03)
     wod.ts             scoreWod + scaling rules, WOD_CORE_WEIGHT
     capacity.ts        predictWodPercent, computeCapacityIndex
     weakness.ts        rank components, flag limiters & coverage gaps

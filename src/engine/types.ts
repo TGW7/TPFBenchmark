@@ -32,7 +32,27 @@ export type OperatorComponentId = 'upper_endurance' | 'stability' | 'swimming';
  *  the operator pathways and is reused; cycling is new here. */
 export type EnduranceComponentId = 'cycling';
 
-export type ComponentId = CoreComponentId | OptionalComponentId | OperatorComponentId | EnduranceComponentId;
+/**
+ * 2026-10-03 — the TPF app's nine HABS components (tpf-app src/lib/habs.ts
+ * `HABSComponent`, in its COMPONENT_DEFS order). The HABS score on the lift /
+ * hybrid brands is computed over THESE (src/engine/habs.ts), so it is the same
+ * number the app shows for the same inputs. `lower_strength`, `power`,
+ * `swimming` and `cycling` share ids with the components above; the other five
+ * are HABS-only. See docs/HABS-ALIGNMENT-2026-10-03.md.
+ */
+export type HabsComponentId =
+  | 'lower_strength'
+  | 'power'
+  | 'upper_push'
+  | 'upper_pull'
+  | 'run_intensity'
+  | 'run_distance'
+  | 'swimming'
+  | 'cycling'
+  | 'erg';
+
+export type ComponentId =
+  | CoreComponentId | OptionalComponentId | OperatorComponentId | EnduranceComponentId | HabsComponentId;
 
 export const CORE_COMPONENT_IDS: readonly CoreComponentId[] = [
   'running',
@@ -146,6 +166,10 @@ export interface BenchmarkDef {
    *  averaged as before. Mirrors tpf-app's `ORSBenchmark.alternativeGroup`
    *  and its `computeORS` (operational_readiness.ts). */
   alternativeGroup?: string;
+  /** 2026-10-03 — the HABS component this benchmark feeds (lift / hybrid
+   *  only; the Benchmarks_Sourcing `habs_component` column). Absent = not in
+   *  the HABS score: a TPF Benchmark standard scored on its own. */
+  habsComponent?: HabsComponentId;
   meta?: BenchmarkMeta;
 }
 

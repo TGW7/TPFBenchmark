@@ -14,6 +14,7 @@ import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { BENCHMARK_DISPLAY } from '../src/config/benchmarkDisplay.ts';
+import { HABS_COMPONENT_LABEL } from '../src/config/habsDisplay.ts';
 
 const REPO = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = resolve(REPO, 'dist');
@@ -250,9 +251,13 @@ for (const b of liftBench) {
   const TIERS = sixTier ? TIERS6 : TIERS4;
   const TIER_LABEL = sixTier ? TIER6_LABEL : TIER4_LABEL;
   const rows = TIERS.map((k) => [TIER_LABEL[k], fmt(b.unit, t.M[k]), fmt(b.unit, t.F[k])]);
-  const inPathways = Object.entries(lift.weights)
-    .filter(([, w]) => (w[b.component] ?? 0) > 0)
-    .map(([pid]) => PATHWAY[pid]).filter(Boolean);
+  // 2026-10-03 — "counts toward" = the pathways whose HABS score weights this
+  // benchmark's HABS component (the HABS_Weights sheet, the TPF app's model;
+  // docs/HABS-ALIGNMENT-2026-10-03.md). A benchmark outside HABS counts
+  // toward none and says so.
+  const inPathways = b.habsComponent
+    ? Object.entries(lift.habsWeights).filter(([, w]) => (w[b.habsComponent] ?? 0) > 0).map(([pid]) => PATHWAY[pid]).filter(Boolean)
+    : [];
   const dir = b.lowerIsBetter ? 'lower is faster' : b.normalization === 'bodyweight' ? 'as a multiple of bodyweight' : 'higher is better';
   const tips = tipsFor(b.id);
   const tierNames = TIERS.map((k) => TIER_LABEL[k].toLowerCase()).join(' / ');
@@ -287,7 +292,7 @@ for (const b of liftBench) {
   const pathwayNames = inPathways.map(([l]) => l);
   const pathwayNote = pathwayNames.length
     ? ` Counts toward ${pathwayNames.slice(0, 2).join(', ')}${pathwayNames.length > 2 ? ` +${pathwayNames.length - 2} more` : ''}.`
-    : '';
+    : b.habsComponent ? '' : ' Scored on its own, outside the HABS score.';
   const metaDescription = `${label} standards, ${sixTier ? 'six' : 'four'}-tier and split by sex, from ${firstTier} to ${lastTier}.${pathwayNote} ${scoreDir} — score yours free, no sign-up.`;
   emit(`/standards/${slug}/`, page({
     brand: 'lift', host: LIFT_HOST, path: `/standards/${slug}/`,
@@ -299,7 +304,9 @@ for (const b of liftBench) {
       (sixTier
         ? `<p class="note">These are Take Point Fitness's own standards, checked against openly licensed research or public test tables where one exists. Each tier is a point on the 0–100 score (50 / 60 / 70 / 80 / 90 / 100), not a population percentile.</p>`
         : `<p class="note">These are Take Point Fitness's own standards, checked against openly licensed research or public test tables where one exists. Each tier is a point on the 0–100 score (50 / 70 / 85 / 100), not a population percentile.</p>`) +
-      (inPathways.length ? `<p>Counts toward: ${inPathways.map(([l, s]) => `<a href="/pathways/${s}/">${esc(l)}</a>`).join(' · ')}</p>` : '') +
+      (inPathways.length
+        ? `<p>Counts toward the HABS score of: ${inPathways.map(([l, s]) => `<a href="/pathways/${s}/">${esc(l)}</a>`).join(' · ')}</p>`
+        : b.habsComponent ? '' : `<p>Not part of the HABS score — a Take Point Fitness benchmark standard you can score on its own in the calculator.</p>`) +
       `<h2>How to improve your ${esc(label)}</h2>` + bullets(tips) +
       faqHtml(faqs),
     jsonLd: [
@@ -311,11 +318,17 @@ for (const b of liftBench) {
 
 // ---- Lift pathway pages ----------------------------------------------------
 for (const [pid, [label, slug]] of Object.entries(PATHWAY)) {
-  const w = lift.weights[pid] ?? {};
+  // 2026-10-03 — the HABS weights (the TPF app's model), labelled as the app
+  // labels them; the standards outside HABS this pathway lists are linked
+  // separately (docs/HABS-ALIGNMENT-2026-10-03.md).
+  const w = lift.habsWeights[pid] ?? {};
+  const oldW = lift.weights[pid] ?? {};
   const comps = Object.entries(w).filter(([, v]) => (v ?? 0) > 0);
-  const benchLinks = liftBench.filter((b) => (w[b.component] ?? 0) > 0)
-    .map((b) => `<a href="/standards/${BENCH[b.id][1]}/">${esc(BENCH[b.id][0])}</a>`);
-  const compNames = comps.map(([c]) => c.replace(/_/g, ' ')).join(', ');
+  const areaLabel = (c) => HABS_COMPONENT_LABEL[c] ?? c.replace(/_/g, ' ');
+  const link = (b) => `<a href="/standards/${BENCH[b.id][1]}/">${esc(BENCH[b.id][0])}</a>`;
+  const benchLinks = liftBench.filter((b) => b.habsComponent && (w[b.habsComponent] ?? 0) > 0).map(link);
+  const otherLinks = liftBench.filter((b) => !b.habsComponent && (oldW[b.component] ?? 0) > 0).map(link);
+  const compNames = comps.map(([c]) => areaLabel(c).toLowerCase()).join(', ');
   const faqs = [
     { q: `What does the ${label} score measure?`, a: `It weights ${comps.length} training areas (${compNames}) into a single 0–100 score, so you can see where you’re strong and where you’re holding yourself back.` },
     { q: `How do I improve my ${label} score?`, a: `Your score is dragged down most by your weakest weighted area, not your best lift. Find that area in the free calculator and train it — that’s the fastest way to raise the number.` },
@@ -324,7 +337,7 @@ for (const [pid, [label, slug]] of Object.entries(PATHWAY)) {
   // weighted components (compNames), which genuinely differ per pathway,
   // instead of a "scored across N areas" placeholder that reads identically
   // everywhere except the number.
-  const compList = comps.map(([c]) => c.replace(/_/g, ' '));
+  const compList = comps.map(([c]) => areaLabel(c).toLowerCase());
   const compNote = compList.length > 3
     ? `${compList.slice(0, 3).join(', ')} +${compList.length - 3} more`
     : compList.join(', ');
@@ -334,8 +347,10 @@ for (const [pid, [label, slug]] of Object.entries(PATHWAY)) {
     description: `${label} training standards: your score weights ${compNote} — find your weakest area and fix it first, free, no sign-up.`,
     h1: `${label} Standards`,
     lede: `What does it take to be a strong ${label}? Your score weights ${comps.length} areas — here's what counts and how to benchmark it.`,
-    body: table(['Area', 'Weight'], comps.map(([c, v]) => [c.replace(/_/g, ' '), `${v}%`])) +
+    body: table(['Area', 'Weight'], comps.map(([c, v]) => [areaLabel(c), `${v}%`])) +
+      `<p class="note">The HABS score: each area is the average of its benchmarks on a 0–100 curve, and the areas you have tested are weighted as above — an untested area is left out, not scored as zero. The same model and weights as the Take Point Fitness app.</p>` +
       (benchLinks.length ? `<p>Benchmarks: ${benchLinks.join(' · ')}</p>` : '') +
+      (otherLinks.length ? `<p>Also benchmarked (not in the HABS score): ${otherLinks.join(' · ')}</p>` : '') +
       faqHtml(faqs),
     jsonLd: [
       breadcrumb(LIFT_HOST, [{ name: 'Home', path: '/' }, { name: 'Pathways', path: '/pathways/' }, { name: label, path: `/pathways/${slug}/` }]),

@@ -50,6 +50,14 @@ const CORE_COMPONENTS = [
   'cycling',
 ];
 const PATHWAYS = ['gym_goer', 'hybrid_athlete', 'crossfit_generalist', 'hyrox', 'powerlifter', 'bodybuilder', 'triathlete'];
+// 2026-10-03 — the TPF app's nine HABS components (tpf-app src/lib/habs.ts
+// COMPONENT_DEFS order). Structure, not standards: which benchmark feeds which
+// is the Benchmarks_Sourcing `habs_component` column, the weights are the
+// HABS_Weights sheet (docs/HABS-ALIGNMENT-2026-10-03.md).
+const HABS_COMPONENTS = [
+  'lower_strength', 'power', 'upper_push', 'upper_pull',
+  'run_intensity', 'run_distance', 'swimming', 'cycling', 'erg',
+];
 
 // ---- helpers ---------------------------------------------------------------
 
@@ -137,6 +145,7 @@ function parseSourcing(wb) {
     refPop: findCol(head, (s) => s === 'reference_population'),
     launch: findCol(head, (s) => s === 'launch_method'),
     notes: findCol(head, (s) => s === 'notes'),
+    habs: findCol(head, (s) => s === 'habs_component'),
   };
   const out = [];
   for (let i = h + 1; i < rows.length; i++) {
@@ -158,6 +167,9 @@ function parseSourcing(wb) {
       referencePopulation: str(cell(r, C.refPop)),
       launchMethod: str(cell(r, C.launch)),
       notes: str(cell(r, C.notes)),
+      // 2026-10-03 — which HABS component this benchmark feeds; null = a TPF
+      // Benchmark standard outside the HABS score.
+      habsComponent: str(cell(r, C.habs)) || null,
     });
   }
   return out;
@@ -278,6 +290,33 @@ function parseWeights(wb) {
   return result;
 }
 
+/**
+ * 2026-10-03 — the HABS_Weights sheet: the TPF app's literal per-pathway HABS
+ * weights (tpf-app src/lib/habs_pathways.ts HABS_PATHWAY_WEIGHTS), component ×
+ * pathway. These weight the HABS score; the Weights sheet above still decides
+ * which extra standards a pathway lists and feeds the Capacity Index.
+ */
+function parseHabsWeights(wb) {
+  const rows = sheetRows(wb, 'HABS_Weights');
+  const h = findHeaderRow(rows, 'component');
+  const result = Object.fromEntries(PATHWAYS.map((p) => [p, {}]));
+  if (h < 0) return result;
+  const head = rows[h];
+  const compCol = findCol(head, (s) => s === 'component');
+  const pathCols = Object.fromEntries(PATHWAYS.map((p) => [p, findCol(head, (s) => s === p)]));
+  for (let i = h + 1; i < rows.length; i++) {
+    const r = rows[i] || [];
+    const comp = str(cell(r, compCol));
+    if (!HABS_COMPONENTS.includes(comp)) continue; // skips TOTAL / note rows
+    for (const p of PATHWAYS) {
+      const raw = cell(r, pathCols[p]);
+      const n = raw == null || raw === '' ? null : Number(raw);
+      result[p][comp] = Number.isFinite(n) ? n : null;
+    }
+  }
+  return result;
+}
+
 function parseWodStandards(wb) {
   const rows = sheetRows(wb, 'WOD_Standards');
   const h = findHeaderRow(rows, 'wod_id');
@@ -371,6 +410,7 @@ function renderTs(data, sourceName) {
 
 import type {
   ComponentId,
+  HabsComponentId,
   Normalization,
   PathwayId,
   Sex,
@@ -393,6 +433,9 @@ export interface SourcingRow {
   referencePopulation: string;
   launchMethod: string;
   notes: string;
+  /** The HABS component this benchmark feeds (the TPF app's model), or null
+   *  for a TPF Benchmark standard outside the HABS score (2026-10-03). */
+  habsComponent: HabsComponentId | null;
 }
 
 export interface WodStandard {
@@ -417,6 +460,11 @@ export const PATHWAY_STANDARD_OVERRIDES: Partial<Record<PathwayId, Record<string
 /** Pathway component weights, from the Weights sheet — each pathway's
  *  populated weights must sum to 100 (enforced by \`validate()\` above). */
 export const PATHWAY_WEIGHTS: Partial<Record<PathwayId, Partial<Record<ComponentId, number | null>>>> = ${J(data.weights)};
+
+/** HABS component weights per pathway, from the HABS_Weights sheet — the TPF
+ *  app's literal HABS_PATHWAY_WEIGHTS (2026-10-03). These weight the HABS
+ *  score; PATHWAY_WEIGHTS above feeds the Capacity Index. Each sums to 100. */
+export const HABS_PATHWAY_WEIGHTS: Partial<Record<PathwayId, Partial<Record<HabsComponentId, number | null>>>> = ${J(data.habsWeights)};
 
 /** Benchmark-WOD tiers by sex, from the WOD_Standards sheet. */
 export const WOD_STANDARDS: Record<WodId, WodStandard> = ${J(data.wodStandards)};
@@ -463,7 +511,8 @@ workbook location with the \`HRS_STANDARDS_XLSX\` env var.
 | \`BENCHMARK_SOURCING\` (${benchCount}) | Benchmarks_Sourcing | populated |
 | \`STANDARDS_THRESHOLDS\` | Standards | ${fillState(benchCount, standardsFilled)} |
 | \`PATHWAY_STANDARD_OVERRIDES\` | Standards_Pathway | per-pathway tier overrides |
-| \`PATHWAY_WEIGHTS\` | Weights | ${fillState(Object.keys(data.weights).length, weightsFilled)}, each col → 100 |
+| \`PATHWAY_WEIGHTS\` | Weights | ${fillState(Object.keys(data.weights).length, weightsFilled)}, each col → 100 (Capacity Index; which extra standards a pathway lists) |
+| \`HABS_PATHWAY_WEIGHTS\` | HABS_Weights | the TPF app's literal HABS weights, each col → 100 (the HABS score) |
 | \`WOD_STANDARDS\` (${wodCount}) | WOD_Standards | ${fillState(wodCount, wodFilled)} |
 | \`QUALITY_MIX\` | Quality_Mix | ${fillState(wodCount, mixFilled)}, rows → 1 |
 
@@ -486,7 +535,7 @@ value flows in from the workbook via codegen. Any cell still empty stays
  * the Excel master used to ship silently — collects every violation across
  * both checks so one run surfaces all of them, not just the first.
  */
-function validate({ sourcing, standards, pathwayStandards, weights, wodStandards }) {
+function validate({ sourcing, standards, pathwayStandards, weights, habsWeights, wodStandards }) {
   const errors = [];
   const EPS = 0.01;
 
@@ -494,6 +543,24 @@ function validate({ sourcing, standards, pathwayStandards, weights, wodStandards
     const sum = Object.values(w).reduce((s, v) => s + (v ?? 0), 0);
     if (Math.abs(sum - 100) > EPS) {
       errors.push(`Weights: pathway "${pathwayId}" sums to ${sum}, must be 100`);
+    }
+  }
+  // 2026-10-03 — the HABS weights (HABS_Weights sheet) and the HABS membership
+  // (Benchmarks_Sourcing.habs_component).
+  for (const [pathwayId, w] of Object.entries(habsWeights)) {
+    const sum = Object.values(w).reduce((s, v) => s + (v ?? 0), 0);
+    if (Math.abs(sum - 100) > EPS) {
+      errors.push(`HABS_Weights: pathway "${pathwayId}" sums to ${sum}, must be 100`);
+    }
+    for (const c of HABS_COMPONENTS) {
+      if ((w[c] ?? 0) > 0 && !sourcing.some((s) => s.habsComponent === c)) {
+        errors.push(`HABS_Weights: pathway "${pathwayId}" weights ${c}, which no benchmark feeds`);
+      }
+    }
+  }
+  for (const s of sourcing) {
+    if (s.habsComponent && !HABS_COMPONENTS.includes(s.habsComponent)) {
+      errors.push(`Benchmarks_Sourcing: "${s.id}" has unknown habs_component "${s.habsComponent}"`);
     }
   }
 
@@ -545,10 +612,11 @@ async function main() {
   const standards = parseStandards(wb);
   const pathwayStandards = parsePathwayStandards(wb);
   const weights = parseWeights(wb);
+  const habsWeights = parseHabsWeights(wb);
   const wodStandards = parseWodStandards(wb);
   const qualityMix = parseQualityMix(wb, Object.keys(wodStandards));
 
-  const data = { sourcing, standards, pathwayStandards, weights, wodStandards, qualityMix };
+  const data = { sourcing, standards, pathwayStandards, weights, habsWeights, wodStandards, qualityMix };
   validate(data);
 
   await writeFile(GEN_TS, renderTs(data, sourceName), 'utf8');

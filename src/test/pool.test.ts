@@ -58,13 +58,24 @@ describe('buildPoolSubmissions', () => {
     expect(liftRows[0].pathway_id).toBeNull(); // tiers are pathway-independent for Lift
   });
 
-  it('versions the composite overall cell (v2 = absolute recalibration)', () => {
+  it('versions the composite overall cell (v2 = absolute recalibration; v3 = the app\'s HABS model)', () => {
     const rows = buildPoolSubmissions({
       brand: 'lift', benchmarks: [], profile: PROFILE, logs: logs(0), signedIn: true,
       pathwayId: 'hybrid_athlete', overall: 72,
     });
     expect(rows).toHaveLength(1);
-    expect(rows[0].benchmark_id).toBe(overallPoolKey('hybrid_athlete'));
-    expect(rows[0].benchmark_id).toBe('overall:hybrid_athlete:v2');
+    expect(rows[0].benchmark_id).toBe(overallPoolKey('hybrid_athlete', 'lift'));
+    // 2026-10-03 — the HABS score moved to the TPF app's model, so its
+    // composite starts a new cell; v2 rows are left as they are.
+    expect(rows[0].benchmark_id).toBe('overall:hybrid_athlete:v3');
+    expect(overallPoolKey('hybrid_athlete', 'hybrid')).toBe('overall:hybrid_athlete:v3');
+  });
+
+  it('Operator\'s composite stays on v2 — its score did not change (2026-10-03)', () => {
+    const rows = buildPoolSubmissions({
+      brand: 'operator', benchmarks: [], profile: PROFILE, logs: logs(0), signedIn: true,
+      pathwayId: 'navy_seal_bud_s', overall: 72,
+    });
+    expect(rows[0].benchmark_id).toBe('overall:navy_seal_bud_s:v2');
   });
 });

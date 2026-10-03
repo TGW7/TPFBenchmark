@@ -4,16 +4,23 @@ import {
   ageBand,
   analyseWeaknesses,
   computeCapacityIndex,
+  computeHabs,
   computeHRS,
+  habsAsHrsResult,
+  habsBenchmarkScore,
   toComponentScoreMap,
 } from '../engine';
 import type {
   AthleteLogs,
   AthleteProfile,
   BenchmarkDef,
+  ComponentId,
+  HrsResult,
   PathwayId,
   WodEntry,
 } from '../engine/types';
+import { HABS_OLYMPIC_IDS, habsWeightsFor, inHabsScore } from '../config/habs';
+import { HABS_COMPONENT_LABEL, HABS_OUTSIDE_HEADING, HABS_OUTSIDE_NOTE } from '../config/habsDisplay';
 import { emptyLogs } from '../data/stores';
 import { brandConfig } from '../data/brandConfig';
 import { brandMeta, detectBrand } from '../brand';
@@ -34,7 +41,7 @@ import { EmailCapture } from './EmailCapture';
 import { BrowseStandards } from './BrowseStandards';
 import { Landing } from './Landing';
 import { Footer } from './Footer';
-import { benchmarkLabel, componentLabel } from './format';
+import { benchmarkLabel, componentLabel, formatScore, scoreTier } from './format';
 import { resultShareText } from './resultCopy';
 import { event } from '../lib/analytics';
 import { shareScoreCard } from './shareCard';
@@ -51,6 +58,11 @@ const SITE = BRAND === 'operator'
 const APP_NAME = BRAND === 'operator' ? 'TPF Operator' : BRAND === 'hybrid' ? 'TPF Hybrid' : 'Take Point Fitness';
 
 const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+
+// 2026-10-03 — the HABS brands show the TPF app's component labels
+// ("Upper-body push", "Running (intensity)", …); Operator keeps its own.
+const labelOf = (c: ComponentId): string =>
+  (CFG.habs ? HABS_COMPONENT_LABEL[c] : undefined) ?? componentLabel(c);
 
 function hasEntries(l: AthleteLogs): boolean {
   return Boolean(l.orm.length || l.raceTimes.length || l.manual.length || l.wod.length);
@@ -104,16 +116,45 @@ export function App() {
 
   const pathway = CFG.pathways[pathwayId];
   const benchmarks = useMemo(() => CFG.benchmarksFor(pathwayId), [pathwayId]);
-  const result = useMemo(
+  // The site's own component model (computeHRS over the Weights sheet). On
+  // Operator it IS the score. On the HABS brands it now feeds only the
+  // Capacity Index, unchanged (2026-10-03).
+  const componentResult = useMemo(
     () => computeHRS({ pathway, benchmarks, profile, logs }),
     [pathway, benchmarks, profile, logs],
   );
+  // 2026-10-03 — the HABS brands score the TPF app's HABS model, so the
+  // number here is the app's for the same lifts and times
+  // (docs/HABS-ALIGNMENT-2026-10-03.md; `npm run check:app-habs`).
+  const habs = useMemo(
+    () => (CFG.habs
+      ? computeHabs({ benchmarks, weights: habsWeightsFor(pathwayId), sex: profile.sex, logs, olympicIds: HABS_OLYMPIC_IDS })
+      : null),
+    [benchmarks, pathwayId, profile.sex, logs],
+  );
+  const result: HrsResult = useMemo(
+    () => (habs ? habsAsHrsResult(pathwayId, habs) : componentResult),
+    [habs, pathwayId, componentResult],
+  );
   const capacity = useMemo(
-    () => computeCapacityIndex(CFG.wods, logs.wod, toComponentScoreMap(result.components), profile),
-    [logs.wod, result.components, profile],
+    () => computeCapacityIndex(CFG.wods, logs.wod, toComponentScoreMap(componentResult.components), profile),
+    [logs.wod, componentResult.components, profile],
   );
   const weakness = useMemo(() => analyseWeaknesses(result), [result]);
   const hasData = result.overall != null;
+  // The "your weak link" card: the app's rule on the HABS brands (the lowest
+  // scored component, only once two are scored); the weakest otherwise.
+  const weakLink: ComponentId | null = habs ? habs.weakLink : (weakness.limiters[0] ?? null);
+  // TPF Benchmark standards the calculator lists that the HABS score does not
+  // count (front squat, snatch, gymnastics, …), each with its own score.
+  const outsideIds = useMemo(
+    () => new Set(CFG.habs ? benchmarks.filter((b) => !inHabsScore(b, pathwayId)).map((b) => b.id) : []),
+    [benchmarks, pathwayId],
+  );
+  const outsideScore = (b: BenchmarkDef): string | null => {
+    const s = habsBenchmarkScore(b, profile.sex, logs, HABS_OLYMPIC_IDS);
+    return s == null ? null : `${scoreTier(s)} · ${formatScore(s)}`;
+  };
 
   // Data-driven overall percentile from the pool. The server returns null
   // until the (sex, age-band) cell has enough trusted submissions, and then
@@ -128,7 +169,7 @@ export function App() {
     let cancelled = false;
     const t = setTimeout(() => {
       const cell = {
-        brand: BRAND, benchmarkId: overallPoolKey(pathwayId),
+        brand: BRAND, benchmarkId: overallPoolKey(pathwayId, BRAND),
         sex: profile.sex, ageBand: ageBand(profile.ageYears) ?? null,
       };
       fetchPercentile({ ...cell, value: overall, lowerIsBetter: false })
@@ -143,7 +184,10 @@ export function App() {
     if (pathway.radar === 'benchmarks') {
       const scoreById = new Map<string, number | null>();
       for (const c of result.components) for (const b of c.benchmarks) scoreById.set(b.benchmarkId, b.percent);
-      return benchmarks.map((b) => ({ label: benchmarkLabel(b), percent: scoreById.get(b.id) ?? null }));
+      // HABS brands: one axis per lift the score counts (not the standards
+      // outside it).
+      const axes = benchmarks.filter((b) => !outsideIds.has(b.id));
+      return axes.map((b) => ({ label: benchmarkLabel(b), percent: scoreById.get(b.id) ?? null }));
     }
     // 2026-07-13 — pathway-aware axes: only components this pathway
     // actually weights (result.components is exactly that set), in the
@@ -156,10 +200,10 @@ export function App() {
     const ordered = CFG.components.filter((c) => weighted.has(c));
     const extras = result.components.map((c) => c.component).filter((c) => !CFG.components.includes(c));
     return [...ordered, ...extras].map((c) => ({
-      label: componentLabel(c),
+      label: labelOf(c),
       percent: result.components.find((x) => x.component === c)?.percent ?? null,
     }));
-  }, [pathway, benchmarks, result]);
+  }, [pathway, benchmarks, result, outsideIds]);
 
   // WODs + Capacity Index don't apply to pure-strength pathways.
   const showWods = (pathway.showWods ?? true) && CFG.wodList.length > 0;
@@ -179,7 +223,7 @@ export function App() {
       overall: result.overall,
       livePercentile: poolPct,
       poolN,
-      weak: weakness.limiters.map(componentLabel).join(', '),
+      weak: weakness.limiters.map(labelOf).join(', '),
       site: SITE,
     });
     navigator.clipboard?.writeText(text).then(
@@ -196,7 +240,7 @@ export function App() {
     const level = habsLevelInfo(result.overall).level;
     const components = result.components
       .filter((c): c is typeof c & { percent: number } => c.percent != null)
-      .map((c) => ({ label: componentLabel(c.component), score: c.percent }));
+      .map((c) => ({ label: labelOf(c.component), score: c.percent }));
     try {
       const res = await shareScoreCard(
         {
@@ -355,6 +399,8 @@ export function App() {
               onOrm={upsertOrm}
               onRaceTime={upsertRaceTime}
               onManual={upsertManual}
+              groupOf={CFG.habs ? (b) => labelOf(b.habsComponent ?? b.component) : undefined}
+              outside={CFG.habs ? { ids: outsideIds, heading: HABS_OUTSIDE_HEADING, note: HABS_OUTSIDE_NOTE, scoreOf: outsideScore } : undefined}
             />
             {showWods && (
               <div style={{ marginTop: 16 }}>
@@ -375,6 +421,7 @@ export function App() {
               showCapacity={showWods}
               stacked
               scoreLabel={META.scoreLabel}
+              labelOf={labelOf}
             />
             <div className="card">
               <h2>{pathway.radar === 'benchmarks' ? 'Per-lift radar' : 'Weakness radar'}</h2>
@@ -403,10 +450,10 @@ export function App() {
           </div>
         )}
 
-        {hasData && weakness.limiters[0] && (
+        {hasData && weakLink && (
           <div className="card" style={{ marginTop: 16, borderColor: 'var(--primary)' }}>
             <p style={{ margin: '0 0 12px' }}>
-              Your weak link is <strong>{componentLabel(weakness.limiters[0])}</strong>. The {APP_NAME} app
+              Your weak link is <strong>{labelOf(weakLink)}</strong>. The {APP_NAME} app
               turns it into a training plan and tracks it over time.
             </p>
             <a className="btn" href={META.appUrl}
@@ -422,6 +469,7 @@ export function App() {
       <section id="standards" style={{ marginTop: 40 }}>
         <BrowseStandards
           benchmarks={benchmarks}
+          outsideIds={outsideIds}
           wods={CFG.wodList}
           sex={profile.sex}
           unisex={CFG.unisex}

@@ -18,6 +18,14 @@ export const COMPONENT_LABELS: Record<ComponentId, string> = {
   stability: 'Stability',
   swimming: 'Swimming',
   cycling: 'Cycling',
+  // 2026-10-03 — the HABS-only components (the TPF app's labels; the HABS
+  // brands read src/config/habsDisplay.ts, which also relabels
+  // lower_strength as the app's "Lower-body strength").
+  upper_push: 'Upper-body push',
+  upper_pull: 'Upper-body pull',
+  run_intensity: 'Running (intensity)',
+  run_distance: 'Running (distance)',
+  erg: 'Rowing / erg',
 };
 
 export const componentLabel = (c: ComponentId): string => COMPONENT_LABELS[c] ?? c;
@@ -33,7 +41,8 @@ export const componentLabel = (c: ComponentId): string => COMPONENT_LABELS[c] ??
 const LOCAL_LABEL_OVERRIDES: Record<string, string> = {
   strict_press_1rm: 'Strict Press',
   hspu: 'HSPU', t2b: 'T2B', plank_hold: 'Plank',
-  run_1mi: '1-mile run', run_5k: '5k run', row_2k: '2k row', row_500m: '500m row',
+  run_1mi: '1-mile run', run_5k: '5k run', run_10k: '10k run', run_half: 'Half marathon',
+  row_2k: '2k row', row_500m: '500m row',
   swim_400m: '400m swim', swim_1500m: '1500m swim', bike_20k: '20km bike TT', bike_40k: '40km bike TT',
   // 2026-10-03 — two Operator ids. Plan 55 gave these rows the app's longer
   // names (the unit pages print them in full), which are too long for the

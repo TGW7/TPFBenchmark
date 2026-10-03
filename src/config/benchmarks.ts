@@ -32,6 +32,9 @@ export const HRS_BENCHMARKS: BenchmarkDef[] = BENCHMARK_SOURCING.map((s) => ({
   normalization: s.normalization,
   thresholds: thresholdsFor(s.id),
   optional: s.optional,
+  // 2026-10-03 — the HABS component this benchmark feeds (null in the
+  // workbook = a TPF Benchmark standard outside the HABS score).
+  ...(s.habsComponent ? { habsComponent: s.habsComponent } : {}),
   meta: {
     dataSource: s.dataSource,
     license: s.license,

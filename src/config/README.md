@@ -22,10 +22,11 @@ workbook location with the `HRS_STANDARDS_XLSX` env var.
 
 | Export | From sheet | State |
 |--------|-----------|-------|
-| `BENCHMARK_SOURCING` (26) | Benchmarks_Sourcing | populated |
-| `STANDARDS_THRESHOLDS` | Standards | 24/26 populated |
+| `BENCHMARK_SOURCING` (28) | Benchmarks_Sourcing | populated |
+| `STANDARDS_THRESHOLDS` | Standards | 26/28 populated |
 | `PATHWAY_STANDARD_OVERRIDES` | Standards_Pathway | per-pathway tier overrides |
-| `PATHWAY_WEIGHTS` | Weights | populated, each col → 100 |
+| `PATHWAY_WEIGHTS` | Weights | populated, each col → 100 (Capacity Index; which extra standards a pathway lists) |
+| `HABS_PATHWAY_WEIGHTS` | HABS_Weights | the TPF app's literal HABS weights, each col → 100 (the HABS score) |
 | `WOD_STANDARDS` (7) | WOD_Standards | populated |
 | `QUALITY_MIX` | Quality_Mix | populated, rows → 1 |
 

@@ -52,6 +52,22 @@ still reads the ordinary `run["1.5mile"]` record: neither repository records
 whether a run was booted yet (the owner asked the app for a "boot run" switch;
 not built).
 
+*2026-10-03 (the HABS alignment, `docs/HABS-ALIGNMENT-2026-10-03.md`):* two rows
+added, and one rule for the pull.
+
+| Benchmark id | App target | Synced? |
+|---|---|---|
+| `run_10k` | `race_times.run["10k"]` | ✅ since 2026-10-03 — the app's HABS running-distance component reads it |
+| `run_half` | `race_times.run["half"]` | ✅ since 2026-10-03 — likewise |
+
+**A time the app saved as a prediction is no longer pulled.** The app's Race
+Times screen can save a predicted time (`predicted: true`). The pull used to
+take it as if typed — so the site scored a prediction as a result — and the
+next Save wrote it back with `predicted: false`, turning the app's prediction
+into a "real" time there. `logsFromAppProfile` now skips `predicted: true`
+records (pinned in `src/test/appsync.test.ts`). Adding the 10 km and half,
+which the app predicts most often, would otherwise have widened that.
+
 Anything not synced still works on the benchmark site (scored + saved in our own
 `benchmark_entries`); it just doesn't appear in the app.
 

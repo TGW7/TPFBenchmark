@@ -53,6 +53,10 @@ export const ORM_TO_APP: Record<string, string> = {
 export const RACE_TO_APP: Record<string, { modality: string; event: string; loadKg?: number }> = {
   run_1mi: { modality: 'run', event: 'mile' },
   run_5k: { modality: 'run', event: '5k' },
+  // 2026-10-03 — the HABS running-distance benchmarks (the app's `10k` and
+  // `half` run events, which its HABS reads; docs/HABS-ALIGNMENT-2026-10-03.md).
+  run_10k: { modality: 'run', event: '10k' },
+  run_half: { modality: 'run', event: 'half' },
   row_2k: { modality: 'row', event: '2k' },
   row_500m: { modality: 'row', event: '500m' },
   // 2026-07-13 — triathlete swim/bike benchmarks (event keys match the
@@ -190,6 +194,14 @@ export function logsFromAppProfile(
   for (const [modality, events] of Object.entries(race ?? {})) {
     for (const [event, v] of Object.entries(events ?? {})) {
       if (!v) continue;
+      // 2026-10-03 — a time the app SAVED AS A PREDICTION (its Race Times
+      // screen's Predict buttons store `predicted: true`) is not a result. It
+      // used to be pulled here as if typed, scored as one, and written back on
+      // Save with `predicted: false` — turning the app's prediction into a
+      // "real" time there. The app's own HABS re-derives or drops such a row
+      // (auto_benchmark_inputs.ts raceTimesWithEquivalents), never scores it
+      // as typed, so the site now leaves it out too.
+      if (v.predicted === true) continue;
       const key = `${modality}:${event}`;
       // A pulled record carrying a loadKg reconstructs to the loaded-variant
       // id when we have one for this event; otherwise the plain/default id.

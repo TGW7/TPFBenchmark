@@ -17,7 +17,10 @@ curated workbook; the section further down already said so.*
 ## What the tiers mean
 
 Every benchmark's tiers sit at the same points on the 0–100 score across
-domains, so the composite and the weakness radar stay coherent. The tiers are
+domains, so the composite and the weakness radar stay coherent. *(2026-10-03:
+on the Lift / Hybrid brands the composite is the TPF app's HABS model, whose
+curve differs below Beginner for times — 0 one Beginner–Novice gap past
+Beginner, not at twice Beginner; `docs/HABS-ALIGNMENT-2026-10-03.md`.)* The tiers are
 **TPF's own standards** (next section) — they are **not population
 percentiles**, and nothing here says what share of athletes reaches a tier.
 
@@ -512,6 +515,20 @@ them structurally different — the app's HABS now scores other components
 (upper push / pull, run intensity / distance, erg) than this site's composite
 (`docs/APP-ALIGNMENT-AUDIT-2026-07.md`, §1's 2026-10-03 addendum). Not changed
 here; it needs a decision, not a value edit.
+
+> **Resolved later on 2026-10-03** (the owner: *"make HABS score align"*). The
+> HABS score is now the app's model — its nine components, its literal weights
+> (a new `HABS_Weights` sheet), its curve, its 1RM estimate and its combination
+> rule (`src/engine/habs.ts`) — and the 10 km and half marathon it scores were
+> added, derived from the 5 km as the app derives them.
+> **`npm run check:app-habs -- <path to tpf-app>`**
+> (`scripts/check-habs-vs-app.mjs`) runs the app's own `computeHABS` and this
+> site's engine on 708 synthetic athletes and compares the model data (weights,
+> labels, membership, 210 ladders, the Olympic divisor): **0 differences, all
+> 708 scores bit-identical**. `check:app-lift` now also covers the derived
+> 10 km / half (16 base keys). The record — criteria list first, then what was
+> built, what was measured and what was not — is
+> `docs/HABS-ALIGNMENT-2026-10-03.md`.
 
 Pinned value by value in `src/test/standards-research-2026-10-03.test.ts`
 (and the existing pins in `pathway-standards.test.ts`,

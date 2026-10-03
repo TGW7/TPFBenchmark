@@ -30,6 +30,14 @@
  *      both directions for every shared key, with each pathway's derived 500 m
  *      row checked the same way.
  *
+ * 2026-10-03 — the 10 km and the half marathon (HABS's running-distance
+ * component; docs/HABS-ALIGNMENT-2026-10-03.md) are DERIVED from the 5 km on
+ * both sides — the app at runtime (habs.ts riegelStd), the site in its
+ * workbook (scripts/apply-habs-alignment-2026-10-03.py). The base rows are
+ * compared like any base key; a pathway's derived rows are compared with the
+ * app's resolved table (habs_pathway_standards.ts habsStandardsFor), and an app
+ * pathway with its own 5 km must have them here.
+ *
  * The vestigial four-tier `excellent` is not compared (the app has no such
  * tier on a six-tier ladder). Rows only this site has — TPF Benchmark's own
  * gap-fillers (front squat, snatch, clean & jerk, the gymnastics and skill
@@ -64,10 +72,12 @@ export const WOD_TO_APP = {
 export const STD_TO_SITE = {
   back_squat: 'back_squat_1rm', deadlift: 'deadlift_1rm', bench_press: 'bench_1rm',
   strict_press: 'strict_press_1rm', power_clean: 'power_clean_1rm', barbell_row: 'barbell_row_1rm',
-  run_1mi: 'run_1mi', run_5k: 'run_5k', row_2k: 'row_2k', swim_400m: 'swim_400m',
+  run_1mi: 'run_1mi', run_5k: 'run_5k', run_10k: 'run_10k', run_half: 'run_half', row_2k: 'row_2k', swim_400m: 'swim_400m',
   swim_1500m: 'swim_1500m', bike_20k: 'bike_20k', bike_40k: 'bike_40k',
 };
 const SITE_TO_STD = Object.fromEntries(Object.entries(STD_TO_SITE).map(([a, s]) => [s, a]));
+/** Derived from the 5 km on both sides (see the header). */
+const DERIVED_FROM_5K = ['run_10k', 'run_half'];
 const SEX = { M: 'male', F: 'female' };
 
 function loadApp(app) {
@@ -84,6 +94,8 @@ import { BENCHMARK_TESTS } from ${at('benchmark_tests.ts')};
 import { STANDARDS_MALE, STANDARDS_FEMALE, riegelStd } from ${at('habs.ts')};
 import { RIEGEL_ROW_500_FROM_2K } from ${at('benchmark_derived_tiers.ts')};
 import { GENERATED_HABS_PATHWAY_STANDARD_ROWS } from ${at('habs_pathway_standards.generated.ts')};
+import { habsStandardsFor } from ${at('habs_pathway_standards.ts')};
+import { ALL_HABS_PATHWAYS } from ${at('habs_pathways.ts')};
 const wods = Object.fromEntries(${JSON.stringify(Object.values(WOD_TO_APP).map((v) => v[0]))}.map((id) => {
   const t = BENCHMARK_TESTS.find((x) => x.id === id);
   return [id, t ? Object.fromEntries(t.events.map((e) => [e.id, e.hybridTiers ?? null])) : null];
@@ -92,7 +104,12 @@ const row500 = (std) => riegelStd(std, RIEGEL_ROW_500_FROM_2K, 1);
 const pathways = GENERATED_HABS_PATHWAY_STANDARD_ROWS.map((r) => ({
   ...r, row500: r.stdKey === 'row_2k' ? row500(r) : null,
 }));
+const derivedRuns = Object.fromEntries(ALL_HABS_PATHWAYS.map((p) => [p, Object.fromEntries(['male', 'female'].map((sex) => {
+  const t = habsStandardsFor(p, sex);
+  return [sex, { run_10k: t.run_10k, run_half: t.run_half }];
+}))]));
 process.stdout.write(JSON.stringify({
+  derivedRuns,
   wods,
   base: { male: STANDARDS_MALE, female: STANDARDS_FEMALE },
   base500: { male: row500(STANDARDS_MALE.row_2k), female: row500(STANDARDS_FEMALE.row_2k) },
@@ -168,7 +185,12 @@ export function compare(app, site) {
       for (const sex of ['M', 'F']) {
         const s = tiersOf(bySex[sex]);
         if (!s || s.every((v) => v == null)) continue;
-        if (id === 'row_500m') {
+        if (DERIVED_FROM_5K.includes(id)) {
+          const own = appRow.get(`${pathway}/run_5k/${sex}`);
+          const a = tiersOf(app.derivedRuns?.[pathway]?.[SEX[sex]]?.[id]);
+          if (!own) diffs.push(`${pathway} ${id}/${sex}: the site has a derived override but the app's ${pathway} has no own 5 km row`);
+          else if (!same(a, s)) diffs.push(`${pathway} ${id}/${sex} (derived from its run_5k): app ${show(a)} · site ${show(s)}`);
+        } else if (id === 'row_500m') {
           const own = appRow.get(`${pathway}/row_2k/${sex}`);
           const a = own ? tiersOf(own.row500) : null;
           if (!a) diffs.push(`${pathway} row_500m/${sex}: the site has a derived override but the app's ${pathway} has no own 2 km row`);
@@ -187,6 +209,14 @@ export function compare(app, site) {
     const [pathway, id, sex] = k.split('/');
     if (id === 'row_2k' && !tiersOf(site.pathwayStandards[pathway]?.row_500m?.[sex])) {
       diffs.push(`${pathway} row_500m/${sex}: the app derives it from its own 2 km (${show(tiersOf(r.row500))}); the site has no override`);
+    }
+    // Likewise its own 10 km and half from its own 5 km (2026-10-03).
+    if (id === 'run_5k') {
+      for (const d of DERIVED_FROM_5K) {
+        if (!tiersOf(site.pathwayStandards[pathway]?.[d]?.[sex])) {
+          diffs.push(`${pathway} ${d}/${sex}: the app derives it from its own 5 km (${show(tiersOf(app.derivedRuns?.[pathway]?.[SEX[sex]]?.[d]))}); the site has no override`);
+        }
+      }
     }
   }
   return { diffs, onlySite, onlyApp };

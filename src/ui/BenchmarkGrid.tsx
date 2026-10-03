@@ -11,7 +11,7 @@
 
 import { useState } from 'react';
 import { auditEntry, calc1RMVal } from '../engine';
-import type { AthleteLogs, AthleteProfile, BenchmarkDef, ComponentId } from '../engine/types';
+import type { AthleteLogs, AthleteProfile, BenchmarkDef } from '../engine/types';
 import { type Units, weightUnit, toKg, fromKg } from '../lib/units';
 import { benchmarkLabel, componentLabel } from './format';
 
@@ -25,6 +25,20 @@ interface Props {
   onOrm: (benchmarkId: string, weightKg: number | null, reps: number) => void;
   onRaceTime: (bench: BenchmarkDef, timeSec: number | null) => void;
   onManual: (benchmarkId: string, value: number | null) => void;
+  /** 2026-10-03 — the group heading for a benchmark (the HABS brands group by
+   *  HABS component, with the app's labels). Default: its component label. */
+  groupOf?: (b: BenchmarkDef) => string;
+  /** 2026-10-03 — HABS brands: the TPF Benchmark standards listed here that
+   *  the HABS score does not count. They render last, under their own heading,
+   *  each with its own tier and score; the "N of M entered" count is the
+   *  score's benchmarks only. */
+  outside?: {
+    ids: ReadonlySet<string>;
+    heading: string;
+    note: string;
+    /** e.g. "Advanced · 92", or null with nothing entered. */
+    scoreOf: (b: BenchmarkDef) => string | null;
+  };
 }
 
 function parseTimeInput(s: string): number | null {
@@ -58,9 +72,11 @@ interface RowProps {
   onOrm: Props['onOrm'];
   onRaceTime: Props['onRaceTime'];
   onManual: Props['onManual'];
+  /** A standard outside the score: its own tier and score, shown under it. */
+  ownScore?: string | null;
 }
 
-function BenchmarkRow({ bench, profile, units, initial, onOrm, onRaceTime, onManual }: RowProps) {
+function BenchmarkRow({ bench, profile, units, initial, onOrm, onRaceTime, onManual, ownScore }: RowProps) {
   const [w, setW] = useState(initial.w);
   const [r, setR] = useState(initial.r);
   const [t, setT] = useState(initial.t);
@@ -125,13 +141,17 @@ function BenchmarkRow({ bench, profile, units, initial, onOrm, onRaceTime, onMan
           <span className="subtle">{bench.unit}</span>
         </div>
       )}
+      {ownScore && <div className="subtle" style={{ fontSize: '0.78rem', marginTop: 2 }}>{ownScore}</div>}
       {warn && <div className="bench-warn">⚠️ {warn}</div>}
     </div>
   );
 }
 
-export function BenchmarkGrid({ benchmarks, profile, units, logs, resetKey, onOrm, onRaceTime, onManual }: Props) {
-  const list = benchmarks.filter((b) => !b.optional);
+export function BenchmarkGrid({ benchmarks, profile, units, logs, resetKey, onOrm, onRaceTime, onManual, groupOf, outside }: Props) {
+  const all = benchmarks.filter((b) => !b.optional);
+  const isOutside = (b: BenchmarkDef) => outside?.ids.has(b.id) ?? false;
+  const list = all.filter((b) => !isOutside(b));
+  const extras = all.filter(isOutside);
 
   const hasEntry = (id: string) =>
     logs.orm.some((e) => e.benchmarkId === id) ||
@@ -146,10 +166,12 @@ export function BenchmarkGrid({ benchmarks, profile, units, logs, resetKey, onOr
 
   // Group by component so the inputs chunk into labelled areas (Miller's Law /
   // Law of Common Region) and mirror the radar + limiters — a consistent model.
-  const groups: { component: ComponentId; items: BenchmarkDef[] }[] = [];
+  const labelFor = (b: BenchmarkDef) => (groupOf ? groupOf(b) : componentLabel(b.component));
+  const groups: { label: string; items: BenchmarkDef[] }[] = [];
   for (const b of list) {
-    let g = groups.find((x) => x.component === b.component);
-    if (!g) { g = { component: b.component, items: [] }; groups.push(g); }
+    const label = labelFor(b);
+    let g = groups.find((x) => x.label === label);
+    if (!g) { g = { label, items: [] }; groups.push(g); }
     g.items.push(b);
   }
 
@@ -173,6 +195,7 @@ export function BenchmarkGrid({ benchmarks, profile, units, logs, resetKey, onOr
         onOrm={onOrm}
         onRaceTime={onRaceTime}
         onManual={onManual}
+        ownScore={isOutside(b) ? outside?.scoreOf(b) ?? null : undefined}
       />
     );
   };
@@ -180,8 +203,8 @@ export function BenchmarkGrid({ benchmarks, profile, units, logs, resetKey, onOr
   return (
     <div className="card">
       {groups.map((g) => (
-        <div key={g.component} className="bench-group">
-          <div className="bench-group-label">{componentLabel(g.component)}</div>
+        <div key={g.label} className="bench-group">
+          <div className="bench-group-label">{g.label}</div>
           {g.items.some((b) => b.alternativeGroup) && (
             <p className="subtle" style={{ margin: '0 0 6px' }}>Alternatives — enter any one; only your best counts.</p>
           )}
@@ -192,6 +215,13 @@ export function BenchmarkGrid({ benchmarks, profile, units, logs, resetKey, onOr
         <strong style={{ color: 'var(--fg)' }}>{entered} of {eventCount} entered.</strong>{' '}
         Fill in what you know — the more you add, the more complete your score. It updates as you type.
       </p>
+      {outside && extras.length > 0 && (
+        <div className="bench-group" style={{ marginTop: 18 }}>
+          <div className="bench-group-label">{outside.heading}</div>
+          <p className="subtle" style={{ margin: '0 0 6px' }}>{outside.note}</p>
+          <div className="bench-grid">{extras.map(renderRow)}</div>
+        </div>
+      )}
     </div>
   );
 }
