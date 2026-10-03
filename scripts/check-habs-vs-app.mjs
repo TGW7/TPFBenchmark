@@ -30,11 +30,24 @@
  * pound-converted weights, the TPF Benchmark standards outside HABS, empty)
  * on every pathway and both sexes, plus seeded random partial athletes.
  *
- * Reported, not counted as a difference: how often the APP's predicted
- * equivalents (auto_benchmark_inputs.ts raceTimesWithEquivalents — a missing
- * race filled from a nearby one) would move the app's number for the same
- * typed inputs. The site does not predict (docs/HABS-ALIGNMENT-2026-10-03.md
- * D19, an owner question).
+ * 2026-10-03 (later) — PREDICTED RACE TIMES (the owner's "1 yes";
+ * docs/LEGAL-FIXES-2026-10-03.md §6). The site now fills a missing race with
+ * the app's predicted equivalent, so this also runs the APP's own prediction
+ * path — `computeHABS(orm, raceTimesWithEquivalents(raceTimes, bodyweight,
+ * sex), …)`, as the app's HABS card calls it — beside the site's
+ * (src/engine/habsPredict.ts → computeHabs), and requires:
+ *
+ *   - the equivalents: every run / row / bike / swim event's time and
+ *     predicted flag, the app's raceTimesWithEquivalents against the site's
+ *     port (src/engine/racePrediction.ts), bit-identical;
+ *   - the scores with predictions: the same breakdown rule as above.
+ *
+ * Those athletes add partial race coverage on purpose (one race, a blend
+ * between two, a race further than 4.1× from every other, a 500 m row
+ * predicting the 2 km), the athlete's OTHER typed app results the site pulls
+ * as anchors (a 1 km row, a 2 km run, a marathon, an 800 m swim, a 50 km
+ * ride, a 100 m sprint), and a spread of bodyweights (the row's Riegel
+ * exponent depends on it). The first 400 random athletes are unchanged.
  *
  * It needs the app checked out with its node_modules installed, and is not
  * part of `npm test` (CI has no app checkout). Exit 0 = no differences.
@@ -45,7 +58,7 @@ import { existsSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { HABS_APP_KEYS, HABS_STD_KEYS } from '../src/config/habsAppMap.ts';
+import { HABS_APP_KEYS, HABS_STD_KEYS, PREDICTION_RACE_EVENTS } from '../src/config/habsAppMap.ts';
 
 const REPO = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const APP = resolve(process.argv[2] ?? process.env.TPF_APP_PATH ?? resolve(REPO, '../tpf-app'));
@@ -53,6 +66,7 @@ const PATHWAYS = ['gym_goer', 'hybrid_athlete', 'crossfit_generalist', 'hyrox', 
 const SEXES = ['M', 'F'];
 const TIERS6 = ['pass', 'novice', 'good', 'intermediate', 'advanced', 'elite'];
 const EPS = 1e-9;
+const RANDOM_PRED = 600;
 const LB = 0.45359237;
 
 // ---- synthetic athletes (site ids; lifts [kg, reps], races seconds) -------
@@ -99,6 +113,31 @@ const FIXED = {
   },
   fractional_reps: { lifts: { bench_1rm: [90, 2.5], power_clean_1rm: [60, 0] }, races: { run_1mi: 450.25 } },
   empty: { lifts: {}, races: {} },
+  // 2026-10-03 — partial race coverage for the predicted equivalents.
+  pred_5k_only: { lifts: { back_squat_1rm: [120, 1] }, races: { run_5k: 1320 } },
+  pred_mile_and_half: { lifts: {}, races: { run_1mi: 380, run_half: 6100 } },
+  pred_5k_and_half_blend: { lifts: {}, races: { run_5k: 1250, run_half: 5900 } },
+  pred_mile_only_far: { lifts: {}, races: { run_1mi: 330 } },
+  pred_half_only: { lifts: {}, races: { run_half: 7000 } },
+  pred_row_500m_only: { lifts: { deadlift_1rm: [170, 1] }, races: { row_500m: 92 }, bw: 95 },
+  pred_row_500m_heavy: { lifts: {}, races: { row_500m: 88 }, bw: 120 },
+  pred_row_500m_light: { lifts: {}, races: { row_500m: 101 }, bw: 52 },
+  pred_swim_400_only: { lifts: {}, races: { swim_400m: 380 } },
+  pred_swim_1500_only: { lifts: {}, races: { swim_1500m: 1500 } },
+  pred_bike_20k_only: { lifts: {}, races: { bike_20k: 2100 } },
+  pred_bike_40k_only: { lifts: {}, races: { bike_40k: 4300 } },
+  pred_anchor_row_1k: { lifts: {}, races: {}, anchors: { row: { '1k': 205 } }, bw: 85 },
+  pred_anchor_row_6k: { lifts: {}, races: { run_5k: 1400 }, anchors: { row: { '6k': 1500 } }, bw: 70 },
+  pred_anchor_run_2k: { lifts: {}, races: {}, anchors: { run: { '2k': 470 } } },
+  pred_anchor_run_2mi_blend: { lifts: {}, races: { run_10k: 2600 }, anchors: { run: { '2mi': 750 } } },
+  pred_anchor_marathon: { lifts: {}, races: {}, anchors: { run: { marathon: 12600 } } },
+  pred_anchor_400m: { lifts: {}, races: {}, anchors: { run: { '400m': 62 } } },
+  pred_anchor_100m_isolated: { lifts: {}, races: {}, anchors: { run: { '100m': 12.4 } } },
+  pred_anchor_swim_800: { lifts: {}, races: {}, anchors: { swim: { '800m': 760 } } },
+  pred_anchor_bike_50k: { lifts: {}, races: {}, anchors: { bike: { '50k': 5600 } } },
+  pred_anchor_bike_100k_far: { lifts: {}, races: {}, anchors: { bike: { '100k': 11000 } } },
+  pred_typed_beats_anchor: { lifts: {}, races: { run_1mi: 400 }, anchors: { run: { '1500m': 300, '2k': 520 } } },
+  pred_implausible_vdot: { lifts: {}, races: { run_5k: 400 } },
 };
 
 /** Lifts on each pathway's own anchors (scored exactly 50…100). */
@@ -139,6 +178,37 @@ function randomAthlete(r) {
     else races[id] = v;
   }
   return { lifts, races };
+}
+
+/** 2026-10-03 — the second random set: sparse races (each kept with p 0.3,
+ *  plus the 500 m row), app-only anchors at events the site has no field for,
+ *  and a bodyweight. Its own seed, so the first 400 are unchanged. */
+const ANCHOR_RANGES = {
+  run: { '400m': [55, 110], '800m': [120, 260], '1500m': [250, 520], '2k': [360, 720], '1.5mile': [480, 900], '2mi': [620, 1200], marathon: [9000, 21000] },
+  row: { '1k': [180, 290], '5k': [1050, 1500], '6k': [1260, 1850], '10k': [2150, 3100], '21k': [4600, 6800] },
+  bike: { '50k': [4200, 9000], '100k': [9000, 18000] },
+  swim: { '50m': [25, 60], '100m': [55, 130], '200m': [120, 280], '500m': [330, 760], '800m': [540, 1250], '1mile': [1150, 2700] },
+};
+const BWS = [null, 52, 62, 70, 80, 95, 120];
+function randomPredAthlete(r) {
+  const lifts = {};
+  const races = {};
+  const ranges = { ...RANGES, row_500m: [80, 130] };
+  for (const [id, [lo, hi]] of Object.entries(ranges)) {
+    const isLift = id in HABS_APP_KEYS && 'orm' in HABS_APP_KEYS[id];
+    if (r() < (isLift ? 0.5 : 0.7)) continue;
+    const v = Math.round((lo + r() * (hi - lo)) * 4) / 4;
+    if (isLift) lifts[id] = [v, 1];
+    else races[id] = v;
+  }
+  const anchors = {};
+  for (const [m, evs] of Object.entries(ANCHOR_RANGES)) {
+    for (const [ev, [lo, hi]] of Object.entries(evs)) {
+      if (r() < 0.82) continue;
+      (anchors[m] ??= {})[ev] = Math.round(lo + r() * (hi - lo));
+    }
+  }
+  return { lifts, races, anchors, bw: BWS[Math.floor(r() * BWS.length)] };
 }
 
 // ---- the two engines ------------------------------------------------------
@@ -194,8 +264,13 @@ process.stdout.write(JSON.stringify(cases.map((c) => {
   const w = HABS_PATHWAY_WEIGHTS[c.pathway];
   const std = habsStandardsFor(c.pathway, c.sex);
   const r = computeHABS(c.orm, c.race, c.sex, w, std);
-  const p = computeHABS(c.orm, raceTimesWithEquivalents(c.race, null, c.sex), c.sex, w, std);
-  return { id: c.id, r, predicted: { score: p.score, weightCovered: p.weightCovered } };
+  const eq = raceTimesWithEquivalents(c.race, c.bw, c.sex);
+  const p = computeHABS(c.orm, eq, c.sex, w, std);
+  const equiv = {};
+  for (const m of ['run', 'row', 'bike', 'swim']) {
+    equiv[m] = Object.fromEntries(Object.entries(eq[m] ?? {}).map(([k, v]) => [k, { timeSec: v.timeSec, predicted: v.predicted === true }]));
+  }
+  return { id: c.id, r, p, equiv };
 })));
 `, cases);
 }
@@ -205,7 +280,10 @@ function siteRun(tsx, cases) {
   return runTsx(tsx, REPO, `
 import { readFileSync } from 'node:fs';
 import { computeHabs } from ${at('engine/habs.ts')};
-import { HABS_OLYMPIC_IDS, habsWeightsFor, liftBenchmarksFor } from ${at('config/habs.ts')};
+import { predictMissingRaces, buildRaceStore, appSexOf } from ${at('engine/habsPredict.ts')};
+import { raceTimesWithEquivalents } from ${at('engine/racePrediction.ts')};
+import { PREDICTION_RACE_EVENTS } from ${at('config/habsAppMap.ts')};
+import { HABS_OLYMPIC_IDS, habsWeightsFor, inHabsScore, liftBenchmarksFor } from ${at('config/habs.ts')};
 import { HABS_COMPONENT_LABEL } from ${at('config/habsDisplay.ts')};
 import { HRS_BENCHMARKS, withPathwayStandards } from ${at('config/benchmarks.ts')};
 import { PATHWAY_IDS } from ${at('config/pathways.ts')};
@@ -222,16 +300,35 @@ process.stdout.write(JSON.stringify({
   members: HRS_BENCHMARKS.filter((b) => b.habsComponent).map((b) => ({ id: b.id, component: b.habsComponent })),
   standards,
   olympic: [...HABS_OLYMPIC_IDS],
-  results: cases.map((c) => ({ id: c.id, r: computeHabs({
-    benchmarks: liftBenchmarksFor(c.pathway), weights: habsWeightsFor(c.pathway), sex: c.sex, logs: c.logs, olympicIds: HABS_OLYMPIC_IDS,
-  }) })),
+  results: cases.map((c) => {
+    const benchmarks = liftBenchmarksFor(c.pathway);
+    const weights = habsWeightsFor(c.pathway);
+    const r = computeHabs({ benchmarks, weights, sex: c.sex, logs: c.logs, olympicIds: HABS_OLYMPIC_IDS });
+    // The predicted path, exactly as src/ui/App.tsx runs it.
+    const targets = benchmarks.filter((b) => b.source === 'race_times' && inHabsScore(b, c.pathway)).map((b) => b.id);
+    const pred = predictMissingRaces({
+      logs: c.logs, raceEventOf: PREDICTION_RACE_EVENTS, targets, anchors: c.anchors, sex: c.sex, bodyweightKg: c.bw,
+    });
+    const p = computeHabs({ benchmarks, weights, sex: c.sex, logs: pred.logs, olympicIds: HABS_OLYMPIC_IDS });
+    const eq = raceTimesWithEquivalents(buildRaceStore(c.logs, PREDICTION_RACE_EVENTS, c.anchors), c.bw, appSexOf(c.sex));
+    const equiv = {};
+    for (const m of ['run', 'row', 'bike', 'swim']) {
+      equiv[m] = Object.fromEntries(Object.entries(eq[m] ?? {}).map(([k, v]) => [k, { timeSec: v.timeSec, predicted: v.predicted === true }]));
+    }
+    return { id: c.id, r, p, equiv, predictedCount: pred.predictions.length };
+  }),
 }));
 `, cases);
 }
 
 // ---- build the cases ------------------------------------------------------
 
-/** One athlete in both vocabularies: the site's logs and the app's stores. */
+/** One athlete in both vocabularies: the site's logs and the app's stores.
+ *  2026-10-03 — races map through PREDICTION_RACE_EVENTS (the HABS races +
+ *  the 500 m row, which the app predicts from); `anchors` are app-only typed
+ *  results (events the site has no field for) — in the app's store as typed
+ *  records, on the site passed as the pull passes them; `bw` the bodyweight
+ *  both predictors are given (default 80, the calculator's starting value). */
 function toCase(id, pathway, sex, a) {
   const logs = { orm: [], raceTimes: [], manual: [], wod: [] };
   const orm = {};
@@ -243,11 +340,22 @@ function toCase(id, pathway, sex, a) {
   }
   for (const [bid, sec] of Object.entries(a.races ?? {})) {
     logs.raceTimes.push({ benchmarkId: bid, modality: 'x', event: bid, timeSec: sec });
-    const k = HABS_APP_KEYS[bid];
-    if (k && 'race' in k) race[k.race[0]][k.race[1]] = { timeSec: sec, updatedAt: '2026-10-03T00:00:00.000Z' };
+    const k = PREDICTION_RACE_EVENTS[bid];
+    if (k) race[k.modality][k.event] = { timeSec: sec, updatedAt: '2026-10-03T00:00:00.000Z' };
   }
   for (const [bid, v] of Object.entries(a.manual ?? {})) logs.manual.push({ benchmarkId: bid, value: v });
-  return { id, pathway, siteSex: sex, appSex: sex === 'F' ? 'female' : 'male', logs, orm, race };
+  const anchors = {};
+  for (const [m, evs] of Object.entries(a.anchors ?? {})) {
+    for (const [ev, sec] of Object.entries(evs)) {
+      if (Object.values(PREDICTION_RACE_EVENTS).some((r) => r.modality === m && r.event === ev)) {
+        throw new Error(`${id}: anchor ${m}:${ev} is a site field — the pull never makes that an anchor`);
+      }
+      race[m][ev] = { timeSec: sec, updatedAt: '2026-10-03T00:00:00.000Z' };
+      (anchors[m] ??= {})[ev] = { timeSec: sec };
+    }
+  }
+  const bw = a.bw === undefined ? 80 : a.bw;
+  return { id, pathway, siteSex: sex, appSex: sex === 'F' ? 'female' : 'male', logs, orm, race, anchors, bw };
 }
 
 /** Every athlete the check scores, in both vocabularies. `appStandards` =
@@ -264,7 +372,13 @@ export function buildCases(appStandards) {
   for (let i = 0; i < 400; i++) {
     const p = PATHWAYS[Math.floor(r() * PATHWAYS.length)];
     const sex = r() < 0.5 ? 'M' : 'F';
-    cases.push(toCase(`random_${i}/${p}/${sex}`, p, sex, randomAthlete(r)));
+    cases.push(toCase(`random_${i}/${p}/${sex}`, p, sex, { ...randomAthlete(r), bw: null }));
+  }
+  const r2 = rng(20261004);
+  for (let i = 0; i < RANDOM_PRED; i++) {
+    const p = PATHWAYS[Math.floor(r2() * PATHWAYS.length)];
+    const sex = r2() < 0.5 ? 'M' : 'F';
+    cases.push(toCase(`random_pred_${i}/${p}/${sex}`, p, sex, randomPredAthlete(r2)));
   }
   return cases;
 }
@@ -325,15 +439,16 @@ export function compareModel(app, site) {
   return diffs;
 }
 
-export function compareScores(cases, appRes, siteRes) {
+export function compareScores(cases, appRes, siteRes, which = 'r') {
   const diffs = [];
   let identical = 0;
   let maxDiff = 0;
-  const siteById = Object.fromEntries(siteRes.map((x) => [x.id, x.r]));
+  const siteById = Object.fromEntries(siteRes.map((x) => [x.id, x[which]]));
+  const appById = Object.fromEntries(appRes.map((x) => [x.id, x[which]]));
   for (const c of cases) {
-    const a = appRes.find((x) => x.id === c.id).r;
+    const a = appById[c.id];
     const s = siteById[c.id];
-    const tag = `${c.id}`;
+    const tag = which === 'r' ? `${c.id}` : `${c.id} [predicted]`;
     const d = Math.abs(a.score - s.score);
     maxDiff = Math.max(maxDiff, d);
     const before = diffs.length;
@@ -366,6 +481,30 @@ export function compareScores(cases, appRes, siteRes) {
   return { diffs, identical, maxDiff };
 }
 
+/** The app's raceTimesWithEquivalents vs the site's port, every event. */
+export function compareEquivalents(cases, appRes, siteRes) {
+  const diffs = [];
+  let events = 0;
+  let predictedEvents = 0;
+  const siteById = Object.fromEntries(siteRes.map((x) => [x.id, x.equiv]));
+  for (const c of cases) {
+    const a = appRes.find((x) => x.id === c.id).equiv;
+    const s = siteById[c.id];
+    for (const m of ['run', 'row', 'bike', 'swim']) {
+      for (const k of new Set([...Object.keys(a[m] ?? {}), ...Object.keys(s[m] ?? {})])) {
+        events++;
+        const av = a[m]?.[k];
+        const sv = s[m]?.[k];
+        if (av?.predicted) predictedEvents++;
+        if (!av || !sv || av.timeSec !== sv.timeSec || av.predicted !== sv.predicted) {
+          diffs.push(`${c.id} ${m}:${k}: app ${av ? `${av.timeSec}${av.predicted ? ' (predicted)' : ''}` : '—'} · site ${sv ? `${sv.timeSec}${sv.predicted ? ' (predicted)' : ''}` : '—'}`);
+        }
+      }
+    }
+  }
+  return { diffs, events, predictedEvents };
+}
+
 // ---- main -----------------------------------------------------------------
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
@@ -376,19 +515,30 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   const app = appModel(tsx);
   const cases = buildCases(app.standards);
 
-  const appRes = appScores(tsx, cases.map((c) => ({ id: c.id, pathway: c.pathway, sex: c.appSex, orm: c.orm, race: c.race })));
-  const site = siteRun(tsx, cases.map((c) => ({ id: c.id, pathway: c.pathway, sex: c.siteSex, logs: c.logs })));
+  const appRes = appScores(tsx, cases.map((c) => ({ id: c.id, pathway: c.pathway, sex: c.appSex, orm: c.orm, race: c.race, bw: c.bw })));
+  const site = siteRun(tsx, cases.map((c) => ({ id: c.id, pathway: c.pathway, sex: c.siteSex, logs: c.logs, anchors: c.anchors, bw: c.bw })));
 
   const modelDiffs = compareModel(app, site);
-  const { diffs, identical, maxDiff } = compareScores(cases, appRes, site.results);
+  const typed = compareScores(cases, appRes, site.results, 'r');
+  const withPred = compareScores(cases, appRes, site.results, 'p');
+  const equiv = compareEquivalents(cases, appRes, site.results);
   const scored = appRes.filter((x) => x.r.weightCovered > 0).length;
-  const moved = appRes.filter((x) => Math.abs(x.predicted.score - x.r.score) > 0.5);
-  const maxMove = Math.max(0, ...appRes.map((x) => Math.abs(x.predicted.score - x.r.score)));
+  const scoredPred = appRes.filter((x) => x.p.weightCovered > 0).length;
+  const moved = appRes.filter((x) => Math.abs(x.p.score - x.r.score) > 0.5);
+  const maxMove = Math.max(0, ...appRes.map((x) => Math.abs(x.p.score - x.r.score)));
+  const sitePredicted = site.results.reduce((n, x) => n + x.predictedCount, 0);
+  const withAnchors = cases.filter((c) => Object.keys(c.anchors).length > 0).length;
 
   console.log(`[check:app-habs] app ${APP}`);
-  for (const d of [...modelDiffs, ...diffs]) console.log(`  - ${d}`);
+  const all = [...modelDiffs, ...typed.diffs, ...withPred.diffs, ...equiv.diffs];
+  for (const d of all.slice(0, 200)) console.log(`  - ${d}`);
+  if (all.length > 200) console.log(`  … ${all.length - 200} more`);
+  const fixedN = Object.keys(FIXED).length + TIERS6.length;
   console.log(`[check:app-habs] model: ${app.pathways.length} pathways × 9 weights, ${Object.keys(app.labels).length} labels, ${app.members.length} benchmark memberships, ${app.pathways.length * 2 * Object.keys(HABS_STD_KEYS).length} ladders, 9 Olympic-divisor flags: ${modelDiffs.length} difference(s)`);
-  console.log(`[check:app-habs] scores: ${cases.length} athletes (${scored} with a score; ${PATHWAYS.length} pathways × 2 sexes × ${Object.keys(FIXED).length + TIERS6.length} fixed + 400 random), ${identical} bit-identical, max |Δ| ${maxDiff}: ${diffs.length} difference(s)`);
-  console.log(`[check:app-habs] not compared (information): with the app's predicted equivalents for missing races, ${moved.length} of ${cases.length} athletes' app score moves by more than 0.5 (max ${maxMove.toFixed(1)}) — the site does not predict (docs/HABS-ALIGNMENT-2026-10-03.md D19)`);
-  process.exit(modelDiffs.length + diffs.length ? 1 : 0);
+  console.log(`[check:app-habs] athletes: ${cases.length} (${PATHWAYS.length} pathways × 2 sexes × ${fixedN} fixed + 400 random + ${RANDOM_PRED} random with sparse races, app anchors and bodyweights); ${withAnchors} carry app-only anchors`);
+  console.log(`[check:app-habs] scores, typed values only: ${scored} with a score, ${typed.identical} bit-identical, max |Δ| ${typed.maxDiff}: ${typed.diffs.length} difference(s)`);
+  console.log(`[check:app-habs] equivalents (the app's raceTimesWithEquivalents vs the site's port): ${equiv.events} run/row/bike/swim events, ${equiv.predictedEvents} of them predicted: ${equiv.diffs.length} difference(s)`);
+  console.log(`[check:app-habs] scores, with predicted equivalents (the app's own prediction path vs the site's): ${scoredPred} with a score, ${withPred.identical} bit-identical, max |Δ| ${withPred.maxDiff}, ${sitePredicted} HABS races filled by the site: ${withPred.diffs.length} difference(s)`);
+  console.log(`[check:app-habs] information: predictions move ${moved.length} of ${cases.length} athletes' score by more than 0.5 (max ${maxMove.toFixed(1)})`);
+  process.exit(all.length ? 1 : 0);
 }

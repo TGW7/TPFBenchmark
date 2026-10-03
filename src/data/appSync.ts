@@ -15,8 +15,10 @@
 import { supabase } from '../lib/supabase';
 import { emptyLogs } from './stores';
 import { lbToKg } from '../lib/units';
+import { PREDICTION_RACE_EVENTS } from '../config/habsAppMap';
 import type { Brand } from '../brand';
 import type { AthleteLogs } from '../engine/types';
+import type { RaceStore } from '../engine/racePrediction';
 
 /**
  * benchmark id → the app's ORM lift name (exact title-case key in profiles.orm).
@@ -212,35 +214,101 @@ export function logsFromAppProfile(
   return logs;
 }
 
+/**
+ * 2026-10-03 — the athlete's OTHER typed race results in the app, for the
+ * predicted equivalents only (src/engine/habsPredict.ts;
+ * docs/LEGAL-FIXES-2026-10-03.md §6).
+ *
+ * The app fills a missing race from ANY typed event in that modality — a 1 km
+ * row predicts the 2 km, a 2 km run the mile — so for the site to reach the
+ * app's number it needs those events too, though it has no field for them.
+ * Kept: run / row / bike / swim records with a real (not `predicted`) time, at
+ * events none of the calculator's own race fields maps to (those come in as
+ * the field's value, and the athlete edits them on the site). Never saved,
+ * never written back to the app, never pooled — read-only context.
+ */
+export function anchorsFromAppProfile(race: MultimodalRaceTimes | null | undefined): RaceStore {
+  const own = new Set(Object.values(PREDICTION_RACE_EVENTS).map((r) => `${r.modality}:${r.event}`));
+  const out: RaceStore = {};
+  for (const modality of ['run', 'row', 'bike', 'swim'] as const) {
+    for (const [event, v] of Object.entries(race?.[modality] ?? {})) {
+      if (!v || v.predicted === true) continue;
+      const t = Number(v.timeSec);
+      if (!(t > 0) || !Number.isFinite(t)) continue;
+      if (own.has(`${modality}:${event}`)) continue;
+      (out[modality] ??= {})[event] = { timeSec: t };
+    }
+  }
+  return out;
+}
+
 // ---- async (no-op / safe defaults when Supabase isn't configured) ---------
 
-/** Pull the athlete's shared 1RMs + times from the app to prefill the calculator. */
-export async function syncFromApp(userId: string, brand: Brand): Promise<AthleteLogs> {
-  if (!supabase) return emptyLogs();
+export interface AppPull {
+  logs: AthleteLogs;
+  /** See anchorsFromAppProfile. */
+  anchors: RaceStore;
+}
+
+/** Pull the athlete's shared 1RMs + times from the app to prefill the
+ *  calculator, plus their other typed race results as prediction anchors. */
+export async function syncFromApp(userId: string, brand: Brand): Promise<AppPull> {
+  if (!supabase) return { logs: emptyLogs(), anchors: {} };
   const { data, error } = await supabase
     .from('profiles')
     .select('orm, race_times')
     .eq('id', userId)
     .maybeSingle();
-  if (error || !data) return emptyLogs();
-  return logsFromAppProfile(data.orm as OrmStore, data.race_times as MultimodalRaceTimes, brand);
+  if (error || !data) return { logs: emptyLogs(), anchors: {} };
+  return {
+    logs: logsFromAppProfile(data.orm as OrmStore, data.race_times as MultimodalRaceTimes, brand),
+    anchors: anchorsFromAppProfile(data.race_times as MultimodalRaceTimes),
+  };
 }
 
 export interface SyncResult {
   ormWritten: number;
   racesWritten: number;
+  /** Supabase is not configured (nothing to sync with). */
   disabled: boolean;
+  /** 2026-10-03 — set when the read or the write failed (it used to be
+   *  folded into `disabled`, so a failure read as "not configured"). */
+  error?: string;
+}
+
+/** The query-builder calls syncToApp makes — so a test can hand it a fake. */
+export interface ProfilesClient {
+  from(table: 'profiles'): {
+    select(cols: 'orm, race_times'): {
+      eq(col: 'id', v: string): {
+        maybeSingle(): PromiseLike<{ data: { orm?: unknown; race_times?: unknown } | null; error: { message?: string } | null }>;
+      };
+    };
+    update(patch: { orm: OrmStore; race_times: MultimodalRaceTimes }): {
+      eq(col: 'id', v: string): PromiseLike<{ error: { message?: string } | null }>;
+    };
+  };
 }
 
 /** Merge the session's mapped 1RMs + times into the app's profile (non-destructive). */
 export async function syncToApp(userId: string, logs: AthleteLogs): Promise<SyncResult> {
   if (!supabase) return { ormWritten: 0, racesWritten: 0, disabled: true };
+  return syncToAppWith(supabase as unknown as ProfilesClient, userId, logs);
+}
 
-  const { data } = await supabase
+export async function syncToAppWith(client: ProfilesClient, userId: string, logs: AthleteLogs): Promise<SyncResult> {
+  const read = await client
     .from('profiles')
     .select('orm, race_times')
     .eq('id', userId)
     .maybeSingle();
+  // 2026-10-03 — never write without a successful read. With a failed read
+  // `data` is null, and the merge below would then REPLACE the app's whole
+  // 1RM and race-time stores with just this session's patch.
+  if (read.error) {
+    return { ormWritten: 0, racesWritten: 0, disabled: false, error: read.error.message || 'could not read the TPF app profile' };
+  }
+  const data = read.data;
 
   const ormPatch = ormPatchFromLogs(logs);
   const racePatch = racePatchFromLogs(logs, new Date().toISOString());
@@ -251,11 +319,12 @@ export async function syncToApp(userId: string, logs: AthleteLogs): Promise<Sync
     raceMerged[modality] = { ...(raceMerged[modality] ?? {}), ...events };
   }
 
-  const { error } = await supabase
+  const { error } = await client
     .from('profiles')
     .update({ orm: ormMerged, race_times: raceMerged })
     .eq('id', userId);
+  if (error) return { ormWritten: 0, racesWritten: 0, disabled: false, error: error.message || 'could not update the TPF app profile' };
 
   const racesWritten = Object.values(racePatch).reduce((n, e) => n + Object.keys(e).length, 0);
-  return { ormWritten: Object.keys(ormPatch).length, racesWritten, disabled: Boolean(error) };
+  return { ormWritten: Object.keys(ormPatch).length, racesWritten, disabled: false };
 }

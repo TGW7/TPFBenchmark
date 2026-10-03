@@ -176,7 +176,7 @@ not carry it, with the reason. Every row is answered in §4.
 | D16 | Sex unspecified → men's ladders | yes | the site has no unspecified option | **N-A** |
 | D17 | Standards (base + overrides) | §1.6 | mirrored, checked | already equal (`check:app-lift`), plus D3 |
 | D18 | Logged e1RMs / logged runs beat typed values | yes | the site has no training log | **N-A** — the site scores what is typed (or pulled from the app's typed stores) |
-| D19 | Predicted equivalents for missing races | yes (VDOT / Riegel, ≤ 4.1×) | none | **owner question** (§7 Q1) — not ported; measured in §5 how often it changes the number |
+| D19 | Predicted equivalents for missing races | yes (VDOT / Riegel, ≤ 4.1×) | none | **owner question** (§7 Q1) — not ported; measured in §5 how often it changes the number. **ANSWERED 2026-10-03 ("1 yes") and BUILT the same day** — `docs/LEGAL-FIXES-2026-10-03.md` §6; `check:app-habs` now runs the app's own prediction path too (0 differences) |
 | D20 | Current (6 months) vs all-time | yes | no history | **N-A** — the site's number is "the values you entered"; for a signed-in athlete those are the app's typed records, which the app's own Current view treats as current when undated |
 | D21 | Stored app predictions pulled as typed, written back as real | n/a | yes (§2) | **applies** — the pull now skips `predicted: true` records (adding the 10K / half to the sync would otherwise widen it to the events the app most often predicts) |
 | D22 | Level ladder (20 levels, 5 points each) | yes | yes | already equal (the app rounds "points to next" to 0.1; the site rounds up for display — display only) |
@@ -257,6 +257,11 @@ derived 10 km / half (§5).
 
 ## 5. Measured
 
+*2026-10-03, later — superseded as the current numbers, kept as the record of
+this change: the pool composite moved again to `v4`, and `check:app-habs` grew
+a predicted path and 1,644 athletes; its current output is in
+`docs/LEGAL-FIXES-2026-10-03.md` §8.*
+
 All runs read-only, with the app's own `tsx`. The app clone moved during the
 work, from `226b018a` to `baa1aebd` (two assistant commits, #660 and #661, plus
 another session's uncommitted documents); `git diff --stat 226b018a baa1aebd`
@@ -333,6 +338,11 @@ The pool (`benchmark_submissions`) holds two kinds of row:
   submissions (30 by default). Operator's composite stays on v2.
 - Saved entries (`benchmark_entries`) hold raw inputs and are re-scored live —
   a returning athlete's saved numbers simply show the new score.
+- *2026-10-03, later:* the HABS score then began filling missing races with
+  the app's predicted equivalents, so the composite moved again, to
+  `overall:<pathway>:v4`; v3 rows are left untouched as v2 rows were
+  (`docs/LEGAL-FIXES-2026-10-03.md` §6). Pool rows also stopped carrying the
+  account id and bodyweight (§3 there).
 
 Re-scoring the v2 composites is not reliable: a pool row has no submission id
 (only `user_id` and `created_at`), and lift rows hold the estimated 1RM, not
@@ -342,6 +352,8 @@ Olympic divisor. Owner question Q2.
 ## 7. Questions for the owner
 
 **Q1 — Should the site fill in predicted race times, as the app does?**
+**ANSWERED 2026-10-03 — the owner: "1 yes". Built the same day:
+`docs/LEGAL-FIXES-2026-10-03.md` §6. The question is kept as it was asked.**
 *What it is:* in the app, an athlete who has logged a 5 km but no 10 km gets a
 **predicted** 10 km (and mile) filled in, and HABS scores it; the site scores
 only what is typed, so the running-distance component stays "untested" and is
@@ -392,7 +404,10 @@ and default:* leave it.
   `benchmark_profiles` and `benchmark_entries`, while the hybrid brand writes
   `'hybrid'` — if the live table matches the migration, hybrid saves and pool
   submissions are rejected (and `submitToPool` does not check for an error).
-  Pre-existing; not changed.
+  Pre-existing; not changed. **Fixed 2026-10-03 (the owner: "Fix benchmark
+  bug") — migration `0006_allow_hybrid_brand.sql` (written, NOT applied), and
+  every save step now reports its error (`src/data/save.ts`);
+  `docs/LEGAL-FIXES-2026-10-03.md` §4.**
 - **The app-sync change** (skip `predicted: true`) is tested on the mappers
   only, not against a real account.
 - **Operator was not aligned.** Noticed: the app's ORS also estimates a

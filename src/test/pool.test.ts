@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { buildPoolSubmissions, overallPoolKey } from '../data/pool';
+import { POOL_OPT_IN_DEFAULT, buildPoolSubmissions, overallPoolKey, poolSubmissionSignature } from '../data/pool';
 import type { AthleteLogs, AthleteProfile, BenchmarkDef } from '../engine/types';
 
 const PROFILE: AthleteProfile = { sex: 'M', bodyweightKg: 100, ageYears: 31 };
@@ -58,17 +58,18 @@ describe('buildPoolSubmissions', () => {
     expect(liftRows[0].pathway_id).toBeNull(); // tiers are pathway-independent for Lift
   });
 
-  it('versions the composite overall cell (v2 = absolute recalibration; v3 = the app\'s HABS model)', () => {
+  it('versions the composite overall cell (v2 = absolute recalibration; v3 = the app\'s HABS model; v4 = + predicted races)', () => {
     const rows = buildPoolSubmissions({
       brand: 'lift', benchmarks: [], profile: PROFILE, logs: logs(0), signedIn: true,
       pathwayId: 'hybrid_athlete', overall: 72,
     });
     expect(rows).toHaveLength(1);
     expect(rows[0].benchmark_id).toBe(overallPoolKey('hybrid_athlete', 'lift'));
-    // 2026-10-03 — the HABS score moved to the TPF app's model, so its
-    // composite starts a new cell; v2 rows are left as they are.
-    expect(rows[0].benchmark_id).toBe('overall:hybrid_athlete:v3');
-    expect(overallPoolKey('hybrid_athlete', 'hybrid')).toBe('overall:hybrid_athlete:v3');
+    // 2026-10-03 — the HABS score moved to the TPF app's model (v3), then the
+    // same day began filling missing races with the app's predicted
+    // equivalents (v4); each starts a new cell, older rows are left as they are.
+    expect(rows[0].benchmark_id).toBe('overall:hybrid_athlete:v4');
+    expect(overallPoolKey('hybrid_athlete', 'hybrid')).toBe('overall:hybrid_athlete:v4');
   });
 
   it('Operator\'s composite stays on v2 — its score did not change (2026-10-03)', () => {
@@ -77,5 +78,44 @@ describe('buildPoolSubmissions', () => {
       pathwayId: 'navy_seal_bud_s', overall: 72,
     });
     expect(rows[0].benchmark_id).toBe('overall:navy_seal_bud_s:v2');
+  });
+});
+
+// 2026-10-03 — the TPF app's legal review, H1 (docs/LEGAL-FIXES-2026-10-03.md §3).
+describe('the pool keeps no link to the athlete', () => {
+  const allowed = new Set(['brand', 'benchmark_id', 'sex', 'age_band', 'value', 'lower_is_better', 'trust', 'pathway_id']);
+  const rows = [
+    ...buildPoolSubmissions({ brand: 'lift', benchmarks: [squat], profile: PROFILE, logs: logs(150), signedIn: true, pathwayId: 'hybrid_athlete', overall: 72 }),
+    ...buildPoolSubmissions({ brand: 'operator', benchmarks: [{ ...squat, id: 'back_squat' }], profile: PROFILE,
+      logs: { orm: [{ benchmarkId: 'back_squat', weightKg: 150, reps: 1 }], raceTimes: [], manual: [], wod: [] },
+      signedIn: true, pathwayId: 'navy_seal_bud_s', overall: 60 }),
+  ];
+
+  it('a row carries no account id, no bodyweight and nothing outside what the percentile needs', () => {
+    expect(rows.length).toBe(4);
+    for (const r of rows) {
+      for (const k of Object.keys(r)) expect(allowed.has(k), k).toBe(true);
+      expect('user_id' in r).toBe(false);
+      expect('bodyweight_kg' in r).toBe(false);
+    }
+  });
+
+  it('the build step cannot even be handed an account id', () => {
+    // A stray userId (as App.tsx passed until 2026-10-03) changes nothing.
+    const withId = buildPoolSubmissions({ brand: 'lift', benchmarks: [squat], profile: PROFILE, logs: logs(150), signedIn: true,
+      ...({ userId: 'b1f4c3e2-0000-4000-8000-000000000000' } as object) });
+    expect(JSON.stringify(withId)).not.toContain('b1f4c3e2');
+  });
+
+  it('contributing is opt-in: the box starts unticked', () => {
+    expect(POOL_OPT_IN_DEFAULT).toBe(false);
+  });
+
+  it('the same rows have the same signature (a repeat Save in one visit is not pooled twice)', () => {
+    const a = buildPoolSubmissions({ brand: 'lift', benchmarks: [squat], profile: PROFILE, logs: logs(150), signedIn: true, pathwayId: 'hybrid_athlete', overall: 72 });
+    const b = buildPoolSubmissions({ brand: 'lift', benchmarks: [squat], profile: PROFILE, logs: logs(150), signedIn: true, pathwayId: 'hybrid_athlete', overall: 72 });
+    const c = buildPoolSubmissions({ brand: 'lift', benchmarks: [squat], profile: PROFILE, logs: logs(152.5), signedIn: true, pathwayId: 'hybrid_athlete', overall: 72 });
+    expect(poolSubmissionSignature(a)).toBe(poolSubmissionSignature([...b].reverse()));
+    expect(poolSubmissionSignature(a)).not.toBe(poolSubmissionSignature(c));
   });
 });

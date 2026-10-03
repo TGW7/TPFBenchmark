@@ -15,6 +15,9 @@ import type { AthleteLogs, BenchmarkDef, ComponentId } from '../engine/types';
 import { HABS_OLYMPIC_IDS, habsWeightsFor, inHabsScore, liftBenchmarksFor } from '../config/habs';
 import { HABS_COMPONENT_LABEL, HABS_OUTSIDE_HEADING, HABS_OUTSIDE_NOTE } from '../config/habsDisplay';
 import { componentLabel, formatScore, scoreTier } from '../ui/format';
+import { predictMissingRaces } from '../engine';
+import { PREDICTION_RACE_EVENTS } from '../config/habsAppMap';
+import { fmtRaceTime, predictionNote } from '../ui/predictionCopy';
 
 const P = 'hybrid_athlete';
 const benchmarks = liftBenchmarksFor(P);
@@ -84,5 +87,42 @@ describe('the dashboard on a HABS brand', () => {
     expect(t).toContain('Upper-body pull');
     expect(t).toContain('Running (distance): untested');
     expect(t).not.toContain('Gymnastics');
+  });
+});
+
+// 2026-10-03 — predicted race times on the grid (docs/LEGAL-FIXES-2026-10-03.md
+// §6): shown AS predictions, never put into the field.
+describe('predicted race times on the grid', () => {
+  const targets = benchmarks.filter((b) => b.source === 'race_times' && inHabsScore(b, P)).map((b) => b.id);
+  const pred = predictMissingRaces({ logs, raceEventOf: PREDICTION_RACE_EVENTS, targets, sex: 'M', bodyweightKg: 80 });
+  const typedOnSite = (m: string, e: string) => m === 'run' && e === '5k';
+  const predicted = new Map(pred.predictions.map((p) => [p.benchmarkId, { placeholder: `≈ ${fmtRaceTime(p.timeSec)}`, note: predictionNote(p, typedOnSite) }]));
+  const html = renderToStaticMarkup(createElement(BenchmarkGrid, {
+    benchmarks, profile: { sex: 'M', bodyweightKg: 80 }, units: 'metric', logs, resetKey: 0,
+    onOrm: () => {}, onRaceTime: () => {}, onManual: () => {},
+    groupOf: (b: BenchmarkDef) => labelOf(b.habsComponent ?? b.component),
+    predicted,
+  }));
+  const t = text(html);
+
+  it('the typed 5 km fills the mile and the 10 km — not the half (4.22×)', () => {
+    expect([...predicted.keys()].sort()).toEqual(['run_10k', 'run_1mi']);
+  });
+
+  it('a predicted field stays EMPTY, with the time as its placeholder and a line saying where it came from', () => {
+    const tenK = /<input[^>]*aria-label="10 km[^"]*time"[^>]*>/i.exec(html)?.[0] ?? /<input[^>]*aria-label="10K[^"]*"[^>]*>/i.exec(html)?.[0] ?? '';
+    expect(tenK).not.toBe('');
+    expect(tenK).toContain('value=""');
+    expect(tenK).toContain(`placeholder="${predicted.get('run_10k')!.placeholder}"`);
+    expect(t).toContain('from your 5 km — counts toward your score until you enter a time.');
+    expect(t).not.toContain('TPF app results');
+  });
+
+  it('counts predictions apart from entries', () => {
+    expect(t).toMatch(/\b4 of 22 entered · 2 predicted\./); // no `outside` passed here, so all 22 listed rows count
+  });
+
+  it('the 5 km field itself shows the typed time, not a prediction', () => {
+    expect(predicted.has('run_5k')).toBe(false);
   });
 });

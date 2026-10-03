@@ -15,6 +15,23 @@
  * a tier and the weak link — never "your percentile". The hero's sample result
  * lost its "≈ 84th percentile" for the same reason. Pinned by
  * src/test/no-percentile-claims.test.ts.
+ *
+ * 2026-10-03 — the TPF app's legal review (H4; this repo's
+ * docs/LEGAL-FIXES-2026-10-03.md §7, every old → new wording, for counsel):
+ *   - "Free forever" → "Free to use" (a "forever" is a promise nobody has
+ *     made; the CAP Code's rule on "free" claims);
+ *   - the authority badge "Free to use · private, no tracking" was false once
+ *     analytics went in (the footer had already been corrected) → "Free to use
+ *     · analytics only if you say yes";
+ *   - Operator's "Held to real standards — scored against the standard set for
+ *     your role or unit" read as an official standard; the tiers are TPF's,
+ *     built from published test tables where they exist;
+ *   - the HABS brands' explanatory text called the curve "pass / good /
+ *     excellent / elite" and said "85+ is elite territory" — HABS has six
+ *     tiers and Elite is 100. Operator's four-tier curve is right and stays;
+ *     its "85+ is elite territory" now names the tiers (85 Excellent, 100
+ *     Elite).
+ * Pinned by src/test/legal-copy.test.ts.
  */
 
 import type { Brand } from '../brand';
@@ -94,7 +111,7 @@ const LIFT: LandingCopy = {
       // have none — docs/STANDARDS.md lists the gaps); none is derived from a
       // third-party percentile chart.
       'Our own standards, checked against open data where it exists',
-      'Free to use · private, no tracking',
+      'Free to use · analytics only if you say yes',
     ],
   },
   plan: {
@@ -106,10 +123,10 @@ const LIFT: LandingCopy = {
     ],
   },
   explanatory:
-    'Take Point Fitness turns your scattered numbers into one honest read. Enter your squat, deadlift, bench, runs, rows and benchmark workouts, choose the pathway that matches your goal, and the calculator scores each lift and time on a clear pass / good / excellent / elite curve — scored on absolute standards for your sex, tiered by pathway. It weights everything toward the goal you care about, gives you a tier from Beginner to Elite, and shows the weak link that’s costing you the most. It’s free and needs no account. When you’re ready to fix what it finds, the Take Point Fitness app turns your weak link into a plan and tracks the number as it climbs. Scores compress at the top — 85+ is elite territory, because it means being near the top in every area at once, not just one.',
+    'Take Point Fitness turns your scattered numbers into one honest read. Enter your squat, deadlift, bench, runs, rows and benchmark workouts, choose the pathway that matches your goal, and the calculator scores each lift and time on a clear six-tier curve, Beginner to Elite — scored on absolute standards for your sex, tiered by pathway. It weights everything toward the goal you care about, gives you a tier from Beginner to Elite, and shows the weak link that’s costing you the most. It’s free and needs no account. When you’re ready to fix what it finds, the Take Point Fitness app turns your weak link into a plan and tracks the number as it climbs. Scores compress at the top: a high overall score means being strong in every area at once, not just one.',
   options: {
     heading: 'Free to find out. Built to improve.',
-    free: { title: 'The benchmark', body: 'Your score, tier and weak link — across every pathway. Free forever — sign in to save yours.' },
+    free: { title: 'The benchmark', body: 'Your score, tier and weak link — across every pathway. Free to use — sign in to save yours.' },
     app: {
       title: 'The Take Point Fitness app',
       body: 'Turn your weak link into a plan, log your training, and watch your score climb. Your benchmark syncs straight in — and the free version is genuinely free: no card, no trial.',
@@ -151,7 +168,7 @@ const OPERATOR: LandingCopy = {
     items: [
       { title: 'Know your readiness', body: 'One clear score across strength, engine and work capacity, weighted to your standard.' },
       { title: 'Find the gap', body: 'See the weakness that would fail you first — and train it before it’s tested.' },
-      { title: 'Held to real standards', body: 'Scored against the standard set for your role or unit — not a generic chart.' },
+      { title: 'Role-specific standards', body: 'Scored on TPF’s standards for your role or unit, built from published test tables where they exist — not a generic chart.' },
       { title: 'Pick your standard', body: 'Choose the role or unit benchmark that matches the job.' },
     ],
   },
@@ -161,7 +178,7 @@ const OPERATOR: LandingCopy = {
     authority: [
       'Built by ex-British Army PTIs',
       'Standards modelled on tactical demands',
-      'Free to use · private, no tracking',
+      'Free to use · analytics only if you say yes',
     ],
   },
   plan: {
@@ -173,10 +190,10 @@ const OPERATOR: LandingCopy = {
     ],
   },
   explanatory:
-    'Take Point Fitness Operator turns your fitness into one honest readiness read. Enter your lifts, carries, runs and work-capacity efforts, choose the standard that matches the job, and the calculator scores each against a clear pass / good / excellent / elite curve — scored on absolute standards, tiered by unit. It weights everything toward the demands of the role, gives you a tier, and shows the gap most likely to fail you first. It’s free and needs no account. When you’re ready to close it, the Take Point Fitness Operator app turns that gap into a plan and tracks your readiness over time. Scores compress at the top — 85+ is elite territory, because it means being near the top in every area at once, not just one.',
+    'Take Point Fitness Operator turns your fitness into one honest readiness read. Enter your lifts, carries, runs and work-capacity efforts, choose the standard that matches the job, and the calculator scores each against a clear pass / good / excellent / elite curve — scored on absolute standards, tiered by unit. It weights everything toward the demands of the role, gives you a tier, and shows the gap most likely to fail you first. It’s free and needs no account. When you’re ready to close it, the Take Point Fitness Operator app turns that gap into a plan and tracks your readiness over time. Scores compress at the top — 85 is Excellent and 100 is Elite, because a high overall score means being near the top in every area at once, not just one.',
   options: {
     heading: 'Free to find out. Built to close the gap.',
-    free: { title: 'The benchmark', body: 'Your readiness score, tier and biggest gap. Free forever — sign in to save yours.' },
+    free: { title: 'The benchmark', body: 'Your readiness score, tier and biggest gap. Free to use — sign in to save yours.' },
     app: {
       title: 'The TPF Operator app',
       body: 'Turn your gap into a plan, log your training, and track readiness over time. Your benchmark syncs straight in — and the free version is genuinely free: no card, no trial.',
@@ -228,7 +245,7 @@ const HYBRID: LandingCopy = {
     authority: [
       'Built by ex-British Army PTIs',
       'Balanced strength + engine standards — not specialist charts',
-      'Free to use · private, no tracking',
+      'Free to use · analytics only if you say yes',
     ],
   },
   plan: {
@@ -240,10 +257,10 @@ const HYBRID: LandingCopy = {
     ],
   },
   explanatory:
-    'Take Point Fitness Hybrid turns your combined training into one honest read. Enter your squat, deadlift, bench, power clean and run and row times, choose the hybrid standard that matches your goal, and the calculator scores each against a clear pass / good / excellent / elite curve — scored on absolute standards for your sex, tiered by pathway. It weights strength and engine roughly half and half for the hybrid athlete — the same HABS components and weights as the Take Point Fitness Hybrid app — gives you a tier from Beginner to Elite, and surfaces the weak side that\'s costing you the most. It\'s free and needs no account. When you\'re ready to fix what it finds, the Take Point Fitness Hybrid app turns your weak side into a balanced plan. Scores compress at the top — 85+ is elite territory, because it means being near the top in every area at once, not just one.',
+    'Take Point Fitness Hybrid turns your combined training into one honest read. Enter your squat, deadlift, bench, power clean and run and row times, choose the hybrid standard that matches your goal, and the calculator scores each on a clear six-tier curve, Beginner to Elite — scored on absolute standards for your sex, tiered by pathway. It weights strength and engine roughly half and half for the hybrid athlete — the same HABS components and weights as the Take Point Fitness Hybrid app — gives you a tier from Beginner to Elite, and surfaces the weak side that\'s costing you the most. It\'s free and needs no account. When you\'re ready to fix what it finds, the Take Point Fitness Hybrid app turns your weak side into a balanced plan. Scores compress at the top: a high overall score means being strong in every area at once, not just one.',
   options: {
     heading: 'Free to find out. Built to balance.',
-    free: { title: 'The benchmark', body: 'Your hybrid score, tier and weak side — free forever; sign in to save yours.' },
+    free: { title: 'The benchmark', body: 'Your hybrid score, tier and weak side — free to use; sign in to save yours.' },
     app: {
       title: 'The TPF Hybrid app',
       body: 'Turn your weak side into a plan, log your training, and watch the balance improve. Your benchmark syncs straight in — and the free version is genuinely free: no card, no trial.',

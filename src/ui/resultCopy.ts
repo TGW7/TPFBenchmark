@@ -23,16 +23,21 @@ import { formatPercentile, scoreTier } from './format';
 export interface LivePercentileLine {
   /** e.g. "73rd percentile" */
   main: string;
-  /** e.g. "live — vs 1,240 athletes" */
+  /** e.g. "live — vs 1,240 results" */
   context: string;
 }
 
-/** The measured-percentile line, or null when there is no pool percentile. */
+/** The measured-percentile line, or null when there is no pool percentile.
+ *
+ *  2026-10-03 — "vs N athletes" → "vs N results". `poolN` is
+ *  benchmark_pool_count(): a count of pool ROWS, and one athlete who adds
+ *  their numbers on two visits is two rows (the pool keeps no link to anyone
+ *  since migration 0007, so it cannot count people). docs/LEGAL-FIXES-2026-10-03.md §7. */
 export function livePercentileLine(pct: number | null, poolN: number | null = null): LivePercentileLine | null {
   if (pct == null || !Number.isFinite(pct)) return null;
   return {
     main: `${formatPercentile(pct)} percentile`,
-    context: poolN ? `live — vs ${poolN.toLocaleString()} athletes` : 'live — vs real athletes',
+    context: poolN ? `live — vs ${poolN.toLocaleString()} results` : 'live — vs real results',
   };
 }
 
@@ -64,7 +69,7 @@ export interface ShareTextArgs {
 export function resultShareText(a: ShareTextArgs): string {
   const tier = scoreTier(a.overall);
   const live = livePercentileLine(a.livePercentile, a.poolN ?? null);
-  const pct = live ? `, ${live.main}${a.poolN ? ` of ${a.poolN.toLocaleString()} athletes` : ''}` : '';
+  const pct = live ? `, ${live.main}${a.poolN ? ` of ${a.poolN.toLocaleString()} results` : ''}` : '';
   return (
     `My ${a.scoreLabel} — ${a.pathwayLabel}: ${Math.round(a.overall)}/100 ` +
     `(${tier}${pct}). Weakest: ${a.weak || '—'}. ` +

@@ -383,7 +383,12 @@ for (const u of operator) {
     title: `${u.label} Fitness Standards | TPF Operator`,
     description: `${u.label} fitness standards: ${eventNames}${u.benchmarks.length > 4 ? ' and more' : ''}, scored pass through elite. Score your readiness free, no sign-up.`,
     h1: `${u.label} Fitness Standards`,
-    lede: `Could you meet the ${u.label} standard? These are the per-event tiers (unisex, absolute) used to score readiness.`,
+    // 2026-10-03 (the TPF app's legal review, H4 / G2; docs/LEGAL-FIXES-2026-10-03.md
+    // §7) — "the ${u.label} standard" read as the unit's own official test. The
+    // tiers are Take Point Fitness's, built from the unit's published test or
+    // public military tables where they exist; say so, and that no military or
+    // police body endorses them. Pinned by src/test/legal-copy.test.ts.
+    lede: `Could you meet the ${u.label} standard? These are Take Point Fitness's per-event tiers for the ${u.label} pathway (unisex, absolute), used to score readiness. They are not an official test, and no military or police body endorses them.`,
     body: table(['Benchmark', 'Pass', 'Good', 'Excellent', 'Elite'], rows) + altNote +
       `<p class="note">${u.region} unit. Where the unit's published test or a public military fitness table exists, tiers are set from or checked against it; the rest are Take Point Fitness's own (beta) and recalibrate with athlete data.</p>` +
       faqHtml(faqs),

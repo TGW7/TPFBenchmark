@@ -57,8 +57,8 @@ describe('resultCopy — a percentile only when measured', () => {
   });
 
   it('a measured pool percentile reads as one, with the pool size', () => {
-    expect(livePercentileLine(73.4, 1240)).toEqual({ main: '73rd percentile', context: `live — vs ${(1240).toLocaleString()} athletes` });
-    expect(livePercentileLine(51, null)).toEqual({ main: '51st percentile', context: 'live — vs real athletes' });
+    expect(livePercentileLine(73.4, 1240)).toEqual({ main: '73rd percentile', context: `live — vs ${(1240).toLocaleString()} results` });
+    expect(livePercentileLine(51, null)).toEqual({ main: '51st percentile', context: 'live — vs real results' });
   });
 
   it('the no-percentile note says the score is against TPF’s standards, and promises a percentile only when a pool exists', () => {
@@ -82,7 +82,7 @@ describe('resultCopy — a percentile only when measured', () => {
 
   it('the copied result carries a measured percentile when there is one', () => {
     const t = resultShareText({ ...base, livePercentile: 88, poolN: 1240 });
-    expect(t).toContain(`(Intermediate, 88th percentile of ${(1240).toLocaleString()} athletes)`);
+    expect(t).toContain(`(Intermediate, 88th percentile of ${(1240).toLocaleString()} results)`);
   });
 
   it('an empty weak list reads as a dash', () => {

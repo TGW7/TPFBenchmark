@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import './theme.css';
 import {
   ageBand,
@@ -8,8 +8,10 @@ import {
   computeHRS,
   habsAsHrsResult,
   habsBenchmarkScore,
+  predictMissingRaces,
   toComponentScoreMap,
 } from '../engine';
+import type { RaceStore } from '../engine/racePrediction';
 import type {
   AthleteLogs,
   AthleteProfile,
@@ -21,6 +23,7 @@ import type {
 } from '../engine/types';
 import { HABS_OLYMPIC_IDS, habsWeightsFor, inHabsScore } from '../config/habs';
 import { HABS_COMPONENT_LABEL, HABS_OUTSIDE_HEADING, HABS_OUTSIDE_NOTE } from '../config/habsDisplay';
+import { PREDICTION_RACE_EVENTS } from '../config/habsAppMap';
 import { emptyLogs } from '../data/stores';
 import { brandConfig } from '../data/brandConfig';
 import { brandMeta, detectBrand } from '../brand';
@@ -28,7 +31,8 @@ import { LANDING_COPY } from '../content/landingCopy';
 import { useAuth } from '../auth/AuthContext';
 import { AuthPanel } from '../auth/AuthPanel';
 import { fetchPercentile, fetchPoolCount, loadEntries, loadProfile, replaceEntries, saveProfile, submitToPool } from '../data/remote';
-import { buildPoolSubmissions, overallPoolKey } from '../data/pool';
+import { POOL_OPT_IN_DEFAULT, buildPoolSubmissions, overallPoolKey, poolSubmissionSignature } from '../data/pool';
+import { runSave } from '../data/save';
 import { syncFromApp, syncToApp } from '../data/appSync';
 import { isSupabaseConfigured } from '../lib/supabase';
 import { Dashboard } from './Dashboard';
@@ -38,6 +42,8 @@ import { WodLog } from './WodLog';
 import { PathwayPicker } from './PathwayPicker';
 import { ProfileBar } from './ProfileBar';
 import { EmailCapture } from './EmailCapture';
+import { SaveControls } from './SaveControls';
+import { fmtRaceTime, predictionNote } from './predictionCopy';
 import { BrowseStandards } from './BrowseStandards';
 import { Landing } from './Landing';
 import { Footer } from './Footer';
@@ -89,7 +95,18 @@ export function App() {
     document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light',
   );
   const [saveMsg, setSaveMsg] = useState<string | null>(null);
-  const [contribute, setContribute] = useState(true);
+  const [saveFailed, setSaveFailed] = useState(false);
+  const [saving, setSaving] = useState(false);
+  // 2026-10-03 — opt-in: the pool box starts UNTICKED (it was ticked by
+  // default — the TPF app's legal review, H1; src/data/pool.ts).
+  const [contribute, setContribute] = useState(POOL_OPT_IN_DEFAULT);
+  // The rows last added to the pool in this visit, so pressing Save twice
+  // does not add the same numbers twice (the pool keeps no link to anyone).
+  const lastPooled = useRef<string | null>(null);
+  // 2026-10-03 — the athlete's other typed race results in the TPF app (events
+  // the calculator has no field for), used ONLY as anchors for the predicted
+  // equivalents (src/data/appSync.ts anchorsFromAppProfile). Never saved.
+  const [appAnchors, setAppAnchors] = useState<RaceStore>({});
   const [shareMsg, setShareMsg] = useState<string | null>(null);
   // Bumps to re-seed the entry grid from logs (sample / clear / sign-in / unit switch).
   const [formResetKey, setFormResetKey] = useState(0);
@@ -98,17 +115,18 @@ export function App() {
   function setUnits(u: Units) { setUnitsState(u); saveUnits(u); event('units_changed', { units: u }); bumpForm(); }
 
   useEffect(() => {
-    if (!user) return;
+    if (!user) { setAppAnchors({}); return; }
     let cancelled = false;
     (async () => {
-      const [p, ours, appLogs] = await Promise.all([
+      const [p, ours, app] = await Promise.all([
         loadProfile(user.id),
         loadEntries(user.id),
         syncFromApp(user.id, BRAND),
       ]);
       if (cancelled) return;
       if (p) { setProfile(p.profile); setPathwayId(p.pathway); }
-      const merged = mergeLogs(appLogs, ours);
+      setAppAnchors(app.anchors);
+      const merged = mergeLogs(app.logs, ours);
       if (hasEntries(merged)) { setLogs(merged); bumpForm(); }
     })();
     return () => { cancelled = true; };
@@ -123,14 +141,43 @@ export function App() {
     () => computeHRS({ pathway, benchmarks, profile, logs }),
     [pathway, benchmarks, profile, logs],
   );
+  // 2026-10-03 (later) — the owner's "1 yes": a HABS race with no typed time
+  // is filled with the app's predicted equivalent, exactly as the app fills
+  // it (src/engine/habsPredict.ts). `logs` stay what the athlete typed — they
+  // are what is saved, synced and pooled; `scoringLogs` add the predictions
+  // and are only ever scored.
+  const habsRaceTargets = useMemo(
+    () => (CFG.habs ? benchmarks.filter((b) => b.source === 'race_times' && inHabsScore(b, pathwayId)).map((b) => b.id) : []),
+    [benchmarks, pathwayId],
+  );
+  const predicted = useMemo(
+    () => (CFG.habs
+      ? predictMissingRaces({
+          logs, raceEventOf: PREDICTION_RACE_EVENTS, targets: habsRaceTargets,
+          anchors: appAnchors, sex: profile.sex, bodyweightKg: profile.bodyweightKg,
+        })
+      : { logs, predictions: [] }),
+    [logs, habsRaceTargets, appAnchors, profile.sex, profile.bodyweightKg],
+  );
+  const scoringLogs = predicted.logs;
+  const predictedView = useMemo(() => {
+    const typedOnSite = (modality: string, event: string) =>
+      Object.entries(PREDICTION_RACE_EVENTS).some(
+        ([id, r]) => r.modality === modality && r.event === event && logs.raceTimes.some((e) => e.benchmarkId === id && e.timeSec > 0),
+      );
+    return new Map(predicted.predictions.map((p) => [
+      p.benchmarkId,
+      { placeholder: `≈ ${fmtRaceTime(p.timeSec)}`, note: predictionNote(p, typedOnSite) },
+    ]));
+  }, [predicted, logs]);
   // 2026-10-03 — the HABS brands score the TPF app's HABS model, so the
   // number here is the app's for the same lifts and times
   // (docs/HABS-ALIGNMENT-2026-10-03.md; `npm run check:app-habs`).
   const habs = useMemo(
     () => (CFG.habs
-      ? computeHabs({ benchmarks, weights: habsWeightsFor(pathwayId), sex: profile.sex, logs, olympicIds: HABS_OLYMPIC_IDS })
+      ? computeHabs({ benchmarks, weights: habsWeightsFor(pathwayId), sex: profile.sex, logs: scoringLogs, olympicIds: HABS_OLYMPIC_IDS })
       : null),
-    [benchmarks, pathwayId, profile.sex, logs],
+    [benchmarks, pathwayId, profile.sex, scoringLogs],
   );
   const result: HrsResult = useMemo(
     () => (habs ? habsAsHrsResult(pathwayId, habs) : componentResult),
@@ -284,22 +331,28 @@ export function App() {
       return { ...l, manual };
     });
 
+  // 2026-10-03 — every step's error is reported (src/data/save.ts). Until
+  // then this awaited four writes, checked none, and always said "Saved".
+  // Only TYPED `logs` are saved, synced or pooled — never a prediction.
   async function save() {
     if (!user) return;
+    setSaving(true);
+    setSaveFailed(false);
     setSaveMsg('Saving…');
-    await saveProfile(user.id, profile, pathwayId, BRAND);
-    await replaceEntries(user.id, logs, BRAND);
-    const sync = await syncToApp(user.id, logs);
-    if (contribute) {
-      await submitToPool(
-        buildPoolSubmissions({ brand: BRAND, benchmarks, profile, logs, signedIn: true, userId: user.id, pathwayId, overall: result.overall }),
-      );
-    }
-    setSaveMsg(
-      sync.disabled
-        ? 'Saved to your profile.'
-        : `Saved — ${sync.ormWritten} lifts + ${sync.racesWritten} times synced to your TPF app.`,
-    );
+    const rows = contribute
+      ? buildPoolSubmissions({ brand: BRAND, benchmarks, profile, logs, signedIn: true, pathwayId, overall: result.overall })
+      : [];
+    const sig = rows.length ? poolSubmissionSignature(rows) : null;
+    const outcome = await runSave({
+      saveProfile: () => saveProfile(user.id, profile, pathwayId, BRAND),
+      replaceEntries: () => replaceEntries(user.id, logs, BRAND),
+      syncToApp: () => syncToApp(user.id, logs),
+      submitToPool: sig && sig !== lastPooled.current ? () => submitToPool(rows) : null,
+    });
+    if (outcome.pooled) lastPooled.current = sig;
+    setSaveFailed(!outcome.saved);
+    setSaveMsg(outcome.message);
+    setSaving(false);
   }
 
   return (
@@ -364,17 +417,15 @@ export function App() {
         />
 
         {user && (
-          <div className="row" style={{ marginBottom: 16, alignItems: 'center' }}>
-            <button className="btn" onClick={save}>Save my results</button>
-            {saveMsg && <span className="subtle">{saveMsg}</span>}
-          </div>
-        )}
-
-        {isSupabaseConfigured && (
-          <label className="row subtle" style={{ alignItems: 'center', gap: 8, marginBottom: 16 }}>
-            <input type="checkbox" checked={contribute} onChange={(e) => setContribute(e.target.checked)} />
-            Help improve the standards — add your anonymised numbers to the percentile pool.
-          </label>
+          <SaveControls
+            onSave={save}
+            saving={saving}
+            saveMsg={saveMsg}
+            saveFailed={saveFailed}
+            poolAvailable={isSupabaseConfigured}
+            contribute={contribute}
+            onContribute={setContribute}
+          />
         )}
 
         {!hasData && (
@@ -401,6 +452,7 @@ export function App() {
               onManual={upsertManual}
               groupOf={CFG.habs ? (b) => labelOf(b.habsComponent ?? b.component) : undefined}
               outside={CFG.habs ? { ids: outsideIds, heading: HABS_OUTSIDE_HEADING, note: HABS_OUTSIDE_NOTE, scoreOf: outsideScore } : undefined}
+              predicted={CFG.habs ? predictedView : undefined}
             />
             {showWods && (
               <div style={{ marginTop: 16 }}>
@@ -461,7 +513,7 @@ export function App() {
           </div>
         )}
 
-        {hasData && <EmailCapture brand={BRAND} pathway={pathwayId} userId={user?.id ?? null} />}
+        {hasData && <EmailCapture brand={BRAND} pathway={pathwayId} />}
 
       </section>
 
